@@ -63,6 +63,7 @@ CREATE TABLE dog (
 CREATE TABLE photo (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     file_name TEXT,
+    dog_id INT REFERENCES dog(id) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ
 );
