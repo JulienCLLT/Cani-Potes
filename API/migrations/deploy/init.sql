@@ -84,11 +84,11 @@ CREATE TABLE ride (
 );
 
 CREATE TABLE member_write_ride (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     member_id INT REFERENCES member(id), 
     ride_id INT REFERENCES ride(id), 
     message TEXT NOT NULL, -- v  CHECK (char_length(surname) < 200)
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (member_id, ride_id)
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE member_participate_ride (
