@@ -29,18 +29,32 @@ INSERT INTO dog(surname, breed_id, weight, gender_id, birthday, sterilization, d
 ('Plutôt', 156, 10.4, 2, '2020-01-01', false, 'un peu con mais vraiment symoa', 4, 2),
 ('Rox Attak', 300, 15.2, 2, '2001-09-11', true, 'bon des fois il montre les crocs mais sinon il est cool', 3, 3);
 
-INSERT INTO photo(file_name) VALUES
-('img.jpg'),
-('img.jpg'),
-('img.jpg'),
-('img.jpg'),
-('img.jpg'),
-('img.jpg'),
-('img.jpg'),
-('img.jpg'),
-('img.jpg'),
-('img.jpg'),
-('img.jpg');
+INSERT INTO photo(file_name, dog_id) VALUES
+('img4.jpg', 1),
+('img5.jpg', 1),
+('img6.jpg', 2),
+('img7.jpg', 2),
+('img8.jpg', 2),
+('img9.jpg', 4),
+('img10.jpg', 3),
+('img11.jpg', 3),
+('img12.jpg', 4),
+('img13.jpg', 1),
+('img14.jpg', 4);
 
+INSERT INTO ride(title, description, start_coordinate, end_coordinate, starting_time, duration, max_number_dogs, tag_id, host_id) VALUES
+('Dans le coin', 'un petit tour de quartier pour se rencontrer et y a une fontaine sympa', '{2.290084,49.897443}', '{2.310084,49.877443}', '2021-09-29 19:37:25.631205+02','15 minutes', 5, 1, 1),
+('Cool ici', 'On va rire car mon chien est vraiment foufou', '{3.290084,48.897443}', '{3.290084,48.897443}', '2021-10-14 19:37:25.631205+02', '35 minutes', 4, 2, 3);
+
+INSERT INTO member_write_ride (member_id, ride_id, message) VALUES 
+(1, 1, 'Salut vous etes prêts ?'),
+(3, 1, 'Oui bien motivé, le toutou a son écharpe'),
+(2, 1, 'Excellent, on pourra aller lentement, je crois que Lassie a mal'),
+(1, 1, 'bien sûr!');
+
+
+INSERT INTO member_participate_ride (member_id, ride_id) VALUES 
+(2, 1),
+(3, 1);
 
 COMMIT;
