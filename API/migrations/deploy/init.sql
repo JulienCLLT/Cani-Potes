@@ -49,7 +49,7 @@ CREATE TABLE dog (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     surname TEXT NOT NULL , -- v CHECK (char_length(surname) < 30)
     description TEXT, -- v  CHECK (char_length(value) < 200)
-    weigth NUMERIC(4,2), -- v 
+    weight NUMERIC(4,2), -- v 
     birthday DATE NOT NULL, 
     sterilization BOOLEAN NOT NULL, 
     breed_id INT REFERENCES breed(id) NOT NULL DEFAULT 1,
