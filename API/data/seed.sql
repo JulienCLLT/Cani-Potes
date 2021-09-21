@@ -22,12 +22,25 @@ INSERT INTO member(email, first_name, last_name, photo, zip_code, password, birt
 ('sheldon@bigbang.net', 'Sheldon', 'Cooper', 'img2.jpg', '06100', 'tropcomplique', '1975-02-02'),
 ('sherlock@holmes.com', 'Sherlock', 'Holmes', 'img3.jpg', '75009', 'sherlocked', '1887-01-07');
 
+--
 INSERT INTO dog(surname, breed_id, weight, gender_id, birthday, sterilization, description, behavior_id, dog_owner_id) VALUES
 ('Snoopie', 231, 5.12, 1, '2018-02-12', true, 'Un super toutou que j''adore qui bouge dans tous les sens', 1, 1),
 ('Lassie', 12, 12, 2, '2015-06-01', true, 'Un chien au magnifique pelage', 2, 1),
 ('Plutôt', 156, 10.4, 2, '2020-01-01', false, 'un peu con mais vraiment symoa', 4, 2),
 ('Rox Attak', 300, 15.2, 2, '2001-09-11', true, 'bon des fois il montre les crocs mais sinon il est cool', 3, 3);
 
+INSERT INTO photo(file_name) VALUES
+('img.jpg'),
+('img.jpg'),
+('img.jpg'),
+('img.jpg'),
+('img.jpg'),
+('img.jpg'),
+('img.jpg'),
+('img.jpg'),
+('img.jpg'),
+('img.jpg'),
+('img.jpg');
 
 
 COMMIT;
