@@ -39,7 +39,7 @@ ALTER TABLE photo
 
 CREATE DOMAIN emoji_format AS TEXT CHECK (
     -- suite de 4 à 5 caractères : A à F ou 1 à 9
-    VALUE ~ '[A-F1-9]{4,5}'
+    VALUE ~ '[A-E1-9]{4,5}'
 );
 
 ALTER TABLE behavior 
