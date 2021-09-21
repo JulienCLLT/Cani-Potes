@@ -18,7 +18,7 @@ INSERT INTO tag(label)VALUES
 ('sortie de quartier');
 
 INSERT INTO member(email, first_name, last_name, photo, zip_code, password, birthday) VALUES
-('toto@toto.com', 'Toto', 'Le fou', 'img1.jpg', '33800', 'toto33mdp', '1980-01-01'),
+('toto@toto.com', 'Toto', 'Le fou de ouf', 'img1.jpg', '33800', 'toto33mdp', '1980-01-01'),
 ('sheldon@bigbang.net', 'Sheldon', 'Cooper', 'img2.jpg', '06100', 'tropcomplique', '1975-02-02'),
 ('sherlock@holmes.com', 'Sherlock', 'Holmes', 'img3.jpg', '75009', 'sherlocked', '1887-01-07');
 
