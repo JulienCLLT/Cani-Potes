@@ -2,3 +2,4 @@
 %project=canipotes
 
 init 2021-09-21T14:26:04Z Alekiel42 <alexandra.bercoff@gmail.com> # init tables
+constraint 2021-09-21T14:53:35Z Alekiel42 <alexandra.bercoff@gmail.com> # add constraints with regex
