@@ -7,9 +7,15 @@ const CreateRide = () => {
 	//todo check how to avoid errors when input is empty but only on submit (with state ?)
 	const { register, handleSubmit, formState: { errors } } = useForm();
 
+	
+
 	const onSubmit = (data) => {
 		console.log('submitted data : ', data);
 	};
+
+	const hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ,19 ,20, 21, 22, 23];
+	const minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+	const date = new Date();
 
 	return (
 		<main className='create-ride'>
@@ -50,27 +56,36 @@ const CreateRide = () => {
 					{/* {errors.endingPoint && <span>Le point d'arrivée est obligatoire</span>} */}
 				</div>
 
+				<div className="create-ride__field">
+					<label htmlFor="date">Jour de la balade</label>
+					<input
+						id='date'
+						name='date'
+						type='date'
+						defaultValue={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`}
+						min={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`}
+						{...register('date', {required: 'A day is needed'})}
+					/>
+					{/* {errors.endingPoint && <span>Le point d'arrivée est obligatoire</span>} */}
+				</div>
+
 				{/* ADD INPUT DATE TO SELECT DATE */}
 
 				{/* CHANGE INPUT FOR SELECT WITH OPTION */}
 				<div className="create-ride__field">
 					<p>Heure de départ</p>
 					<label htmlFor="startHour"></label>
-					<input
-						id='startHour'
-						name='startHour'
-						defaultValue={18}
-						type='number'
-						{...register('startHour', {required: 'startHour is needed'})}
-					/>
+					<select {...register("startHour")} defaultValue="female">
+						{
+							hours.map(hour => <option key={hour} value={hour}>{hour}</option>)
+						}
+					</select>
 					<label htmlFor="startMin"></label>
-					<input
-						id='startMin'
-						name='startMin'
-						defaultValue={0}
-						type='number'
-						{...register('startMin', {required: 'startMin is needed'})}
-					/>
+					<select {...register("startHour")} defaultValue="female">
+						{
+							minutes.map(minute => <option key={minute} value={minute}>{minute}</option>)
+						}
+					</select>
 				</div>
 
 				<div className="create-ride__field">
