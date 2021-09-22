@@ -4,13 +4,15 @@ import './App.css'
 import { BrowserRouter } from 'react-router-dom';
 //import CreateRide from '../CreateRide/CreateRide';
 import NavBarConnected from '../NavBarConnected/NavBarConnected';
+import Header from '../Header/Header';
+
 
 function App() {
   
   return (
     <BrowserRouter>
-      <div className="App">
-        <NavBarConnected />
+      <div>
+        <Header />
       </div>
     </BrowserRouter> 
 
@@ -18,4 +20,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
