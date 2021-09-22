@@ -11,9 +11,8 @@
     background-color: antiquewhite;
 
     @media screen and (min-width: 600px) {
-        top: 0;
-        bottom: auto;
-        padding-left: 5rem;
+        position: static;
+        padding: 1rem 0 1rem 5rem;
     }
 
     &__logo {
