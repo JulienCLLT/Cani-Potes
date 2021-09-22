@@ -226,6 +226,11 @@
   dependencies:
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
+    
+"@react-leaflet/core@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@react-leaflet/core/-/core-1.1.0.tgz#389b2b373f1da4caeb3c4cf6f33d84561c58d504"
+  integrity sha512-zFxMHgfjCi7khRVB7o7H8NoJl36NaezvfcaeEurVXx22lAGHFlTHiSuLOGA4tOiHj+Ep+Lo3uwUGJ3YM9BGkHg==
 
 "@rollup/pluginutils@^4.1.1":
   version "4.1.1"
@@ -1058,6 +1063,10 @@ kind-of@^6.0.3:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
 
+leaflet@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.7.1.tgz#10d684916edfe1bf41d688a3b97127c0322a2a19"
+  integrity sha512-/xwPEBidtg69Q3HlqPdU3DnrXQOvQU/CCHA1tcDQVzOwm91YMYaILjNp7L4Eaw5Z4sOYdbBz6koWyibppd8Zqw==
 klona@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/klona/-/klona-2.0.4.tgz#7bb1e3affb0cb8624547ef7e8f6708ea2e39dfc0"
@@ -1446,6 +1455,13 @@ react-is@^16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-leaflet@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-3.2.1.tgz#5f04588b96f62b9476cbeb4ea39c698b5db78e1c"
+  integrity sha512-3iS1fpOO+uaRpbuq68Euw9kgaoM9oIGBiDfeFtVb/C9PWBQvXdrv1n946Z8GrbQEhrT+hM9ND6NLLF9fGxTGRw==
+  dependencies:
+    "@react-leaflet/core" "^1.1.0"
 
 react-redux@^7.2.5:
   version "7.2.5"

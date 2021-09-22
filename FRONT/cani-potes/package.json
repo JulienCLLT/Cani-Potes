@@ -7,6 +7,9 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "leaflet": "^1.7.1",
+    "react-leaflet": "^3.2.1",
+    "sass": "^1.42.0"
     "node-sass": "^6.0.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
