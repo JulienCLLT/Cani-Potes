@@ -1,16 +1,11 @@
 .ride-informations {
     h1 {
         text-align: center;
-    }
+        display: flex;
+        align-items: center;
 
-    &__all {
-
-    }
-}
-
-.icon {
-        width: 20px;
         img {
-            width: 100%;
+            width: 20%
         }
+    }
 }
