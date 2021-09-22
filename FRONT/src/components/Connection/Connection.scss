@@ -1,0 +1,37 @@
+.connection {
+
+    &__info {
+
+    }
+
+    &__modal {
+        background-color: rgba(200, 200, 200, .6);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border: 1px solid black;
+        transform: translate(-50%, -50%);
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        &__close {
+            align-self: flex-end;
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &__field {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+    }
+}
