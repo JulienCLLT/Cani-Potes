@@ -4,12 +4,10 @@ import { useForm } from "react-hook-form";
 import '../CreateRide/createRide.scss';
 
 const CreateRide = () => {
-	//todo check how to avoid errors when input is empty but only on submit (with state ?)
 	const { register, handleSubmit, formState: { errors } } = useForm();
 
-	
-
 	const onSubmit = (data) => {
+		// dispatch action to post data to bdd through middleware and if ride is created, add it to state
 		console.log('submitted data : ', data);
 	};
 
@@ -27,10 +25,10 @@ const CreateRide = () => {
 					<input
 						id='title'
 						name='title'
-						defaultValue="Ma balade"
+						defaultValue="Ma super balade"
 						{...register('title', {required: 'Title is needed'})}
 					/>
-					{/* {errors.title && <span>Le titre est obligatoire</span>} */}
+					{errors.title && <span>Le titre est obligatoire</span>}
 				</div>
 
 				{/* how to choose coordinates ? with map ? by writing an adress ? */}
@@ -42,7 +40,7 @@ const CreateRide = () => {
 						defaultValue="Point de départ"
 						{...register('startingPoint', {required: 'startingPoint is needed'})}
 					/>
-					{/* {errors.startingPoint && <span>Le point de départ est obligatoire</span>} */}
+					{errors.startingPoint && <span>Le point de départ est obligatoire</span>}
 				</div>
 
 				<div className="create-ride__field">
@@ -53,7 +51,7 @@ const CreateRide = () => {
 						defaultValue="Point d'arrivée"
 						{...register('endingPoint', {required: 'endingPoint is needed'})}
 					/>
-					{/* {errors.endingPoint && <span>Le point d'arrivée est obligatoire</span>} */}
+					{errors.endingPoint && <span>Le point d'arrivée est obligatoire</span>}
 				</div>
 
 				<div className="create-ride__field">
@@ -62,30 +60,29 @@ const CreateRide = () => {
 						id='date'
 						name='date'
 						type='date'
-						defaultValue={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`}
+						defaultValue={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${(date.getUTCDate() + 1).toString().padStart(2, '0')}`}
 						min={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`}
 						{...register('date', {required: 'A day is needed'})}
 					/>
-					{/* {errors.endingPoint && <span>Le point d'arrivée est obligatoire</span>} */}
+					{errors.date && <span>Le choix d'une date est obligatoire</span>}
 				</div>
 
-				{/* ADD INPUT DATE TO SELECT DATE */}
-
-				{/* CHANGE INPUT FOR SELECT WITH OPTION */}
 				<div className="create-ride__field">
 					<p>Heure de départ</p>
 					<label htmlFor="startHour"></label>
-					<select {...register("startHour")} defaultValue="female">
+					<select {...register("startHour")} defaultValue={17}>
 						{
-							hours.map(hour => <option key={hour} value={hour}>{hour}</option>)
+							hours.map(hour => <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}h</option>)
 						}
 					</select>
 					<label htmlFor="startMin"></label>
-					<select {...register("startHour")} defaultValue="female">
+					<select {...register("startMin")} defaultValue={30}>
 						{
-							minutes.map(minute => <option key={minute} value={minute}>{minute}</option>)
+							minutes.map(minute => <option key={minute} value={minute}>{minute.toString().padStart(2, '0')}</option>)
 						}
 					</select>
+
+					{errors.startHour || errors.startMin && <span>L'heure de départ est obligatoire</span>}
 				</div>
 
 				<div className="create-ride__field">
@@ -103,20 +100,21 @@ const CreateRide = () => {
 					<input
 						id='maxDogs'
 						name='maxDogs'
+						min={2}
+						defaultValue={4}
 						type='number'
 						{...register('maxDogs', {required: 'maxDogs is needed'})}
 					/>
-					{/* {errors.maxDogs && <span>Le nombre max de chiens est obligatoire</span>} */}
+					{errors.maxDogs && <span>Le nombre max de chiens est obligatoire</span>}
 				</div>
 
-
-				{/* INPUT ==> TEXTAREA */}
 				<div className="create-ride__field">
 					<label htmlFor="description">Description de ma balade</label>
-					<input
+					<textarea
+						placeholder='Je souhaite me faire des Cani Potes :)'
 						{...register('description', {required: 'Description is needed'})}
 					/>
-					{/* {errors.description && <span>La description est obligatoire</span>} */}
+					{errors.description && <span>La description est obligatoire</span>}
 				</div>
 				
 				<input type="submit" />
