@@ -7,6 +7,8 @@ const router = Router();
 router.get('/', function (req, res) {
     res.send('GET request to the homepage')});
 
+// router.post('/login',userController.login),
+
 router.post('/subscribe',userController.addNewUser);
 
 

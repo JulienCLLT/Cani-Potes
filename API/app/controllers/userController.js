@@ -1,9 +1,12 @@
 const UserModel = require('../models/userModel');
+const bcrypt = require('../services/bcrypt');
 
 const userController = {
     addNewUser : async (request, response)=>{   
         try {
             const user = new UserModel(request.body);
+            user.password = await bcrypt.hash(user.password);
+            console.log(user);
             const newUser = await user.save();
                 if (newUser) {
                     //return un json avec les data de l'INSERT avec le nouvelle ID
