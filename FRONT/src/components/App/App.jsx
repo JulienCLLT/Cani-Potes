@@ -1,6 +1,6 @@
 import React from 'react';
 import MapBalade from '../MapBalade/index';
-import './App.css';
+import './App.scss';
 
 function App() {
   return (
