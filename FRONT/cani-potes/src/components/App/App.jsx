@@ -3,7 +3,6 @@ import MapBalade from '../MapBalade/index';
 import './App.css';
 
 function App() {
-
   return (
     <div className="App">
       <main>
