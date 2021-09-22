@@ -3,3 +3,4 @@
 
 init 2021-09-21T14:26:04Z Alekiel42 <alexandra.bercoff@gmail.com> # init tables
 constraint 2021-09-21T14:53:35Z Alekiel42 <alexandra.bercoff@gmail.com> # add constraints with regex
+views_ride 2021-09-22T09:43:30Z Alekiel42 <alexandra.bercoff@gmail.com> # add views to query ride
