@@ -8,7 +8,6 @@ import logout from '../../assets/navbar/log-out.svg';
 
 import './NavBarConnected.scss';
 
-// Desktop NavBar in the header when users are connected
 const NavBarConnected = () => (
   <nav className="navbar-connected">
     <NavLink
@@ -19,6 +18,7 @@ const NavBarConnected = () => (
     >
       <div className="navbar-connected__img">
         <img src={home} alt="home" />
+        <span>Home</span>
       </div>
     </NavLink>
 
@@ -30,6 +30,7 @@ const NavBarConnected = () => (
     >
       <div className="navbar-connected__img">
         <img src={board} alt="board" />
+        <span>Board</span>
       </div>
     </NavLink>
 
@@ -41,6 +42,7 @@ const NavBarConnected = () => (
     >
       <div className="navbar-connected__img">
         <img src={profile} alt="profile" />
+        <span>Profile</span>
       </div>
     </NavLink>
 
@@ -51,6 +53,7 @@ const NavBarConnected = () => (
     >
       <div className="navbar-connected__img">
         <img src={logout} alt="logout" />
+        <span>Logout</span>
       </div>
     </NavLink>
   </nav>

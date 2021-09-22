@@ -1,5 +1,3 @@
-// logo is position absolute if on mobile, but not when on desktop  
-
 .header {
     position: fixed;
     bottom: 0;
@@ -8,15 +6,25 @@
     padding: .3rem 0;
     z-index: 999;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     background-color: antiquewhite;
+
+    @media screen and (min-width: 600px) {
+        top: 0;
+        bottom: auto;
+        padding-left: 5rem;
+    }
 
     &__logo {
         position: fixed;
         top: 1rem;
         left: 4rem;
         z-index: 999;
+
+        @media screen and (min-width: 600px) {
+            position: static;
+        }
     }
 }
 
