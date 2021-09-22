@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import NavBarConnected from '../NavBarConnected/NavBarConnected';
-import NavBarDisconnected from '../NavBarDisconnected/NavBarDisconnected';
+import NavBarConnected from './NavBarConnected/NavBarConnected';
+import NavBarDisconnected from './NavBarDisconnected/NavBarDisconnected';
 
 import './Header.scss';
 
