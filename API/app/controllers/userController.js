@@ -2,6 +2,28 @@ const UserModel = require('../models/userModel');
 const bcrypt = require('../services/bcrypt');
 
 const userController = {
+    login : async (request, response)=>{
+        try {
+            const body = request.body;
+            
+            const result = await UserModel.login(body.email);
+            console.log(result);
+                if (result) {
+                    const validedPassword = await bcrypt.compare(body.password, result.password);
+                        if (validedPassword) {
+                            response.status(200).json({ message: "Valid password" });
+                        } else {
+                            response.status(400).json({ error: "Invalid Password" });
+                        }
+                } else {
+                    response.status(401).json({ error: "User does not exist" });
+                }
+        } catch (error) {
+            response.status(500)
+        }
+
+    },
+
     addNewUser : async (request, response)=>{   
         try {
             const user = new UserModel(request.body);

@@ -7,13 +7,11 @@ class UserModel {
         };
     }
 
-    static async findOne(id) {
+    static async login(email) {
         try {
-            const { rows } = await db.query('SELECT * FROM WHERE id=$1', [id]);
-            if (rows[0]) {
-                return new UserModel(rows[0]);
-            }
-            return null;
+            const { rows } = await database.query('SELECT * FROM member WHERE email=$1', [email]);
+            return rows[0];
+            
         } catch (error) {
             if (error.detail) {
                 throw new Error(error.detail)
