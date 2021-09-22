@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import home from '../../assets/navbar/location.png';
-import board from '../../assets/navbar/tablet.png';
-import profile from '../../assets/navbar/user.svg';
-import logout from '../../assets/navbar/log-out.svg';
+import home from '../../../assets/navbar/location.png';
+import board from '../../../assets/navbar/tablet.png';
+import profile from '../../../assets/navbar/user.svg';
+import logout from '../../../assets/navbar/log-out.svg';
 
 import './NavBarConnected.scss';
 
