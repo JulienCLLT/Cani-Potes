@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import NavBarConnected from './NavBarConnected/NavBarConnected';
 import NavBarDisconnected from './NavBarDisconnected/NavBarDisconnected';
@@ -7,8 +8,7 @@ import NavBarDisconnected from './NavBarDisconnected/NavBarDisconnected';
 import './Header.scss';
 
 const Header = () => {
-  // fake user to test, should be taken from state
-  const userIsLogged = false;
+  const { isLogged } = useSelector((state) => state.user);
 
   return (
     <header className="header">
@@ -20,8 +20,8 @@ const Header = () => {
         {/* expect logo img instead of text */}
         LOGO
       </NavLink>
-      {userIsLogged && <NavBarConnected />}
-      {!userIsLogged && <NavBarDisconnected />}
+      {isLogged && <NavBarConnected />}
+      {!isLogged && <NavBarDisconnected />}
     </header>
   );
 };
