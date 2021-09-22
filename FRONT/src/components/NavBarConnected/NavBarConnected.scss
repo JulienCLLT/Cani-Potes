@@ -1,0 +1,13 @@
+.navbar-connected {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    
+    &__img {
+        width: 25px;
+
+        img {
+            width: 100%;
+        }
+    }
+}
