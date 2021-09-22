@@ -8,56 +8,46 @@ import './NavBarConnected.scss';
 const NavBarConnected = () => {
    
   
-    return (
-      <nav className="navbar-connected">
-        <div className="logo-container">
-          <NavLink
-          className="logo-link"
-          to="/home"
-          exact
-        >
-        Logo
-          </NavLink>
-        </div>
+  return (
+    <nav className="navbar-connected">
+      <NavLink
+        className="home-link"
+        activeClassName="home-link--active"
+        to="/home"
+        exact
+      >
+         Map Balade
+      </NavLink>
 
-        <NavLink
-          className="home-link"
-          activeClassName="home-link--active"
-          to="/home"
-          exact
-        >
-        Accueil
-        </NavLink>
-
-        <NavLink
-          className="board-link"
-          activeClassName="board-link--active"
-          to="/board"
-          exact
-        >
-        Tableau de bord
-        </NavLink>
+      <NavLink
+        className="board-link"
+        activeClassName="board-link--active"
+        to="/board"
+        exact
+      >
+         Tableau de bord
+      </NavLink>
         
-        <NavLink
-            className="profile-link"
-            activeClassName="profile-link--active"
-            to="/profile/:id"
-            exact
-          >
+      <NavLink
+        className="profile-link"
+        activeClassName="profile-link--active"
+        to="/profile/:id"
+        exact
+      >
           Profil
-        </NavLink>
+      </NavLink>
 
-        <NavLink
-            className="signed-out-link"
-            to="/"
-            exact
-          >
+      <NavLink
+        className="signed-out-link"
+        to="/"
+        exact
+      >
           Déconnexion
-        </NavLink>
+      </NavLink>
         
-      </nav>
-    );
-  };
+    </nav>
+  );
+};
 
   
   export default NavBarConnected;
