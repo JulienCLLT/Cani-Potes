@@ -1,0 +1,45 @@
+.profile {
+    &__picture {
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: center;
+        // align-items: center;
+
+        &__user{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: 30%;
+                border-radius: 50%;
+            }
+
+            &__name{
+                justify-self: end;
+            }
+        }
+
+        &__dog {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                // text-align: center;
+            }
+
+            &__details {
+                display: flex;
+                // flex-direction: column;
+            }
+        }
+
+        &__names {
+            text-align: center;
+        }
+    }
+}
