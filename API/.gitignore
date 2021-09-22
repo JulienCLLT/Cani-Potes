@@ -1,0 +1,6 @@
+.env
+/node_modules
+sqitch.conf
+test.sql
+test2.sql
+issue.md
