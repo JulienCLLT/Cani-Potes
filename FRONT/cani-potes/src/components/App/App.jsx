@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
-import Connection from './Connection/Connection'
+import React from 'react';
+import MapBalade from '../MapBalade/index';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <Connection />
-    
+    <div className="App">
+      <main>
+        <MapBalade />
+      </main>
+    </div>
   )
 }
 
-export default App
+export default App;
