@@ -6,16 +6,13 @@ const userController = {
         try {
             const user = new UserModel(request.body);
             user.password = await bcrypt.hash(user.password);
-            console.log(user);
             const newUser = await user.save();
                 if (newUser) {
                     //return un json avec les data de l'INSERT avec le nouvelle ID
                     response.status(201).json(newUser);
-                    
-                } else {
+                  } else {
                     response.status(204).json('Update done');
-                    
-                }
+                 }
         } catch (error) {
             response.status(500)
         }
