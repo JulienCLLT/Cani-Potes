@@ -4,7 +4,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+// action creator
+import { clickContinueUser } from '../../../actions/signup';
 
 import './user-form.scss';
 
@@ -14,14 +17,17 @@ const UserForm = () => {
     console.log(data);
   };
 
-  const isFormComplete = useSelector((state) => state.isUserFormComplete);
+  const isUserFormHide = useSelector((state) => state.signup.isUserFormHide);
+  const dispatch = useDispatch();
+  const clickToContinue = () => {
+    dispatch(clickContinueUser());
+  };
 
   return (
-    <div className="signup user-form">
-      {/* <div className={isFormComplete ? 'part-bullet part-bullet_complete' : 'part-bullet'}>{isFormComplete ? '✓' : ''}</div> */}
+    <div className={isUserFormHide ? 'signup-hidden' : 'signup user-form'}>
       <h2 className="signup__subtitle">Vous</h2>
 
-      <div className="user-form__form"> {/* isFormComplete ? 'signup-hide' : '' */}
+      <div className="user-form__form">
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="user-form__form__input-infos">
@@ -40,30 +46,30 @@ const UserForm = () => {
 
               {/* Password confirmation */}
               <div className="user-form__form__input-infos__password--confirmation">
-                <label htmlFor="password-confirmation">Confirmer votre mot de passe</label>
-                <input {...register('password-confirmation', { required: true })} type="password" id="password-confirmation" value="password-confirmation" placeholder="Confirmer mot de passe" />
+                <label htmlFor="password_confirmation">Confirmer votre mot de passe</label>
+                <input {...register('password_confirmation', { required: true })} type="password" id="password_confirmation" value="password_confirmation" placeholder="Confirmer mot de passe" />
               </div>
 
               {/* Firstname */}
-              <div className="user-form__form__input-infos__firstname">
-                <label htmlFor="firstname">Votre Prénom</label>
-                <input {...register('firstname', { required: true })} type="text" id="firstname" value="firstname" placeholder="Prénom" />
+              <div className="user-form__form__input-infos__first_name">
+                <label htmlFor="first_name">Votre Prénom</label>
+                <input {...register('first_name', { required: true })} type="text" id="first_name" value="first_name" placeholder="Prénom" />
               </div>
 
               {/* Name */}
               <div className="user-form__form__input-infos__name">
-                <label htmlFor="name">Votre Nom</label>
-                <input {...register('name', { required: true })} type="text" id="name" value="name" placeholder="Nom" />
+                <label htmlFor="last_name">Votre Nom</label>
+                <input {...register('last_name', { required: true })} type="text" id="last_name" value="last_name" placeholder="Nom" />
               </div>
 
               {/* Picture profile */}
               <div className="user-form__form__input-infos__picture">
-                <label htmlFor="user-picture">Ajouter une photo de profil</label>
+                <label htmlFor="photo">Ajouter une photo de profil</label>
                 <input
-                  {...register(('user-picture'))}
+                  {...register(('photo'))}
                   type="file"
-                  id="user-picture"
-                  name="user-picture"
+                  id="photo"
+                  name="photo"
                   accept="image/png, image/jpeg"
                 />
               </div>
@@ -82,12 +88,12 @@ const UserForm = () => {
             </div>
           </div>
           <div className="signup__back-submit">
-            <Link to="/" exact="true" className="signup__back-submit__back">Retour</Link>
+            <Link to="/" className="signup__back-submit__back">Retour</Link>
             <button
+              onClick={clickToContinue}
               type="submit"
               className="signup__back-submit__submit"
             >Continuer
-              {/* click = change état à true, isClicked ? et true = mets hidden à la div et passe dog en false */}
             </button>
           </div>
         </form>

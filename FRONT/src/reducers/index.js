@@ -3,12 +3,12 @@ import { combineReducers } from 'redux';
 
 import ridesReducer from './ridesReducer';
 import userReducer from './userReducer';
-import timelineReducer from './timelineReducer';
+import signupReducer from './signupReducer';
 
 const rootReducer = combineReducers({
   rides: ridesReducer,
   user: userReducer,
-  timeline: timelineReducer,
+  signup: signupReducer,
 });
 
 export default rootReducer;
