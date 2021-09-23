@@ -1,15 +1,16 @@
 import React from 'react';
-import MapBalade from '../MapBalade/index';
+import SignUp from '../SignUp/index';
+// import MapBalade from '../MapBalade/index';
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
       <main>
-        <MapBalade />
+        <SignUp />
       </main>
     </div>
-  )
+  );
 }
 
 export default App;
