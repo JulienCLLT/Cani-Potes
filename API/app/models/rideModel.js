@@ -18,6 +18,31 @@ class Ride {
         }
     }
 
+    static async findById(id) {
+        try {
+            // todo verif id ? 
+            const query = `SELECT * FROM ride WHERE ride.id = $1`;
+            const {rows} = await client.query(query, [id]);
+            if (rows[0]) {
+                return new Ride(rows[0]);
+            }
+            return null;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
+    async delete() {
+        try {
+
+
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
 }
 
 module.exports = Ride;

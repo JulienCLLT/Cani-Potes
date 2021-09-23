@@ -20,5 +20,9 @@ router.post('/subscribe',userController.addNewUser);
 
 router.get('/rides', rideController.findAll);
 
+//todo regex id
+//todo rajouter mw de verif identité
+router.delete('/ride/:id', rideController.delete)
+
 
 module.exports = router;

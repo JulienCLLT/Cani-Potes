@@ -1,0 +1,10 @@
+@protocol=http://
+@host=localhost
+@port=:2600
+@prefix=
+@baseUrl={{protocol}}{{host}}{{port}}{{prefix}}
+
+### Suppresion d'une balade
+DELETE {{baseUrl}}/ride/2
+
+
