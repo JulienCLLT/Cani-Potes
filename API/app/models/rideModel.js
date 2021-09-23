@@ -1,9 +1,17 @@
--- Deploy canipotes:views_ride to pg
+const client = require('../../database');
 
-BEGIN;
+class Ride {
+    constructor(data={}) {
+        for (const prop in data) {
+            this[prop] = data[prop];
+        }
+    }
 
-CREATE VIEW rides_with_all_informations AS
-SELECT 
+    static async findAll() {
+        try {
+            // const query = `SELECT * FROM rides_with_all_informations`;
+            const query = `
+            SELECT 
     ride.id AS ride_id, title, ride.description, start_coordinate, end_coordinate, starting_time, duration, max_number_dogs, 
     tag.label AS tag_label, 
     host.id AS host_id, host.first_name AS host_first_name,   
@@ -39,4 +47,15 @@ LEFT JOIN member AS participant ON participant.id = member_participate_ride.memb
 LEFT JOIN dog ON dog.dog_owner_id = member_participate_ride.member_id
 GROUP BY ride.id, tag.label, host.id, host.first_name; 
 
-COMMIT;
+ `
+            const {rows} = await client.query(query);
+            return rows.map(row => new Ride(row));
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
+}
+
+module.exports = Ride;
