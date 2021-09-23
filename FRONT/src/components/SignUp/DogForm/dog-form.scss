@@ -13,16 +13,6 @@
     padding-bottom: 0.5*vars.$gutter;
   }
 
-  .title-valid {
-    padding-bottom: 3*vars.$gutter;
-  }
-
-  &__p {
-    line-height: 1.4;
-    text-align: justify;
-    font-size: 16px;
-  }
-
   &__commun {
     font-size: 0.9* vars.$gutter;
     border: 0.1 *vars.$gutter solid vars.$color_border-input;
@@ -40,8 +30,6 @@
       margin-right: vars.$gutter;
       margin-top: vars.$gutter;
       margin-bottom: vars.$gutter;
-      // width: 5* vars.$gutter;
-      // height: 1.8* vars.$gutter;
       text-align: center;
       vertical-align: middle;
       border-radius: 5px;
@@ -97,6 +85,12 @@
       }
     }
 
+    &__add-dog {
+      & img {
+        width: 9%;
+      }
+    }
+
     &__submit {
       border: none;
       border-radius: 30px;
@@ -108,22 +102,6 @@
       text-transform: uppercase;
       color: vars.$color__white;
       font-weight: bold;
-    }
-  }
-
-  .part-bullet {
-    width: 16px;
-    height: 16px;
-    background-color: vars.$color_main;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: -25px;
-    text-align: center;
-    color: white;
-
-    &_complete {
-      background-color: vars.$color_valid;
     }
   }
 }

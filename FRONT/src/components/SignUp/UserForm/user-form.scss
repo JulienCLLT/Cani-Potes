@@ -1,22 +1,44 @@
 @use '../../../styles/vars';
 
-.signup {
-  position: relative;
+.user-form {
 
-  .signup-hide {
-    display: none;
-  }
+  &__form {
+    
 
-  & h2 {
-    font-size: 1.3*vars.$gutter;
-    padding-bottom: 0.5*vars.$gutter;
-  }
+    &__input-infos {
 
-  .title-valid {
-    padding-bottom: 3*vars.$gutter;
-  }
+      &__identity {
+        padding: 0 3*vars.$gutter;
+        padding-bottom: vars.$gutter;
+      }
 
-  & p {
-    line-height: 1.4;
+      &__email, &__password, &__password--confirmation, &__name, &__firstname, &__picture, &__zipcode__input {
+        display: flex;
+        flex-direction: column;
+        margin-top: vars.$gutter;
+
+        & label {
+          margin-bottom: 0.4*vars.$gutter;
+        }
+      }
+
+      &__zipcode{
+
+        & p {
+          font-size: vars.$gutter;
+          text-align: justify;
+          margin-top: vars.$gutter;
+        }
+        &__input {
+          padding: 0 3*vars.$gutter;
+        }
+      }
+    }
   }
+}
+
+input {
+  border: 0.1 *vars.$gutter solid vars.$color_border-input;
+  border-radius: 1px;
+  height: 1.3*vars.$gutter;
 }
