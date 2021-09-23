@@ -20,7 +20,6 @@ class Ride {
 
     static async findById(id) {
         try {
-            // todo verif id ? 
             const query = `SELECT * FROM ride WHERE ride.id = $1`;
             const {rows} = await client.query(query, [id]);
             if (rows[0]) {
@@ -35,7 +34,6 @@ class Ride {
 
     static async deleteMessagesByRideId(rideId) {
         try {
-            //todo verif id? 
             const query= `DELETE FROM member_write_ride WHERE ride_id = $1`;
             await client.query(query, [rideId]);
             // return qq chose ? 
@@ -48,7 +46,6 @@ class Ride {
 
     static async deleteAllParticipantsFromRide(rideId){
         try {
-            //todo verif id? 
             const query= `DELETE FROM member_participate_ride WHERE ride_id = $1`;
             await client.query(query, [rideId]);
             // return qq chose ? 
@@ -61,7 +58,6 @@ class Ride {
 
     static async deleteRide(rideId){
         try {
-            //todo verif id? 
             const query= `DELETE FROM ride WHERE id = $1`;
             await client.query(query, [rideId]);
             // return qq chose ? 
@@ -72,13 +68,22 @@ class Ride {
         }
     }
 
-    // todo faire controller
     static async deleteMemberParticipateRide(memberId, rideId){
         try {
-            //todo verif id? 
             const query= `DELETE FROM member_participate_ride WHERE ride_id = $1 AND member_id = $2`;
             await client.query(query, [rideId, memberId]);
             // return qq chose ? 
+            return null;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
+    static async postMemberParticipateRide(memberId, rideId) {
+        try {
+            const query= `INSERT INTO member_participate_ride(member_id, ride_id) VALUES ($1,$2)`;
+            await client.query(query, [memberId, rideId]);
             return null;
         } catch (error) {
             console.error(error);
