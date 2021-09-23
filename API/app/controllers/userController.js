@@ -16,10 +16,11 @@ const userController = {
                     const validedPassword = await bcrypt.compare(body.password, result.password);
 
                         if (validedPassword) {
-
+                            
                             //authentification ok on genere un token
-                            const token = await jwt.signToken({...body.id});
-                            response.status(200).json({ message: "Valid password", token });
+                            const token = jwt.signToken({id:result.id});
+                            response.set({'authozization': token})
+                            response.status(200).json({ message: "Valid password"});
                         } else {
                             response.status(400).json({ error: "Invalid Password" });
                         }
@@ -43,8 +44,9 @@ const userController = {
                 if (newUser) {
                     
                     //on envoie le nouvel ID en payload du token
-                    const token = await jwt.signToken({...newUser});
-                    response.status(201).json({token});
+                    const token = jwt.signToken({...newUser});
+                    response.set({'authozization': token});
+                    response.status(201).json('Welcome new user');
                   } else {
                     response.status(204).json('Update done');
                  }

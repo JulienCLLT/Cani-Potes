@@ -9,7 +9,7 @@ class UserModel {
 
     static async login(email) {
         try {
-            const { rows } = await database.query('SELECT email, password FROM member WHERE email=$1', [email]);
+            const { rows } = await database.query('SELECT email, password, id FROM member WHERE email=$1', [email]);
             //return new UserModel(rows[0]) ; quelle version est plus propre ?
             return rows[0];
             
