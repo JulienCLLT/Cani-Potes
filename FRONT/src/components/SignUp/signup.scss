@@ -1,5 +1,9 @@
 @use '../../styles/vars';
 
+.signup-hidden {
+    display: none;
+}
+
 .signup-main {
     padding: vars.$gutter;
 
@@ -28,7 +32,7 @@
 
         &__submit {
             @extend %btn;
-            // margin-right: vars.$gutter;
+            margin-left: 0.5*vars.$gutter;
         }
     
         &__back {
@@ -36,10 +40,7 @@
             background: none;
             border: 1px solid vars.$color_main;
             color: vars.$color_main;
+            margin-right: 0.5*vars.$gutter;
         }
     }
-}
-
-.signup-hide {
-    display: none;
 }

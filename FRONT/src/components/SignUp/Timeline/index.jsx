@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 import './timeline.scss';
 
 const Timeline = () => {
-  const isDogFormComplete = useSelector((state) => state.timeline.isDogFormComplete);
-  const isUserFormComplete = useSelector((state) => state.timeline.isUserFormComplete);
+  const isDogFormComplete = useSelector((state) => state.signup.isDogFormComplete);
+  const isUserFormComplete = useSelector((state) => state.signup.isUserFormComplete);
 
   return (
     <div className="timeline">

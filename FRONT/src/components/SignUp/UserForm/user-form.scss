@@ -3,16 +3,21 @@
 .user-form {
 
   &__form {
-    
+    & form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
 
     &__input-infos {
+      height: 72vh;
 
       &__identity {
         padding: 0 3*vars.$gutter;
         padding-bottom: vars.$gutter;
       }
 
-      &__email, &__password, &__password--confirmation, &__name, &__firstname, &__picture, &__zipcode__input {
+      &__email, &__password, &__password--confirmation, &__name, &__first_name, &__picture, &__zipcode__input {
         display: flex;
         flex-direction: column;
         margin-top: vars.$gutter;
