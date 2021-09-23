@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 // before beeing able to ask to db real url, simulating
 import user from '../../assets/img/profile-simulation/user.jpg';
-import dog from '../../assets/img/profile-simulation/dog-one.jpg';
+import dogPic from '../../assets/img/profile-simulation/dog-one.jpg';
 
 import './RideDetails.scss';
 
 const RideDetails = () => {
-  const { id } = useParams();
-  // get id in pathname and ask db for ride details
+  const { currentRide } = useSelector((state) => state.rides);
+
+  const {
+    title, max_number_dogs, participants, starting_time, duration, description, host_first_name, host_id, messages,
+  } = useSelector((state) => state.rides.currentRide);
+
+  let nbOfDogs = 0;
+
+  participants.map((participant) => nbOfDogs += participant.dogs.length);
 
   const { register, handleSubmit } = useForm();
 
@@ -28,58 +36,62 @@ const RideDetails = () => {
           <div className="ride-details__leaflet">
             LEAFLET PROJECTION
           </div>
-          <h2>Titre de la balade</h2>
-          <span>8 / 10 chiens</span>
+          <h2>{title}</h2>
+          <span>
+            {nbOfDogs} / {max_number_dogs} chiens
+          </span>
         </div>
         <div className="ride-details__infos__description">
-          <p>Départ le jeudi 17 janvier 2038 à 18h45</p>
-          <p>Durée : 37min</p>
-          <p>Description de la balade qui dit que c'est franchement une chouette balade</p>
+          <p>
+            Départ le
+            {new Date(starting_time).toLocaleDateString(undefined, {
+              weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',
+            })}
+          </p>
+          <p>Durée : {duration.minutes}min</p>
+          <p>{description}</p>
         </div>
       </section>
 
       <section className="ride-details__users">
         <div className="ride-details__users__infos">
-          <span>3 Cani Potes</span>
+          <span>{participants.length} Cani Potes</span>
           <button type="button">S'inscrire</button>
         </div>
 
         <div className="ride-details__container">
           <div className="ride-details__users__registered">
-            {/* first registered user */}
-            <div className="ride-details__current-user">
-              <NavLink
-                className="ride-details__current-user__avatar"
-                to="/profile/:id"
-                exact
-              >
-                <img src={user} alt="user" />
-                <span>Susie Q</span>
-              </NavLink>
-              <div className="ride-details__current-user__dogs">
-                <img src={dog} alt="dog" />
-                <span>Lassie</span>
-              </div>
-            </div>
-            {/* second registered user */}
-            <div className="ride-details__current-user">
-              <NavLink
-                className="ride-details__current-user__avatar"
-                to="/profile/:id"
-                exact
-              >
-                <img src={user} alt="user" />
-                <span>Johann H</span>
-              </NavLink>
-              <div className="ride-details__current-user__dogs">
-                <img src={dog} alt="dog" />
-                <span>Chippie</span>
-              </div>
-              <div className="ride-details__current-user__dogs">
-                <img src={dog} alt="dog" />
-                <span>Foufou</span>
-              </div>
-            </div>
+            {
+              participants.map((participant) => (
+                <div className="ride-details__current-user" key={participant.participant_id}>
+                  <NavLink
+                    className="ride-details__current-user__avatar"
+                    to={`/profile/${participant.participant_id}`}
+                    exact
+                  >
+                    <img src={user} alt="user" /> {/* wait for real photo url */}
+                    <span>{participant.participant_first_name}</span>
+                  </NavLink>
+                  {participant.dogs.map((dog, index) => {
+                    if (index < 3) {
+                      return (
+                        <div className="ride-details__current-user__dogs" key={`${dog.dog_id}`}>
+                          <img src={dogPic} alt="dog" /> {/* wait for real photo url */}
+                          <span>{dog.dog_surname}</span>
+                        </div>
+                      );
+                    }
+                    if (index === (participant.dogs.length - 1)) {
+                      return (
+                        <div className="ride-details__current-user__dogs" key={`${dog.dog_id}`}>
+                          <span>{participant.dogs.length - 3} de plus</span>
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+              ))
+            }
           </div>
 
           <div className="ride-details__users__creator">
@@ -89,8 +101,8 @@ const RideDetails = () => {
               exact
             >
               <p>Créateur</p>
-              <img src={user} alt="user" />
-              <span>Sandy K</span>
+              <img src={user} alt="user" /> {/* wait for real photo url */}
+              <span>{host_first_name}</span>
             </NavLink>
           </div>
         </div>
@@ -104,23 +116,30 @@ const RideDetails = () => {
       >
         <span>^</span>
       </button>
+
       {isChatOpen && (
         <section className="ride-details__chat">
 
           <div className="ride-details__messages-container">
-              <div className="ride-details__messages-container__message">
-                <p>Johann H <span>Il y a 2h</span></p>
-                <span>Alors vous êtes prêtes ?</span>
-              </div>
-              <div className="ride-details__messages-container__message my-message">
-                <p>JSandy K <span>Il y a 1h</span></p>
-                <span>Super ouais, j'ai hâte ! Et toi Susie ?</span>
-              </div>
-              <div className="ride-details__messages-container__message">
-                <p>Susie Q<span>Il y a 38min</span></p>
-                <span>Oh oui alors !</span>
-              </div>
-            </div>
+            {
+              messages.map((msg) => (
+                <div
+                  key={`${msg.sent}${msg.message}`}
+                  className={msg.sender_id === host_id ? 'ride-details__messages-container__message my-message' : 'ride-details__messages-container__message'}
+                >
+                  <p>{msg.sender_first_name}
+                    <span>
+                      {new Date(starting_time).toLocaleDateString(undefined, {
+                        hour: 'numeric', minute: 'numeric',
+                      })}
+                    </span>
+                  </p>
+                  <span>{msg.message}</span>
+                </div>
+
+              ))
+            }
+          </div>
           <div className="ride-details__new-message">
             <form onSubmit={handleSubmit(onSubmit)} className="ride-details__form">
               <input
