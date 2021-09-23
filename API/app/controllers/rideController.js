@@ -12,9 +12,9 @@ const rideController = {
 
     delete: async (request, response) => {
         try {
-            const rideId = Number(request.params.id);
+            const rideId = Number(request.params.rideId);
             // todo  fausse data en attendant test avec jwt
-            const userId = 3;
+            const userId = 1;
 
             if (isNaN(rideId)) {
                 throw Error('La valeur de l\'id Ride doit être un nombre');
@@ -24,25 +24,43 @@ const rideController = {
             if(!rideToDelete) {
                 throw Error('La balade que vous souhaitez supprimer n\'existe pas');
             }
-            console.log("la balade existe");
 
             if(userId !== rideToDelete.host_id ){
                 throw Error('Vous nêtes pas l\'organisateur de la balade');
             }
-            console.log("ok orga = user");
 
-            // deleye memeber_write_ride avec id ride
+            // delete messages and member from this ride, then ride
             await Ride.deleteMessagesByRideId(rideId);
-            console.log("suppr ok");
-            
-                // memeber_ participate_ride avec id_ride
-                // ride                    
-            // res bon status json ?
-        // si non peut pas suppr pas existant
+            await Ride.deleteAllParticipantsFromRide(rideId);
+            await Ride.deleteRide(rideId);
+
+            //todo message json ne s'affiche pas
+            response.status(204).json("La balade a été supprimée");
         } catch (error) {
             response.status(500).json(error.message);
         }
+    },
+
+    leaveARide: async (request, response) => {
+        try {
+            const rideId = Number(request.params.rideId);
+            // todo  fausse data en attendant test avec jwt
+            const userId = 4;
+    
+            if (isNaN(rideId)) {
+                throw Error('La valeur de l\'id Ride doit être un nombre');
+            }
+            // todo test avec id ride ou user non existant
+            await Ride.deleteMemberParticipateRide(userId, rideId);
+    
+            response.status(204).json("Le membre a été retiré de la balade");
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
+
     }
+
+
 };
 
 module.exports = rideController;

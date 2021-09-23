@@ -5,6 +5,10 @@
 @baseUrl={{protocol}}{{host}}{{port}}{{prefix}}
 
 ### Suppresion d'une balade
-DELETE {{baseUrl}}/ride/2
+DELETE {{baseUrl}}/ride/6
+
+### Retirer un membre d'une balade
+DELETE {{baseUrl}}/ride/6/participation
+
 
 
