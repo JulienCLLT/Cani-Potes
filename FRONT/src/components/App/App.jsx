@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import SignUp from '../SignUp/index';
 
 import Header from '../Header/Header';
 import MapBalade from '../MapBalade';
@@ -14,12 +16,20 @@ function App() {
 
   return (
     <div className="App">
+
       <Switch>
         <Route exact path="/">
           {isLogged && <Redirect to="/home" />}
           <Header />
           <main>
             <Connection />
+          </main>
+        </Route>
+        <Route exact path="/signup">
+          {isLogged && <Redirect to="/home" />}
+          <Header />
+          <main>
+            <SignUp />
           </main>
         </Route>
         <Route exact path="/home">
