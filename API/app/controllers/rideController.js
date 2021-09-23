@@ -14,7 +14,7 @@ const rideController = {
         try {
             const rideId = Number(request.params.id);
             // todo  fausse data en attendant test avec jwt
-            const userId = 1;
+            const userId = 3;
 
             if (isNaN(rideId)) {
                 throw Error('La valeur de l\'id Ride doit être un nombre');
@@ -31,15 +31,14 @@ const rideController = {
             }
             console.log("ok orga = user");
 
-                //si oui 
-                    // method findOne : est-ce que l'instance existe ? 
-                    // si oui : 
-                        // appeler method model pr delete :
-                            // memeber_write_ride avec id ride
-                            // memeber_ participate_ride avec id_ride
-                            // ride                    
-                        // res bon status json ?
-                    // si non peut pas suppr pas existant
+            // deleye memeber_write_ride avec id ride
+            await Ride.deleteMessagesByRideId(rideId);
+            console.log("suppr ok");
+            
+                // memeber_ participate_ride avec id_ride
+                // ride                    
+            // res bon status json ?
+        // si non peut pas suppr pas existant
         } catch (error) {
             response.status(500).json(error.message);
         }
