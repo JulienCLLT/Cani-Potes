@@ -6,6 +6,15 @@
     }
 };
 
+:root {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
 .ride-details {
     padding: vars.$gutter;
 
@@ -121,5 +130,109 @@
                 width: 65px;
             }
         }
+    }
+
+    &__toggle {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        right: .5 * vars.$gutter;
+        transform: translate(0, -50%) rotate(-90deg);
+        width: 30px;
+        height: 30px;
+        background: vars.$color_main;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all .2s ease-in;
+        cursor: pointer;
+    }
+
+    .rotate {
+        transform: translate(0, -50%) rotate(90deg);
+        transition: all .2s ease-in;
+    }
+
+    &__chat {
+        position: fixed;
+        top: 200px;
+        bottom: 50px;
+        right: vars.$gutter;
+        width: calc(100% - 2 * vars.$gutter);
+        border-top: 1px solid vars.$color_main;
+        background: white;
+        animation: slide-in .3s linear;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        @include lg-screen {
+            max-width: 600px;
+            border: 1px solid vars.$color_main;
+            right: 3 * vars.$gutter;
+        }
+    }
+
+    &__messages-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: vars.$gutter;
+        padding: vars.$gutter 0;
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .my-message {
+            align-self: flex-end;
+        }
+
+        &__message {
+            max-width: 70%;
+            padding: .5 * vars.$gutter;
+            background: vars.$color-border-bottom-header;
+
+            p {
+                color: vars.$color_main;
+                span {
+                    color: vars.$color_main;
+                }
+            }
+            span {
+                color: white;
+            }
+        }
+    }
+
+    &__form {
+        margin-top: vars.$gutter;
+        display: flex;
+        justify-content: space-between;
+        gap: vars.$gutter;
+
+        input {
+            padding: 0 .5rem;
+            flex: 1;
+            border: 1px solid vars.$color_main;
+            border-radius: 5px;
+        }
+
+        button {
+            @extend %btn
+        }
+    }
+}
+
+@keyframes slide-in {
+    from {
+        margin-right: -100%;
+    }
+    to {
+        margin-right: 0;
     }
 }
