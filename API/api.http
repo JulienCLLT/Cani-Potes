@@ -4,11 +4,16 @@
 @prefix=
 @baseUrl={{protocol}}{{host}}{{port}}{{prefix}}
 
-### Suppresion d'une balade
+### Reception de toutes les balades
+GET {{baseUrl}}/rides
+
+### Suppression d'une balade
 DELETE {{baseUrl}}/ride/6
 
 ### Retirer un membre d'une balade
 DELETE {{baseUrl}}/ride/6/participation
 
 
+### Retirer un membre d'une balade dont on est l'orga
+DELETE {{baseUrl}}/ride/1/participation/user/3
 
