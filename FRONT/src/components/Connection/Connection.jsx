@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../../actions/users';
 
 import './Connection.scss';
 
 const Connection = () => {
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -11,6 +14,7 @@ const Connection = () => {
     // dispatch action to post data to db through middleware and try to conenct
     // if connected, set user data in state
     console.log('submitted data : ', data);
+    dispatch(loginUser());
   };
 
   return (
