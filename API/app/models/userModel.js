@@ -9,7 +9,8 @@ class UserModel {
 
     static async login(email) {
         try {
-            const { rows } = await database.query('SELECT * FROM member WHERE email=$1', [email]);
+            const { rows } = await database.query('SELECT email, password FROM member WHERE email=$1', [email]);
+            //return new UserModel(rows[0]) ; quelle version est plus propre ?
             return rows[0];
             
         } catch (error) {
@@ -37,11 +38,16 @@ class UserModel {
                 this.password,
                 this.birthday,
             ]);
-            this.id = rows[0].id;
-            return this;
+            //return le nouvelle id de l'insert
+            
+            return rows[0];
             }
         } catch (error) {
-            console.log(error);
+            if (error.detail) {
+            throw new Error(error.detail)
+        } else {
+            throw error;
+        }
         }
     }
 
