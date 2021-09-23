@@ -1,6 +1,6 @@
 @use '../../../styles/vars';
 
-.you {
+.signup {
   position: relative;
 
   .signup-hide {
@@ -18,21 +18,5 @@
 
   & p {
     line-height: 1.4;
-  }
-
-  .part-bullet {
-    width: 16px;
-    height: 16px;
-    background-color: vars.$color_main;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: -25px;
-    text-align: center;
-    color: white;
-
-    &_complete {
-      background-color: vars.$color_valid;
-    }
   }
 }

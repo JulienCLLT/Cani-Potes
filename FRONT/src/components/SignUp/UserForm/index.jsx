@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 // required les champs
 
 import React from 'react';
@@ -13,7 +14,7 @@ const UserForm = () => {
     console.log(data);
   };
 
-  const isFormComplete = useSelector((state) => state.isYouFormComplete);
+  const isFormComplete = useSelector((state) => state.isUserFormComplete);
 
   return (
     <div className="signup user-form">
