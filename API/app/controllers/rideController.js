@@ -71,12 +71,20 @@ const rideController = {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
-            // verif existance balade
-            // verif existance userid
-            // veri si user connecté est le mec du token
-            // verif si l'userid est bien i,scrit a la balade
-            // mdethod modele pour le suppr
-            // res 204
+            const ride = await Ride.findById(rideId);
+            if(!ride) {
+                throw Error('La balade n\'existe pas');
+            }
+            if(hostId !== ride.host_id ){
+                throw Error('Vous nêtes pas l\'organisateur de la balade: vous ne pouvez pas supprimer des participants');
+            }
+            if(hostId === userId){
+                throw Error('Vous ne pouvez pas vous retirer d\'une balade que vous organisez');
+            }
+
+            await Ride.deleteAllParticipantsFromRide(userId, rideId);
+
+            response.status(204).json("Le membre a été retiré de la balade");
 
         } catch (error) {
             response.status(500).json(error.message);

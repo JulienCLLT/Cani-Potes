@@ -11,4 +11,6 @@ DELETE {{baseUrl}}/ride/6
 DELETE {{baseUrl}}/ride/6/participation
 
 
+### Retirer un membre d'une balade dont on est l'orga
+DELETE {{baseUrl}}/ride/1/participation/user/1
 
