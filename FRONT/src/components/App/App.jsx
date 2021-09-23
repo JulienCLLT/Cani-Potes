@@ -1,13 +1,15 @@
+/* eslint-disable linebreak-style */
+// eslint-disable-next-line no-unused-vars
 import React from 'react';
 
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import SignUp from '../SignUp/index';
 
 import Header from '../Header/Header';
 import MapBalade from '../MapBalade';
 import Connection from '../Connection/Connection';
 import CreateRide from '../CreateRide/CreateRide';
+import SignUp from '../SignUp/index';
 
 import './App.scss';
 

@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable max-len */
 import React from 'react';
