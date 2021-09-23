@@ -6,6 +6,9 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
+// import svg
+import add from '../../../assets/img/plus.svg';
+
 import './dog-form.scss';
 
 const DogForm = () => {
@@ -15,12 +18,13 @@ const DogForm = () => {
   };
 
   const isFormComplete = useSelector((state) => state.isDogFormComplete);
+  const date = new Date();
 
   return (
     <div className="signup dog">
 
       <h2 className={isFormComplete ? 'title-valid' : ''}>Mon chien</h2>
-      {/* div pour display hidden */}
+      {/* div for display hidden */}
       <div className={isFormComplete ? 'signup-hide' : ''}>
         <form onSubmit={handleSubmit(onSubmit)} className="dog__form"> {/* className pas raccord, à modif */}
           <div className="dog__input-infos">
@@ -33,23 +37,35 @@ const DogForm = () => {
               </select>
               {/* Age */}
               <input {...register('age')} type="number" placeholder="Age" className="dog__commun" />
-              {/* Poids */}
+              {/* Weight */}
               <input {...register('poids')} type="number" placeholder="Poids (kg)" className="dog__commun" />
             </div>
             <div className="dog__input-infos__others">
 
-              {/* Sexe */}
+              {/* Sex */}
               <div className="dog__input-infos__others__sexe">
                 <p className="dog__input-infos__others__title">Il s'agit d'un(e)</p>
-                {/* Femelle */}
+                {/* Female */}
                 <input {...register('sexe')} type="radio" id="femelle" value="femelle" checked />
                 <label htmlFor="femelle" className="dog__commun">Femelle</label>
-                {/* Mâle */}
+                {/* Male */}
                 <input {...register('sexe')} type="radio" id="male" value="male" />
                 <label htmlFor="male" className="dog__commun">Mâle</label>
               </div>
 
-              {/* Stérilisé */}
+              {/* Birthday */}
+              <div className="dog__input-infos__others__birthday">
+                <label htmlFor="date">Sa date de naissance</label>
+                <input
+                  id="dog-birthday"
+                  name="dog-birthday"
+                  type="date"
+                  max={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`}
+                  {...register('dog-birthday', { required: 'A birthday is needed' })}
+                />
+              </div>
+
+              {/* Sterilized */}
               <div className="dog__input-infos__others__sterilized">
                 <p className="dog__input-infos__others__title">Il est stérilisé</p>
                 <input {...register('sterilized')} type="radio" id="sterilized-yes" value="sterilized-yes" />
@@ -86,9 +102,11 @@ const DogForm = () => {
               <p>Ajouter une photo de votre chien</p>
             </div>
           </div>
-          <button type="button" className="dog__input-infos__add-dog">Ajouter un chien</button>
-          <button type="submit" className="dog__input-infos__back">Retour</button>
-          <button type="submit" className="dog__input-infos__submit">Continuer</button>
+          <button type="button" className="dog__input-infos__add-dog"><img src={add} alt="add icon" />Ajouter un chien</button>
+          <div className="signup__back-submit">
+            <button type="submit" className="signup__back-submit__back">Retour</button>
+            <button type="submit" className="signup__back-submit__submit">Continuer</button>
+          </div>
         </form>
       </div>
     </div>
