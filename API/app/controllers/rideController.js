@@ -57,6 +57,30 @@ const rideController = {
         } catch (error) {
             response.status(500).json(error.message);
         }
+    },
+
+    removeUserFromRide: async (request, response) => {
+        try {
+            const rideId = Number(request.params.rideId);
+            const userId = Number(request.params.userId);
+
+            // todo  fausse data en attendant test avec jwt
+            const hostId = 1;
+    
+            if (isNaN(rideId) || isNaN(userId)) {
+                throw Error('La valeur de l\'id doit être un nombre');
+            }
+
+            // verif existance balade
+            // verif existance userid
+            // veri si user connecté est le mec du token
+            // verif si l'userid est bien i,scrit a la balade
+            // mdethod modele pour le suppr
+            // res 204
+
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
 
     }
 
