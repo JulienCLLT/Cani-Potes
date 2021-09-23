@@ -51,7 +51,7 @@ const rideController = {
             if (isNaN(rideId)) {
                 throw Error('La valeur de l\'id Ride doit être un nombre');
             }
-            // todo test avec id ride ou user non existant
+            
             await Ride.deleteMemberParticipateRide(userId, rideId);
     
             response.status(204).json("Le membre a été retiré de la balade");
