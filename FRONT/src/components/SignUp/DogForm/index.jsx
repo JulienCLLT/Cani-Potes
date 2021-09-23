@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable max-len */
 import React from 'react';
@@ -13,11 +14,11 @@ const DogForm = () => {
     console.log(data);
   };
 
-  const isFormComplete = useSelector((state) => state.isMyDogFormComplete);
+  const isFormComplete = useSelector((state) => state.isDogFormComplete);
 
   return (
     <div className="signup dog">
-      <div className={isFormComplete ? 'part-bullet part-bullet_complete' : 'part-bullet'}>{isFormComplete ? '✓' : ''}</div>
+
       <h2 className={isFormComplete ? 'title-valid' : ''}>Mon chien</h2>
       {/* div pour display hidden */}
       <div className={isFormComplete ? 'signup-hide' : ''}>
@@ -77,8 +78,8 @@ const DogForm = () => {
 
               {/* Nom */}
               <div className="dog__input-infos__others__name">
-                <label htmlFor="name">Il s'appelle</label>
-                <input {...register('name')} type="text" id="name" placeholder="Nom" />
+                <label htmlFor="dog-name">Il s'appelle</label>
+                <input {...register('dog-name')} type="text" id="dog-name" placeholder="Nom" />
               </div>
             </div>
             <div className="signup__input-infos__picture">

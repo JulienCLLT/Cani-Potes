@@ -21,7 +21,7 @@ const Header = () => {
         LOGO
       </NavLink>
       {isLogged && <NavBarConnected />}
-      {!isLogged && <NavBarDisconnected />}
+      {!isLogged && window.location.pathname === '/' && <NavBarDisconnected />}
     </header>
   );
 };

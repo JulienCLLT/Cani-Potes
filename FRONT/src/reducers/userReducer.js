@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import { LOGIN__USER, LOGOUT__USER } from '../actions/users';
 
 const userInitialState = {

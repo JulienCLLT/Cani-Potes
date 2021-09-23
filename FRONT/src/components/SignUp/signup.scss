@@ -1,0 +1,11 @@
+@use '../../styles/vars';
+
+.signup-main {
+    // width:70%; // pr pc
+    // margin: 1*vars.$gutter;
+    padding: 1*vars.$gutter;
+
+    & h1 {
+        text-align: center;
+    }
+}
