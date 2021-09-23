@@ -33,10 +33,13 @@ class Ride {
         }
     }
 
-    async delete() {
+    static async deleteMessagesByRideId(rideId) {
         try {
-
-
+            //todo verif id? 
+            const query= `DELETE FROM member_write_ride WHERE ride_id = $1`;
+            await client.query(query, [rideId]);
+            // return qq chose ? 
+            return null;
         } catch (error) {
             console.error(error);
             throw new Error(error.detail ? error.detail : error.message);
