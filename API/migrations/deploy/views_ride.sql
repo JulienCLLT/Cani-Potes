@@ -15,7 +15,7 @@ SELECT
             'sender_photo', sender.photo,       
             'message', message.message,                    
             'sent', message.created_at
-        )) AS message,
+        )) AS messages,
     array_agg(DISTINCT
         jsonb_build_object(
             'participant_id', participant.id,
@@ -28,7 +28,7 @@ SELECT
                                 'dog_surname', dog.surname 
                             ))  
                         FROM dog WHERE dog.dog_owner_id = participant.id)
-        )) AS participant
+        )) AS participants
 FROM ride
 JOIN tag ON tag.id = tag_id   
 JOIN member AS host ON host.id = host_id  
