@@ -15,7 +15,7 @@ SELECT
             'sender_photo', sender.photo,       
             'message', message.message,                    
             'sent', message.created_at
-        )) AS messages,
+        )) FILTER (WHERE sender.id IS NOT NULL) AS messages,
     array_agg(DISTINCT
         jsonb_build_object(
             'participant_id', participant.id,

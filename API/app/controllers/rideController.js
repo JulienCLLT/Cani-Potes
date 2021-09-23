@@ -45,7 +45,7 @@ const rideController = {
         try {
             const rideId = Number(request.params.rideId);
             // todo  fausse data en attendant test avec jwt
-            const userId = 4;
+            const userId = 1;
     
             if (isNaN(rideId)) {
                 throw Error('La valeur de l\'id Ride doit être un nombre');
