@@ -1,13 +1,29 @@
-// logo is position absolute if on mobile, but not when on desktop  
-// body display flex with header that is going to be at the bottom on mobile, at the top on desktop
-
 .header {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: .3rem 0;
+    z-index: 999;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    background-color: antiquewhite;
 
-    .navbar-connected {
-        font-size: .8rem;
+    @media screen and (min-width: 600px) {
+        position: static;
+        padding: 1rem 0 1rem 5rem;
+    }
+
+    &__logo {
+        position: fixed;
+        top: 1rem;
+        left: 4rem;
+        z-index: 999;
+
+        @media screen and (min-width: 600px) {
+            position: static;
+        }
     }
 }
 
