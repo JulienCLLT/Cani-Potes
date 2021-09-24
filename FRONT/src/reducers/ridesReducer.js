@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+import { ADD__USER__TO__RIDE } from '../actions/rides';
+import { REMOVE__USER__FROM__RIDE } from '../actions/rides';
 const ridesInitialState = {
   // get all rides from the api within an area
   // ? how to do this with leaflet and SQL ?by city ? by coordinate ?
@@ -361,6 +363,35 @@ const ridesInitialState = {
 
 const ridesReducer = (state = ridesInitialState, action = {}) => {
   switch (action.type) {
+    case ADD__USER__TO__RIDE:
+      return {
+        ...state,
+        currentRide: {
+          ...state.currentRide,
+          participants: [
+            ...state.currentRide.participants,
+            {
+              participant_id: action.participant_id,
+              participant_first_name: action.participant_first_name,
+              participant_last_name: action.participant_last_name,
+              participant_photo: action.participant_photo,
+              dogs: action.dogs,
+            },
+          ],
+        },
+      };
+    case REMOVE__USER__FROM__RIDE:
+      return {
+        ...state,
+        currentRide: {
+          ...state.currentRide,
+          participants: [
+            ...state.currentRide.participants.filter(
+              (participant) => participant.participant_id !== action.id,
+            ),
+          ],
+        },
+      };
     default:
       return state;
   }
