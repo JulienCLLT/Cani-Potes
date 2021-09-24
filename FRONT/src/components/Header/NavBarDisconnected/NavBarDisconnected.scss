@@ -1,3 +1,5 @@
+@use '../../../styles/vars';
+
 .navbar-disconnected {
     width: 100%;
     display: flex;
@@ -5,7 +7,8 @@
     max-width: 600px;
     padding: .3rem 0;
 
-    span {
-        padding: .5rem;
+    a {
+        @extend %btn;
+        font-size: .9rem;
     }
 }

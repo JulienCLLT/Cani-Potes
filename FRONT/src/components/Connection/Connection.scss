@@ -1,24 +1,101 @@
-.connection {
+@use '../../styles/vars';
 
-    &__info {
+@mixin lg-screen {
+    @media screen and (min-width:700px) {
+        @content
+    }
+}
 
+.connection-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header-connection {
+    display: flex;
+    justify-content: space-between;
+    padding: 1 * vars.$gutter;
+    border-bottom: 1px solid vars.$color_main;
+
+    &__title {
+        font-size: 1.5rem;
     }
 
-    &__modal {
-        background-color: rgba(200, 200, 200, .6);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        border: 1px solid black;
-        transform: translate(-50%, -50%);
-        padding: 50px;
+    &__cta {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: .5 * vars.$gutter;
+
+        &__signin {
+            @extend %btn;
+        }
+
+        &__signup {
+            @extend %btn;
+
+            background: none;
+            border: 1px solid vars.$color_main;
+            color: vars.$color_main;
+
+            &:hover {
+                background: vars.$color_main;
+                color: vars.$color__white;
+            }
+        }
+    }
+}
+
+.connection {
+    flex: 1;
+
+    @include lg-screen {
+        width: 70%;
+        margin: auto;
+    }
+
+    &__info {
+        &__text {
+            padding: 1 * vars.$gutter;
+
+            @include lg-screen {
+                padding: 0;
+            }
+
+            h2 {
+                text-align: center;
+                margin: 1 * vars.$gutter 0;
+                font-size: 1.3rem;
+            }
+        }
+
+        &__map {
+            height: 250px;
+            margin: 1 * vars.$gutter 0;
+            background: grey;
+        }
+    }
+
+    &__modal {
+        background-color: rgba(200, 200, 200, .8);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 60%;
+        max-width: 600px;
+        transform: translate(-50%, -50%);
+        padding: 3 * vars.$gutter;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
 
         &__close {
             align-self: flex-end;
+            cursor: pointer;
         }
     }
 
@@ -27,11 +104,39 @@
         flex-direction: column;
         align-items: center;
 
+        @include lg-screen {
+            width: 50%;
+        }
+
         &__field {
+            width: 100%;
             display: flex;
             flex-direction: column;
+            align-items: flex-start;
             gap: 1rem;
             margin-bottom: 1rem;
+
+            label {
+                @extend %btn;
+                cursor: initial;
+                font-weight: normal;
+            }
+
+            input {
+                width: 100%;
+                border: none;
+                padding: .3 * vars.$gutter;
+            }
         }
+
+        &__submit {
+            @extend %btn;
+        }
+    }
+
+    &__footer{
+        display: flex;
+        justify-content: center;
+        padding: 3 * vars.$gutter 0 0 0;
     }
 }
