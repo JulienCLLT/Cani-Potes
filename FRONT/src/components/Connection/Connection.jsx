@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { loginUser } from '../../actions/users';
+import NavBarDisconnected from '../Header/NavBarDisconnected/NavBarDisconnected';
 
 import './Connection.scss';
+import close from '../../assets/img/close.svg';
 
 const Connection = () => {
   const dispatch = useDispatch();
@@ -18,25 +21,61 @@ const Connection = () => {
   };
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => setIsModalOpen(true)}
-      >
-        OPEN
-      </button>
+    <div className="connection-container">
+      <header className="header-connection">
+        <NavLink
+          className="header-connection__logo"
+          to="/"
+          exact
+        >
+          {/* expect logo img instead of text */}
+          LOGO
+        </NavLink>
+        <h1 className="header-connection__title">Cani Potes</h1>
+        <div className="header-connection__cta">
+          <button
+            type="button"
+            className="header-connection__cta__signin"
+            onClick={() => setIsModalOpen(true)}
+          >
+            Connexion
+          </button>
+          <NavLink
+            className="header-connection__cta__signup"
+            to="/signup"
+            exact
+          >
+            Inscription
+          </NavLink>
+        </div>
+      </header>
+
       <main className="connection">
         <div className="connection__info">
           <div className="connection__info__text">
-            <p>Je suis la présentation du site</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Esse, quae dolores delectus porro qui voluptates mollitia sequi.
-              Aliquam laudantium quia quidem, totam suscipit,
-              unde ipsam voluptatem delectus consequuntur ratione magnam!
+            <h2 className="connection__info__title">
+              Bienvenue sur le site <strong>Cani Potes</strong> !
+            </h2>
+            <p>
+              <strong>Cani Potes</strong> ? C'est quoi ça ?
+              C'est un site qui a du chien !
+              Oui mais c'est avant tout un site pour les <strong>chiens</strong>
+              Partez à la rencontre de nombreux Cani Potes (propriétaires de chiens)
+              pour que vos toutous se sociabilisent en toute sécurité avec d'autres amoureux de nos amis poilus 
             </p>
           </div>
           <div className="connection__info__map">
             GROSSE MAP DE PRESENTATION ICI
+          </div>
+          <div className="connection__info__text">
+            <p>Pour commencer l'aventure, rien de plus simple !</p>
+            <ul>
+              <li>Je me créé un compte en cliquant sur "Inscription"</li>
+              <li>Je renseigne mes informations et celles de mon / mes chiens</li>
+              <li>Depuis la carte interactive, je peux chercher une balade proposée par un autre membre</li>
+              <li>Et c'est partit pour des rencontres au poil !</li>
+              <li>Vous pourrez également créer vos propres balades !</li>
+            </ul>
           </div>
         </div>
 
@@ -47,14 +86,14 @@ const Connection = () => {
               type="button"
               onClick={() => setIsModalOpen(false)}
             >
-              X
+              <img src={close} alt="close" />
             </button>
-            <form onSubmit={handleSubmit(onSubmit)} className="connection__form">
 
+            <form onSubmit={handleSubmit(onSubmit)} className="connection__form">
               <div className="connection__form__field">
                 <label htmlFor="email">Email</label>
                 <input
-                  id="emil"
+                  id="email"
                   name="email"
                   type="email"
                   {...register('email', { required: true })}
@@ -62,7 +101,7 @@ const Connection = () => {
               </div>
 
               <div className="connection__form__field">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Mot de passe</label>
                 <input
                   id="password"
                   name="password"
@@ -72,6 +111,7 @@ const Connection = () => {
               </div>
 
               <button
+                className="connection__form__submit"
                 type="submit"
               >
                 Se connecter
@@ -80,9 +120,12 @@ const Connection = () => {
             </form>
           </div>
         )}
-
       </main>
-    </>
+
+      <footer className="connection__footer">
+        <NavBarDisconnected />
+      </footer>
+    </div>
   );
 };
 
