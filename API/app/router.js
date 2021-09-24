@@ -21,14 +21,11 @@ router.post('/subscribe',userController.addNewUser);
 
 router.get('/rides', rideController.findAll);
 
-//todo rajouter mw de verif identité
-router.delete('/ride/:rideId(\\d+)', rideController.delete);
+router.delete('/ride/:rideId(\\d+)', ckeckToken, rideController.delete);
 
-//todo rajouter mw de verif token
-router.delete('/ride/:rideId(\\d+)/participation', rideController.leaveARide);
-router.post('/ride/:rideId(\\d+)/participation', rideController.addNewParticipant);
+router.delete('/ride/:rideId(\\d+)/participation', ckeckToken, rideController.leaveARide);
+router.post('/ride/:rideId(\\d+)/participation', ckeckToken, rideController.addNewParticipant);
 
-//todo rajouter mw de verif token
-router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', rideController.removeUserFromRide);
+router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', ckeckToken, rideController.removeUserFromRide);
 
 module.exports = router;
