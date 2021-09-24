@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
-import { ADD__USER__TO__RIDE } from '../actions/rides';
+import { ADD__USER__TO__RIDE, DELETE__RIDE } from '../actions/rides';
 import { REMOVE__USER__FROM__RIDE } from '../actions/rides';
+import { ADD__NEW__MESSAGE } from '../actions/rides';
 const ridesInitialState = {
   // get all rides from the api within an area
   // ? how to do this with leaflet and SQL ?by city ? by coordinate ?
@@ -213,7 +214,7 @@ const ridesInitialState = {
     }
   ],
   currentRide: {
-    ride_id: 1,
+    ride_id: 3,
     title: "Dans le coin",
     description: "un petit tour de quartier pour se rencontrer et y a une fontaine sympa",
     start_coordinate: [
@@ -228,9 +229,9 @@ const ridesInitialState = {
     duration: {
       minutes: 15,
     },
-    max_number_dogs: 5,
+    max_number_dogs: 50,
     tag_label: "grand air",
-    host_id: 1,
+    host_id: 99,
     host_first_name: "Toto",
     messages: [
       {
@@ -270,19 +271,19 @@ const ridesInitialState = {
       {
         dogs: [
           {
-            dog_id: 3,
+            dog_id: 1,
             dog_photo: "img10.jpg",
             dog_surname: "Plutôt",
             dog_photo_id: 7
           },
           {
-            dog_id: 3,
+            dog_id: 2,
             dog_photo: "img11.jpg",
             dog_surname: "Plutôt",
             dog_photo_id: 8
           }
         ],
-        participant_id: 2,
+        participant_id: 1,
         participant_photo: "img2.jpg",
         participant_last_name: "Cooper",
         participant_first_name: "Sheldon"
@@ -290,25 +291,25 @@ const ridesInitialState = {
       {
         dogs: [
           {
-            dog_id: 4,
+            dog_id: 10,
             dog_photo: "img12.jpg",
             dog_surname: "Rox Attak",
             dog_photo_id: 9
           },
           {
-            dog_id: 4,
+            dog_id: 11,
             dog_photo: "img14.jpg",
             dog_surname: "Rox Attak",
             dog_photo_id: 11
           },
           {
-            dog_id: 4,
+            dog_id: 12,
             dog_photo: "img9.jpg",
             dog_surname: "Rox Attak",
             dog_photo_id: 6
           }
         ],
-        participant_id: 3,
+        participant_id: 13,
         participant_photo: "img3.jpg",
         participant_last_name: "Holmes",
         participant_first_name: "Sherlock"
@@ -316,43 +317,43 @@ const ridesInitialState = {
       {
         dogs: [
           {
-            dog_id: 1,
+            dog_id: 21,
             dog_photo: "img13.jpg",
             dog_surname: "Snoopie",
             dog_photo_id: 10
           },
           {
-            dog_id: 1,
+            dog_id: 22,
             dog_photo: "img4.jpg",
             dog_surname: "Snoopie",
             dog_photo_id: 1
           },
           {
-            dog_id: 1,
+            dog_id: 23,
             dog_photo: "img5.jpg",
             dog_surname: "Snoopie",
             dog_photo_id: 2
           },
           {
-            dog_id: 2,
+            dog_id: 24,
             dog_photo: "img6.jpg",
             dog_surname: "Lassie",
             dog_photo_id: 3
           },
           {
-            dog_id: 2,
+            dog_id: 25,
             dog_photo: "img7.jpg",
             dog_surname: "Lassie",
             dog_photo_id: 4
           },
           {
-            dog_id: 2,
+            dog_id: 26,
             dog_photo: "img8.jpg",
             dog_surname: "Lassie",
             dog_photo_id: 5
           }
         ],
-        participant_id: 1,
+        participant_id: 27,
         participant_photo: "img1.jpg",
         participant_last_name: "Le fou de ouf",
         participant_first_name: "Toto"
@@ -390,6 +391,32 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
               (participant) => participant.participant_id !== action.id,
             ),
           ],
+        },
+      };
+    case ADD__NEW__MESSAGE:
+      return {
+        ...state,
+        currentRide: {
+          ...state.currentRide,
+          messages: [
+            ...state.currentRide.messages,
+            {
+              sent: new Date().toISOString(),
+              message: action.message,
+              sender_id: action.sender_id,
+              sender_photo: action.sender_photo,
+              sender_first_name: action.sender_first_name,
+              sender_last_name: action.sender_last_name,
+            },
+          ],
+        },
+      };
+    case DELETE__RIDE:
+      return {
+        ...state,
+        allRides: state.allRides.map((ride) => ride.ride_id !== action.id),
+        currentRide: {
+          ...ridesInitialState.currentRide,
         },
       };
     default:

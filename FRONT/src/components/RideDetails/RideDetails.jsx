@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,19 +15,19 @@ import dogPic from '../../assets/img/profile-simulation/dog-one.jpg';
 import calendar from '../../assets/img/info-ride/calendar.svg';
 import hourglass from '../../assets/img/info-ride/hourglass.svg';
 import mapPin from '../../assets/img/maps-and-flags.svg';
+import doubleArrow from '../../assets/img/info-ride/double_arrow.svg';
 
 import './RideDetails.scss';
-import { addUserToRide, removeUserFromRide } from '../../actions/rides';
+import { addNewMessage, addUserToRide, deleteRide, removeUserFromRide } from '../../actions/rides';
 
 const RideDetails = () => {
+  const chatZone = useRef();
   const dispatch = useDispatch();
-  const { currentRide } = useSelector((state) => state.rides);
   const { user: userProfile } = useSelector((state) => state);
-
-  console.log(currentRide);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
-    title, max_number_dogs, participants, starting_time, duration,
+    ride_id, title, max_number_dogs, participants, starting_time, duration,
     description, host_first_name, host_id, messages, start_coordinate, end_coordinate,
   } = useSelector((state) => state.rides.currentRide);
 
@@ -35,7 +35,7 @@ const RideDetails = () => {
 
   participants.map((participant) => nbOfDogs += participant.dogs.length);
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const [isChatOpen, setIsChatOpen] = useState(false);
 
@@ -56,15 +56,38 @@ const RideDetails = () => {
     }
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const handleQuit = () => {
+    if (userProfile.id === host_id) {
+      setIsModalOpen(true);
+    }
+    else {
+      dispatch(removeUserFromRide(userProfile.id));
+    }
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteRide(ride_id));
+  };
+
+  const onSubmit = ({ message }) => {
+    dispatch(addNewMessage(
+      message, userProfile.id, userProfile.photo, userProfile.first_name, userProfile.last_name,
+    ));
+
+    reset();
+
+    chatZone.current.scrollTo({
+      top: chatZone.current.scrollHeight,
+      left: 0,
+      behavior: 'smooth',
+    });
   };
 
   const positionIcon = new L.Icon({
     iconUrl: mapPin,
     inconRetInaUrl: mapPin,
     popupAnchor: [-0, -0],
-    iconSize: [22, 35], // iconSize: [32, 45],
+    iconSize: [22, 35],
   });
 
   return (
@@ -86,13 +109,13 @@ const RideDetails = () => {
         </div>
         <div className="ride-details__infos__description">
           <p>
-            <div className="ride-details__icon"><img src={calendar} alt="calendar" /></div>
+            <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
             Départ le {new Date(starting_time).toLocaleDateString(undefined, {
               weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',
             })}
           </p>
           <p>
-            <div className="ride-details__icon"><img src={hourglass} alt="hourglass" /></div>
+            <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
             Durée : {duration.minutes}min
           </p>
           <p>{description}</p>
@@ -107,7 +130,7 @@ const RideDetails = () => {
               ? (
                 <button
                   type="button"
-                  onClick={() => dispatch(removeUserFromRide(userProfile.id))}
+                  onClick={() => handleQuit()}
                 >
                   Se désinscrire
                 </button>
@@ -180,7 +203,7 @@ const RideDetails = () => {
           className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
           onClick={() => setIsChatOpen(!isChatOpen)}
         >
-          <span>^</span>
+          <img src={doubleArrow} alt="arrow" />
         </button>
         )
       }
@@ -188,12 +211,12 @@ const RideDetails = () => {
       {isChatOpen && (
         <section className="ride-details__chat">
 
-          <div className="ride-details__messages-container">
+          <div className="ride-details__messages-container" ref={chatZone}>
             {
               messages.map((msg) => (
                 <div
                   key={`${msg.sent}${msg.message}`}
-                  className={msg.sender_id === host_id ? 'ride-details__messages-container__message my-message' : 'ride-details__messages-container__message'}
+                  className={msg.sender_id === userProfile.id ? 'ride-details__messages-container__message my-message' : 'ride-details__messages-container__message'}
                 >
                   <p>{msg.sender_first_name}
                     <span>
@@ -211,11 +234,11 @@ const RideDetails = () => {
           <div className="ride-details__new-message">
             <form onSubmit={handleSubmit(onSubmit)} className="ride-details__form">
               <input
-                id="text"
-                name="text"
+                id="message"
+                name="message"
                 type="text"
                 placeholder="Nouveau message"
-                {...register('text', { required: true })}
+                {...register('message', { required: true })}
               />
               <button type="submit">Envoyer</button>
             </form>
@@ -223,6 +246,44 @@ const RideDetails = () => {
 
         </section>
       )}
+
+      {
+        isModalOpen && (
+          <div className="ride-details__modal">
+            <p
+              className="ride-details__modal__text"
+            >
+              Attention, vous êtes l'organisateur de cette balade
+            </p>
+            <p
+              className="ride-details__modal__text"
+            >
+              En vous retirant vous la supprimerez
+            </p>
+            <p
+              className="ride-details__modal__text"
+            >
+              Continuer ?
+            </p>
+            <div className="ride-details__modal__btn-container">
+              <button
+                type="button"
+                className="ride-details__modal__back-btn"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Retour
+              </button>
+              <button
+                type="button"
+                className="ride-details__modal__delete-btn"
+                onClick={() => handleDelete()}
+              >
+                Supprimer
+              </button>
+            </div>
+          </div>
+        )
+      }
     </div>
   );
 };
