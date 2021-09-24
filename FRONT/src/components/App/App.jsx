@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -15,9 +15,16 @@ import RideDetails from '../RideDetails/RideDetails';
 // import './App.scss';
 
 import '../../styles/reset.scss';
+import { useDispatch } from 'react-redux';
+import { getAllRides } from '../../actions/rides';
 
 function App() {
   const { isLogged } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllRides());
+  }, []);
 
   return (
     <div className="App">
