@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -38,6 +38,7 @@ const RideDetails = () => {
   const { register, handleSubmit, reset } = useForm();
 
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isRedirect, setIsRedirect] = useState(false);
 
   let joinInMsg = "S'inscrire";
 
@@ -67,6 +68,7 @@ const RideDetails = () => {
 
   const handleDelete = () => {
     dispatch(deleteRide(ride_id));
+    setIsRedirect(true);
   };
 
   const onSubmit = ({ message }) => {
@@ -92,6 +94,7 @@ const RideDetails = () => {
 
   return (
     <div className="ride-details">
+      {isRedirect && <Redirect to="/home" />}
       <h1 className="ride-details__title">Détails d'une balade</h1>
       <section className="ride-details__infos">
         <div className="ride-details__infos__map">
