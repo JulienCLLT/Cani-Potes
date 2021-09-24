@@ -34,3 +34,14 @@ export const deleteRide = (id) => ({
   type: DELETE__RIDE,
   id,
 });
+
+export const GET__ALL__RIDES = 'GET__ALL__RIDES';
+export const getAllRides = () => ({
+  type: GET__ALL__RIDES,
+});
+
+export const SAVE__ALL__RIDES = 'SAVE__ALL__RIDES';
+export const saveAllRides = (allRides) => ({
+  type: SAVE__ALL__RIDES,
+  allRides,
+});
