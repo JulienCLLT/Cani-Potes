@@ -15,7 +15,6 @@ import './signup.scss';
 const SignUp = () => {
   const methods = useForm();
   const onSubmit = (data) => console.log(data);
-
   const formStep = useSelector((state) => state.signup.formStep);
 
   return (
@@ -24,23 +23,19 @@ const SignUp = () => {
       <Timeline />
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <div className={formStep === 1 ? 'visible' : 'hidden'}>
-            <UserForm />
-          </div>
-          <div className={formStep === 2 ? 'visible' : 'hidden'}>
-            <DogForm />
-          </div>
-          <div className={formStep === 3 ? 'visible' : 'hidden'}>
-            <EndForm />
-          </div>
-          <button type="submit" className="end__submit signup-main__submit">Chercher une balade</button>
+          <UserForm />
+          <DogForm />
+          <EndForm />
+
+          {formStep === 3 && <button type="submit" className="end__submit signup-main__submit">Chercher une balade</button>}
 
           {/* {formStep === 1 && (<UserForm />) }
           {formStep === 2 && (<DogForm />) }
           {formStep === 3 && (
             <>
               <EndForm />
-              <button type="submit" className="end__submit signup-main__submit">Chercher une balade</button>
+              <button type="submit" className="end__submit signup-main__submit">
+              Chercher une balade</button>
             </>
           ) } */}
         </form>
