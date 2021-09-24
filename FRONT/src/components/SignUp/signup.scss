@@ -1,7 +1,11 @@
 @use '../../styles/vars';
 
-.signup-hidden {
+.hidden {
     display: none;
+}
+
+.visible {
+    display: block;
 }
 
 .signup-main {

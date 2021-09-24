@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 
 import React from 'react';
-import { useForm, useFormContext, FormProvider } from 'react-hook-form';
-import { useSelector, useDispatch } from 'react-redux';
+import { useForm, FormProvider } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 // import component
 import DogForm from './DogForm/index';
@@ -13,13 +13,10 @@ import Timeline from './Timeline/index';
 import './signup.scss';
 
 const SignUp = () => {
-  // const { handleSubmit } = useForm();
   const methods = useForm();
   const onSubmit = (data) => console.log(data);
 
-  // const dispatch = useDispatch();
-
-  // const formStep = useSelector((state) => state.signup.formStep);
+  const formStep = useSelector((state) => state.signup.formStep);
 
   return (
     <div className="signup-main">
@@ -27,18 +24,27 @@ const SignUp = () => {
       <Timeline />
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <UserForm />
-          <DogForm />
-          <EndForm />
+          <div className={formStep === 1 ? 'visible' : 'hidden'}>
+            <UserForm />
+          </div>
+          <div className={formStep === 2 ? 'visible' : 'hidden'}>
+            <DogForm />
+          </div>
+          <div className={formStep === 3 ? 'visible' : 'hidden'}>
+            <EndForm />
+          </div>
           <button type="submit" className="end__submit signup-main__submit">Chercher une balade</button>
+
+          {/* {formStep === 1 && (<UserForm />) }
+          {formStep === 2 && (<DogForm />) }
+          {formStep === 3 && (
+            <>
+              <EndForm />
+              <button type="submit" className="end__submit signup-main__submit">Chercher une balade</button>
+            </>
+          ) } */}
         </form>
       </FormProvider>
-      {/* {formStep === 1 && <UserForm /> }
-        {formStep === 2 && <DogForm /> }
-        {formStep === 3 && <EndForm /> }
-        {formStep === 3 && (
-        <button type="submit" className="end__submit signup-main__submit">Chercher une balade</button>
-        )} */}
     </div>
   );
 };
