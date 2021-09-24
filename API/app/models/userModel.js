@@ -7,13 +7,12 @@ class UserModel {
         };
     }
 
-    static async findOne(id) {
+    static async login(email) {
         try {
-            const { rows } = await db.query('SELECT * FROM WHERE id=$1', [id]);
-            if (rows[0]) {
-                return new UserModel(rows[0]);
-            }
-            return null;
+            const { rows } = await database.query('SELECT email, password, id FROM member WHERE email=$1', [email]);
+            //return new UserModel(rows[0]) ; quelle version est plus propre ?
+            return rows[0];
+            
         } catch (error) {
             if (error.detail) {
                 throw new Error(error.detail)
@@ -39,11 +38,16 @@ class UserModel {
                 this.password,
                 this.birthday,
             ]);
-            this.id = rows[0].id;
-            return this;
+            //return le nouvelle id de l'insert
+            
+            return rows[0];
             }
         } catch (error) {
-            console.log(error);
+            if (error.detail) {
+            throw new Error(error.detail)
+        } else {
+            throw error;
+        }
         }
     }
 
