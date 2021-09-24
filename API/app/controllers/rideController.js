@@ -15,7 +15,7 @@ const rideController = {
         try {
             const rideId = Number(request.params.rideId);
             // todo  fausse data en attendant test avec jwt
-            const userId = 1;
+            const userId = request.userId;
 
             if (isNaN(rideId)) {
                 throw Error('La valeur de l\'id Ride doit être un nombre');
@@ -35,7 +35,6 @@ const rideController = {
             await Ride.deleteAllParticipantsFromRide(rideId);
             await Ride.deleteRide(rideId);
 
-            //todo message json ne s'affiche pas
             response.status(204).json("La balade a été supprimée");
         } catch (error) {
             response.status(500).json(error.message);
@@ -46,7 +45,7 @@ const rideController = {
         try {
             const rideId = Number(request.params.rideId);
             // todo  fausse data en attendant test avec jwt
-            const userId = 1;
+            const userId = request.userId;
     
             if (isNaN(rideId)) {
                 throw Error('La valeur de l\'id Ride doit être un nombre');
@@ -66,7 +65,7 @@ const rideController = {
             const userId = Number(request.params.userId);
 
             // todo  fausse data en attendant test avec jwt
-            const hostId = 1;
+            const hostId = request.userId;
     
             if (isNaN(rideId) || isNaN(userId)) {
                 throw Error('La valeur de l\'id doit être un nombre');
@@ -97,15 +96,18 @@ const rideController = {
         try {
             const rideId = Number(request.params.rideId);
             // todo  fausse data en attendant test avec jwt
-            const userId = 1;
+            const userId = request.userId;
+             
             if (isNaN(rideId)) {
                 throw Error('La valeur de l\'id Ride doit être un nombre');
             }
 
+            /* overkill avec token ??
             const newParticipant = await User.findOne(userId);
             if(!newParticipant) {
                 throw Error('Le membre que vous souhaitez rajouter n\'existe pas');
             }
+            */
 
             const ride = await Ride.findById(rideId);
             if(!ride) {
