@@ -14,22 +14,24 @@ import { nextSignupFormStep } from '../../../actions/signup';
 import './user-form.scss';
 
 const UserForm = () => {
-  const { register } = useFormContext();
+  const { register, formState: { errors } } = useFormContext();
 
   const formStep = useSelector((state) => state.signup.formStep);
   const dispatch = useDispatch();
   const clickToContinue = () => {
-    console.log('toto');
     dispatch(nextSignupFormStep());
   };
 
+  // caciop
+  console.log(errors);
+
   return (
-    <div className="signup user-form">
+    <div className={formStep === 1 ? 'signup user-form' : 'hidden'}>
       <h2 className="signup__subtitle">Vous</h2>
 
       <div className="user-form__form">
+        {errors.email && <span>{errors.email.message}</span>} {/* a supprimer */}
 
-        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
         <div className="user-form__form__input-infos">
           <div className="user-form__form__input-infos__identity">
             {/* Email */}
@@ -96,7 +98,6 @@ const UserForm = () => {
           >Continuer
           </button>
         </div>
-        {/* </form> */}
       </div>
     </div>
   );

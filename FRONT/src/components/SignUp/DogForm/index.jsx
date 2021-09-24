@@ -2,9 +2,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable max-len */
 import React from 'react';
-// import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { nextSignupFormStep, previousSignupFormStep } from '../../../actions/signup';
 
 // import svg
@@ -17,17 +16,17 @@ const DogForm = () => {
   const date = new Date();
 
   const dispatch = useDispatch();
-  // const clickToContinue = dispatch(nextSignupFormStep());
   const clickToContinue = () => {
-    console.log('tata');
     dispatch(nextSignupFormStep());
   };
+
+  const formStep = useSelector((state) => state.signup.formStep);
   const clickToPrevious = () => {
     dispatch(previousSignupFormStep());
   };
 
   return (
-    <div className="signup dog">
+    <div className={formStep === 2 ? 'signup dog' : 'hidden'}>
 
       <h2>Mon chien</h2>
       <div className="dog__form">
