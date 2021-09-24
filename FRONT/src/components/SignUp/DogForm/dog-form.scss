@@ -1,11 +1,6 @@
 @use '../../../styles/vars';
 
 .dog {
-  position: relative;
-
-  .signup-hide {
-    display: none;
-  }
 
   & h2 {
     font-size: 1.2*vars.$gutter;
@@ -13,122 +8,74 @@
     padding-bottom: 0.5*vars.$gutter;
   }
 
-  .title-valid {
-    padding-bottom: 3*vars.$gutter;
+  &__form {
+
+    &__input-infos {
+  
+      &__first {
+        margin: vars.$gutter 0;
+        display: flex;
+        justify-content: center;
+      }
+  
+      &__others{
+        display: flex;
+        flex-direction: column;
+  
+        &__sexe, &__birthday, &__sterilized, &__character__label-flex {
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: vars.$gutter;
+        }
+
+        &__birthday {
+          & input {
+            border-radius: 3px;
+          }
+        }
+
+        &__character {
+          display: flex;
+        }
+  
+        &__surname{
+  
+          & input {
+            border: none;
+            // margin-left: 4.4*vars.$gutter;
+            border-bottom: 0.2*vars.$gutter solid vars.$color_border-input;
+          }
+        }
+
+        &__add-dog {
+          & img {
+            width: 9%;
+          }
+        }
+      }
+  
+    }
   }
 
-  &__p {
-    line-height: 1.4;
-    text-align: justify;
-    font-size: 16px;
-  }
-
+  // all inputs
   &__commun {
     font-size: 0.9* vars.$gutter;
     border: 0.1 *vars.$gutter solid vars.$color_border-input;
-    border-radius: 5px;
+    border-radius: 3px;
     padding: 0.3*vars.$gutter;
-    width: 7*vars.$gutter;
+    width: 4*vars.$gutter;
     text-align: center;
     margin-right: 0.5*vars.$gutter;
     margin-bottom: 0.8*vars.$gutter;
   }
 
-  &__input-infos {
-
-    &__commun {
-      margin-right: vars.$gutter;
-      margin-top: vars.$gutter;
-      margin-bottom: vars.$gutter;
-      // width: 5* vars.$gutter;
-      // height: 1.8* vars.$gutter;
-      text-align: center;
-      vertical-align: middle;
-      border-radius: 5px;
-      border: 0.1*vars.$gutter solid vars.$color-border-input
-    }
-
-    &__first {
-      margin: vars.$gutter 0;
-      display: flex;
-      justify-content: center;
-    }
-
-    &__others{
-      display: flex;
-      flex-direction: column;
-
-      &__title {
-        font-size: 0.9* vars.$gutter;
-      }
-
-      &__sexe, &__sterilized, &__character {
-        display: flex;
-        margin-bottom: vars.$gutter;
-      }
-
-      &__label {
-        border: 0.1 *vars.$gutter solid vars.$color_border-input;
-        border-radius: 5px;
-        padding: 0.3*vars.$gutter;
-        width: 7*vars.$gutter;
-        text-align: center;
-        margin: 0 0.5*vars.$gutter;
-      }
-
-      &__label--selected {
-        border: 0.2 *vars.$gutter solid vars.$color_main;
-      }
-
-      &__character {
-        &__label-flex {
-          display: flex;
-          flex-wrap: wrap;
-        }
-      }
-
-      &__name{
-
-        & input {
-          border: none;
-          margin-left: 4.4*vars.$gutter;
-          border-bottom: 0.2*vars.$gutter solid vars.$color_border-input;
-        }
-      }
-    }
-
-    &__submit {
-      border: none;
-      border-radius: 30px;
-      padding: 0.3*vars.$gutter;
-      margin: 2.5*vars.$gutter 0;
-      background-color: vars.$color_main;
-      width: 7*vars.$gutter;
-      text-align: center;
-      text-transform: uppercase;
-      color: vars.$color__white;
-      font-weight: bold;
-    }
-  }
-
-  .part-bullet {
-    width: 16px;
-    height: 16px;
-    background-color: vars.$color_main;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: -25px;
-    text-align: center;
-    color: white;
-
-    &_complete {
-      background-color: vars.$color_valid;
-    }
+  // texts before input
+  &__title {
+    width: 7*vars.$gutter;
   }
 }
 
-// enlève les flèches des input type number
+// remove the arrows of input type number
 input[type="number"] {
   /* Firefox */
 	-moz-appearance: textfield;
@@ -151,5 +98,5 @@ input[type="radio"]{
 }
 
 input[type="radio"]:checked + label {
-  border: 0.2*vars.$gutter solid vars.$color_main;
+  border: 0.15*vars.$gutter solid vars.$color_main;
 }

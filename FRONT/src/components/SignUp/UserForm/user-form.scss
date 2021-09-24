@@ -1,38 +1,49 @@
 @use '../../../styles/vars';
 
-.you {
-  position: relative;
+.user-form {
 
-  .signup-hide {
-    display: none;
-  }
+  &__form {
+    & form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
 
-  & h2 {
-    font-size: 1.3*vars.$gutter;
-    padding-bottom: 0.5*vars.$gutter;
-  }
+    &__input-infos {
+      height: 72vh;
 
-  .title-valid {
-    padding-bottom: 3*vars.$gutter;
-  }
+      &__identity {
+        padding: 0 3*vars.$gutter;
+        padding-bottom: vars.$gutter;
+      }
 
-  & p {
-    line-height: 1.4;
-  }
+      &__email, &__password, &__password--confirmation, &__name, &__first_name, &__picture, &__zipcode__input {
+        display: flex;
+        flex-direction: column;
+        margin-top: vars.$gutter;
 
-  .part-bullet {
-    width: 16px;
-    height: 16px;
-    background-color: vars.$color_main;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: -25px;
-    text-align: center;
-    color: white;
+        & label {
+          margin-bottom: 0.4*vars.$gutter;
+        }
+      }
 
-    &_complete {
-      background-color: vars.$color_valid;
+      &__zipcode{
+
+        & p {
+          font-size: vars.$gutter;
+          text-align: justify;
+          margin-top: vars.$gutter;
+        }
+        &__input {
+          padding: 0 3*vars.$gutter;
+        }
+      }
     }
   }
+}
+
+input {
+  border: 0.1 *vars.$gutter solid vars.$color_border-input;
+  border-radius: 1px;
+  height: 1.3*vars.$gutter;
 }

@@ -5,6 +5,7 @@
     display: flex;
     justify-content: space-around;
     max-width: 600px;
+    padding: .3rem 0;
 
     a {
         @extend %btn;
