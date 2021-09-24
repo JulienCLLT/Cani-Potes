@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 // before beeing able to ask to db real url, simulating
 import user from '../../assets/img/profile-simulation/user.jpg';
 import dogPic from '../../assets/img/profile-simulation/dog-one.jpg';
+import calendar from '../../assets/img/info-ride/calendar.svg';
+import hourglass from '../../assets/img/info-ride/hourglass.svg';
 
 import './RideDetails.scss';
 
@@ -43,12 +45,16 @@ const RideDetails = () => {
         </div>
         <div className="ride-details__infos__description">
           <p>
+            <div className="ride-details__icon"><img src={calendar} alt="calendar" /></div>
             Départ le
             {new Date(starting_time).toLocaleDateString(undefined, {
               weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',
             })}
           </p>
-          <p>Durée : {duration.minutes}min</p>
+          <p>
+            <div className="ride-details__icon"><img src={hourglass} alt="hourglass" /></div>
+            Durée : {duration.minutes}min
+            </p>
           <p>{description}</p>
         </div>
       </section>
