@@ -15,7 +15,7 @@ SELECT
             'sender_photo', sender.photo,       
             'message', message.message,                    
             'sent', message.created_at
-        )) AS messages,
+        )) FILTER (WHERE sender.id IS NOT NULL) AS messages,
     array_agg(DISTINCT
         jsonb_build_object(
             'participant_id', participant.id,
@@ -25,9 +25,13 @@ SELECT
             'dogs',  (SELECT array_agg(DISTINCT                            
                             jsonb_build_object(
                                 'dog_id', dog.id,
-                                'dog_surname', dog.surname 
+                                'dog_surname', dog.surname,
+								'dog_photo_id', photo.id,
+								'dog_photo', photo.file_name 
                             ))  
-                        FROM dog WHERE dog.dog_owner_id = participant.id)
+                        FROM dog 
+                        JOIN photo ON dog.id = photo.dog_id
+                        WHERE dog.dog_owner_id = participant.id)
         )) AS participants
 FROM ride
 JOIN tag ON tag.id = tag_id   
@@ -40,3 +44,5 @@ LEFT JOIN dog ON dog.dog_owner_id = member_participate_ride.member_id
 GROUP BY ride.id, tag.label, host.id, host.first_name; 
 
 COMMIT;
+
+
