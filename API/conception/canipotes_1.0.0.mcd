@@ -1,0 +1,35 @@
+:
+:
+:
+RACE: label
+SEXE: label
+:
+COMPORTEMENT : label, emoji
+
+:
+:
+:
+CORRESPOND, 0N RACE, 11 CHIEN
+EST, 0N SEXE, 11 CHIEN
+:
+SE CARACTERISE PAR, 11 CHIEN, 0N COMPORTEMENT
+
+:
+:
+MEMBRE: email, prenom, nom, photo, mot de passe, date de naissance, code postal
+POSSEDE, 1N MEMBRE, 11 CHIEN
+CHIEN : _nom, poids, date de naissance, stérilisation, description
+MONTRE, 1N CHIEN, 11 PHOTO
+PHOTO: nom du fichier
+
+:
+
+VEUT PARTICIPER A, 0N MEMBRE, 0N BALADE
+ORGANISE, 11 BALADE, 0N MEMBRE
+ECRIT DANS, 0N MEMBRE, 0N BALADE : message
+:
+:
+
+BALADE: _nom, description, coordonnées départ, coordonnées arrivé, heure du départ, durée, nombre max de chiens
+DECRIT, 11 BALADE, 0N TYPE
+TYPE: label
