@@ -2,11 +2,24 @@
 import { LOGIN__USER, LOGOUT__USER } from '../actions/users';
 
 const userInitialState = {
-  id: '',
-  first_name: '',
-  last_name: '',
+  id: 99,
+  first_name: 'Jean-Michel',
+  last_name: 'Le Test',
   photo: '',
-  dogs: [],
+  dogs: [
+    {
+      dog_id: 101,
+      dog_photo: "img12.jpg",
+      dog_surname: "Riri",
+      dog_photo_id: 9,
+    },
+    {
+      dog_id: 102,
+      dog_photo: "img14.jpg",
+      dog_surname: "Fifi",
+      dog_photo_id: 11,
+    },
+  ],
   isLogged: false,
 };
 
