@@ -3,7 +3,7 @@
 /* eslint-disable max-len */
 import React from 'react';
 // import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { nextSignupFormStep, previousSignupFormStep } from '../../../actions/signup';
 
@@ -13,7 +13,7 @@ import { nextSignupFormStep, previousSignupFormStep } from '../../../actions/sig
 import './dog-form.scss';
 
 const DogForm = () => {
-  const { register } = useForm();
+  const { register } = useFormContext();
   const date = new Date();
 
   const dispatch = useDispatch();
