@@ -3,19 +3,30 @@ import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
+import {
+  MapContainer, TileLayer, Marker,
+} from 'react-leaflet';
+
+import L from 'leaflet';
+
 // before beeing able to ask to db real url, simulating
 import user from '../../assets/img/profile-simulation/user.jpg';
 import dogPic from '../../assets/img/profile-simulation/dog-one.jpg';
 import calendar from '../../assets/img/info-ride/calendar.svg';
 import hourglass from '../../assets/img/info-ride/hourglass.svg';
+import mapPin from '../../assets/img/maps-and-flags.svg';
 
 import './RideDetails.scss';
 
 const RideDetails = () => {
   const { currentRide } = useSelector((state) => state.rides);
+  const { id: userId } = useSelector((state) => state.user);
+  console.log('id du user : ', userId);
+  console.log(currentRide);
 
   const {
-    title, max_number_dogs, participants, starting_time, duration, description, host_first_name, host_id, messages,
+    title, max_number_dogs, participants, starting_time, duration,
+    description, host_first_name, host_id, messages, start_coordinate, end_coordinate,
   } = useSelector((state) => state.rides.currentRide);
 
   let nbOfDogs = 0;
@@ -30,13 +41,26 @@ const RideDetails = () => {
     console.log(data);
   };
 
+  const fillBlueOptions = { fillColor: 'blue' };
+
+  const positionIcon = new L.Icon({
+    iconUrl: mapPin,
+    inconRetInaUrl: mapPin,
+    popupAnchor: [-0, -0],
+    iconSize: [22, 35], // iconSize: [32, 45],
+  });
+
   return (
     <div className="ride-details">
       <h1 className="ride-details__title">Détails d'une balade</h1>
       <section className="ride-details__infos">
         <div className="ride-details__infos__map">
           <div className="ride-details__leaflet">
-            LEAFLET PROJECTION
+            <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={10} scrollWheelZoom={false}>
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <Marker position={start_coordinate} icon={positionIcon} />
+              <Marker position={end_coordinate} icon={positionIcon} />
+            </MapContainer>
           </div>
           <h2>{title}</h2>
           <span>
@@ -46,8 +70,7 @@ const RideDetails = () => {
         <div className="ride-details__infos__description">
           <p>
             <div className="ride-details__icon"><img src={calendar} alt="calendar" /></div>
-            Départ le
-            {new Date(starting_time).toLocaleDateString(undefined, {
+            Départ le {new Date(starting_time).toLocaleDateString(undefined, {
               weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',
             })}
           </p>
