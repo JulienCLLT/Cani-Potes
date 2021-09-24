@@ -32,11 +32,23 @@
 
     &__back-submit {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
+        margin-top: 10px;
+        padding: 0 3 * vars.$gutter;
+
+        &__submit, &__back {
+            text-align: center;
+            line-height: 1.4;
+            text-transform: uppercase;
+            width: 50%;
+            border-radius: 4px;
+            margin-top: 24px;
+        }
 
         &__submit {
             @extend %btn;
             margin-left: 0.5*vars.$gutter;
+            line-height: 1.2;
         }
     
         &__back {
@@ -44,7 +56,6 @@
             background: none;
             border: 1px solid vars.$color_main;
             color: vars.$color_main;
-            margin-right: 0.5*vars.$gutter;
         }
     }
 }

@@ -10,7 +10,6 @@
     }
 
     &__input-infos {
-      height: 72vh;
 
       &__identity {
         padding: 0 3*vars.$gutter;
@@ -38,12 +37,20 @@
           padding: 0 3*vars.$gutter;
         }
       }
+
+
     }
   }
 }
 
 input {
   border: 0.1 *vars.$gutter solid vars.$color_border-input;
-  border-radius: 1px;
-  height: 1.3*vars.$gutter;
+  border-radius: px;
+  height: 2*vars.$gutter;
+  box-sizing: content-box;
+  // width: 100%;
+}
+
+.user-form__form__input-infos__picture input {
+  border: none;
 }
