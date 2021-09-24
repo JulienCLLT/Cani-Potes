@@ -1,7 +1,7 @@
-/* eslint-disable linebreak-style */
-import { ADD__USER__TO__RIDE, DELETE__RIDE } from '../actions/rides';
-import { REMOVE__USER__FROM__RIDE } from '../actions/rides';
-import { ADD__NEW__MESSAGE } from '../actions/rides';
+import {
+  ADD__USER__TO__RIDE, REMOVE__USER__FROM__RIDE, ADD__NEW__MESSAGE, DELETE__RIDE
+} from '../actions/rides';
+
 const ridesInitialState = {
   // get all rides from the api within an area
   // ? how to do this with leaflet and SQL ?by city ? by coordinate ?
