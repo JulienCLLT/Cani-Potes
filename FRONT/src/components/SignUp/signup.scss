@@ -1,0 +1,46 @@
+@use '../../styles/vars';
+
+.signup-hidden {
+    display: none;
+}
+
+.signup-main {
+    padding: vars.$gutter;
+
+    & h1 {
+        text-align: center;
+        font-size: 2*vars.$gutter;
+        margin: vars.$gutter 0;
+        font-weight: bold;
+    }
+}
+
+// Common CSS of signup's children components
+
+.signup {
+
+    & h2 {
+        font-size: 1.3*vars.$gutter;
+        font-weight: bold;
+        margin-top : 2*vars.$gutter;
+        margin-bottom : vars.$gutter;
+    }
+
+    &__back-submit {
+        display: flex;
+        justify-content: center;
+
+        &__submit {
+            @extend %btn;
+            margin-left: 0.5*vars.$gutter;
+        }
+    
+        &__back {
+            @extend %btn;
+            background: none;
+            border: 1px solid vars.$color_main;
+            color: vars.$color_main;
+            margin-right: 0.5*vars.$gutter;
+        }
+    }
+}
