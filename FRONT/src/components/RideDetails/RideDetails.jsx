@@ -39,6 +39,23 @@ const RideDetails = () => {
 
   const [isChatOpen, setIsChatOpen] = useState(false);
 
+  let joinInMsg = "S'inscrire";
+
+  if (nbOfDogs > max_number_dogs) {
+    joinInMsg = 'Plus de place';
+  }
+  if (nbOfDogs < max_number_dogs && (nbOfDogs + userProfile.dogs.length) > max_number_dogs) {
+    joinInMsg = 'Vous êtes trop nombreux';
+  }
+
+  const handleJoinIn = () => {
+    if (nbOfDogs < max_number_dogs) {
+      if ((nbOfDogs + userProfile.dogs.length) < max_number_dogs) {
+        dispatch(addUserToRide(userProfile));
+      }
+    }
+  };
+
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -97,9 +114,9 @@ const RideDetails = () => {
               ) : (
                 <button
                   type="button"
-                  onClick={() => dispatch(addUserToRide(userProfile))}
+                  onClick={() => handleJoinIn()}
                 >
-                  S'inscrire
+                  {joinInMsg}
                 </button>
               )
           }
