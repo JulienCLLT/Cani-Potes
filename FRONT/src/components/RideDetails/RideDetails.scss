@@ -1,0 +1,251 @@
+@use '../../styles/vars';
+
+@mixin lg-screen {
+    @media screen and (min-width:700px) {
+        @content
+    }
+};
+
+:root {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.ride-details {
+    padding: vars.$gutter;
+
+    &__icon {
+        width: 1rem;
+        height: 1rem;
+        display: inline-block;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    @include lg-screen {
+        padding: 0;
+        width: 70%;
+        margin: auto;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    &__title {
+        text-align: center;
+        font-size: 1.3rem;
+        padding: 1rem;
+    }
+
+    &__leaflet {
+        height: 150px;
+        background-color: vars.$color-border-bottom-header;
+
+
+    }
+
+    &__infos {
+        display: flex;
+        margin-bottom: vars.$gutter;
+        gap: vars.$gutter;
+
+        &__map, &__description {
+            width: 50%;
+        }
+
+        &__map {
+            h2 {
+                margin: .5 * vars.$gutter 0;
+                font-size: 1.3rem;
+                font-weight: bold;
+            }
+        }
+    }
+
+    &__container {
+        display: flex;
+        margin: vars.$gutter 0;
+    }
+
+    &__current-user {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: .3rem;
+
+        &__avatar {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-right: .5rem;
+            width: 60px;
+            font-size: .7rem;
+
+            img {
+                width: 40px;
+                border-radius: 50%;
+                margin-bottom: .2rem;
+            }
+        }
+
+        &__dogs {
+            display: flex;
+            width: 46px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: .7rem;
+            margin-right: .3rem;
+
+            img {
+                width: 25px;
+                border-radius: 50%;
+                margin-bottom: .2rem;
+            }
+        }
+    }
+
+    &__users {
+
+        &__infos {
+            button {
+                @extend %btn;
+                margin-left: .3rem;
+            }
+        }
+
+        &__registered {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+        }
+
+        &__creator {
+            width: 20%;
+
+            &__avatar {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: .3rem;
+                text-align: center;
+            }
+
+            img {
+                border-radius: 50%;
+                width: 65px;
+            }
+        }
+    }
+
+    &__toggle {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        right: .5 * vars.$gutter;
+        transform: translate(0, -50%) rotate(-90deg);
+        width: 30px;
+        height: 30px;
+        background: vars.$color_main;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all .2s ease-in;
+        cursor: pointer;
+    }
+
+    .rotate {
+        transform: translate(0, -50%) rotate(90deg);
+        transition: all .2s ease-in;
+    }
+
+    &__chat {
+        position: fixed;
+        top: 200px;
+        bottom: 50px;
+        right: vars.$gutter;
+        width: calc(100% - 2 * vars.$gutter);
+        border-top: 1px solid vars.$color_main;
+        background: white;
+        animation: slide-in .3s linear;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        @include lg-screen {
+            max-width: 600px;
+            border: 1px solid vars.$color_main;
+            right: 3 * vars.$gutter;
+        }
+    }
+
+    &__messages-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: vars.$gutter;
+        padding: vars.$gutter 0;
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .my-message {
+            align-self: flex-end;
+        }
+
+        &__message {
+            max-width: 70%;
+            padding: .5 * vars.$gutter;
+            background: vars.$color-border-bottom-header;
+
+            p {
+                color: vars.$color_main;
+                span {
+                    color: vars.$color_main;
+                }
+            }
+            span {
+                color: white;
+            }
+        }
+    }
+
+    &__form {
+        margin-top: vars.$gutter;
+        display: flex;
+        justify-content: space-between;
+        gap: vars.$gutter;
+
+        input {
+            padding: 0 .5rem;
+            flex: 1;
+            border: 1px solid vars.$color_main;
+            border-radius: 5px;
+        }
+
+        button {
+            @extend %btn
+        }
+    }
+}
+
+@keyframes slide-in {
+    from {
+        margin-right: -100%;
+    }
+    to {
+        margin-right: 0;
+    }
+}

@@ -1,5 +1,8 @@
+@use '../../../../styles/vars';
+
 .profile {
-    background-color: #f9b29c;
+    background-color: vars.$color-main;
+    // opacity: 0.8;
     border-radius: 5%;
     display: flex;
     flex-direction: column;
