@@ -1,4 +1,6 @@
 .env
 /node_modules
 sqitch.conf
+test_model.js
+.js
 
