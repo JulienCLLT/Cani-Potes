@@ -45,10 +45,20 @@
     }
 
     &__leaflet {
-        height: 150px;
-        background-color: vars.$color-border-bottom-header;
+        height: 200px;
 
+        @include lg-screen {
+            height: 400px;
+            max-width: 500px;
+        }
 
+        &__map {
+            height: 100%;
+        }
+
+        .leaflet-bottom  {
+            z-index: 400 !important;
+        }
     }
 
     &__infos {
@@ -66,6 +76,12 @@
                 font-size: 1.3rem;
                 font-weight: bold;
             }
+        }
+
+        &__description {
+            display: flex;
+            flex-direction: column;
+            gap: .3rem;
         }
     }
 
@@ -147,7 +163,7 @@
 
     &__toggle {
         position: absolute;
-        z-index: 1;
+        z-index: 999;
         top: 50%;
         right: .5 * vars.$gutter;
         transform: translate(0, -50%) rotate(-90deg);
@@ -179,6 +195,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        z-index: 998;
 
         @include lg-screen {
             max-width: 600px;
@@ -229,8 +246,9 @@
         gap: vars.$gutter;
 
         input {
-            padding: 0 .5rem;
+            padding: .8rem .5rem;
             flex: 1;
+            align-self: stretch;
             border: 1px solid vars.$color_main;
             border-radius: 5px;
         }
