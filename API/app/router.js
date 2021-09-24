@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage });
 
-
+router.use
 
 router.get('/', ckeckToken, function (req, res) {
     res.send('GET request to the homepage token ok '+ req.userId)});
