@@ -6,7 +6,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useFormContext } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // action creator
 import { nextSignupFormStep } from '../../../actions/signup';
@@ -16,9 +16,10 @@ import './user-form.scss';
 const UserForm = () => {
   const { register } = useFormContext();
 
-  // const formStep = useSelector((state) => state.signup.formStep);
+  const formStep = useSelector((state) => state.signup.formStep);
   const dispatch = useDispatch();
   const clickToContinue = () => {
+    console.log('toto');
     dispatch(nextSignupFormStep());
   };
 

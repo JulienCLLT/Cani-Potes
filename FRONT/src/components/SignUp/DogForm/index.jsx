@@ -17,8 +17,14 @@ const DogForm = () => {
   const date = new Date();
 
   const dispatch = useDispatch();
-  const clickToContinue = dispatch(nextSignupFormStep());
-  const clickToPrevious = dispatch(previousSignupFormStep());
+  // const clickToContinue = dispatch(nextSignupFormStep());
+  const clickToContinue = () => {
+    console.log('tata');
+    dispatch(nextSignupFormStep());
+  };
+  const clickToPrevious = () => {
+    dispatch(previousSignupFormStep());
+  };
 
   return (
     <div className="signup dog">
