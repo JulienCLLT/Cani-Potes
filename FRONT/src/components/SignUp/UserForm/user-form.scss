@@ -10,9 +10,10 @@
     }
 
     &__input-infos {
+      height: 480px;
 
       &__identity {
-        padding: 0 3*vars.$gutter;
+        padding: 0 2*vars.$gutter;
         padding-bottom: vars.$gutter;
       }
 
@@ -23,6 +24,8 @@
 
         & label {
           margin-bottom: 0.4*vars.$gutter;
+          max-width: 400px;
+          // text-align: center;
         }
       }
 
@@ -30,25 +33,25 @@
 
         & p {
           font-size: vars.$gutter;
-          text-align: justify;
+          text-align: justify; // center pour media queries
           margin-top: vars.$gutter;
         }
         &__input {
-          padding: 0 3*vars.$gutter;
+          padding: 0 2*vars.$gutter;
         }
       }
-
-
     }
   }
-}
 
-input {
-  border: 0.1 *vars.$gutter solid vars.$color_border-input;
-  border-radius: px;
-  height: 2*vars.$gutter;
-  box-sizing: content-box;
-  // width: 100%;
+  & input {
+    border: 0.1 *vars.$gutter solid vars.$color_border-input;
+    border-radius: 2px;
+    height: 2*vars.$gutter;
+    box-sizing: content-box;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
 }
 
 .user-form__form__input-infos__picture input {
