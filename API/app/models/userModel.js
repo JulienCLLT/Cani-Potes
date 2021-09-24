@@ -1,4 +1,4 @@
-const database = require('../database');
+const db = require('../database');
 
 class UserModel {
     constructor(data ={}){
@@ -9,7 +9,7 @@ class UserModel {
 
     static async findOne(id) {
         try {
-            const { rows } = await db.query('SELECT * FROM WHERE id=$1', [id]);
+            const { rows } = await db.query('SELECT * FROM member WHERE id=$1', [id]);
             if (rows[0]) {
                 return new UserModel(rows[0]);
             }
