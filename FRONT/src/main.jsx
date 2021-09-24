@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import store from './store';
 
-import './index.css';
+import './index.scss';
 import App from './components/App/App';
 
 ReactDOM.render(
@@ -14,5 +14,5 @@ ReactDOM.render(
       <App />
     </Router>
   </Provider>,
-  document.getElementById('root')
-)
+  document.getElementById('root'),
+);
