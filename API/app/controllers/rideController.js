@@ -64,7 +64,6 @@ const rideController = {
             const rideId = Number(request.params.rideId);
             const userId = Number(request.params.userId);
 
-            // todo  fausse data en attendant test avec jwt
             const hostId = request.userId;
     
             if (isNaN(rideId) || isNaN(userId)) {
@@ -82,7 +81,7 @@ const rideController = {
                 throw Error('Vous ne pouvez pas vous retirer d\'une balade que vous organisez');
             }
 
-            await Ride.deleteAllParticipantsFromRide(userId, rideId);
+            await Ride.deleteMemberParticipateRide(userId, rideId);
 
             response.status(204).json("Le membre a été retiré de la balade");
 
@@ -102,12 +101,10 @@ const rideController = {
                 throw Error('La valeur de l\'id Ride doit être un nombre');
             }
 
-            /* overkill avec token ??
             const newParticipant = await User.findOne(userId);
             if(!newParticipant) {
                 throw Error('Le membre que vous souhaitez rajouter n\'existe pas');
             }
-            */
 
             const ride = await Ride.findById(rideId);
             if(!ride) {
