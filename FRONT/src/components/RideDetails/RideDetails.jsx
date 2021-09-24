@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   MapContainer, TileLayer, Marker,
@@ -17,11 +17,13 @@ import hourglass from '../../assets/img/info-ride/hourglass.svg';
 import mapPin from '../../assets/img/maps-and-flags.svg';
 
 import './RideDetails.scss';
+import { addUserToRide, removeUserFromRide } from '../../actions/rides';
 
 const RideDetails = () => {
+  const dispatch = useDispatch();
   const { currentRide } = useSelector((state) => state.rides);
-  const { id: userId } = useSelector((state) => state.user);
-  console.log('id du user : ', userId);
+  const { user: userProfile } = useSelector((state) => state);
+
   console.log(currentRide);
 
   const {
@@ -40,8 +42,6 @@ const RideDetails = () => {
   const onSubmit = (data) => {
     console.log(data);
   };
-
-  const fillBlueOptions = { fillColor: 'blue' };
 
   const positionIcon = new L.Icon({
     iconUrl: mapPin,
@@ -77,7 +77,7 @@ const RideDetails = () => {
           <p>
             <div className="ride-details__icon"><img src={hourglass} alt="hourglass" /></div>
             Durée : {duration.minutes}min
-            </p>
+          </p>
           <p>{description}</p>
         </div>
       </section>
@@ -85,7 +85,24 @@ const RideDetails = () => {
       <section className="ride-details__users">
         <div className="ride-details__users__infos">
           <span>{participants.length} Cani Potes</span>
-          <button type="button">S'inscrire</button>
+          {
+            participants.find((participant) => participant.participant_id === userProfile.id)
+              ? (
+                <button
+                  type="button"
+                  onClick={() => dispatch(removeUserFromRide(userProfile.id))}
+                >
+                  Se désinscrire
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => dispatch(addUserToRide(userProfile))}
+                >
+                  S'inscrire
+                </button>
+              )
+          }
         </div>
 
         <div className="ride-details__container">
@@ -131,7 +148,7 @@ const RideDetails = () => {
             >
               <p>Créateur</p>
               <img src={user} alt="user" /> {/* wait for real photo url */}
-              <span>{host_first_name}</span>
+              <span>{userProfile.id === host_id ? 'Vous' : host_first_name}</span>
             </NavLink>
           </div>
         </div>
