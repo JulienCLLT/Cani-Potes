@@ -155,13 +155,18 @@ const RideDetails = () => {
 
       </section>
 
-      <button
-        type="button"
-        className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
-        onClick={() => setIsChatOpen(!isChatOpen)}
-      >
-        <span>^</span>
-      </button>
+      {
+        participants.find((participant) => participant.participant_id === userProfile.id)
+        && (
+        <button
+          type="button"
+          className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
+          onClick={() => setIsChatOpen(!isChatOpen)}
+        >
+          <span>^</span>
+        </button>
+        )
+      }
 
       {isChatOpen && (
         <section className="ride-details__chat">
