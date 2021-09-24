@@ -26,4 +26,7 @@ router.delete('/ride/:rideId(\\d+)', rideController.delete)
 //todo rajouter mw de verif token
 router.delete('/ride/:rideId(\\d+)/participation', rideController.leaveARide)
 
+//todo rajouter mw de verif token
+router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', rideController.removeUserFromRide);
+
 module.exports = router;
