@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import { CLICK_CONTINUE_USER, CLICK_CONTINUE_DOG } from '../actions/signup';
+import { NEXT_SIGNUP_FORM_STEP, PREVIOUS_SIGNUP_FORM_STEP } from '../actions/signup';
 
 const initialState = {
 
@@ -11,14 +11,14 @@ const initialState = {
   first_name: '',
   last_name: '',
   photo: '',
-  zipcode: '',
+  zip_code: '',
   // dog
   surname: '',
   breed_id: '',
-  weight: '',
-  gender_id: '',
+  weight: undefined,
+  gender_id: undefined,
   birthday: '', // AAAA-MM-DD in bdd
-  sterilization: '', // boolean in bdd
+  sterilization: false, // boolean in bdd
   behavior: '', // behavior_id in bdd
 
   // for timeline
@@ -26,10 +26,8 @@ const initialState = {
   isDogFormComplete: false,
   // valider, en cours, masquer
 
-  // for continue button
-  isUserFormHide: false,
-  isDogFormHide: true,
-  isEndFormHide: true,
+  // for continue and previous button
+  formStep: 1,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -39,18 +37,16 @@ const reducer = (state = initialState, action = {}) => {
     //     ...state,
     //     [action.fieldName]: action.value,
     //   };
-    case CLICK_CONTINUE_USER:
+    case NEXT_SIGNUP_FORM_STEP:
       return {
         ...state,
-        isUserFormHide: true,
-        isDogFormHide: false,
+        formStep: state.formStep + 1,
       };
 
-    case CLICK_CONTINUE_DOG:
+    case PREVIOUS_SIGNUP_FORM_STEP:
       return {
         ...state,
-        isDogFormHide: true,
-        isEndFormHide: false,
+        formStep: state.formStep - 1,
       };
     default:
       return state;

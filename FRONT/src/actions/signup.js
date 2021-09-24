@@ -1,10 +1,10 @@
 /* eslint-disable linebreak-style */
-export const CLICK_CONTINUE_USER = 'CLICK_CONTINUE_USER';
-export const clickContinueUser = () => ({
-  type: CLICK_CONTINUE_USER,
+export const NEXT_SIGNUP_FORM_STEP = 'NEXT_SIGNUP_FORM_STEP';
+export const nextSignupFormStep = () => ({
+  type: NEXT_SIGNUP_FORM_STEP,
 });
 
-export const CLICK_CONTINUE_DOG = 'CLICK_CONTINUE_USER';
-export const clickContinueDog = () => ({
-  type: CLICK_CONTINUE_DOG,
+export const PREVIOUS_SIGNUP_FORM_STEP = 'PREVIOUS_SIGNUP_FORM_STEP';
+export const previousSignupFormStep = () => ({
+  type: PREVIOUS_SIGNUP_FORM_STEP,
 });
