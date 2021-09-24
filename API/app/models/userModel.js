@@ -22,6 +22,22 @@ class UserModel {
         }
     }
 
+
+    static async findOne(userId) {
+        try {
+            const { rows } = await database.query('SELECT id, photo FROM member WHERE id=$1', [userId]);
+            //return new UserModel(rows[0]) ; quelle version est plus propre ?
+            return rows[0];
+            
+        } catch (error) {
+            if (error.detail) {
+                throw new Error(error.detail)
+            } else {
+                throw error;
+            }
+        }
+    }
+
     async save(){
         try {
             if(this.id){
