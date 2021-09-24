@@ -1,21 +1,27 @@
 @use '../../../styles/vars';
 
 .dog {
-
-  & h2 {
-    font-size: 1.2*vars.$gutter;
-    margin-top: vars.$gutter;
-    padding-bottom: 0.5*vars.$gutter;
-  }
-
+  
   &__form {
 
     &__input-infos {
+      height: 480px;
   
       &__first {
         margin: vars.$gutter 0;
         display: flex;
         justify-content: center;
+        // width: 100%;
+        // max-width: 400px;
+
+        & select, & input {
+        width: 100%;
+        max-width: 150px;
+        }
+
+        & select {
+          color: vars.$color-border-bottom-header;
+        }
       }
   
       &__others{
@@ -30,7 +36,8 @@
 
         &__birthday {
           & input {
-            border-radius: 3px;
+            border-radius: 2px;
+            // width: 100%;
           }
         }
 
@@ -71,7 +78,7 @@
 
   // texts before input
   &__title {
-    width: 7*vars.$gutter;
+    width: 8*vars.$gutter;
   }
 }
 

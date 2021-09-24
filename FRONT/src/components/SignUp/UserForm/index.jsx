@@ -34,6 +34,18 @@ const UserForm = () => {
 
         <div className="user-form__form__input-infos">
           <div className="user-form__form__input-infos__identity">
+            {/* Firstname */}
+            <div className="user-form__form__input-infos__first_name">
+              {/* <label htmlFor="first_name">Votre Prénom</label> */}
+              <input {...register('first_name', { required: 'Veuillez entrer votre prénom' })} type="text" id="first_name" name="first_name" placeholder="Prénom" />
+            </div>
+
+            {/* Name */}
+            <div className="user-form__form__input-infos__name">
+              {/* <label htmlFor="last_name">Votre Nom</label> */}
+              <input {...register('last_name', { required: 'Veuillez entrer votre nom' })} type="text" id="last_name" name="last_name" placeholder="Nom" />
+            </div>
+
             {/* Email */}
             <div className="user-form__form__input-infos__email">
               {/* <label htmlFor="email">Votre adresse e-mail</label> */}
@@ -50,18 +62,6 @@ const UserForm = () => {
             <div className="user-form__form__input-infos__password--confirmation">
               {/* <label htmlFor="password_confirmation">Confirmer votre mot de passe</label> */}
               <input {...register('password_confirmation', { required: 'Veuillez confirmer votre mot de passe' })} type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirmer mot de passe" />
-            </div>
-
-            {/* Firstname */}
-            <div className="user-form__form__input-infos__first_name">
-              {/* <label htmlFor="first_name">Votre Prénom</label> */}
-              <input {...register('first_name', { required: 'Veuillez entrer votre prénom' })} type="text" id="first_name" name="first_name" placeholder="Prénom" />
-            </div>
-
-            {/* Name */}
-            <div className="user-form__form__input-infos__name">
-              {/* <label htmlFor="last_name">Votre Nom</label> */}
-              <input {...register('last_name', { required: 'Veuillez entrer votre nom' })} type="text" id="last_name" name="last_name" placeholder="Nom" />
             </div>
 
             {/* Picture profile */}
@@ -85,7 +85,7 @@ const UserForm = () => {
             </p>
             <div className="user-form__form__input-infos__zipcode__input">
               {/* <label htmlFor="zip_code">Votre code postal</label> */}
-              <input {...register('zip_code', { required: 'Veuillez entrer votre code postal' })} type="number" id="zip_code" name="zip_code" placeholder="Code postal" />
+              <input {...register('zip_code', { required: 'Veuillez entrer votre code postal' })} type="text" id="zip_code" name="zip_code" placeholder="Code postal" />
             </div>
           </div>
         </div>

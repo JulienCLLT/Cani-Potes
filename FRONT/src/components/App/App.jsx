@@ -11,7 +11,6 @@ import Connection from '../Connection/Connection';
 import CreateRide from '../CreateRide/CreateRide';
 import SignUp from '../SignUp/index';
 import RideDetails from '../RideDetails/RideDetails';
-import SignupMaterialUIUserForm from '../SignUp/MaterialUIUserForm';
 
 // import './App.scss';
 
@@ -33,7 +32,6 @@ function App() {
           <Header />
           <main>
             <SignUp />
-            {/* <SignupMaterialUIUserForm /> */}
           </main>
         </Route>
         <Route exact path="/home">

@@ -27,7 +27,7 @@ const SignUp = () => {
           <DogForm />
           <EndForm />
 
-          {formStep === 3 && <button type="submit" className="end__submit signup-main__submit">Chercher une balade</button>}
+          {/* {formStep === 3 && <button type="submit" className="end__submit signup-main__submit">Chercher une balade</button>} */}
 
           {/* {formStep === 1 && (<UserForm />) }
           {formStep === 2 && (<DogForm />) }

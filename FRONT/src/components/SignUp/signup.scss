@@ -23,7 +23,7 @@
 
 .signup {
 
-    & h2 {
+    & h2 { //centrer avec media queries
         font-size: 1.3*vars.$gutter;
         font-weight: bold;
         margin-top : 2*vars.$gutter;
@@ -32,15 +32,16 @@
 
     &__back-submit {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         margin-top: 10px;
-        padding: 0 3 * vars.$gutter;
+        padding: 0 2* vars.$gutter;
 
         &__submit, &__back {
             text-align: center;
             line-height: 1.4;
             text-transform: uppercase;
             width: 50%;
+            max-width: 200px;
             border-radius: 4px;
             margin-top: 24px;
         }
@@ -48,7 +49,6 @@
         &__submit {
             @extend %btn;
             margin-left: 0.5*vars.$gutter;
-            line-height: 1.2;
         }
     
         &__back {
