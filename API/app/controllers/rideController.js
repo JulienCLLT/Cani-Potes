@@ -58,6 +58,38 @@ const rideController = {
         } catch (error) {
             response.status(500).json(error.message);
         }
+    },
+
+    removeUserFromRide: async (request, response) => {
+        try {
+            const rideId = Number(request.params.rideId);
+            const userId = Number(request.params.userId);
+
+            // todo  fausse data en attendant test avec jwt
+            const hostId = 1;
+    
+            if (isNaN(rideId) || isNaN(userId)) {
+                throw Error('La valeur de l\'id doit être un nombre');
+            }
+
+            const ride = await Ride.findById(rideId);
+            if(!ride) {
+                throw Error('La balade n\'existe pas');
+            }
+            if(hostId !== ride.host_id ){
+                throw Error('Vous nêtes pas l\'organisateur de la balade: vous ne pouvez pas supprimer des participants');
+            }
+            if(hostId === userId){
+                throw Error('Vous ne pouvez pas vous retirer d\'une balade que vous organisez');
+            }
+
+            await Ride.deleteAllParticipantsFromRide(userId, rideId);
+
+            response.status(204).json("Le membre a été retiré de la balade");
+
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
 
     },
 

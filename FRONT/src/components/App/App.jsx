@@ -8,8 +8,11 @@ import Header from '../Header/Header';
 import MapBalade from '../MapBalade';
 import Connection from '../Connection/Connection';
 import CreateRide from '../CreateRide/CreateRide';
+import RideDetails from '../RideDetails/RideDetails';
 
-import './App.scss';
+// import './App.scss';
+
+import '../../styles/reset.scss';
 
 function App() {
   const { isLogged } = useSelector((state) => state.user);
@@ -20,10 +23,7 @@ function App() {
       <Switch>
         <Route exact path="/">
           {isLogged && <Redirect to="/home" />}
-          <Header />
-          <main>
-            <Connection />
-          </main>
+          <Connection />
         </Route>
         <Route exact path="/signup">
           {isLogged && <Redirect to="/home" />}
@@ -42,6 +42,12 @@ function App() {
           <Header />
           <main>
             <CreateRide />
+          </main>
+        </Route>
+        <Route exact path="/ride/:id">
+          <Header />
+          <main>
+            <RideDetails />
           </main>
         </Route>
         <Route>
