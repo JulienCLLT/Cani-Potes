@@ -12,7 +12,8 @@ SELECT
             'sender_id', sender.id,
             'sender_first_name', sender.first_name,
             'sender_last_name', sender.last_name,
-            'sender_photo', sender.photo,       
+            'sender_photo', sender.photo,
+            'message_id', message.id,       
             'message', message.message,                    
             'sent', message.created_at
         )) FILTER (WHERE sender.id IS NOT NULL) AS messages,
