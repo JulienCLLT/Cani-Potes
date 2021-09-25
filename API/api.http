@@ -12,11 +12,12 @@ DELETE {{baseUrl}}/ride/6
 
 ### Retirer un membre d'une balade
 
-DELETE {{baseUrl}}/ride/8/participation
+DELETE {{baseUrl}}/ride/1/participation
+
 
 ### Ajout un nouveau membre à une balade
-POST {{baseUrl}}/ride/2/participation
+POST {{baseUrl}}/ride/1/participation
 
 ### Retirer un membre d'une balade dont on est l'orga
 
-DELETE {{baseUrl}}/ride/1/participation/user/1
+DELETE {{baseUrl}}/ride/1/participation/user/2
