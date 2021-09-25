@@ -1,8 +1,33 @@
 @use '../../../styles/vars';
 
 .end {
+    
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 480px;
 
-  .signup-hide {
-    display: none;
-  }
+        &__p {
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        &__submit {
+            @extend %btn;
+            padding: 0 3 * vars.$gutter;
+            line-height: 2;
+            margin: 0 auto;
+            max-width: 250px;
+            width: 100%;
+        }
+    }
+
+    &__back {
+        margin: 0 auto;
+    }
+
+    & img {
+        width: vars.$gutter;
+    } 
 }
