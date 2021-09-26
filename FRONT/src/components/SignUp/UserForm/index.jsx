@@ -5,9 +5,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import Input from '../Input';
 
 // action creator
 import { nextSignupFormStep } from '../../../actions/signup';
@@ -15,88 +14,103 @@ import { nextSignupFormStep } from '../../../actions/signup';
 import './user-form.scss';
 
 const UserForm = () => {
-  const { register, control } = useFormContext();
-
   const formStep = useSelector((state) => state.signup.formStep);
   const dispatch = useDispatch();
   const clickToContinue = () => {
     dispatch(nextSignupFormStep());
   };
 
+  const {
+    register, handleSubmit, formState: { isSubmitSuccessful, errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    console.log('data', data);
+  };
+
+  if (isSubmitSuccessful) {
+    console.log('yes');
+    return <Link to="/" />;
+  }
+
   return (
     <div className={formStep === 1 ? 'signup user-form' : 'hidden'}>
       <h2 className="signup__subtitle">Vous</h2>
 
       <div className="user-form__form">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* {isValid ? <p> isValid 'true'</p> : <p> isValid 'false'</p>}
+          {isSubmitted ? <p> isSubmitted 'true'</p> : <p> isSubmitted 'false'</p>}
+          {isSubmitting ? <p> isSubmitting 'true'</p> : <p> isSubmitting 'false'</p>}
+          {isSubmitSuccessful ? <p> isSubmitSuccessful 'true'</p> : <p> isSubmitSuccessful 'false'</p>} */}
 
-        <div className="user-form__form__input-infos">
-          <div className="user-form__form__input-infos__identity">
-            {/* Firstname */}
-            <div className="user-form__form__input-infos__first_name">
-              {/* <label htmlFor="first_name">Votre Prénom</label> */}
-              <Input type="text" id="first_name" name="first_name" placeholder="Prénom" control={control} rules={{ required: true }} />
-              {/* <input {...register('first_name', { required: 'Veuillez entrer votre prénom' })} type="text" id="first_name" name="first_name" placeholder="Prénom" /> */}
+          <div className="user-form__form__input-infos">
+            <div className="user-form__form__input-infos__identity">
+              {/* Firstname */}
+              <div className="user-form__form__input-infos__first_name">
+                <input {...register('first_name', { required: 'Veuillez entrer votre prénom.' })} type="text" placeholder="Prénom" defaultValue="ma" />
+                {errors.first_name && <p className="errors">{errors.first_name.message}</p>}
+              </div>
+
+              {/* Name */}
+              <div className="user-form__form__input-infos__name">
+                <input {...register('last_name', { required: 'Veuillez entrer votre nom.' })} type="text" placeholder="Nom" defaultValue="ch" />
+                {errors.last_name && <p className="errors">{errors.last_name.message}</p>}
+              </div>
+
+              {/* Email */}
+              <div className="user-form__form__input-infos__email">
+                <input {...register('email', { required: 'Veuillez entrer un email.' })} type="email" placeholder="Email" defaultValue="az@z" />
+                {errors.email && <p className="errors">{errors.email.message}</p>}
+              </div>
+
+              {/* Password */}
+              <div className="user-form__form__input-infos__password">
+                <input {...register('password', { required: 'Veuillez entrer un mot de passe.' })} type="password" placeholder="Mot de passe" />
+                {errors.password && <p className="errors">{errors.password.message}</p>}
+              </div>
+
+              {/* Password confirmation */}
+              <div className="user-form__form__input-infos__password--confirmation">
+                <input {...register('password_confirmation', { required: 'Veuillez confirmer votre mot de passe.' })} type="password" placeholder="Confirmer mot de passe" />
+                {errors.password_confirmation && <p className="errors">{errors.password_confirmation.message}</p>}
+              </div>
+
+              {/* Picture profile */}
+              <div className="user-form__form__input-infos__picture">
+                <label htmlFor="photo">Ajouter une photo de profil
+                  <input
+                    {...register(('photo'))}
+                    type="file"
+                    id="photo"
+                    accept="image/png, image/jpeg"
+                  />
+                </label>
+              </div>
             </div>
 
-            {/* Name */}
-            <div className="user-form__form__input-infos__name">
-              {/* <label htmlFor="last_name">Votre Nom</label> */}
-              <input {...register('last_name', { required: 'Veuillez entrer votre nom' })} type="text" id="last_name" name="last_name" placeholder="Nom" />
-            </div>
-
-            {/* Email */}
-            <div className="user-form__form__input-infos__email">
-              {/* <label htmlFor="email">Votre adresse e-mail</label> */}
-              <input {...register('email', { required: 'Veuillez entrer un email' })} type="email" id="email" name="email" placeholder="Email" />
-            </div>
-
-            {/* Password */}
-            <div className="user-form__form__input-infos__password">
-              {/* <label htmlFor="password">Votre mot de passe</label> */}
-              <input {...register('password', { required: 'Veuillez entrer un mot de passe' })} type="password" id="password" name="password" placeholder="Mot de passe" />
-            </div>
-
-            {/* Password confirmation */}
-            <div className="user-form__form__input-infos__password--confirmation">
-              {/* <label htmlFor="password_confirmation">Confirmer votre mot de passe</label> */}
-              <input {...register('password_confirmation', { required: 'Veuillez confirmer votre mot de passe' })} type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirmer mot de passe" />
-            </div>
-
-            {/* Picture profile */}
-            <div className="user-form__form__input-infos__picture">
-              <label htmlFor="photo">Ajouter une photo de profil</label>
-              <input
-                {...register(('photo'))}
-                type="file"
-                id="photo"
-                name="photo"
-                accept="image/png, image/jpeg"
-              />
+            {/* Zipcode */}
+            <div className="user-form__form__input-infos__zipcode">
+              <p className="user-form__form__input-infos__zipcode__p">
+                Afin de pouvoir géolocaliser votre ville,
+                nous avons besoin de votre code postal.
+              </p>
+              <div className="user-form__form__input-infos__zipcode__input">
+                <input {...register('zip_code', { required: 'Veuillez entrer un code postal.', minLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' }, maxLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' } })} type="text" placeholder="Code postal" />
+                {errors.zip_code && <p className="errors">{errors.zip_code.message}</p>}
+                {}
+              </div>
             </div>
           </div>
-
-          {/* Zipcode */}
-          <div className="user-form__form__input-infos__zipcode">
-            <p>
-              Afin de pouvoir géolocaliser votre ville,
-              nous avons besoin de votre code postal.
-            </p>
-            <div className="user-form__form__input-infos__zipcode__input">
-              {/* <label htmlFor="zip_code">Votre code postal</label> */}
-              <input {...register('zip_code', { required: 'Veuillez entrer votre code postal' })} type="text" id="zip_code" name="zip_code" placeholder="Code postal" />
-            </div>
+          <div className="signup__back-submit">
+            <Link to="/" className="signup__back-submit__back">Retour</Link>
+            <button
+              onClick={handleSubmit(onSubmit)}
+              type="button"
+              className="signup__back-submit__submit"
+            >Valider
+            </button>
           </div>
-        </div>
-        <div className="signup__back-submit">
-          <Link to="/" className="signup__back-submit__back">Retour</Link>
-          <button
-            onClick={clickToContinue}
-            type="button"
-            className="signup__back-submit__submit"
-            // disabled={!formState.isValid}
-          >Continuer
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   );

@@ -19,11 +19,16 @@
 
 .signup {
 
-    & h2 { //centrer avec media queries
+    & h2 {
+        // color: vars.$color_main;
+        text-align: center;
         font-size: 1.3*vars.$gutter;
         font-weight: bold;
         margin-top : 2*vars.$gutter;
         margin-bottom : vars.$gutter;
+        // border-bottom: 1px solid vars.$color-border-input;
+        box-shadow: 0 0 20px vars.$color-border-input;
+        padding: 0.2*vars.$gutter 0;
     }
 
     &__back-submit {
