@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 @mixin lg-screen {
-    @media screen and (min-width:700px) {
+    @media screen and (min-width:900px) {
         @content
     }
 }
@@ -64,7 +64,7 @@
 
     &__cani-potes {
         font-family: 'Indie Flower', cursive;
-        font-size: 1.4rem;
+        font-size: 1.7rem;
     }
 
     p {
@@ -79,14 +79,33 @@
     }
 
     &__info {
+        & article {
+            @include lg-screen {
+                display: flex;
+                gap: 2 * vars.$gutter;
+                align-items: center;
+                margin: 3 * vars.$gutter 0;
+            }
+
+            &:nth-child(2) {
+                @include lg-screen {
+                    flex-direction: row-reverse;
+                }
+            }
+        }
 
         &__title {
+            flex: 1;
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             margin: .5 * vars.$gutter 0 2 * vars.$gutter;
             gap: 1 * vars.$gutter;
+
+            @include lg-screen {
+                margin: 0;
+            }
 
             &.flex-row-reverse {
                 color: red;
@@ -100,6 +119,7 @@
                 top: 20%;
                 left: 50%;
                 width: 80%;
+                max-width: 350px;
                 z-index: 1;
                 transform: translate(-50%, -50%);
                 text-align: center;
@@ -108,11 +128,7 @@
                 text-shadow: 0 0 5px black;
 
                 @include lg-screen {
-                    position: static;
-                    transform: translate(0);
-                    color: black;
-                    text-shadow: none;
-                    text-align: left;
+                    top: 25%;
                 }
                 
                 strong {
@@ -122,8 +138,9 @@
             }
             
             div {
-                
+
                 @include lg-screen {
+                    min-width: 300px;
                     max-width: 450px;
                 }
 
@@ -143,24 +160,30 @@
             box-shadow: 0 1px 5px vars.$color-border-bottom-header;
             
             @include lg-screen {
-                width: 100%;
+                width: 60%;
+                margin: 0;
+                // align-self: stretch;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding:  3 * vars.$gutter 2 * vars.$gutter  3 * vars.$gutter;
             }
             
             span:nth-child(1) {
-                font-size: 1rem;
+                font-size: 1.5rem;
                 padding-bottom: 1 * vars.$gutter;
                 border-bottom: 1px solid vars.$color-border-bottom-header;
                 margin-bottom: .7 * vars.$gutter;
             }
             
-            p {
+            p, div {
                 display: flex;
                 flex-direction: column;
-                font-size: 1rem;
+                font-size: 1.3rem;
                 line-height: 1.3;
-
-
             }
+
+
         }
 
         &__map {

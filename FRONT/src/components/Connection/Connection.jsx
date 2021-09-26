@@ -54,46 +54,51 @@ const Connection = () => {
 
       <main className="connection">
         <div className="connection__info">
-          <div className="connection__info__title">
-            <h2>
-              <strong>Cani' Potes</strong>
-              <br/>
-              Pour des rencontres qui ont du chien
-            </h2>
-            <div>
-              <img src={dogHome} alt="dogs" />
+          <article>
+            <div className="connection__info__title">
+              <h2>
+                <strong>Cani' Potes</strong>
+                <br/>
+                Pour des rencontres qui ont du chien
+              </h2>
+              <div>
+                <img src={dogHome} alt="dogs" />
+              </div>
             </div>
-          </div>
-          <div className="connection__info__text">
-            <p>
-              <span>
-                <strong className="connection__cani-potes">Cani' Potes</strong> ? <br/>
-                <span>C'est un site au poil pour les <strong>chiens</strong> !</span>
-              </span>
-              <span>
-                Partez à la rencontre de nombreux Cani' Potes (comprendre "propriétaires" de chiens)
-                pour que vos toutous se sociabilisent en toute sécurité avec d'autres amis poilus
-              </span>
-            </p>
-          </div>
-          <div className="connection__info__title flex-row-reverse">
-            <span>Trouvez via la carte interractive d'autres Cani' Potes et partez en balades organisées</span>
-            <div>
-              <img src={mapHome} alt="map example" />
+            <div className="connection__info__text">
+              <p>
+                <span>
+                  <strong className="connection__cani-potes">Cani' Potes</strong> ? <br/>
+                  <span>C'est un site au poil pour les <strong>chiens</strong> !</span>
+                </span>
+                <span>
+                  Partez à la rencontre de nombreux Cani' Potes (comprendre "propriétaires" de chiens)
+                  pour que vos toutous se sociabilisent en toute sécurité avec d'autres amis poilus
+                </span>
+              </p>
             </div>
-          </div>
-          <div className="connection__info__text">
-            <p>
-              <span>Commencez l'aventure simplement !</span>
-              <ul>
-                <li>Je me créé un compte en cliquant sur "Inscription"</li>
-                <li>Je renseigne mes informations et celles de mon / mes chiens</li>
-                <li>Depuis la carte interactive, je peux chercher une balade proposée par un autre membre</li>
-                <li>Et c'est partit pour des rencontres au poil !</li>
-                <li>Vous pourrez également créer vos propres balades !</li>
-              </ul>
-            </p>
-          </div>
+          </article>
+
+          <article>
+            <div className="connection__info__title">
+              <span>Trouvez via la carte interractive d'autres Cani' Potes et partez en balades organisées</span>
+              <div>
+                <img src={mapHome} alt="map example" />
+              </div>
+            </div>
+            <div className="connection__info__text">
+              <div>
+                <span>Commencez l'aventure simplement !</span>
+                <ol>
+                  <li>Je me créé un compte en cliquant sur "Inscription"</li>
+                  <li>Je renseigne mes informations et celles de mon / mes chiens</li>
+                  <li>Depuis la carte interactive, je peux chercher une balade proposée par un autre membre</li>
+                  <li>Et c'est partit pour des rencontres au poil !</li>
+                  <li>Vous pourrez également créer vos propres balades !</li>
+                </ol>
+              </div>
+            </div>
+          </article>
         </div>
 
         {isModalOpen && (
