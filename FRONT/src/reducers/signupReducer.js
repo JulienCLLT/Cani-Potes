@@ -22,7 +22,7 @@ const initialState = {
   behavior: '', // behavior_id in bdd
 
   // for continue and previous button
-  formStep: 2,
+  formStep: 1,
 };
 
 const reducer = (state = initialState, action = {}) => {

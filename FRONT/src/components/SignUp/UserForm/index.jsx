@@ -21,7 +21,7 @@ const UserForm = () => {
   };
 
   const {
-    register, handleSubmit, formState: { isSubmitSuccessful, errors },
+    register, handleSubmit, formState: { isSubmitSuccessful, errors }, watch,
   } = useForm();
   const onSubmit = (data) => {
     console.log('data', data);
@@ -31,6 +31,8 @@ const UserForm = () => {
     console.log('yes');
     return <Link to="/" />;
   }
+
+  console.log(errors);
 
   return (
     <div className={formStep === 1 ? 'signup user-form' : 'hidden'}>
@@ -71,7 +73,7 @@ const UserForm = () => {
 
               {/* Password confirmation */}
               <div className="user-form__form__input-infos__password--confirmation">
-                <input {...register('password_confirmation', { required: 'Veuillez confirmer votre mot de passe.' })} type="password" placeholder="Confirmer mot de passe" />
+                <input {...register('password_confirmation', { required: 'Veuillez confirmer votre mot de passe.', validate: (value) => value === watch('password') || 'Les mots de passe de correspondent pas' })} type="password" placeholder="Confirmer mot de passe" />
                 {errors.password_confirmation && <p className="errors">{errors.password_confirmation.message}</p>}
               </div>
 
