@@ -8,7 +8,8 @@ import NavBarDisconnected from '../Header/NavBarDisconnected/NavBarDisconnected'
 import './Connection.scss';
 import close from '../../assets/img/close.svg';
 import logo from '../../assets/navbar/canipotes_logo.jpg';
-import dogMobile from '../../assets/img/home-dogs.jpg';
+import dogHome from '../../assets/img/home-dogs.jpg';
+import mapHome from '../../assets/img/home_map.png';
 
 const Connection = () => {
   const dispatch = useDispatch();
@@ -60,33 +61,38 @@ const Connection = () => {
               Pour des rencontres qui ont du chien
             </h2>
             <div>
-              <img src={dogMobile} alt="dogs" />
+              <img src={dogHome} alt="dogs" />
             </div>
           </div>
           <div className="connection__info__text">
             <p>
-              <span><strong>Cani' Potes</strong> ?</span>
-              <span>C'est un site au poil pour les <strong>chiens</strong> !</span>
+              <span>
+                <strong className="connection__cani-potes">Cani' Potes</strong> ? <br/>
+                <span>C'est un site au poil pour les <strong>chiens</strong> !</span>
+              </span>
               <span>
                 Partez à la rencontre de nombreux Cani' Potes (comprendre "propriétaires" de chiens)
                 pour que vos toutous se sociabilisent en toute sécurité avec d'autres amis poilus
               </span>
-              <span>Trouvez via la carte interractive d'autres Cani' Potes et partez en balades organisées</span>
             </p>
           </div>
-          <div className="connection__info__map">
-            {/* screeshot the map */}
-            GROSSE MAP DE PRESENTATION ICI
+          <div className="connection__info__title flex-row-reverse">
+            <span>Trouvez via la carte interractive d'autres Cani' Potes et partez en balades organisées</span>
+            <div>
+              <img src={mapHome} alt="map example" />
+            </div>
           </div>
           <div className="connection__info__text">
-            <p>Pour commencer l'aventure, rien de plus simple !</p>
-            <ul>
-              <li>Je me créé un compte en cliquant sur "Inscription"</li>
-              <li>Je renseigne mes informations et celles de mon / mes chiens</li>
-              <li>Depuis la carte interactive, je peux chercher une balade proposée par un autre membre</li>
-              <li>Et c'est partit pour des rencontres au poil !</li>
-              <li>Vous pourrez également créer vos propres balades !</li>
-            </ul>
+            <p>
+              <span>Commencez l'aventure simplement !</span>
+              <ul>
+                <li>Je me créé un compte en cliquant sur "Inscription"</li>
+                <li>Je renseigne mes informations et celles de mon / mes chiens</li>
+                <li>Depuis la carte interactive, je peux chercher une balade proposée par un autre membre</li>
+                <li>Et c'est partit pour des rencontres au poil !</li>
+                <li>Vous pourrez également créer vos propres balades !</li>
+              </ul>
+            </p>
           </div>
         </div>
 
