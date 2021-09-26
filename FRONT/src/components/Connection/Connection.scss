@@ -61,6 +61,12 @@
 }
 
 .connection {
+
+    &__cani-potes {
+        font-family: 'Indie Flower', cursive;
+        font-size: 1.4rem;
+    }
+
     p {
         line-height: 1.2;
     }
@@ -79,11 +85,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 1 * vars.$gutter 0 2 * vars.$gutter;
+            margin: .5 * vars.$gutter 0 2 * vars.$gutter;
             gap: 1 * vars.$gutter;
 
+            &.flex-row-reverse {
+                color: red;
+                @include lg-screen {
+                    flex-direction: row-reverse;
+                }
+            }
             
-            h2 {
+            h2, span {
                 position: absolute;
                 top: 20%;
                 left: 50%;
@@ -93,17 +105,19 @@
                 text-align: center;
                 font-size: 1.6rem;
                 color: vars.$color__white;
-                text-shadow: 0 0 3px black;
+                text-shadow: 0 0 5px black;
 
                 @include lg-screen {
                     position: static;
                     transform: translate(0);
                     color: black;
                     text-shadow: none;
+                    text-align: left;
                 }
                 
                 strong {
                     font-family: 'Indie Flower', cursive;
+                    font-size: 1.5em;
                 }
             }
             
@@ -122,17 +136,30 @@
         }
         
         &__text {
-            padding: 1 * vars.$gutter 0  2 * vars.$gutter;
-
+            width: 87%;
+            margin: 2 * vars.$gutter auto;
+            padding: 1 * vars.$gutter 2 * vars.$gutter  2 * vars.$gutter;
+            border-radius: 5px;
+            box-shadow: 0 1px 5px vars.$color-border-bottom-header;
+            
             @include lg-screen {
-                padding: 0;
+                width: 100%;
             }
-
+            
+            span:nth-child(1) {
+                font-size: 1rem;
+                padding-bottom: 1 * vars.$gutter;
+                border-bottom: 1px solid vars.$color-border-bottom-header;
+                margin-bottom: .7 * vars.$gutter;
+            }
+            
             p {
                 display: flex;
                 flex-direction: column;
-                text-align: center;
                 font-size: 1rem;
+                line-height: 1.3;
+
+
             }
         }
 
