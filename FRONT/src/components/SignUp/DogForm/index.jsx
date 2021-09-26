@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable max-len */
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { nextSignupFormStep, previousSignupFormStep } from '../../../actions/signup';
 
@@ -12,7 +12,7 @@ import { nextSignupFormStep, previousSignupFormStep } from '../../../actions/sig
 import './dog-form.scss';
 
 const DogForm = () => {
-  const { register, formState: { errors } } = useFormContext();
+  const { register, formState: { errors } } = useForm();
   const date = new Date();
 
   const dispatch = useDispatch();
@@ -21,9 +21,9 @@ const DogForm = () => {
   };
 
   const formStep = useSelector((state) => state.signup.formStep);
-  const clickToPrevious = () => {
-    dispatch(previousSignupFormStep());
-  };
+  // const clickToPrevious = () => {
+  //   dispatch(previousSignupFormStep());
+  // };
 
   return (
     <div className={formStep === 2 ? 'signup dog' : 'hidden'}>
@@ -41,11 +41,11 @@ const DogForm = () => {
             {errors.race && <span>{errors.race.message}</span>}
 
             {/* Age */}
-            <input type="number" placeholder="Age" {...register('age', { required: 'Veuillez renseigner son âge' })} className="dog__commun" />
+            <input type="number" placeholder="Age" {...register('age', { required: 'Veuillez renseigner son âge', valueAsNumber: true })} className="dog__commun" />
             {errors.age && <span>{errors.age.message}</span>}
 
             {/* Weight */}
-            <input type="number" placeholder="Poids (kg)" {...register('weight', { required: 'Veuillez renseigner son poids' })} className="dog__commun" />
+            <input type="number" placeholder="Poids (kg)" {...register('weight', { required: 'Veuillez renseigner son poids', valueAsNumber: true })} className="dog__commun" />
             {errors.weight && <span>{errors.weight.message}</span>}
           </div>
           <div className="dog__form__input-infos__others">
@@ -55,7 +55,7 @@ const DogForm = () => {
               <p className="dog__title">Il s'agit d'un(e)</p>
               {/* Female */}
               <label htmlFor="female" className="dog__commun">
-                <input {...register('sexe', { required: true })} type="radio" value="1" id="female" name="sexe" />
+                <input {...register('sexe', { required: true })} type="radio" value="1" id="female" />
                 Femelle
               </label>
               {/* Male */}
@@ -140,12 +140,12 @@ const DogForm = () => {
           </div>
         </div>
         <div className="signup__back-submit">
-          <button
+          {/* <button
             onClick={clickToPrevious}
             type="button"
             className="signup__back-submit__back"
           >Retour
-          </button>
+          </button> */}
           <button
             onClick={clickToContinue}
             type="button"

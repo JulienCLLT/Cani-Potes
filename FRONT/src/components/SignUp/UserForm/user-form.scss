@@ -10,34 +10,33 @@
     }
 
     &__input-infos {
-      height: 470px;
+      height: 510px;
 
       &__identity {
         padding: 0 2*vars.$gutter;
-        padding-bottom: vars.$gutter;
       }
 
-      &__email, &__password, &__password--confirmation, &__name, &__first_name, &__picture, &__zipcode__input {
+      &__email, &__password, &__password--confirmation, &__name, &__first_name, &__picture, &__zipcode__input{
         display: flex;
         flex-direction: column;
         margin-top: vars.$gutter;
+        justify-content: center;
+        align-items: center;
 
         & label {
           margin-bottom: 0.4*vars.$gutter;
           max-width: 400px;
-          // text-align: center;
         }
       }
 
       &__zipcode{
+        display: flex;
+        flex-direction: column;
 
-        & p {
+        &__p {
           font-size: vars.$gutter;
           text-align: justify; // center pour media queries
           margin-top: vars.$gutter;
-        }
-        &__input {
-          padding: 0 2*vars.$gutter;
         }
       }
     }
@@ -50,10 +49,17 @@
     box-sizing: content-box;
     width: 100%;
     max-width: 400px;
-    margin: 0 auto;
+    // margin: 0 auto;
   }
 }
 
 .user-form__form__input-infos__picture input {
   border: none;
+}
+
+// errors message
+.errors {
+  margin: 0 auto;
+  font-size: 0.8* vars.$gutter;
+  color: vars.$color_error;
 }

@@ -21,22 +21,12 @@ const initialState = {
   sterilization: false, // boolean in bdd
   behavior: '', // behavior_id in bdd
 
-  // for timeline
-  isUserFormComplete: false,
-  isDogFormComplete: false,
-  // valider, en cours, masquer
-
   // for continue and previous button
-  formStep: 1,
+  formStep: 2,
 };
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    // case 'SET_FIELD':
-    //   return {
-    //     ...state,
-    //     [action.fieldName]: action.value,
-    //   };
     case NEXT_SIGNUP_FORM_STEP:
       return {
         ...state,
