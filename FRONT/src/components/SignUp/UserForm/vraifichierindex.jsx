@@ -5,14 +5,36 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useController } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import Input from '../Input';
 
 // action creator
 import { nextSignupFormStep } from '../../../actions/signup';
 
 import './user-form.scss';
+
+function Input(props) {
+  const { field, fieldState } = useController(props);
+  console.log(field);
+  console.log(fieldState);
+
+  return (
+    <div>
+      <input
+        {...field}
+        type={props.type}
+        placeholder={props.placeholder}
+        name={props.name}
+        id={props.id}
+        rules={{ required: true }}
+      />
+      <p>{fieldState.invalid ? 'invalid' : 'valid'}</p>
+
+      <p>{fieldState.isTouched && 'Touched'}</p>
+      <p>{fieldState.isDirty && 'Dirty'}</p>
+    </div>
+  );
+}
 
 const UserForm = () => {
   const { register, control } = useFormContext();

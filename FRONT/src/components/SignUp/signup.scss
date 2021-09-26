@@ -4,10 +4,6 @@
     display: none;
 }
 
-.visible {
-    display: block;
-}
-
 .signup-main {
     padding: vars.$gutter;
 
@@ -43,7 +39,6 @@
             width: 50%;
             max-width: 200px;
             border-radius: 4px;
-            margin-top: 24px;
         }
 
         &__submit {

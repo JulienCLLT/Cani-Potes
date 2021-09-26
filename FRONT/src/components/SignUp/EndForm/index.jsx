@@ -14,6 +14,7 @@ const EndForm = () => {
   const clickToPrevious = () => {
     dispatch(previousSignupFormStep());
   };
+
   return (
     <div className={formStep === 3 ? 'signup end' : 'hidden'}>
       <h2>Fin</h2>
