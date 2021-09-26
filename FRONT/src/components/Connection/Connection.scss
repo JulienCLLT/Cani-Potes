@@ -49,19 +49,24 @@
 
         @include lg-screen {
             flex-direction: row;
+            gap: 1.5 * vars.$gutter;
         }
 
         &__signin, &__signup {
             @extend %btn;
+            border-radius: 10px;
             background: white;
             color: vars.$color_main;
             padding: .5 * vars.$gutter;
+
+            @include lg-screen {
+                font-size: 1.45rem;
+            }
         }
     }
 }
 
 .connection {
-
     &__cani-potes {
         font-family: 'Indie Flower', cursive;
         font-size: 1.7rem;
@@ -141,7 +146,7 @@
 
                 @include lg-screen {
                     min-width: 300px;
-                    max-width: 450px;
+                    max-width: 640px;
                 }
 
                 img {
@@ -162,7 +167,6 @@
             @include lg-screen {
                 width: 60%;
                 margin: 0;
-                // align-self: stretch;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -195,22 +199,30 @@
 
     &__modal {
         background-color: rgba(200, 200, 200, .8);
-        position: absolute;
+        position: fixed;
         top: 50%;
         left: 50%;
         width: 80%;
         max-width: 600px;
         transform: translate(-50%, -50%);
-        padding: 5 * vars.$gutter 3 * vars.$gutter;
+        padding: 3 * vars.$gutter 3 * vars.$gutter;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         border-radius: 10px;
+        z-index: 9999;
+        font-size: 1.3rem;
 
         &__close {
+            width: 50px;
+            height: 50px;
             align-self: flex-end;
             cursor: pointer;
+
+            img {
+                width: 100%;
+            }
         }
     }
 
@@ -240,12 +252,13 @@
             input {
                 width: 100%;
                 border: none;
-                padding: .3 * vars.$gutter;
+                padding: 1 * vars.$gutter .5 * vars.$gutter;
             }
         }
 
         &__submit {
             @extend %btn;
+            font-size: inherit;
         }
     }
 
