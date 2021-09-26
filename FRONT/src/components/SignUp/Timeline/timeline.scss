@@ -9,6 +9,7 @@
             height: 2px;
             left: 0;
             background-color: vars.$color_main;
+            margin-bottom: 10px;
         }
     
         &__circle {
@@ -30,6 +31,7 @@
 
         & h2 {
             transform: translate(0,-50%);
+            width: fit-content;
             position: absolute;
             // top: 10%;
             font-weight: normal;

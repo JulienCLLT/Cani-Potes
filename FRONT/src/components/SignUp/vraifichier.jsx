@@ -12,14 +12,7 @@ import Timeline from './Timeline/index';
 import './signup.scss';
 
 const SignUp = () => {
-  const methods = useForm(
-  //   {
-  //   defaultValues: {
-  //     first_name: '',
-  //   },
-  //   mode: 'onChange',
-  // }
-  );
+  const methods = useForm();
   const onSubmit = (data) => console.log('data', data);
 
   return (
