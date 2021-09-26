@@ -10,9 +10,9 @@
     }
 
     &__input-infos {
-      height: 510px;
+      height: 520px;
 
-      &__identity {
+      &__identity, &__zipcode__input {
         padding: 0 2*vars.$gutter;
       }
 
@@ -37,6 +37,8 @@
           font-size: vars.$gutter;
           text-align: justify; // center pour media queries
           margin-top: vars.$gutter;
+          max-width: 400px;
+          align-self: center;
         }
       }
     }
@@ -62,4 +64,5 @@
   margin: 0 auto;
   font-size: 0.8* vars.$gutter;
   color: vars.$color_error;
+  padding-top: 0.2*vars.$gutter;
 }
