@@ -7,6 +7,8 @@ import NavBarDisconnected from '../Header/NavBarDisconnected/NavBarDisconnected'
 
 import './Connection.scss';
 import close from '../../assets/img/close.svg';
+import logo from '../../assets/navbar/canipotes_logo.jpg';
+import dogMobile from '../../assets/img/home-dogs.jpg';
 
 const Connection = () => {
   const dispatch = useDispatch();
@@ -28,10 +30,9 @@ const Connection = () => {
           to="/"
           exact
         >
-          {/* expect logo img instead of text */}
-          LOGO
+          <img src={logo} alt="logo cani potes" />
         </NavLink>
-        <h1 className="header-connection__title">Cani Potes</h1>
+        <h1 className="header-connection__title">Cani' Potes</h1>
         <div className="header-connection__cta">
           <button
             type="button"
@@ -52,19 +53,29 @@ const Connection = () => {
 
       <main className="connection">
         <div className="connection__info">
-          <div className="connection__info__text">
-            <h2 className="connection__info__title">
-              Bienvenue sur le site <strong>Cani Potes</strong> !
+          <div className="connection__info__title">
+            <h2>
+              <strong>Cani' Potes</strong>
+              <br/>
+              Pour des rencontres qui ont du chien
             </h2>
+            <div>
+              <img src={dogMobile} alt="dogs" />
+            </div>
+          </div>
+          <div className="connection__info__text">
             <p>
-              <strong>Cani Potes</strong> ? C'est quoi ça ?
-              C'est un site qui a du chien !
-              Oui mais c'est avant tout un site pour les <strong>chiens</strong>
-              Partez à la rencontre de nombreux Cani Potes (propriétaires de chiens)
-              pour que vos toutous se sociabilisent en toute sécurité avec d'autres amoureux de nos amis poilus 
+              <span><strong>Cani' Potes</strong> ?</span>
+              <span>C'est un site au poil pour les <strong>chiens</strong> !</span>
+              <span>
+                Partez à la rencontre de nombreux Cani' Potes (comprendre "propriétaires" de chiens)
+                pour que vos toutous se sociabilisent en toute sécurité avec d'autres amis poilus
+              </span>
+              <span>Trouvez via la carte interractive d'autres Cani' Potes et partez en balades organisées</span>
             </p>
           </div>
           <div className="connection__info__map">
+            {/* screeshot the map */}
             GROSSE MAP DE PRESENTATION ICI
           </div>
           <div className="connection__info__text">

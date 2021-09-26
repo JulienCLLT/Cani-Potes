@@ -1,4 +1,5 @@
 @use '../../styles/vars';
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 @mixin lg-screen {
     @media screen and (min-width:700px) {
@@ -15,40 +16,55 @@
 .header-connection {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 1 * vars.$gutter;
     border-bottom: 1px solid vars.$color_main;
+    background: vars.$color_main;
+
+    &__logo img {
+        width: 60px;
+        border-radius: 50%;
+
+        @include lg-screen {
+            width: 100px;
+        }
+    }
 
     &__title {
-        font-size: 1.5rem;
+        display: none;
+        
+        @include lg-screen {
+            font-size: 3rem;
+            display: block;
+            color: white;
+            font-family: 'Indie Flower', cursive;
+        }
     }
 
     &__cta {
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: .5 * vars.$gutter;
 
-        &__signin {
-            @extend %btn;
+        @include lg-screen {
+            flex-direction: row;
         }
 
-        &__signup {
+        &__signin, &__signup {
             @extend %btn;
-
-            background: none;
-            border: 1px solid vars.$color_main;
+            background: white;
             color: vars.$color_main;
-
-            &:hover {
-                background: vars.$color_main;
-                color: vars.$color__white;
-            }
+            padding: .5 * vars.$gutter;
         }
     }
 }
 
 .connection {
+    p {
+        line-height: 1.2;
+    }
+    
     flex: 1;
 
     @include lg-screen {
@@ -57,23 +73,72 @@
     }
 
     &__info {
+
+        &__title {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1 * vars.$gutter 0 2 * vars.$gutter;
+            gap: 1 * vars.$gutter;
+
+            
+            h2 {
+                position: absolute;
+                top: 20%;
+                left: 50%;
+                width: 80%;
+                z-index: 1;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                font-size: 1.6rem;
+                color: vars.$color__white;
+                text-shadow: 0 0 3px black;
+
+                @include lg-screen {
+                    position: static;
+                    transform: translate(0);
+                    color: black;
+                    text-shadow: none;
+                }
+                
+                strong {
+                    font-family: 'Indie Flower', cursive;
+                }
+            }
+            
+            div {
+                
+                @include lg-screen {
+                    max-width: 450px;
+                }
+
+                img {
+                    width: 100%;
+                    opacity: .6;
+                }
+            }
+
+        }
+        
         &__text {
-            padding: 1 * vars.$gutter;
+            padding: 1 * vars.$gutter 0  2 * vars.$gutter;
 
             @include lg-screen {
                 padding: 0;
             }
 
-            h2 {
+            p {
+                display: flex;
+                flex-direction: column;
                 text-align: center;
-                margin: 1 * vars.$gutter 0;
-                font-size: 1.3rem;
+                font-size: 1rem;
             }
         }
 
         &__map {
             height: 250px;
-            margin: 1 * vars.$gutter 0;
+            margin-bottom: 1 * vars.$gutter 0;
             background: grey;
         }
     }
@@ -83,10 +148,10 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 60%;
+        width: 80%;
         max-width: 600px;
         transform: translate(-50%, -50%);
-        padding: 3 * vars.$gutter;
+        padding: 5 * vars.$gutter 3 * vars.$gutter;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -137,6 +202,7 @@
     &__footer{
         display: flex;
         justify-content: center;
-        padding: 3 * vars.$gutter 0 0 0;
+        padding: 1 * vars.$gutter 0 vars.$gutter;
+        background: vars.$color_grey_connection_footer_bg;
     }
 }
