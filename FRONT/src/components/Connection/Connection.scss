@@ -261,6 +261,12 @@
             @extend %btn;
             font-size: inherit;
         }
+
+        &__failed {
+            color: red;
+            font-size: .8rem;
+            margin-bottom: 1 * vars.$gutter;
+        }
     }
 
     &__footer{
