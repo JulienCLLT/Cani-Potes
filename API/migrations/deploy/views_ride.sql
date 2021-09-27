@@ -42,4 +42,7 @@ LEFT JOIN member_participate_ride ON member_participate_ride.ride_id = ride.id A
 LEFT JOIN member AS participant ON participant.id = member_participate_ride.member_id OR participant.id = host.id
 LEFT JOIN dog ON dog.dog_owner_id = member_participate_ride.member_id
 GROUP BY ride.id, tag.label, host.id, host.first_name; 
+
 COMMIT;
+
+

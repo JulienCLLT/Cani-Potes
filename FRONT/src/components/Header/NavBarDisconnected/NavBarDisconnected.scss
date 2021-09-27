@@ -1,0 +1,14 @@
+@use '../../../styles/vars';
+
+.navbar-disconnected {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    max-width: 600px;
+    padding: .3rem 0;
+
+    a {
+        @extend %btn;
+        font-size: .9rem;
+    }
+}

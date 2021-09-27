@@ -1,13 +1,49 @@
-// logo is position absolute if on mobile, but not when on desktop  
-// body display flex with header that is going to be at the bottom on mobile, at the top on desktop
+@use '../../styles/vars';
+
+@mixin lg-screen {
+    @media screen and (min-width: 700px) {
+        @content
+    }
+}
 
 .header {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    background-color: vars.$color_main;
 
-    .navbar-connected {
-        font-size: .8rem;
+    @include lg-screen {
+        position: static;
+        padding: 1rem 0 1rem 5rem;
+    }
+
+    &__logo {
+        position: fixed;
+        top: 1rem;
+        left: 4rem;
+        z-index: 999;
+
+        @include lg-screen {
+            position: static;
+        }
+
+        &__container {
+            width: 60px;
+            
+            @include lg-screen {
+                width: 100px;
+            }
+            
+            img {
+                width: 100%;
+                border-radius: 50%;
+            }
+        }
     }
 }
 
