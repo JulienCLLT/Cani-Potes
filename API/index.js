@@ -9,7 +9,7 @@ const port = process.env.PORT || 3500;
 
 app.use(cors());
 
-//app.use(express.json());
+app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use('/api', route);
