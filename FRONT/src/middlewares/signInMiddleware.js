@@ -18,14 +18,8 @@ const signinMiddleware = (store) => (next) => (action) => {
         password,
       })
         .then((response) => {
-          // const req = new XMLHttpRequest()
-          // req.open('GET', document.location, false);
-          // req.send(null);
-          // const headers = req.getAllResponseHeaders().toLowerCase();
-          // console.log(headers);
-          console.log(response.headers);
-          // console.log(axiosInstance());
-          // store.dispatch(connectUser());
+          console.log(response);
+          store.dispatch(connectUser(response.data.authozization));
         }).catch((error) => {
           console.error(error);
         });
