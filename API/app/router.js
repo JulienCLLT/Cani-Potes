@@ -3,14 +3,13 @@ const router = Router();
 const userController = require('./controllers/userController');
 const ckeckToken  = require('./middlewares/checkJwt');
 const rideController = require('./controllers/rideController');
+const dogController = require('./controllers/dogController');
 
 const multer  = require('multer');
 const storage = multer.diskStorage({
     destination: (request, file, cb)=>{}
 })
 const upload = multer({ storage: storage });
-
-router.use
 
 router.get('/', ckeckToken, function (req, res) {
     res.send('GET request to the homepage token ok '+ req.userId)});
@@ -27,5 +26,7 @@ router.delete('/ride/:rideId(\\d+)/participation', ckeckToken, rideController.le
 router.post('/ride/:rideId(\\d+)/participation', ckeckToken, rideController.addNewParticipant);
 
 router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', ckeckToken, rideController.removeUserFromRide);
+
+router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.getOneDog);
 
 module.exports = router;
