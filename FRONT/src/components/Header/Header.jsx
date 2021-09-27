@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import NavBarConnected from './NavBarConnected/NavBarConnected';
 import NavBarDisconnected from './NavBarDisconnected/NavBarDisconnected';
 
+import logo from '../../assets/navbar/canipotes_logo.jpg';
+
 import './Header.scss';
 
 const Header = () => {
@@ -18,7 +20,9 @@ const Header = () => {
         exact
       >
         {/* expect logo img instead of text */}
-        LOGO
+        <div className="header__logo__container">
+          <img src={logo} alt="logo Cani' potes" />
+        </div>
       </NavLink>
       {isLogged && <NavBarConnected />}
       {!isLogged && window.location.pathname === '/' && <NavBarDisconnected />}

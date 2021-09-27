@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Header from '../Header/Header';
 import MapBalade from '../MapBalade';
@@ -15,7 +15,6 @@ import RideDetails from '../RideDetails/RideDetails';
 // import './App.scss';
 
 import '../../styles/reset.scss';
-import { useDispatch } from 'react-redux';
 import { getAllRides } from '../../actions/rides';
 
 function App() {
