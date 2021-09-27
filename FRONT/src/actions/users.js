@@ -5,9 +5,15 @@ export const loginUser = (data) => ({
 });
 
 export const CONNECT__USER = 'CONNECT__USER';
-export const connectUser = (user) => ({
+export const connectUser = (token, user = {}) => ({
   type: CONNECT__USER,
+  token,
   user,
+});
+
+export const FAILED__TO__CONNECT = 'FAILED__TO__CONNECT';
+export const failedToConnect = () => ({
+  type: FAILED__TO__CONNECT,
 });
 
 export const LOGOUT__USER = 'LOGOUT__USER';
