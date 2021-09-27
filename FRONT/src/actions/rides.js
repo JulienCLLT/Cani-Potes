@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 export const ADD__USER__TO__RIDE = 'ADD__USER__TO__RIDE';
 export const addUserToRide = ({
   id, first_name, last_name, photo, dogs,
@@ -18,7 +19,7 @@ export const removeUserFromRide = (id) => ({
 
 export const ADD__NEW__MESSAGE = 'ADD__NEW__MESSAGE';
 export const addNewMessage = (
-  message, sender_id, sender_photo, sender_first_name, sender_last_name
+  message, sender_id, sender_photo, sender_first_name, sender_last_name,
 ) => ({
   type: ADD__NEW__MESSAGE,
   sent: new Date().toISOString(),

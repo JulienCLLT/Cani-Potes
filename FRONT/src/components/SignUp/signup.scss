@@ -4,10 +4,6 @@
     display: none;
 }
 
-.visible {
-    display: block;
-}
-
 .signup-main {
     padding: vars.$gutter;
 
@@ -23,18 +19,22 @@
 
 .signup {
 
-    & h2 { //centrer avec media queries
+    & h2 {
+        // color: vars.$color_main;
+        text-align: center;
         font-size: 1.3*vars.$gutter;
         font-weight: bold;
         margin-top : 2*vars.$gutter;
         margin-bottom : vars.$gutter;
+        // border-bottom: 1px solid vars.$color-border-input;
+        box-shadow: 0 0 20px vars.$color-border-input;
+        padding: 0.2*vars.$gutter 0;
     }
 
     &__back-submit {
         display: flex;
         justify-content: center;
         margin-top: 10px;
-        padding: 0 2* vars.$gutter;
 
         &__submit, &__back {
             text-align: center;
@@ -43,7 +43,6 @@
             width: 50%;
             max-width: 200px;
             border-radius: 4px;
-            margin-top: 24px;
         }
 
         &__submit {
