@@ -1,10 +1,18 @@
 .ride-informations {
-    width: 80%;
-    
+    width: 80vw;
+    .leaflet-popup-content-wrapper {
+        padding: 0 !important;
+
+        .leaflet-popup-content{
+            width: 100% !important;
+            margin: 0 !important;
+        }
+    }
     h1 {
         text-align: center;
         display: flex;
         align-items: center;
+        font-size: 1.5rem;
 
         img {
             width: 20%
