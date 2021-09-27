@@ -10,13 +10,18 @@
     }
 
     &__input-infos {
-      height: 520px;
+      // height: 520px;
 
       &__identity, &__zipcode__input {
         padding: 0 2*vars.$gutter;
       }
 
-      &__email, &__password, &__password--confirmation, &__name, &__first_name, &__picture, &__zipcode__input{
+      &__birthday {
+        display: flex;
+        justify-content: center;
+      }
+
+      &__email, &__password, &__password--confirmation, &__name, &__first_name, &__picture, &__zipcode__input {
         display: flex;
         flex-direction: column;
         margin-top: vars.$gutter;
