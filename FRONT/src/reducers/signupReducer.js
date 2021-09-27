@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import { NEXT_SIGNUP_FORM_STEP, PREVIOUS_SIGNUP_FORM_STEP } from '../actions/signup';
+import { NEXT_SIGNUP_FORM_STEP } from '../actions/signup';
 
 const initialState = {
 
@@ -23,6 +23,7 @@ const initialState = {
 
   // for continue and previous button
   formStep: 1,
+  isSubmitSuccessfull: false,
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -31,12 +32,7 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         formStep: state.formStep + 1,
-      };
-
-    case PREVIOUS_SIGNUP_FORM_STEP:
-      return {
-        ...state,
-        formStep: state.formStep - 1,
+        isSubmitSuccessfull: false,
       };
     default:
       return state;
