@@ -41,19 +41,19 @@ function App() {
           </main>
         </Route>
         <Route exact path="/home">
-          <Header />
+          <Header title="Map balade" />
           <main>
             <MapBalade />
           </main>
         </Route>
         <Route exact path="/ride/create">
-          <Header />
+          <Header title="Créer une balade" />
           <main>
             <CreateRide />
           </main>
         </Route>
         <Route exact path="/ride/:id">
-          <Header />
+          <Header title="Détails une balade" />
           <main>
             <RideDetails />
           </main>
