@@ -21,7 +21,7 @@ const DogForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log('data', data);
+    // console.log('data', data);
     dispatch(nextSignupFormStep());
   };
   const date = new Date();

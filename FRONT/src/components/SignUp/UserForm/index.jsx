@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
 // action creator
-import { nextSignupFormStep } from '../../../actions/signup';
+import { nextSignupFormStep, userSignup } from '../../../actions/signup';
 
 import './user-form.scss';
 
@@ -23,9 +23,12 @@ const UserForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log('data', data);
+    // console.log('data', data);
+    dispatch(userSignup(data));
     dispatch(nextSignupFormStep());
   };
+
+  const date = new Date();
 
   return (
     <div className={formStep === 1 ? 'signup user-form' : 'hidden'}>
@@ -37,19 +40,19 @@ const UserForm = () => {
             <div className="user-form__form__input-infos__identity">
               {/* Firstname */}
               <div className="user-form__form__input-infos__first_name">
-                <input {...register('first_name', { required: 'Veuillez entrer votre prénom.' })} type="text" placeholder="Prénom" defaultValue="ma" />
+                <input {...register('first_name', { required: 'Veuillez entrer votre prénom.' })} type="text" placeholder="Prénom" defaultValue="michel" />
                 {errors.first_name && <p className="errors">{errors.first_name.message}</p>}
               </div>
 
               {/* Name */}
               <div className="user-form__form__input-infos__name">
-                <input {...register('last_name', { required: 'Veuillez entrer votre nom.' })} type="text" placeholder="Nom" defaultValue="ch" />
+                <input {...register('last_name', { required: 'Veuillez entrer votre nom.' })} type="text" placeholder="Nom" defaultValue="test" />
                 {errors.last_name && <p className="errors">{errors.last_name.message}</p>}
               </div>
 
               {/* Email */}
               <div className="user-form__form__input-infos__email">
-                <input {...register('email', { required: 'Veuillez entrer un email.' })} type="email" placeholder="Email" defaultValue="az@z" />
+                <input {...register('email', { required: 'Veuillez entrer un email.' })} type="email" placeholder="Email" defaultValue="michel@gmail.com" />
                 {errors.email && <p className="errors">{errors.email.message}</p>}
               </div>
 
@@ -63,6 +66,21 @@ const UserForm = () => {
               <div className="user-form__form__input-infos__password--confirmation">
                 <input {...register('password_confirmation', { required: 'Veuillez confirmer votre mot de passe.', validate: (value) => value === watch('password') || 'Les mots de passe de correspondent pas' })} type="password" placeholder="Confirmer mot de passe" />
                 {errors.password_confirmation && <p className="errors">{errors.password_confirmation.message}</p>}
+              </div>
+
+              {/* Birthday */}
+              <div className="user-form__form__input-infos__birthday">
+
+                <label htmlFor="birthday_user">
+                  Je suis né le
+                  <input
+                    type="date"
+                    {...register('birthday_user', { required: 'Veuillez renseigner votre date de naissance.' })}
+                    id="birthday_user"
+                    max={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`}
+                  />
+                </label>
+                {errors.birthday_user && <p className="errors">{errors.birthday_user.message}</p>}
               </div>
 
               {/* Picture profile */}
@@ -94,7 +112,6 @@ const UserForm = () => {
           <div className="signup__back-submit">
             <Link to="/" className="signup__back-submit__back">Retour</Link>
             <button
-              // onClick={clickToContinue}
               type="submit"
               className="signup__back-submit__submit"
             >Valider

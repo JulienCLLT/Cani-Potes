@@ -4,7 +4,8 @@ export const nextSignupFormStep = () => ({
   type: NEXT_SIGNUP_FORM_STEP,
 });
 
-export const PREVIOUS_SIGNUP_FORM_STEP = 'PREVIOUS_SIGNUP_FORM_STEP';
-export const previousSignupFormStep = () => ({
-  type: PREVIOUS_SIGNUP_FORM_STEP,
+export const USER_SIGNUP = 'USER_SIGNUP';
+export const userSignup = (userForm) => ({
+  type: USER_SIGNUP,
+  userForm,
 });
