@@ -10,8 +10,6 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage });
 
-router.use
-
 router.get('/', ckeckToken, function (req, res) {
     res.send('GET request to the homepage token ok '+ req.userId)});
 
@@ -22,6 +20,8 @@ router.post('/subscribe',userController.addNewUser);
 router.get('/rides', rideController.findAll);
 
 router.delete('/ride/:rideId(\\d+)', ckeckToken, rideController.delete);
+//todo quand front ok, rajout checkToken
+router.get('/ride/:rideId(\\d+)', rideController.findOneRideWithAllInformations);
 
 router.delete('/ride/:rideId(\\d+)/participation', ckeckToken, rideController.leaveARide);
 router.post('/ride/:rideId(\\d+)/participation', ckeckToken, rideController.addNewParticipant);
