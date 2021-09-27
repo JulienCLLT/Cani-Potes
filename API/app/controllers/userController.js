@@ -35,6 +35,7 @@ const userController = {
 
     addNewUser : async (request, response)=>{   
         try {
+            console.log('request'+ request.body);
             const user = new UserModel(request.body);
             
             //on Bcrypt et remplace direct le password
@@ -51,6 +52,7 @@ const userController = {
                     response.status(204).json('Update done');
                  }
         } catch (error) {
+            console.log(error);
             response.status(500).json(error.message);
         }
 
