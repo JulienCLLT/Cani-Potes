@@ -17,8 +17,9 @@
       }
 
       &__birthday {
-        display: flex;
-        justify-content: center;
+        // display: flex;
+        // justify-content: center;
+        margin: 0 auto;
       }
 
       &__email, &__password, &__password--confirmation, &__name, &__first_name, &__picture, &__zipcode__input {
