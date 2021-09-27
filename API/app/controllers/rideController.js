@@ -11,6 +11,26 @@ const rideController = {
         }
     },
 
+    findOneRideWithAllInformations: async (request, response) => {
+        try {
+            const rideId = Number(request.params.rideId);
+    
+            if (isNaN(rideId)) {
+                throw Error('La valeur de l\'id doit être un nombre');
+            }
+
+            const ride = await Ride.findOneCompleteRide(rideId);
+            if(ride.length === 0) {
+                throw Error('La balade n\'existe pas');
+            }
+
+            response.status(201).json(ride);
+
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
+    },
+
     delete: async (request, response) => {
         try {
             const rideId = Number(request.params.rideId);
