@@ -1,13 +1,10 @@
-import React from "react";
-import Map from "./Map/index";
+import React from 'react';
+import Map from './Map/index';
 
-const MapBalade = () => {
-    return (
-        <div className="map-balade">
-            <Map />
-        </div>
-    )
-
-};
+const MapBalade = () => (
+  <div className="map-balade">
+    <Map />
+  </div>
+);
 
 export default MapBalade;

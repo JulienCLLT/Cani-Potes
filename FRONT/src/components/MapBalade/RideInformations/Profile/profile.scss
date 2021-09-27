@@ -2,7 +2,6 @@
 
 .profile {
     background-color: vars.$color-main;
-    // opacity: 0.8;
     border-radius: 5%;
     display: flex;
     flex-direction: column;
@@ -25,26 +24,42 @@
         }
     }
 
-    &__dog {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+    // &__dog {
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: space-between;
 
-        img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+    //     img {
+    //         width: 40px;
+    //         height: 40px;
+    //         border-radius: 50%;
+    //     }
+
+    //     &__icon {
+    //         display: flex;
+    //         align-items: center;
+    //         justify-content: center;
+
+    //         img {
+    //             width: 25%;
+    //             margin: 0 0.25rem;
+    //         }
+    //     }
+    // }
+
+    &__article {
+        display: flex;
+
+        &__avatar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        &__icon {
+        &__dogs {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-
-            img {
-                width: 25%;
-                margin: 0 0.25rem;
-            }
         }
     }
 }
