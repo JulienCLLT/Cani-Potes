@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import axios from 'axios';
 import { GET__ALL__RIDES, saveAllRides } from '../actions/rides';
 
