@@ -15,15 +15,9 @@ import RideInformations from '../RideInformations/index';
 import './map.scss';
 import mapPin from '../../../assets/img/maps-and-flags.svg';
 
-// requete axios, à chaque coordonnée (point balade), map sur Marker pour qu'ils s'affichent tous
-// ne pas oublier la "key" quand map
-
 const Map = () => {
-  const lat = 43.5606;
-  const lng = 4.085;
-
-  // todo
   const { allRides } = useSelector((state) => state.rides);
+  const { user } = useSelector((state) => state);
 
   // const getISS = async () => {
   //     const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
@@ -42,10 +36,11 @@ const Map = () => {
   });
 
   const fillBlueOptions = { fillColor: 'blue' };
+
   return (
-    <MapContainer className="leaflet-container" center={[lat, lng]} zoom={15} scrollWheelZoom={false}>
+    <MapContainer className="leaflet-container" center={user.position} zoom={15} scrollWheelZoom={false}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      <Circle center={[lat, lng]} pathOptions={fillBlueOptions} radius={1000} />
+      <Circle center={user.position} pathOptions={fillBlueOptions} radius={1000} />
 
       {
         allRides.map((ride) => (
@@ -54,6 +49,7 @@ const Map = () => {
           </Marker>
         ))
       }
+
     </MapContainer>
   );
 };

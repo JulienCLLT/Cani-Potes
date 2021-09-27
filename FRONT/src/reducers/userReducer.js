@@ -6,6 +6,7 @@ const userInitialState = {
   first_name: 'Jean-Michel',
   last_name: 'Le Test',
   photo: '',
+  position: [43.5606, 4.085],
   dogs: [
     {
       dog_id: 101,

@@ -3,7 +3,7 @@
 .ride {
     &__detail {
         display: flex;
-        gap: 1 * vars.$gutter;
+        gap: .5 * vars.$gutter;
         align-items: center;
         padding-left: .5 * vars.$gutter;
 
