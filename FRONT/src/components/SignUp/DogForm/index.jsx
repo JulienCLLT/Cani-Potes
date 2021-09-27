@@ -12,23 +12,19 @@ import { nextSignupFormStep } from '../../../actions/signup';
 import './dog-form.scss';
 
 const DogForm = () => {
+  const formStep = useSelector((state) => state.signup.formStep);
+  const dispatch = useDispatch();
+
+  // useForm
   const {
-    register, handleSubmit, formState: { isSubmitSuccessful, errors },
+    register, handleSubmit, formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
     console.log('data', data);
-  };
-  const date = new Date();
-
-  const dispatch = useDispatch();
-  const clickToContinue = () => {
     dispatch(nextSignupFormStep());
   };
-
-  const formStep = useSelector((state) => state.signup.formStep);
-  // const clickToPrevious = () => {
-  //   dispatch(previousSignupFormStep());
-  // };
+  const date = new Date();
 
   return (
     <div className={formStep === 2 ? 'signup dog' : 'hidden'}>
@@ -152,7 +148,6 @@ const DogForm = () => {
           >Retour
           </button> */}
             <button
-            // onClick={handleSubmit(onSubmit)}
               type="submit"
               className="signup__back-submit__submit"
             >Valider

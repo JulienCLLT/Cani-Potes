@@ -14,27 +14,18 @@ import { nextSignupFormStep } from '../../../actions/signup';
 import './user-form.scss';
 
 const UserForm = () => {
+  const formStep = useSelector((state) => state.signup.formStep);
+  const dispatch = useDispatch();
+
+  // useForm
   const {
-    register, handleSubmit, formState: { isSubmitSuccessful, errors }, watch,
+    register, handleSubmit, formState: { errors }, watch,
   } = useForm();
+
   const onSubmit = (data) => {
     console.log('data', data);
-  };
-
-  const formStep = useSelector((state) => state.signup.formStep);
-
-  const dispatch = useDispatch();
-  const clickToContinue = () => {
-    // if (isSubmitSuccessful) {
-    console.log('yes');
     dispatch(nextSignupFormStep());
-    // }
   };
-
-  if (isSubmitSuccessful) {
-    console.log('yes');
-    clickToContinue();
-  }
 
   return (
     <div className={formStep === 1 ? 'signup user-form' : 'hidden'}>
@@ -42,11 +33,6 @@ const UserForm = () => {
 
       <div className="user-form__form">
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* {isValid ? <p> isValid 'true'</p> : <p> isValid 'false'</p>}
-          {isSubmitted ? <p> isSubmitted 'true'</p> : <p> isSubmitted 'false'</p>}
-          {isSubmitting ? <p> isSubmitting 'true'</p> : <p> isSubmitting 'false'</p>}
-          {isSubmitSuccessful ? <p> isSubmitSuccessful 'true'</p> : <p> isSubmitSuccessful 'false'</p>} */}
-
           <div className="user-form__form__input-infos">
             <div className="user-form__form__input-infos__identity">
               {/* Firstname */}
@@ -99,7 +85,7 @@ const UserForm = () => {
                 nous avons besoin de votre code postal.
               </p>
               <div className="user-form__form__input-infos__zipcode__input">
-                <input {...register('zip_code', { required: 'Veuillez entrer un code postal.', minLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' }, maxLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' } })} type="text" placeholder="Code postal" />
+                <input {...register('zip_code', { required: 'Veuillez entrer un code postal.', minLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' }, maxLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' } })} type="text" placeholder="Code postal" defaultValue="12345" />
                 {errors.zip_code && <p className="errors">{errors.zip_code.message}</p>}
                 {}
               </div>
