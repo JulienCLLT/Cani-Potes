@@ -7,7 +7,7 @@ const schemaMember = joi.object({
     // photo
     // zip_code: joi.string().pattern(new RegExp('^(?!00|96|99)\d{5}$')),
     zip_code: joi.string().pattern(/^(?!00|96|99)\d{5}$/),
-    password: joi.string(),
+    // password: joi.string(),pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{7,}$/),
     birthday: joi.date(), // Definir le format avec le lead Dev front
 
 });
@@ -34,16 +34,24 @@ const schemaRide = joi.object({
 const body = {
     email: "sdfsfs@gmail.io",
     first_name: "Jean",
-    last_name: "porte",
+    last_name: "poRte",
     zip_code: "56326",
-    password: "mlodwfjgoeriucxwvjhioifkf",
+    //password: "admin' AND 1=1 OR 1='1",
+     password: "<script>alert(1)</script>",
+
     birthday: 2043-05-10,
 };
 
 const { error, value } = schemaMember.validate(body,{escapeHtml: true});
 
-console.log(value);
-console.log('error du validate '+ error);
+if (error) {
+    console.log('error du validate '+ error);
+}else{
+    console.log(value);
+}
+
+
+
 
 
 
