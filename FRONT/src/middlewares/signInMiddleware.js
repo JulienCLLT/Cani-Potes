@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { connectUser, LOGIN__USER } from '../actions/users';
+import { connectUser, LOGIN__USER, failedToConnect } from '../actions/users';
 
 const axiosInstance = axios.create({
   baseURL: 'http://107.22.144.90/api',
@@ -19,9 +19,11 @@ const signinMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log(response);
+          // wait for user from db
           store.dispatch(connectUser(response.data.authozization));
         }).catch((error) => {
           console.error(error);
+          store.dispatch(failedToConnect());
         });
       break;
     }
