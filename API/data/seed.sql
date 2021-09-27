@@ -18,9 +18,9 @@ INSERT INTO tag(label)VALUES
 ('sortie de quartier');
 
 INSERT INTO member(email, first_name, last_name, photo, zip_code, password, birthday) VALUES
-('toto@toto.com', 'Toto', 'Le fou de ouf', 'img1.jpg', '33800', 'toto33mdp', '1980-01-01'),
-('sheldon@bigbang.net', 'Sheldon', 'Cooper', 'img2.jpg', '06100', 'tropcomplique', '1975-02-02'),
-('sherlock@holmes.com', 'Sherlock', 'Holmes', 'img3.jpg', '75009', 'sherlocked', '1887-01-07');
+('toto@toto.com', 'Jojo', 'Le fou de ouf', 'https://s3.amazonaws.com/southfloridareporter/wp-content/uploads/2016/08/17105112/Dwayne-Johnson-Forbes-2.jpg', '33800', 'toto33mdp', '1980-01-01'),
+('sheldon@bigbang.net', 'Sheldon', 'Cooper', 'https://static.wikia.nocookie.net/the-big-bang-theory/images/0/04/Sheldon_05.jpg/revision/latest/top-crop/width/360/height/450?cb=20130619214106&path-prefix=fr', '06100', 'tropcomplique', '1975-02-02'),
+('sherlock@holmes.com', 'Sherlock', 'Holmes', 'https://resize.programme-television.ladmedia.fr/r/670,670/img/var/premiere/storage/images/tele-7-jours/news-tv/sherlock-france-4-benedict-cumberbatch-a-un-lien-de-parente-avec-arthur-conan-doyle-4400783/89227010-1-fre-FR/Sherlock-France-4-Benedict-Cumberbatch-a-un-lien-de-parente-avec-Arthur-Conan-Doyle.jpg', '75009', 'sherlocked', '1887-01-07');
 
 --
 INSERT INTO dog(surname, breed_id, weight, gender_id, birthday, sterilization, description, behavior_id, dog_owner_id) VALUES
@@ -30,17 +30,17 @@ INSERT INTO dog(surname, breed_id, weight, gender_id, birthday, sterilization, d
 ('Rox Attak', 300, 15.2, 2, '2001-09-11', true, 'bon des fois il montre les crocs mais sinon il est cool', 3, 3);
 
 INSERT INTO photo(file_name, dog_id) VALUES
-('img4.jpg', 1),
-('img5.jpg', 1),
-('img6.jpg', 2),
-('img7.jpg', 2),
-('img8.jpg', 2),
-('img9.jpg', 4),
-('img10.jpg', 3),
-('img11.jpg', 3),
-('img12.jpg', 4),
-('img13.jpg', 1),
-('img14.jpg', 4);
+('https://d3idks24kkd2lv.cloudfront.net/wp-content/uploads/2019/03/German-Pug-Thumb.jpg', 1),
+('https://d3idks24kkd2lv.cloudfront.net/wp-content/uploads/2019/03/German-Pug-Thumb.jpg', 1),
+('https://img.20mn.fr/iIn2KfxcTTSg03kYheHj6A/830x532_elwood-elu-chien-plus-moche-monde-2007.jpg', 2),
+('https://img.20mn.fr/iIn2KfxcTTSg03kYheHj6A/830x532_elwood-elu-chien-plus-moche-monde-2007.jpg', 2),
+('https://img.20mn.fr/iIn2KfxcTTSg03kYheHj6A/830x532_elwood-elu-chien-plus-moche-monde-2007.jpg', 2),
+('https://geo.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Fgeo.2F2019.2F10.2F28.2Fc9c8ea2c-9750-4039-97c1-ce9f592f4ef4.2Ejpeg/1150x647/background-color/ffffff/quality/70/des-chiens-renifleurs-decouvrent-des-sepultures-vieilles-de-3000-ans-en-croatie.jpg', 4),
+('https://cdn.futura-sciences.com/buildsv6/images/wide1920/8/5/8/858743bb35_50169458_chien-min.jpg', 3),
+('https://cdn.futura-sciences.com/buildsv6/images/wide1920/8/5/8/858743bb35_50169458_chien-min.jpg', 3),
+('https://geo.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Fgeo.2F2019.2F10.2F28.2Fc9c8ea2c-9750-4039-97c1-ce9f592f4ef4.2Ejpeg/1150x647/background-color/ffffff/quality/70/des-chiens-renifleurs-decouvrent-des-sepultures-vieilles-de-3000-ans-en-croatie.jpg', 4),
+('https://d3idks24kkd2lv.cloudfront.net/wp-content/uploads/2019/03/German-Pug-Thumb.jpg', 1),
+('https://geo.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Fgeo.2F2019.2F10.2F28.2Fc9c8ea2c-9750-4039-97c1-ce9f592f4ef4.2Ejpeg/1150x647/background-color/ffffff/quality/70/des-chiens-renifleurs-decouvrent-des-sepultures-vieilles-de-3000-ans-en-croatie.jpg', 4);
 
 INSERT INTO ride(title, description, start_coordinate, end_coordinate, starting_time, duration, max_number_dogs, tag_id, host_id) VALUES
 ('Dans le coin', 'un petit tour de quartier pour se rencontrer et y a une fontaine sympa', '{2.290084,49.897443}', '{2.310084,49.877443}', '2021-09-29 19:37:25.631205+02','15 minutes', 5, 1, 1),

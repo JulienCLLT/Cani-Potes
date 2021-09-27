@@ -25,10 +25,11 @@ SELECT
             'participant_photo', participant.photo,
             'dogs',  (SELECT array_agg(DISTINCT                            
                             jsonb_build_object(
-                                'dog_id', dog.id,
                                 'dog_surname', dog.surname,
 								'dog_photo', (SELECT photo.file_name FROM photo WHERE photo.dog_id = dog.id ORDER BY created_at LIMIT 1 ),
-                                'dog_photo_id', (SELECT photo.id FROM photo WHERE photo.dog_id = dog.id ORDER BY created_at LIMIT 1 )
+                                'dog_photo_id', (SELECT photo.id FROM photo WHERE photo.dog_id = dog.id ORDER BY created_at LIMIT 1 ),
+								'dog_behavior', (SELECT label FROM behavior WHERE dog.behavior_id = behavior.id),
+								'dog_breed', (SELECT label FROM breed WHERE dog.breed_id = breed.id)
                             ))  
                         FROM dog                        
                         WHERE dog.dog_owner_id = participant.id)
