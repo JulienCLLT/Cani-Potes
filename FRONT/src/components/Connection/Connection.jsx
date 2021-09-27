@@ -19,8 +19,7 @@ const Connection = () => {
   const onSubmit = (data) => {
     // dispatch action to post data to db through middleware and try to conenct
     // if connected, set user data in state
-    console.log('submitted data : ', data);
-    dispatch(loginUser());
+    dispatch(loginUser(data));
   };
 
   return (

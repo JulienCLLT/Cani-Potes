@@ -21,17 +21,18 @@ const userInitialState = {
       dog_photo_id: 11,
     },
   ],
+  token: '',
   isLogged: false,
 };
 
 const userReducer = (state = userInitialState, action = {}) => {
   switch (action.type) {
-    case LOGIN__USER:
-      // before we can check in db, just simuling connection
-      return {
-        ...state,
-        isLogged: true,
-      };
+    // case LOGIN__USER:
+    //   // before we can check in db, just simuling connection
+    //   return {
+    //     ...state,
+    //     isLogged: true,
+    //   };
     case LOGOUT__USER:
       return {
         ...userInitialState,
