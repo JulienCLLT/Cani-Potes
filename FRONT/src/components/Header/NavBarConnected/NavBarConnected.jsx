@@ -17,8 +17,8 @@ const NavBarConnected = () => {
   return (
     <nav className="navbar-connected">
       <NavLink
-        className="navbar-connected__home"
-        activeClassName="navbar-connected__home--active"
+        className="navbar-connected__link"
+        activeClassName="navbar-connected__link--active"
         to="/home"
         exact
       >
@@ -29,8 +29,8 @@ const NavBarConnected = () => {
       </NavLink>
 
       <NavLink
-        className="navbar-connected__board"
-        activeClassName="navbar-connected__board--active"
+        className="navbar-connected__link"
+        activeClassName="navbar-connected__link--active"
         to="/board"
         exact
       >
@@ -41,8 +41,8 @@ const NavBarConnected = () => {
       </NavLink>
 
       <NavLink
-        className="navbar-connected__profile"
-        activeClassName="navbar-connected__profile--active"
+        className="navbar-connected__link"
+        activeClassName="navbar-connected__link--active"
         to="/profile/:id"
         exact
       >

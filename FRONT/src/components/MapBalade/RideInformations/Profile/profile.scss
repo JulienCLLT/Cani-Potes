@@ -1,12 +1,23 @@
 @use '../../../../styles/vars';
 
+@mixin lg-screen {
+    @media screen and (min-width: 900px) {
+        @content
+    }
+}
+
 .profile {
-    background-color: vars.$color-main;
+    background-color: rgb(230, 230, 230);
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     padding: 0.5rem;
+    max-height: 300px;
+    overflow-y: scroll;
+
+    @include lg-screen {
+
+    }
 
     &__user{
         display: flex;
@@ -56,10 +67,10 @@
     &__article {
         display: flex;
         gap: .5 * vars.$gutter;
-        box-shadow: 0 0 3px vars.$color__white;
+        background-color: white;
         padding: .5 * vars.$gutter;
         margin: .5 * vars.$gutter;
-        border-radius: 5px;
+        border-radius: 12px;
 
         &__avatar {
             width: 60px;
