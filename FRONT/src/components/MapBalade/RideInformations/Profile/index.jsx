@@ -8,28 +8,72 @@ import './profile.scss';
 
 // import img
 import user from '../../../../assets/img/profile-simulation/user.jpg';
-import dog from '../../../../assets/img/profile-simulation/dog-one.jpg';
+import dogPic from '../../../../assets/img/profile-simulation/dog-one.jpg';
 
 // import icon
 import race from '../../../../assets/img/profile-simulation/race.svg';
 import sociable from '../../../../assets/img/profile-simulation/sociable.svg';
 
-const Profile = () => {
-//   const id = useSlector((state) => state.reducer.id);
-  const a = 1;
+const Profile = ({participants, host_id}) => {
+  const rideHost = participants.find((participant) => participant.participant_id === host_id);
+  console.log(rideHost);
+
   return (
     <div className="profile">
 
       <div className="profile__user">
-        <img src={user} alt="user picture" /> {/* mettre en alt le nom du user ? */}
-        <h3 className="profile__user__name">Noémie</h3> {/* mettre dynamiquement les noms */}
+        <img src={rideHost.participant_photo} alt={`${rideHost.participant_first_name} avatar`} />
+        <h3 className="profile__user__name">
+          {rideHost.participant_first_name} {rideHost.participant_last_name[0].toUpperCase()}.
+        </h3>
       </div>
 
-      <div className="profile__dog">
-        <img src={dog} alt="dog picture" /> {/* mettre en alt nom du chien */}
-        <p className="profile__dog__icon"><img src={race} alt="dog icon" />Race</p>{/* mettre en alt la race du chien ? */}
-        <p className="profile__dog__icon"><img src={sociable} alt="happy icon" />Comportement</p> {/* mettre en alt le comportement du chien ? */}
-      </div>
+      {
+        participants.map((participant) => (
+          <article className="profile__article">
+
+            <div className="profile__article__avatar">
+              <div>
+                <img src={participant.participant_photo} alt={participant.participant_first_name} />
+              </div>
+              <div>
+                <span>{participant.participant_first_name} {participant.participant_last_name[0].toUpperCase()}.</span>
+              </div>
+            </div>
+
+            <div className="profile__article__dogs">
+              {
+                participant.dogs.map((dog, index) => {
+                  if (index < 2) {
+                    return (
+                      <div>
+                        <div>
+                          <img src={dog.dog_photo} alt={dog.dog_surname} />
+                        </div>
+                        <div>
+                          <span>{dog.dog_surname}</span>
+                        </div>
+                      </div>
+                    );
+                  }
+                  if (index === participant.dogs.length - 1) {
+                    return (
+                      <span>{participant.dogs.length - 2} chiens de plus</span>
+                    );
+                  }
+                })
+             }
+           </div>
+
+          </article>
+        ))
+      }
+
+      {/* <div className="profile__dog"> */}
+        {/* <img src={dogPic} alt="dog picture" /> mettre en alt nom du chien */}
+        {/* <p className="profile__dog__icon"><img src={race} alt="dog icon" />Race</p>mettre en alt la race du chien ? */}
+        {/* <p className="profile__dog__icon"><img src={sociable} alt="happy icon" />Comportement</p> mettre en alt le comportement du chien ? */}
+      {/* </div> */}
 
       {/* <Link to={`/profile/${id}`} className="profile_see">Voir le profil</Link> */}
     </div>
