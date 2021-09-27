@@ -23,7 +23,7 @@ const userInitialState = {
     },
   ],
   token: '',
-  isLogged: false,
+  isLogged: true,
 };
 
 const userReducer = (state = userInitialState, action = {}) => {
