@@ -27,11 +27,10 @@ SELECT
                             jsonb_build_object(
                                 'dog_id', dog.id,
                                 'dog_surname', dog.surname,
-								'dog_photo_id', photo.id,
-								'dog_photo', photo.file_name 
+								'dog_photo', (SELECT photo.file_name FROM photo WHERE photo.dog_id = dog.id ORDER BY created_at LIMIT 1 ),
+                                'dog_photo_id', (SELECT photo.id FROM photo WHERE photo.dog_id = dog.id ORDER BY created_at LIMIT 1 )
                             ))  
-                        FROM dog 
-                        JOIN photo ON dog.id = photo.dog_id
+                        FROM dog                        
                         WHERE dog.dog_owner_id = participant.id)
         )) AS participants
 FROM ride
