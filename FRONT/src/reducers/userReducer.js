@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 import { LOGIN__USER, LOGOUT__USER } from '../actions/users';
+import { CONNECT__USER } from './../actions/users';
 
 const userInitialState = {
   id: 99,
@@ -33,6 +34,11 @@ const userReducer = (state = userInitialState, action = {}) => {
     //     ...state,
     //     isLogged: true,
     //   };
+    case CONNECT__USER:
+      return {
+        ...state,
+        token: action.token,
+      };
     case LOGOUT__USER:
       return {
         ...userInitialState,
