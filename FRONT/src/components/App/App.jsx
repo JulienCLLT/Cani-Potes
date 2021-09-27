@@ -41,18 +41,21 @@ function App() {
           </main>
         </Route>
         <Route exact path="/home">
+          {!isLogged && <Redirect to="/" />}
           <Header title="Map balade" />
           <main>
             <MapBalade />
           </main>
         </Route>
         <Route exact path="/ride/create">
+          {!isLogged && <Redirect to="/" />}
           <Header title="Créer une balade" />
           <main>
             <CreateRide />
           </main>
         </Route>
         <Route exact path="/ride/:id">
+          {!isLogged && <Redirect to="/" />}
           <Header title="Détails une balade" />
           <main>
             <RideDetails />

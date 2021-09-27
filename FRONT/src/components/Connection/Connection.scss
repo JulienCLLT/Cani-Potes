@@ -105,7 +105,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: .5 * vars.$gutter 0 2 * vars.$gutter;
+            margin-bottom: 2 * vars.$gutter;
             gap: 1 * vars.$gutter;
 
             @include lg-screen {
@@ -250,9 +250,10 @@
             }
 
             input {
+                border-radius: 5px;
                 width: 100%;
                 border: none;
-                padding: 1 * vars.$gutter .5 * vars.$gutter;
+                padding: .5 * vars.$gutter .5 * vars.$gutter;
             }
         }
 
