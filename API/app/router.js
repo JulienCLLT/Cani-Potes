@@ -27,7 +27,6 @@ router.post('/ride/:rideId(\\d+)/participation', ckeckToken, rideController.addN
 
 router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', ckeckToken, rideController.removeUserFromRide);
 
-//todo add checkToken
-router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', dogController.getOneDog);
+router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.getOneDog);
 
 module.exports = router;
