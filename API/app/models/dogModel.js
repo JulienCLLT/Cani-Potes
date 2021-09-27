@@ -9,7 +9,7 @@ class Dog {
 
     static async findById(id){
         try {
-           const query = `SELECT * FROM dog WHERE id=$1`;
+           const query = `SELECT * FROM dogs_with_all_informations WHERE id=$1`;
            const { rows } = await client.query(query, [id]);
            if(rows[0]) {
                return new Dog(rows[0]);
