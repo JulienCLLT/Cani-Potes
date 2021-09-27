@@ -14,12 +14,6 @@ import { nextSignupFormStep } from '../../../actions/signup';
 import './user-form.scss';
 
 const UserForm = () => {
-  const formStep = useSelector((state) => state.signup.formStep);
-  const dispatch = useDispatch();
-  const clickToContinue = () => {
-    dispatch(nextSignupFormStep());
-  };
-
   const {
     register, handleSubmit, formState: { isSubmitSuccessful, errors }, watch,
   } = useForm();
@@ -27,12 +21,20 @@ const UserForm = () => {
     console.log('data', data);
   };
 
+  const formStep = useSelector((state) => state.signup.formStep);
+
+  const dispatch = useDispatch();
+  const clickToContinue = () => {
+    // if (isSubmitSuccessful) {
+    console.log('yes');
+    dispatch(nextSignupFormStep());
+    // }
+  };
+
   if (isSubmitSuccessful) {
     console.log('yes');
-    return <Link to="/" />;
+    clickToContinue();
   }
-
-  console.log(errors);
 
   return (
     <div className={formStep === 1 ? 'signup user-form' : 'hidden'}>
@@ -106,8 +108,8 @@ const UserForm = () => {
           <div className="signup__back-submit">
             <Link to="/" className="signup__back-submit__back">Retour</Link>
             <button
-              onClick={handleSubmit(onSubmit)}
-              type="button"
+              // onClick={clickToContinue}
+              type="submit"
               className="signup__back-submit__submit"
             >Valider
             </button>
