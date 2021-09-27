@@ -1,29 +1,33 @@
-import React from "react";
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import NavBarConnected from "../NavBarConnected/NavBarConnected";
+import { useSelector } from 'react-redux';
 
-import './Header.scss'
+import NavBarConnected from './NavBarConnected/NavBarConnected';
+import NavBarDisconnected from './NavBarDisconnected/NavBarDisconnected';
+
+import logo from '../../assets/navbar/canipotes_logo.jpg';
+
+import './Header.scss';
 
 const Header = () => {
-    // fake user to test
-    const userIsLogged = true
-    return (
-        <header className="header">
-            <NavLink
-                className="home-link"
-                activeClassName="home-link--active"
-                to="/"
-                exact
-            >
-                {/* expect logo img instead of text */}
-                LOGO
-            </NavLink>
-            {userIsLogged && <NavBarConnected />}
-            {/* expect navbardisconnect but need to merge before */}
-            {/* {!userIsLogged && <NavBarDisconnect />} */}
+  const { isLogged } = useSelector((state) => state.user);
 
-        </header>
-    )
-}
+  return (
+    <header className="header">
+      <NavLink
+        className="header__logo"
+        to="/"
+        exact
+      >
+        {/* expect logo img instead of text */}
+        <div className="header__logo__container">
+          <img src={logo} alt="logo Cani' potes" />
+        </div>
+      </NavLink>
+      {isLogged && <NavBarConnected />}
+      {!isLogged && window.location.pathname === '/' && <NavBarDisconnected />}
+    </header>
+  );
+};
 
-export default Header
+export default Header;
