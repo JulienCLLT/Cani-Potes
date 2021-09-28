@@ -1,10 +1,10 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable max-len */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
-import { nextSignupFormStep, dogSignUp } from '../../../actions/signup';
+import { nextSignupFormStep, dogSignUp, getDogBreedsAndBehaviors } from '../../../actions/signup';
 
 // import svg
 // import add from '../../../assets/img/plus.svg';
@@ -13,7 +13,21 @@ import './dog-form.scss';
 
 const DogForm = () => {
   const formStep = useSelector((state) => state.signup.formStep);
+  const breeds = useSelector((state) => state.signup.breeds);
+  const behaviors = useSelector((state) => state.signup.behaviors);
   const dispatch = useDispatch();
+
+  // function capitalizeFirstLetter(string) {
+  //   return string.charAt(0).toUpperCase() + string.slice(1);
+  // }
+
+  // Capitalize(str){
+  //   return str.charAt(0).toUpperCase() + str.slice(1);
+  //   }
+
+  useEffect(() => {
+    dispatch(getDogBreedsAndBehaviors());
+  }, []);
 
   // useForm
   const {
@@ -38,16 +52,13 @@ const DogForm = () => {
               <div className="dog__form__input-infos__first__errors">
                 <select {...register('race', { required: 'Veuillez renseigner sa race' })} className="dog__commun">
                   <option value="">Race</option>
-                  <option value="chihuahua">chihuahua</option>
-                  <option value="border collie">border collie</option>
+                  {
+                    breeds.map((breed) => (
+                      <option value={breed.label} key={breed.id}>{breed.label}</option>
+                    ))
+                  }
                 </select>
                 {errors.race && <p className="errors">{errors.race.message}</p>}
-              </div>
-
-              {/* Age */}
-              <div className="dog__form__input-infos__first__errors">
-                <input type="number" placeholder="Age" {...register('age', { required: 'Veuillez renseigner son âge', valueAsNumber: true })} defaultValue="10" className="dog__commun" />
-                {errors.age && <p className="errors">{errors.age.message}</p>}
               </div>
 
               {/* Weight */}
@@ -106,7 +117,16 @@ const DogForm = () => {
               <div className="dog__form__input-infos__others__character">
                 <p className="dog__title">Il est plutôt du genre</p>
                 <div className="dog__form__input-infos__others__character__label-flex">
-                  <label htmlFor="sociable" className="dog__commun">
+
+                  {
+                    behaviors.map((behavior) => (
+                      <label htmlFor={behavior.label} className="dog__commun" key={behavior.id} style={{ textTransform: 'capitalize' }}>
+                        <input {...register('behavior', { required: 'Veuillez renseigner son caractère' })} type="radio" value={behavior.label} id={behavior.label} />
+                        {behavior.label}
+                      </label>
+                    ))
+                  }
+                  {/* <label htmlFor="sociable" className="dog__commun">
                     <input {...register('behavior', { required: 'Veuillez renseigner son caractère' })} type="radio" value="sociable" id="sociable" />
                     Sociable
                   </label>
@@ -121,7 +141,7 @@ const DogForm = () => {
                   <label htmlFor="agressif" className="dog__commun">
                     <input {...register('behavior', { required: 'Veuillez renseigner son caractère' })} type="radio" value="agressif" id="agressif" />
                     Agressif
-                  </label>
+                  </label> */}
                   {errors.behavior && <p className="errors">{errors.behavior.message}</p>}
                 </div>
               </div>
