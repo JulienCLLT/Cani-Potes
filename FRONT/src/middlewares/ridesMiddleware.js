@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 import axios from 'axios';
-import { GET__ALL__RIDES, saveAllRides } from '../actions/rides';
+import { GET__ALL__RIDES, saveAllRides, saveOneRide } from '../actions/rides';
+import { GET__ONE__RIDE__BY__ID } from './../actions/rides';
 
 const axiosInstance = axios.create({
   baseURL: 'http://107.22.144.90/api',
@@ -20,6 +21,18 @@ const ridesMiddleware = (store) => (next) => (action) => {
           (error) => console.log('erreur : ', error),
         );
       next(action);
+      break;
+    case GET__ONE__RIDE__BY__ID:
+      axiosInstance
+        .get(`/ride/${action.id}`)
+        .then(
+          (response) => {
+            store.dispatch(saveOneRide(response.data[0]));
+          },
+        )
+        .catch(
+          (error) => console.log('erreur : ', error),
+        );
       break;
     default:
       next(action);
