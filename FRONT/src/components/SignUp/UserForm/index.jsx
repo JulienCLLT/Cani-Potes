@@ -23,7 +23,6 @@ const UserForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    // console.log('data', data);
     dispatch(userSignup(data));
     dispatch(nextSignupFormStep());
   };
@@ -71,15 +70,14 @@ const UserForm = () => {
               {/* Birthday */}
               <div className="user-form__form__input-infos__birthday">
 
-                <label htmlFor="birthday_user">
-                  Je suis né le
-                  <input
-                    type="date"
-                    {...register('birthday_user', { required: 'Veuillez renseigner votre date de naissance.' })}
-                    id="birthday_user"
-                    max={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`}
-                  />
-                </label>
+                <label htmlFor="birthday_user">Je suis né le</label>
+                <input
+                  type="date"
+                  {...register('birthday_user', { required: 'Veuillez renseigner votre date de naissance.' })}
+                  id="birthday_user"
+                  max={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`}
+                />
+
                 {errors.birthday_user && <p className="errors">{errors.birthday_user.message}</p>}
               </div>
 
