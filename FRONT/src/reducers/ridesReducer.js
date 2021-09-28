@@ -29,6 +29,7 @@ const ridesInitialState = {
     host_first_name: '',
     messages: [
       {
+        message_id: 1,
         sent: '', // translate into il y a ... min / heures / jours
         message: '',
         sender_id: 0,

@@ -1,5 +1,6 @@
-import React, { useRef, useState } from 'react';
-import { NavLink, Redirect } from 'react-router-dom';
+/* eslint-disable linebreak-style */
+import React, { useEffect, useRef, useState } from 'react';
+import { NavLink, Redirect, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -9,20 +10,25 @@ import {
 
 import L from 'leaflet';
 
-// before beeing able to ask to db real url, simulating
-import user from '../../assets/img/profile-simulation/user.jpg';
-import dogPic from '../../assets/img/profile-simulation/dog-one.jpg';
 import calendar from '../../assets/img/info-ride/calendar.svg';
 import hourglass from '../../assets/img/info-ride/hourglass.svg';
 import mapPin from '../../assets/img/maps-and-flags.svg';
 import doubleArrow from '../../assets/img/info-ride/double_arrow.svg';
 
 import './RideDetails.scss';
-import { addNewMessage, addUserToRide, deleteRide, removeUserFromRide } from '../../actions/rides';
+import {
+  addNewMessage, addUserToRide, deleteRide, getOneRideById, removeUserFromRide
+} from '../../actions/rides';
 
 const RideDetails = () => {
+  const { id } = useParams();
   const chatZone = useRef();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getOneRideById(id));
+  }, []);
+
   const { user: userProfile } = useSelector((state) => state);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -158,14 +164,14 @@ const RideDetails = () => {
                     to={`/profile/${participant.participant_id}`}
                     exact
                   >
-                    <img src={user} alt="user" /> {/* wait for real photo url */}
+                    <img src={participant.participant_photo} alt="user" />
                     <span>{participant.participant_first_name}</span>
                   </NavLink>
                   {participant.dogs.map((dog, index) => {
                     if (index < 3) {
                       return (
                         <div className="ride-details__current-user__dogs" key={`${dog.dog_id}`}>
-                          <img src={dogPic} alt="dog" /> {/* wait for real photo url */}
+                          <img src={dog.dog_photo[0]} alt="dog" />
                           <span>{dog.dog_surname}</span>
                         </div>
                       );
@@ -190,7 +196,7 @@ const RideDetails = () => {
               exact
             >
               <p>Créateur</p>
-              <img src={user} alt="user" /> {/* wait for real photo url */}
+              <img src={participants[0].participant_photo} alt={host_first_name} />
               <span>{userProfile.id === host_id ? 'Vous' : host_first_name}</span>
             </NavLink>
           </div>
@@ -218,7 +224,7 @@ const RideDetails = () => {
             {
               messages.map((msg) => (
                 <div
-                  key={`${msg.sent}${msg.message}`}
+                  key={msg.message_id}
                   className={msg.sender_id === userProfile.id ? 'ride-details__messages-container__message my-message' : 'ride-details__messages-container__message'}
                 >
                   <p>{msg.sender_first_name}
@@ -230,7 +236,6 @@ const RideDetails = () => {
                   </p>
                   <span>{msg.message}</span>
                 </div>
-
               ))
             }
           </div>
