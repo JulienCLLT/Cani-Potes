@@ -9,3 +9,9 @@ export const userSignup = (userForm) => ({
   type: USER_SIGNUP,
   userForm,
 });
+
+export const DOG_SIGN_UP = 'DOG_SIGN_UP';
+export const dogSignUp = (dogForm) => ({
+  type: DOG_SIGN_UP,
+  dogForm,
+});
