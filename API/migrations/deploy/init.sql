@@ -72,7 +72,7 @@ CREATE TABLE ride (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     title TEXT NOT NULL , -- v CHECK (char_length(surname) < 50)
     description TEXT NOT NULL , -- v CHECK (char_length(surname) < 200)
-    start_coordinate NUMERIC(9,2) [] NOT NULL, -- v
+    start_coordinate NUMERIC(9,6) [] NOT NULL, -- v
     end_coordinate NUMERIC(9,6) [] NOT NULL, -- v
     starting_time TIMESTAMPTZ NOT NULL,
     duration INTERVAL, --todo CHECK mniute 
