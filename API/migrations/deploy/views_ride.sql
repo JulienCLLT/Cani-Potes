@@ -11,7 +11,6 @@ SELECT
         jsonb_build_object(				
             'sender_id', sender.id,
             'sender_first_name', sender.first_name,
-            'sender_last_name', sender.last_name,
             'sender_photo', sender.photo,
             'message_id', message.id,       
             'message', message.message,                    
@@ -21,15 +20,19 @@ SELECT
         jsonb_build_object(
             'participant_id', participant.id,
             'participant_first_name', participant.first_name,
-            'participant_last_name', participant.last_name,
             'participant_photo', participant.photo,
             'dogs',  (SELECT array_agg(DISTINCT                            
                             jsonb_build_object(
+                                'dog_id', dog.id,
                                 'dog_surname', dog.surname,
 								'dog_photo', (SELECT photo.file_name FROM photo WHERE photo.dog_id = dog.id ORDER BY created_at LIMIT 1 ),
                                 'dog_photo_id', (SELECT photo.id FROM photo WHERE photo.dog_id = dog.id ORDER BY created_at LIMIT 1 ),
 								'dog_behavior', (SELECT label FROM behavior WHERE dog.behavior_id = behavior.id),
-								'dog_breed', (SELECT label FROM breed WHERE dog.breed_id = breed.id)
+								'dog_breed', (SELECT label FROM breed WHERE dog.breed_id = breed.id),
+                                'dog_gender', (SELECT label FROM gender WHERE dog.gender_id = gender.id),
+                                'dog_weight', dog.weight,
+                                'dog_sterilization', dog.sterilization,
+                                'dog_description', dog.description
                             ))  
                         FROM dog                        
                         WHERE dog.dog_owner_id = participant.id)
