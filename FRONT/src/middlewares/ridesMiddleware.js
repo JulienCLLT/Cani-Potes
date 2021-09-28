@@ -1,7 +1,8 @@
 /* eslint-disable linebreak-style */
 import axios from 'axios';
-import { GET__ALL__RIDES, saveAllRides, saveOneRide } from '../actions/rides';
-import { GET__ONE__RIDE__BY__ID } from './../actions/rides';
+import {
+  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, saveAllRides, saveOneRide,
+} from '../actions/rides';
 
 const axiosInstance = axios.create({
   baseURL: 'http://107.22.144.90/api',

@@ -17,18 +17,9 @@ import mapPin from '../../../assets/img/maps-and-flags.svg';
 import { getOneRideById, getRideIsLoading } from '../../../actions/rides';
 
 const Map = () => {
-  const { allRides, currentRide } = useSelector((state) => state.rides);
+  const { allRides } = useSelector((state) => state.rides);
   const { user } = useSelector((state) => state);
   const dispatch = useDispatch();
-
-  // const getISS = async () => {
-  //     const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
-  //     const data = await response.json();
-  //     setLat(data.latitude);
-  //     setLng(data.longitude);
-  // };
-  // setLat(51.766965502);
-  // setLng(66.38113382904);
 
   const positionIcon = new L.Icon({
     iconUrl: mapPin,

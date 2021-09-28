@@ -5,8 +5,6 @@ import {
 } from '../actions/rides';
 
 const ridesInitialState = {
-  // get all rides from the api within an area
-  // ? how to do this with leaflet and SQL ?by city ? by coordinate ?
   allRides: [],
   currentRide: {
     isLoading: true,
@@ -137,14 +135,14 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           isLoading: false,
         },
       };
-    case GET__RIDE__IS__LOADING: 
-    return {
-      ...state,
-      currentRide: {
-        ...state.currentRide,
-        isLoading: true,
-      }
-    }
+    case GET__RIDE__IS__LOADING:
+      return {
+        ...state,
+        currentRide: {
+          ...state.currentRide,
+          isLoading: true,
+        },
+      };
     default:
       return state;
   }
