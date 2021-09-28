@@ -1,7 +1,7 @@
 @use '../../styles/vars';
 
 @mixin lg-screen {
-    @media screen and (min-width: 700px) {
+    @media screen and (min-width: 900px) {
         @content
     }
 }
@@ -34,7 +34,7 @@
 
         &__container {
             width: 60px;
-            
+
             @include lg-screen {
                 width: 100px;
             }
@@ -45,5 +45,13 @@
             }
         }
     }
-}
 
+    &__title {
+        display: none;
+        
+        @include lg-screen {
+            font-size: 2rem;
+            display: initial;
+        }
+    }
+}

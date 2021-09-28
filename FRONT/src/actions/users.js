@@ -1,6 +1,19 @@
 export const LOGIN__USER = 'LOGIN__USER';
-export const loginUser = () => ({
+export const loginUser = (data) => ({
   type: LOGIN__USER,
+  data,
+});
+
+export const CONNECT__USER = 'CONNECT__USER';
+export const connectUser = (token, user = {}) => ({
+  type: CONNECT__USER,
+  token,
+  user,
+});
+
+export const FAILED__TO__CONNECT = 'FAILED__TO__CONNECT';
+export const failedToConnect = () => ({
+  type: FAILED__TO__CONNECT,
 });
 
 export const LOGOUT__USER = 'LOGOUT__USER';

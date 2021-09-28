@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { loginUser } from '../../actions/users';
 import NavBarDisconnected from '../Header/NavBarDisconnected/NavBarDisconnected';
@@ -15,12 +15,10 @@ const Connection = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { failedToConnect } = useSelector((state) => state.user);
 
   const onSubmit = (data) => {
-    // dispatch action to post data to db through middleware and try to conenct
-    // if connected, set user data in state
-    console.log('submitted data : ', data);
-    dispatch(loginUser());
+    dispatch(loginUser(data));
   };
 
   return (
@@ -131,6 +129,12 @@ const Connection = () => {
                   {...register('password', { required: true })}
                 />
               </div>
+
+              {
+                failedToConnect && (
+                  <span className="connection__form__failed">Les identifiants sont inexacts</span>
+                )
+              }
 
               <button
                 className="connection__form__submit"

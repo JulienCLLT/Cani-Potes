@@ -1,8 +1,17 @@
+@mixin lg-screen {
+    @media screen and (min-width:900px) {
+        @content
+    }
+};
+
 .leaflet-container {
     height: 100vh;
     width: 100%;
+    @include lg-screen {
+        height: calc(100vh - 134.4px);
+    }
 }
 
-// .leaflet-popup-content p {
-//     margin: 0;
-// }
+.leaflet-popup-pane {
+    margin: 0;
+}

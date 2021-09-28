@@ -18,6 +18,17 @@ class Ride {
         }
     }
 
+    static async findOneCompleteRide(id) {
+        try {
+            const query = `SELECT * FROM rides_with_all_informations WHERE ride_id=$1`;
+            const {rows} = await client.query(query, [id]);
+            return rows.map(row => new Ride(row));
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
     static async findById(id) {
         try {
             const query = `SELECT * FROM ride WHERE ride.id = $1`;

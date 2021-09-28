@@ -9,7 +9,7 @@ import logo from '../../assets/navbar/canipotes_logo.jpg';
 
 import './Header.scss';
 
-const Header = () => {
+const Header = ({title}) => {
   const { isLogged } = useSelector((state) => state.user);
 
   return (
@@ -24,6 +24,11 @@ const Header = () => {
           <img src={logo} alt="logo Cani' potes" />
         </div>
       </NavLink>
+
+      {
+        title && (<h1 className="header__title">{title}</h1>)
+      }
+
       {isLogged && <NavBarConnected />}
       {!isLogged && window.location.pathname === '/' && <NavBarDisconnected />}
     </header>

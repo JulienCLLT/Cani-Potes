@@ -9,30 +9,26 @@ import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
 // action creator
-import { nextSignupFormStep } from '../../../actions/signup';
+import { nextSignupFormStep, userSignup } from '../../../actions/signup';
 
 import './user-form.scss';
 
 const UserForm = () => {
   const formStep = useSelector((state) => state.signup.formStep);
   const dispatch = useDispatch();
-  const clickToContinue = () => {
+
+  // useForm
+  const {
+    register, handleSubmit, formState: { errors }, watch,
+  } = useForm();
+
+  const onSubmit = (data) => {
+    // console.log('data', data);
+    dispatch(userSignup(data));
     dispatch(nextSignupFormStep());
   };
 
-  const {
-    register, handleSubmit, formState: { isSubmitSuccessful, errors }, watch,
-  } = useForm();
-  const onSubmit = (data) => {
-    console.log('data', data);
-  };
-
-  if (isSubmitSuccessful) {
-    console.log('yes');
-    return <Link to="/" />;
-  }
-
-  console.log(errors);
+  const date = new Date();
 
   return (
     <div className={formStep === 1 ? 'signup user-form' : 'hidden'}>
@@ -40,28 +36,23 @@ const UserForm = () => {
 
       <div className="user-form__form">
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* {isValid ? <p> isValid 'true'</p> : <p> isValid 'false'</p>}
-          {isSubmitted ? <p> isSubmitted 'true'</p> : <p> isSubmitted 'false'</p>}
-          {isSubmitting ? <p> isSubmitting 'true'</p> : <p> isSubmitting 'false'</p>}
-          {isSubmitSuccessful ? <p> isSubmitSuccessful 'true'</p> : <p> isSubmitSuccessful 'false'</p>} */}
-
           <div className="user-form__form__input-infos">
             <div className="user-form__form__input-infos__identity">
               {/* Firstname */}
               <div className="user-form__form__input-infos__first_name">
-                <input {...register('first_name', { required: 'Veuillez entrer votre prénom.' })} type="text" placeholder="Prénom" defaultValue="ma" />
+                <input {...register('first_name', { required: 'Veuillez entrer votre prénom.' })} type="text" placeholder="Prénom" defaultValue="michel" />
                 {errors.first_name && <p className="errors">{errors.first_name.message}</p>}
               </div>
 
               {/* Name */}
               <div className="user-form__form__input-infos__name">
-                <input {...register('last_name', { required: 'Veuillez entrer votre nom.' })} type="text" placeholder="Nom" defaultValue="ch" />
+                <input {...register('last_name', { required: 'Veuillez entrer votre nom.' })} type="text" placeholder="Nom" defaultValue="test" />
                 {errors.last_name && <p className="errors">{errors.last_name.message}</p>}
               </div>
 
               {/* Email */}
               <div className="user-form__form__input-infos__email">
-                <input {...register('email', { required: 'Veuillez entrer un email.' })} type="email" placeholder="Email" defaultValue="az@z" />
+                <input {...register('email', { required: 'Veuillez entrer un email.' })} type="email" placeholder="Email" defaultValue="michel@gmail.com" />
                 {errors.email && <p className="errors">{errors.email.message}</p>}
               </div>
 
@@ -75,6 +66,21 @@ const UserForm = () => {
               <div className="user-form__form__input-infos__password--confirmation">
                 <input {...register('password_confirmation', { required: 'Veuillez confirmer votre mot de passe.', validate: (value) => value === watch('password') || 'Les mots de passe de correspondent pas' })} type="password" placeholder="Confirmer mot de passe" />
                 {errors.password_confirmation && <p className="errors">{errors.password_confirmation.message}</p>}
+              </div>
+
+              {/* Birthday */}
+              <div className="user-form__form__input-infos__birthday">
+
+                <label htmlFor="birthday_user">
+                  Je suis né le
+                  <input
+                    type="date"
+                    {...register('birthday_user', { required: 'Veuillez renseigner votre date de naissance.' })}
+                    id="birthday_user"
+                    max={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`}
+                  />
+                </label>
+                {errors.birthday_user && <p className="errors">{errors.birthday_user.message}</p>}
               </div>
 
               {/* Picture profile */}
@@ -97,7 +103,7 @@ const UserForm = () => {
                 nous avons besoin de votre code postal.
               </p>
               <div className="user-form__form__input-infos__zipcode__input">
-                <input {...register('zip_code', { required: 'Veuillez entrer un code postal.', minLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' }, maxLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' } })} type="text" placeholder="Code postal" />
+                <input {...register('zip_code', { required: 'Veuillez entrer un code postal.', minLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' }, maxLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' } })} type="text" placeholder="Code postal" defaultValue="12345" />
                 {errors.zip_code && <p className="errors">{errors.zip_code.message}</p>}
                 {}
               </div>
@@ -106,8 +112,7 @@ const UserForm = () => {
           <div className="signup__back-submit">
             <Link to="/" className="signup__back-submit__back">Retour</Link>
             <button
-              onClick={handleSubmit(onSubmit)}
-              type="button"
+              type="submit"
               className="signup__back-submit__submit"
             >Valider
             </button>
