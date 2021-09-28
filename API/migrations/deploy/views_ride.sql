@@ -16,7 +16,7 @@ SELECT
             'sender_photo', sender.photo,
             'message_id', message.id,       
             'message', message.message,                    
-            'sent', message.created_at
+            'sent', to_char(message.created_at, 'TMDay DD TMMonth YYYY "à" HH "h" MI')
         )) FILTER (WHERE sender.id IS NOT NULL) AS messages,
     array_agg(DISTINCT
         jsonb_build_object(
@@ -26,9 +26,14 @@ SELECT
             'dogs',  (SELECT array_agg(DISTINCT                            
                             jsonb_build_object(
                                 'dog_id', dog.id,
+                                'dog_photo', (SELECT ARRAY_AGG(
+                                                        jsonb_build_object(
+                                                        'photo_id', photo.id,
+                                                        'photo_url', photo.file_name
+                                                        )
+                                                    ) 
+                                            FROM photo WHERE photo.dog_id = dog.id GROUP BY photo.dog_id),
                                 'dog_surname', dog.surname,
-								'dog_photo', (SELECT photo.file_name FROM photo WHERE photo.dog_id = dog.id ORDER BY created_at LIMIT 1 ),
-                                'dog_photo_id', (SELECT photo.id FROM photo WHERE photo.dog_id = dog.id ORDER BY created_at LIMIT 1 ),
 								'dog_behavior', (SELECT label FROM behavior WHERE dog.behavior_id = behavior.id),
 								'dog_breed', (SELECT label FROM breed WHERE dog.breed_id = breed.id),
                                 'dog_gender', (SELECT label FROM gender WHERE dog.gender_id = gender.id),
