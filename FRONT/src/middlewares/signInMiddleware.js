@@ -18,10 +18,12 @@ const signinMiddleware = (store) => (next) => (action) => {
         password,
       })
         .then((response) => {
+          console.log("michel oui");
           console.log(response);
           // wait for user from db
           store.dispatch(connectUser(response.data.authozization));
         }).catch((error) => {
+          console.log("michel non");
           console.error(error);
           store.dispatch(failedToConnect());
         });
