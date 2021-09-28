@@ -3,6 +3,7 @@ const joi = require('joi');
 // convert par defaut sur on, c'estc e qui change le timstamp? 
 
 const schemaMember = joi.object({
+
     //todo , ? minDomain a 2 valeur par defaut 
     email:joi.string().email({minDomainSegments:2}).required(),
     //pb prenom composé avec - idem pour nom donc je vite alphanum
@@ -11,7 +12,7 @@ const schemaMember = joi.object({
     last_name: joi.string().min(3).max(15).required(),
     photo: joi.string().pattern(/^.+\..+$/), //regex identique a dans sql
     zip_code: joi.string().pattern(/^(?!00|96|99)\d{5}$/).required(), // faire plus proche de celle sql pour cherence
-    password: joi.string().required(), // avant bcrypt ? donc regex ? 
+    password: joi.string().pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{7,}$/).required(), // avant bcrypt ? donc regex ? 
     birthday: joi.date().required(), // !Definir le format avec le lead Dev front
 });
 
@@ -152,10 +153,12 @@ const schemaPhoto = joi.object({
 
 const member = {
     email: "sdfsfs@gmail.io",
-    first_name: "Jean-Louis",
-    last_name: "porte",
+    first_name: "Jean",
+    last_name: "poRte",
     zip_code: "56326",
-    password: "mlodwfjgoeriucxwvjhioifkf",
+    //password: "admin' AND 1=1 OR 1='1",
+     password: "<script>alert(1)</script>",
+
     birthday: 2043-05-10,
 };
 
@@ -174,8 +177,14 @@ const ride = {
 // const { error, value } = schemaMember.validate(member,{escapeHtml: true});
 const { error, value } = schemaRide.validate(ride, {escapeHtml : true});
 
-console.log(value);
-console.log('error du validate '+ error);
+if (error) {
+    console.log('error du validate '+ error);
+}else{
+    console.log(value);
+}
+
+
+
 
 
 
