@@ -46,3 +46,20 @@ export const saveAllRides = (allRides) => ({
   type: SAVE__ALL__RIDES,
   allRides,
 });
+
+export const GET__ONE__RIDE__BY__ID = 'GET__ONE__RIDE__BY__ID';
+export const getOneRideById = (id) => ({
+  type: GET__ONE__RIDE__BY__ID,
+  id,
+});
+
+export const SAVE__ONE__RIDE = 'SAVE__ONE__RIDE';
+export const saveOneRide = (ride) => ({
+  type: SAVE__ONE__RIDE,
+  ride,
+});
+
+export const GET__RIDE__IS__LOADING = 'GET__RIDE__IS__LOADING';
+export const getRideIsLoading = () => ({
+  type: GET__RIDE__IS__LOADING,
+});

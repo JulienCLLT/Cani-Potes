@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Map from './Map/index';
 import { getAllRides } from '../../actions/rides';
 
@@ -15,6 +15,6 @@ const MapBalade = () => {
       <Map />
     </div>
   );
-}
+};
 
 export default MapBalade;
