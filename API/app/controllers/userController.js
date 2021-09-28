@@ -19,8 +19,8 @@ const userController = {
                             
                             //authentification ok on genere un token
                             const token = jwt.signToken({id:result.id});
-                            response.set({'authozization': token})
-                            response.status(200).json({ message: "Valid password"});
+                            //response.set({'authozization': token})
+                            response.status(200).json({ message: "Valid password", authozization: token});
                         } else {
                             response.status(400).json({ error: "Invalid Password" });
                         }
@@ -45,8 +45,8 @@ const userController = {
                     
                     //on envoie le nouvel ID en payload du token
                     const token = jwt.signToken({...newUser});
-                    response.set({'authozization': token});
-                    response.status(201).json('Welcome new user');
+                    //response.set({'authozization': token});
+                    response.status(201).json({message:'Welcome new user', authozization: token});
                   } else {
                     response.status(204).json('Update done');
                  }
