@@ -28,12 +28,6 @@ const userInitialState = {
 
 const userReducer = (state = userInitialState, action = {}) => {
   switch (action.type) {
-    // case LOGIN__USER:
-    //   // before we can check in db, just simuling connection
-    //   return {
-    //     ...state,
-    //     isLogged: true,
-    //   };
     case CONNECT__USER:
       return {
         ...state,
