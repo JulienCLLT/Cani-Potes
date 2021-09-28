@@ -58,3 +58,8 @@ export const saveOneRide = (ride) => ({
   type: SAVE__ONE__RIDE,
   ride,
 });
+
+export const GET__RIDE__IS__LOADING = 'GET__RIDE__IS__LOADING';
+export const getRideIsLoading = () => ({
+  type: GET__RIDE__IS__LOADING,
+});

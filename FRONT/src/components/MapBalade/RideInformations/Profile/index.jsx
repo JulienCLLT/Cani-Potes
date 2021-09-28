@@ -11,9 +11,6 @@ import race from '../../../../assets/img/profile-simulation/race.svg';
 import sociable from '../../../../assets/img/profile-simulation/sociable.svg';
 
 const Profile = ({participants, host_id}) => {
-  console.log(participants);
-  const rideHost = participants.find((participant) => participant.participant_id === host_id);
-
   participants.sort((a, b) => {
     if (a.participant_id === host_id) {
       return -1;
@@ -24,15 +21,6 @@ const Profile = ({participants, host_id}) => {
   return (
     <div className="profile">
 
-      {/* <div className="profile__user">
-        <div className="profile__user__img-container">
-          <img src={rideHost.participant_photo} alt={`${rideHost.participant_first_name} avatar`} />
-        </div>
-        <h3 className="profile__user__name">
-          {rideHost.participant_first_name} {rideHost.participant_last_name[0].toUpperCase()}.
-        </h3>
-      </div> */}
-
       <section>
         {
           participants.map((participant) => (
@@ -41,10 +29,13 @@ const Profile = ({participants, host_id}) => {
               <Link to={`/profile/${participant.participant_id}`}>
                 <div className="profile__article__avatar">
                   <div className="profile__article__avatar-image">
-                    <img src={participant.participant_photo} alt={participant.participant_first_name} />
+                    <img
+                      src={participant.participant_photo}
+                      alt={participant.participant_first_name}
+                    />
                   </div>
                   <div>
-                    <span>{participant.participant_first_name} {participant.participant_last_name[0].toUpperCase()}.</span>
+                    <span>{participant.participant_first_name}</span>
                   </div>
                 </div>
               </Link>
