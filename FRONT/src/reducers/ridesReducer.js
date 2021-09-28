@@ -29,6 +29,7 @@ const ridesInitialState = {
     host_first_name: '',
     messages: [
       {
+        message_id: 1,
         sent: '', // translate into il y a ... min / heures / jours
         message: '',
         sender_id: 0,
@@ -128,6 +129,16 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
         },
       };
     case SAVE__ONE__RIDE:
+      if (action.ride.messages === null) {
+        return {
+          ...state,
+          currentRide: {
+            ...action.ride,
+            messages: [],
+            isLoading: false,
+          },
+        };
+      }
       return {
         ...state,
         currentRide: {
