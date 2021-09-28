@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // import leaflet
 import {
@@ -14,10 +14,12 @@ import RideInformations from '../RideInformations/index';
 
 import './map.scss';
 import mapPin from '../../../assets/img/maps-and-flags.svg';
+import { getOneRideById } from '../../../actions/rides';
 
 const Map = () => {
-  const { allRides } = useSelector((state) => state.rides);
+  const { allRides, currentRide } = useSelector((state) => state.rides);
   const { user } = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   // const getISS = async () => {
   //     const response = await fetch("https://api.wheretheiss.at/v1/satellites/25544");
@@ -37,6 +39,16 @@ const Map = () => {
 
   const fillBlueOptions = { fillColor: 'blue' };
 
+  const handleClick = (e) => {
+    const { lat, lng } = e.latlng;
+
+    const foundRide = allRides.find((ride) =>
+      ride.start_coordinate[0] === lat && ride.start_coordinate[1] === lng,
+    );
+
+    dispatch(getOneRideById(foundRide.ride_id));
+  };
+
   return (
     <MapContainer className="leaflet-container" center={user.position} zoom={15} scrollWheelZoom={false}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -44,8 +56,13 @@ const Map = () => {
 
       {
         allRides.map((ride) => (
-          <Marker position={ride.start_coordinate} icon={positionIcon} key={ride.ride_id}>
-            <RideInformations ride={ride} />
+          <Marker
+            position={ride.start_coordinate}
+            icon={positionIcon}
+            key={ride.ride_id}
+            eventHandlers={{ click: handleClick }}
+          >
+            {currentRide && <RideInformations />}
           </Marker>
         ))
       }
