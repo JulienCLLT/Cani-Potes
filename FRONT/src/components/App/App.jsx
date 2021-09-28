@@ -11,6 +11,7 @@ import Connection from '../Connection/Connection';
 import CreateRide from '../CreateRide/CreateRide';
 import SignUp from '../SignUp/index';
 import RideDetails from '../RideDetails/RideDetails';
+import Board from '../Board/index';
 
 // import './App.scss';
 
@@ -35,7 +36,7 @@ function App() {
           <Connection />
         </Route>
         <Route exact path="/signup">
-          {isLogged && <Redirect to="/home" />}
+          {/* {isLogged && <Redirect to="/home" />} */}
           <Header />
           <main>
             <SignUp />
@@ -67,6 +68,13 @@ function App() {
           <Header title="Détails d'un profil" />
           <main>
             <Profile />
+          </main>
+        </Route>
+        <Route exact path="/board">
+          {/* {!isLogged && <Redirect to="/" />} */}
+          <Header title="Tableau de bord" />
+          <main>
+            <Board />
           </main>
         </Route>
         <Route>

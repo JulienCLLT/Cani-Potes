@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import { LOGIN__USER, LOGOUT__USER } from '../actions/users';
-import { CONNECT__USER } from './../actions/users';
-import { FAILED__TO__CONNECT } from './../actions/users';
+import { CONNECT__USER } from '../actions/users';
+import { FAILED__TO__CONNECT } from '../actions/users';
 
 const userInitialState = {
   id: 99,
@@ -12,19 +12,19 @@ const userInitialState = {
   dogs: [
     {
       dog_id: 101,
-      dog_photo: "img12.jpg",
-      dog_surname: "Riri",
+      dog_photo: 'img12.jpg',
+      dog_surname: 'Riri',
       dog_photo_id: 9,
     },
     {
       dog_id: 102,
-      dog_photo: "img14.jpg",
-      dog_surname: "Fifi",
+      dog_photo: 'img14.jpg',
+      dog_surname: 'Fifi',
       dog_photo_id: 11,
     },
   ],
   token: '',
-  isLogged: false,
+  isLogged: true,
   failedToConnect: false,
 };
 
