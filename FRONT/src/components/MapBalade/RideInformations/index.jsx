@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Popup } from 'react-leaflet';
 import { useSelector } from 'react-redux';
 
@@ -18,8 +18,16 @@ const RideInformations = () => {
     <Popup className="ride-informations">
       <h1><img className="icon" src={rideImage} alt="clock" />{currentRide.title}</h1>
       <div className="ride-informations__all">
-        <Ride {...currentRide} />
-        <Profile {...currentRide} />
+        {
+          currentRide.isLoading ? (
+            <span>Chargement en cours</span>
+          ) : (
+            <>
+              <Ride {...currentRide} />
+              <Profile {...currentRide} />
+            </>
+          )
+        }
       </div>
     </Popup>
   )

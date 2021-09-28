@@ -14,7 +14,7 @@ import RideInformations from '../RideInformations/index';
 
 import './map.scss';
 import mapPin from '../../../assets/img/maps-and-flags.svg';
-import { getOneRideById } from '../../../actions/rides';
+import { getOneRideById, getRideIsLoading } from '../../../actions/rides';
 
 const Map = () => {
   const { allRides, currentRide } = useSelector((state) => state.rides);
@@ -41,6 +41,7 @@ const Map = () => {
 
   const handleClick = (e) => {
     const { lat, lng } = e.latlng;
+    dispatch(getRideIsLoading());
 
     const foundRide = allRides.find((ride) =>
       ride.start_coordinate[0] === lat && ride.start_coordinate[1] === lng,
@@ -62,7 +63,7 @@ const Map = () => {
             key={ride.ride_id}
             eventHandlers={{ click: handleClick }}
           >
-            {currentRide && <RideInformations />}
+            <RideInformations />
           </Marker>
         ))
       }
