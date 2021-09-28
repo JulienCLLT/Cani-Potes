@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Header from '../Header/Header';
 import MapBalade from '../MapBalade';
@@ -16,16 +16,10 @@ import Board from '../Board/index';
 // import './App.scss';
 
 import '../../styles/reset.scss';
-import { getAllRides } from '../../actions/rides';
 import Profile from '../Profile';
 
 function App() {
   const { isLogged } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllRides());
-  }, []);
 
   return (
     <div className="App">
