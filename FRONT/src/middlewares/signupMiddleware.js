@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 
 import axios from 'axios';
-import { USER_SIGNUP } from '../actions/signup';
+import { USER_SIGNUP, DOG_SIGN_UP } from '../actions/signup';
 
 const axiosInstance = axios.create({
   baseURL: 'http://107.22.144.90/api',
@@ -33,6 +33,23 @@ const signupMiddleware = (store) => (next) => (action) => {
         });
       break;
     }
+
+    // case DOG_SIGN_UP: {
+    //   const {
+    //     surname, breed_id, birthday, sterilization, behavior_id, dog_owner_id,
+    //   } = action.dogForm;
+
+    //   axiosInstance.post('/profile/:id.profile/dogs/:id.dog', {
+    //     surname, breed_id, birthday, sterilization, behavior_id, dog_owner_id,
+    //   })
+    //     .then((response) => {
+    //       console.log(response.data);
+    //       next(action);
+    //     }).catch((error) => {
+    //       console.log(error);
+    //     });
+    //   break;
+    // }
     default:
       next(action);
   }
