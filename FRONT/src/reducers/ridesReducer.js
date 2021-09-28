@@ -6,7 +6,20 @@ import {
 const ridesInitialState = {
   // get all rides from the api within an area
   // ? how to do this with leaflet and SQL ?by city ? by coordinate ?
-  allRides: [],
+  allRides: [
+    {
+      ride_id: 1,
+      start_coordinate: [48.456, 17.54],
+    },
+    {
+      ride_id: 2,
+      start_coordinate: [48.456, 17.54],
+    },
+    {
+      ride_id: 3,
+      start_coordinate: [48.456, 17.54],
+    },
+  ],
   currentRide: {
     ride_id: 3,
     title: 'Dans le coin',
