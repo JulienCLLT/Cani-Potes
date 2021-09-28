@@ -14,10 +14,12 @@
     padding: 0.5rem;
     max-height: 300px;
     overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
-    @include lg-screen {
-
-    }
+    &::-webkit-scrollbar {
+        display: none;
+      }
 
     &__user{
         display: flex;
