@@ -6,10 +6,6 @@ import { PropTypes } from 'prop-types';
 
 import './profile.scss';
 
-// import icon
-import race from '../../../../assets/img/profile-simulation/race.svg';
-import sociable from '../../../../assets/img/profile-simulation/sociable.svg';
-
 const Profile = ({participants, host_id}) => {
   participants.sort((a, b) => {
     if (a.participant_id === host_id) {
@@ -67,14 +63,6 @@ const Profile = ({participants, host_id}) => {
           ))
         }
       </section>
-
-      {/* <div className="profile__dog"> */}
-        {/* <img src={dogPic} alt="dog picture" /> mettre en alt nom du chien */}
-        {/* <p className="profile__dog__icon"><img src={race} alt="dog icon" />Race</p>mettre en alt la race du chien ? */}
-        {/* <p className="profile__dog__icon"><img src={sociable} alt="happy icon" />Comportement</p> mettre en alt le comportement du chien ? */}
-      {/* </div> */}
-
-      {/* <Link to={`/profile/${id}`} className="profile_see">Voir le profil</Link> */}
     </div>
   );
 };
@@ -87,7 +75,7 @@ Profile.propTypes = {
           dog_id: PropTypes.number.isRequired,
           dog_photo: PropTypes.string.isRequired,
           dog_surname: PropTypes.string.isRequired,
-          dog_photo_id: PropTypes.number.isRequired
+          dog_photo_id: PropTypes.number.isRequired,
         }),
       ).isRequired,
       participant_id: PropTypes.number.isRequired,
