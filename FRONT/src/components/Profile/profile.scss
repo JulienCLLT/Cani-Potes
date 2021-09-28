@@ -1,0 +1,73 @@
+@use '../../styles/vars';
+.profile-page {
+
+  &__header {
+    width: 60%;
+    min-width: 220px;
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    box-shadow: 0 0 10px  vars.$color-border-input ;
+    border-radius: 30px;
+    padding: .5 * vars.$gutter;
+
+    &__annoucement {
+      font-size: 1.5rem;
+    }
+
+    &__avatar {
+      width: 200px;
+      margin: auto;
+      
+      img {
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+
+    &__avatar-name {
+      font-size: 1.3rem;
+    }
+  }
+
+  &__info-user, &__info-dogs {
+    padding: 0 1 * vars.$gutter;
+    margin: 1 * vars.$gutter 0;
+  }
+
+  &__info-user {
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+      width: 60%;
+      padding: 1 * vars.$gutter;
+      margin: 1 * vars.$gutter auto;
+      box-shadow: 0 0 5px vars.$color-border-input;
+      border-radius: 5px;
+
+      &-field {
+        display: flex;
+        gap: .5rem;
+      }
+    }
+  }
+
+  &__info-dogs {
+  }
+
+  &__dog {
+
+    &-picture {
+  
+      &__container-item {
+        width: 40px;
+  
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
