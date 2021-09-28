@@ -35,7 +35,7 @@ function App() {
           <Connection />
         </Route>
         <Route exact path="/signup">
-          {isLogged && <Redirect to="/home" />}
+          {/* {isLogged && <Redirect to="/home" />} */}
           <Header />
           <main>
             <SignUp />
