@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 import { LOGIN__USER, LOGOUT__USER } from '../actions/users';
 import { CONNECT__USER } from './../actions/users';
+import { FAILED__TO__CONNECT } from './../actions/users';
 
 const userInitialState = {
   id: 99,
@@ -23,7 +24,8 @@ const userInitialState = {
     },
   ],
   token: '',
-  isLogged: true,
+  isLogged: false,
+  failedToConnect: false,
 };
 
 const userReducer = (state = userInitialState, action = {}) => {
@@ -32,6 +34,12 @@ const userReducer = (state = userInitialState, action = {}) => {
       return {
         ...state,
         token: action.token,
+        isLogged: true,
+      };
+    case FAILED__TO__CONNECT:
+      return {
+        ...state,
+        failedToConnect: true,
       };
     case LOGOUT__USER:
       return {
