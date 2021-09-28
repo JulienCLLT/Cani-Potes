@@ -1,20 +1,4 @@
-      "end_coordinate": [
-        2.310084,
-        49.877443
-      ],
-      "starting_time": "2021-09-29T17:37:25.631Z", //! traduire en format symap
-      "duration": {
-        "minutes": 15
-      },
-          "sent": "2021-09-27T14:09:37.380537+02:00", //! format date sympa
-          "message": "bien sûr!",
-          "sender_id": 1,
-          "message_id": 4, 
-          "sender_photo": "https://s3.amazonaws.com/southfloridareporter/wp-content/uploads/2016/08/17105112/Dwayne-Johnson-Forbes-2.jpg",
-          "sender_first_name": "Jojo"
-        },
-        {
-        },
+       },
       "participants": [
         {
           "dogs": [
