@@ -1,26 +1,11 @@
 /* eslint-disable linebreak-style */
-import { NEXT_SIGNUP_FORM_STEP } from '../actions/signup';
+import { NEXT_SIGNUP_FORM_STEP, SAVE_DOG_BREEDS_AND_BEHAVIORS } from '../actions/signup';
 
 const initialState = {
 
-  // signup informations bdd
-  // user
-  // email: '',
-  // password: '',
-  // password_confirmation: '',
-  // first_name: '',
-  // last_name: '',
-  // birthday_user: '',
-  // photo: '',
-  // zip_code: '',
-  // // dog
-  // surname: '',
-  // breed_id: '',
-  // weight: undefined,
-  // gender_id: undefined,
-  // birthday: '', // AAAA-MM-DD in bdd
-  // sterilization: false, // boolean in bdd
-  // behavior: '', // behavior_id in bdd
+  // to have beahaviors and breeds
+  behaviors: [],
+  breeds: [],
 
   // for continue and previous button
   formStep: 1,
@@ -33,6 +18,13 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         formStep: state.formStep + 1,
         isSubmitSuccessfull: false,
+      };
+
+    case SAVE_DOG_BREEDS_AND_BEHAVIORS:
+      return {
+        ...state,
+        behaviors: action.allBehaviorsAndBreeds.behaviors,
+        breeds: action.allBehaviorsAndBreeds.breeds,
       };
     default:
       return state;

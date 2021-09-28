@@ -15,3 +15,14 @@ export const dogSignUp = (dogForm) => ({
   type: DOG_SIGN_UP,
   dogForm,
 });
+
+export const GET_DOG_BREEDS_AND_BEHAVIORS = 'GET_DOG_BREEDS_AND_BEHAVIORS';
+export const getDogBreedsAndBehaviors = () => ({
+  type: GET_DOG_BREEDS_AND_BEHAVIORS,
+});
+
+export const SAVE_DOG_BREEDS_AND_BEHAVIORS = 'SAVE_DOG_BREEDS_AND_BEHAVIORS';
+export const saveDogBreedsAndBehaviors = (allBehaviorsAndBreeds) => ({
+  type: SAVE_DOG_BREEDS_AND_BEHAVIORS,
+  allBehaviorsAndBreeds,
+});
