@@ -76,7 +76,7 @@ CREATE TABLE ride (
     end_coordinate NUMERIC(9,6) [] NOT NULL, -- v
     starting_time TIMESTAMPTZ NOT NULL,
     duration INTERVAL, --todo CHECK mniute 
-    max_number_dogs INT NOT NULL, 
+    max_number_dogs INT NOT NULL, --todo mini 2? 
     tag_id INT REFERENCES tag(id) NOT NULL, 
     host_id INT REFERENCES member(id) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
