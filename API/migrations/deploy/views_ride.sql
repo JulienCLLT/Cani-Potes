@@ -32,7 +32,12 @@ SELECT
                                 'dog_gender', (SELECT label FROM gender WHERE dog.gender_id = gender.id),
                                 'dog_weight', dog.weight,
                                 'dog_sterilization', dog.sterilization,
-                                'dog_description', dog.description
+                                'dog_description', dog.description,
+                                'dog_age',  CASE 
+                                                    WHEN ((NOW()::DATE - dog.birthday)/365) < 1 THEN ((NOW()::DATE - dog.birthday)/30)::varchar || ' mois' 
+                                                    WHEN ((NOW()::DATE - dog.birthday)/365) = 1 THEN ((NOW()::DATE - dog.birthday)/30)::varchar || ' an'
+                                                    ELSE ((NOW()::DATE - dog.birthday)/365)::varchar || ' ans'
+                                            END 
                             ))  
                         FROM dog                        
                         WHERE dog.dog_owner_id = participant.id)
