@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import home from '../../../assets/navbar/location.png';
 import board from '../../../assets/navbar/tablet.png';
@@ -13,12 +13,13 @@ import './NavBarConnected.scss';
 
 const NavBarConnected = () => {
   const dispatch = useDispatch();
+  const { id } = useSelector(state => state.user);
 
   return (
     <nav className="navbar-connected">
       <NavLink
-        className="navbar-connected__home"
-        activeClassName="navbar-connected__home--active"
+        className="navbar-connected__link"
+        activeClassName="navbar-connected__link--active"
         to="/home"
         exact
       >
@@ -29,8 +30,8 @@ const NavBarConnected = () => {
       </NavLink>
 
       <NavLink
-        className="navbar-connected__board"
-        activeClassName="navbar-connected__board--active"
+        className="navbar-connected__link"
+        activeClassName="navbar-connected__link--active"
         to="/board"
         exact
       >
@@ -41,9 +42,9 @@ const NavBarConnected = () => {
       </NavLink>
 
       <NavLink
-        className="navbar-connected__profile"
-        activeClassName="navbar-connected__profile--active"
-        to="/profile/:id"
+        className="navbar-connected__link"
+        activeClassName="navbar-connected__link--active"
+        to={`/profile/${id}`}
         exact
       >
         <div className="navbar-connected__img">

@@ -16,6 +16,7 @@ import RideDetails from '../RideDetails/RideDetails';
 
 import '../../styles/reset.scss';
 import { getAllRides } from '../../actions/rides';
+import Profile from '../Profile';
 
 function App() {
   const { isLogged } = useSelector((state) => state.user);
@@ -41,21 +42,31 @@ function App() {
           </main>
         </Route>
         <Route exact path="/home">
-          <Header />
+          {!isLogged && <Redirect to="/" />}
+          <Header title="Map balade" />
           <main>
             <MapBalade />
           </main>
         </Route>
         <Route exact path="/ride/create">
-          <Header />
+          {!isLogged && <Redirect to="/" />}
+          <Header title="Créer une balade" />
           <main>
             <CreateRide />
           </main>
         </Route>
         <Route exact path="/ride/:id">
-          <Header />
+          {!isLogged && <Redirect to="/" />}
+          <Header title="Détails une balade" />
           <main>
             <RideDetails />
+          </main>
+        </Route>
+        <Route exact path="/profile/:id">
+          {!isLogged && <Redirect to="/" />}
+          <Header title="Détails d'un profil" />
+          <main>
+            <Profile />
           </main>
         </Route>
         <Route>

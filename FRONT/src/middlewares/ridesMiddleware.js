@@ -3,7 +3,7 @@ import axios from 'axios';
 import { GET__ALL__RIDES, saveAllRides } from '../actions/rides';
 
 const axiosInstance = axios.create({
-  baseURL: 'https://canipotes.herokuapp.com/api',
+  baseURL: 'http://107.22.144.90/api',
 });
 
 const ridesMiddleware = (store) => (next) => (action) => {

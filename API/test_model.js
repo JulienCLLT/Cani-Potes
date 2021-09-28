@@ -6,20 +6,20 @@ const app = express();
 const port = process.env.PORT || 3500;
 
 const Ride = require("./app/models/rideModel");
+const Dog = require("./app/models/dogModel");
 
-const testFindAllRides = async () => {
-  const rides = await Ride.findAll();
-  // console.log('rides : ', rides);
-  //    for(ride of rides){
-  // console.log("ride:", rides[0]);
-  //   }
+const testFindOneRide = async () => {
+  const rides = await Ride.findById(1);
+  console.log(rides);
+}
 
-  for (ride of rides) {
-    console.log("ride:", ride.participant[0].dogs);
-  }
+const testFindOneDog = async () => {
+  const dogs = await Dog.findById(1);
+  console.log(dogs);
 };
 
-testFindAllRides();
+//testFindOneRide(1);
+testFindOneDog(1);
 
 app.listen(port, () => {
   console.log(`Server started on http://localhost:${port}`);
