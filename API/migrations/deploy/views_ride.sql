@@ -4,7 +4,9 @@ BEGIN;
 
 CREATE VIEW rides_with_all_informations AS
 SELECT 
-    ride.id AS ride_id, title, ride.description, start_coordinate, end_coordinate, starting_time, duration, max_number_dogs, 
+    ride.id AS ride_id, title, ride.description, start_coordinate, end_coordinate, 
+    to_char(starting_time, 'TMDay DD TMMonth YYYY "à" HH "h" MI') AS starting_time, 
+    duration, max_number_dogs, 
     tag.label AS tag_label, 
     host.id AS host_id, host.first_name AS host_first_name,   
     array_agg(DISTINCT
