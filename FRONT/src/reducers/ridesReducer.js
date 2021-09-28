@@ -129,6 +129,16 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
         },
       };
     case SAVE__ONE__RIDE:
+      if (action.ride.messages === null) {
+        return {
+          ...state,
+          currentRide: {
+            ...action.ride,
+            messages: [],
+            isLoading: false,
+          },
+        };
+      }
       return {
         ...state,
         currentRide: {
