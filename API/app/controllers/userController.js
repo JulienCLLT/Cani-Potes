@@ -16,11 +16,19 @@ const userController = {
                     const validedPassword = await bcrypt.compare(body.password, result.password);
 
                         if (validedPassword) {
+
+
                             
                             //authentification ok on genere un token
                             const token = jwt.signToken({id:result.id});
                             //response.set({'authozization': token})
-                            response.status(200).json({ message: "Valid password", authozization: token});
+                            response.status(200).json({ 
+                                id: result.id, 
+                                first_name: result.first_name,
+                                position:"implementation API convertion zipcode ",
+                                rides_id:[],
+                                authozization: token
+                            });
                         } else {
                             response.status(400).json({ error: "Invalid Password" });
                         }
