@@ -61,6 +61,10 @@ const userController = {
         }
 
     },
+
+    getProfile :async (request, response) => {
+
+    }
 };
 
 module.exports = userController;
