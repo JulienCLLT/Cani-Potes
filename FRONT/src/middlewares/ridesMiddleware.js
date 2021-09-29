@@ -28,6 +28,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .get(`/ride/${action.id}`)
         .then(
           (response) => {
+            console.log(response);
             store.dispatch(saveOneRide(response.data[0]));
           },
         )

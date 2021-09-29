@@ -24,7 +24,7 @@ const userInitialState = {
     },
   ],
   token: '',
-  isLogged: false,
+  isLogged: true,
   failedToConnect: false,
 };
 
