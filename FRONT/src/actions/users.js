@@ -26,3 +26,8 @@ export const getOneUserById = (id) => ({
   type: GET__ONE__USER__BY__ID,
   id,
 });
+
+export const GET__PROFILE__IS__LOADING = 'GET__PROFILE__IS__LOADING';
+export const getProfileIsLoading = () => ({
+  type: GET__PROFILE__IS__LOADING,
+});
