@@ -1,0 +1,30 @@
+@use '../../styles/vars';
+
+@mixin lg-screen {
+    @media screen and (min-width:700px) {
+        @content
+    }
+};
+
+:root {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.dashboard-page {
+    padding: vars.$gutter;
+
+    
+
+.dashboard-title {
+    font-size:1.5rem;
+    text-align:center;
+    padding-bottom: 2rem;
+    }
+}
+
+ 

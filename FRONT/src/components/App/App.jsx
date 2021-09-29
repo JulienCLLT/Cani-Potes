@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Header from '../Header/Header';
 import MapBalade from '../MapBalade';
@@ -12,20 +12,16 @@ import CreateRide from '../CreateRide/CreateRide';
 import SignUp from '../SignUp/index';
 import RideDetails from '../RideDetails/RideDetails';
 import DashBoard from '../DashBoard/DashBoard';
+import SearchBar from '../SignUp/SearchBar';
+
 
 // import './App.scss';
 
 import '../../styles/reset.scss';
-import { getAllRides } from '../../actions/rides';
 import Profile from '../Profile';
 
 function App() {
   const { isLogged } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllRides());
-  }, []);
 
   return (
     <div className="App">
@@ -36,7 +32,7 @@ function App() {
           <Connection />
         </Route>
         <Route exact path="/signup">
-          {isLogged && <Redirect to="/home" />}
+          {/* {isLogged && <Redirect to="/home" />} */}
           <Header />
           <main>
             <SignUp />
@@ -75,6 +71,11 @@ function App() {
           <Header title="Détails d'un profil" />
           <main>
             <Profile />
+          </main>
+        </Route>
+        <Route exact path="/search">
+          <main>
+            <SearchBar title="Recherche" placeholder="Race" />
           </main>
         </Route>
         <Route>

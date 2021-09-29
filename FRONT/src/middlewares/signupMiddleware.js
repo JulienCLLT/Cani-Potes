@@ -1,7 +1,9 @@
 /* eslint-disable linebreak-style */
 
 import axios from 'axios';
-import { USER_SIGNUP } from '../actions/signup';
+import {
+  USER_SIGNUP, DOG_SIGN_UP, GET_DOG_BREEDS_AND_BEHAVIORS, saveDogBreedsAndBehaviors,
+} from '../actions/signup';
 
 const axiosInstance = axios.create({
   baseURL: 'http://107.22.144.90/api',
@@ -27,10 +29,37 @@ const signupMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log(response.data);
-          next(action);
         }).catch((error) => {
           console.log(error);
         });
+      next(action);
+      break;
+    }
+
+    // case DOG_SIGN_UP: {
+    //   const {
+    //     surname, breed_id, birthday, sterilization, behavior_id, dog_owner_id,
+    //   } = action.dogForm;
+
+    //   axiosInstance.post('/profile/:id.profile/dogs/:id.dog', {
+    //     surname, breed_id, birthday, sterilization, behavior_id, dog_owner_id,
+    //   })
+    //     .then((response) => {
+    //       console.log(response.data);
+    //       next(action);
+    //     }).catch((error) => {
+    //       console.log(error);
+    //     });
+    //   break;
+    // }
+
+    case GET_DOG_BREEDS_AND_BEHAVIORS: {
+      axiosInstance.get('/characteristic')
+        .then((response) => {
+          console.log('response.data', response.data);
+          store.dispatch(saveDogBreedsAndBehaviors(response.data));
+        }).catch((error) => console.log('get dog breeds and behaviors error', error));
+      next(action);
       break;
     }
     default:

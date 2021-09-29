@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { deleteRide, removeUserFromRide } from '../../actions/rides';
 
+import './dashBoard.scss';
 
 const DashBoard = () => {
     const { profile } = useSelector(state => state);
@@ -37,7 +39,7 @@ const DashBoard = () => {
                         
                     <button
                         type="button"
-                        onClick=""
+                        onClick={deleteRide}
                         >
                         Supprimer la balade
                     </button>
@@ -55,7 +57,7 @@ const DashBoard = () => {
                         </span>
                     <button
                         type="button"
-                        onClick=""
+                        onClick={removeUserFromRide}
                         >
                         Me retirer de la balade
                     </button>
