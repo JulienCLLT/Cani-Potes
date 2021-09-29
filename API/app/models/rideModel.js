@@ -18,25 +18,6 @@ class Ride {
         }
     }
 
-    /*
-
-    const allRides = [
-  {
-    ride_id: 1,
-    start_coordinate: [48.456, 17.54]
-  },
-  {
-    ride_id: 2,
-    start_coordinate: [48.456, 17.54]
-  },
-  {
-    ride_id: 3,
-    start_coordinate: [48.456, 17.54]
-  },
-]
-
-
-*/
     static async findOneCompleteRide(id) {
         try {
             const query = `SELECT * FROM rides_with_all_informations WHERE ride_id=$1`;
