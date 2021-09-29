@@ -15,6 +15,7 @@ const userMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .get(`/social/profile/${action.id}`)
         .then((response) => {
+          // todo wait for data from db
           console.log(response);
         })
         .catch((error) => {
