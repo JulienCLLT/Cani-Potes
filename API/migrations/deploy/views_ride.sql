@@ -16,7 +16,7 @@ SELECT
             'sender_photo', sender.photo,
             'message_id', message.id,       
             'message', message.message,                    
-            'sent', to_char(message.created_at, 'TMDay DD TMMonth YYYY "à" HH "h" MI')
+            'sent', to_char(message.created_at, 'TMDay DD TMMonth YYYY "-" HH "h" MI')
         )) FILTER (WHERE sender.id IS NOT NULL) AS messages,
     array_agg(DISTINCT
         jsonb_build_object(
