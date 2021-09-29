@@ -6,8 +6,27 @@
   }
 };
 
+%edit-btn {
+  cursor: pointer;
+  box-shadow: 0 0 5px black;
+  padding: .5 * vars.$gutter;
+  border-radius: 10px;
+
+  &:hover {
+    box-shadow: 0 0 5px black inset;
+  }
+}
+
 .profile-page {
   margin-bottom: 4 * vars.$gutter;
+  position: relative;
+
+  &__edit {
+    @extend %edit-btn;
+    position: absolute;
+    top: 1 * vars.$gutter;
+    right: 1 * vars.$gutter;
+  }
 
   &__header {
     width: 60%;
@@ -90,7 +109,12 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+
+        .profile-page__edit__dog {
+          @extend %edit-btn;
+        }
       }
+
     }
   }
 
@@ -196,9 +220,68 @@
           width: 16px;
           height: 16px;
           border-radius: 50%;
+          cursor: pointer;
+
+          &:hover {
+            transform:  translate(25%, -25%) scale(1.2);
+          }
         }
       }
     }
+  }
 
+  &__modal {
+    position: fixed;
+    background: rgba(200, 200, 200, .8);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fade-in .3s ease-in forwards;
+    
+    &__container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.3rem;
+      padding: 2 * vars.$gutter;
+      box-shadow: 0 0 5px black inset;
+      border-radius: 20px;
+    }
+
+    &__close {
+        width: 50px;
+        height: 50px;
+        align-self: flex-end;
+        cursor: pointer;
+    }
+
+    &__btn {
+      display: flex;
+      justify-content: center;
+      gap: 1 * vars.$gutter;
+      margin: 1 * vars.$gutter 0;
+
+      &-confirm {
+        background: lime !important;
+      }
+
+      button {
+        @extend %btn;
+      }
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    transform: translate(0, -100%);
+  } to {
+    transform: translate(0);
   }
 }

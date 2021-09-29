@@ -443,66 +443,73 @@ const Profile = () => {
         )
       }
 
+      {/* DOG MODAL */}
       {isModalOpen && (
         <div className="profile-page__modal">
-          <button
-            className="profile-page__modal__close"
-            type="button"
-            onClick={() => setIsModalOpen(false)}
-          >
-            <img src={close} alt="close" />
-          </button>
-
-          <p>Attention</p>
-          <p>Vous avez des modifications non enregistrées</p>
-
-          <div className="profile-page__modal__btn">
+          <div className="profile-page__modal__container">
             <button
+              className="profile-page__modal__close"
               type="button"
-              onClick={() => {
-                setIsModalOpen(false);
-                setDogIsChanged(false);
-                setisEditingDog(0);
-              }}
+              onClick={() => setIsModalOpen(false)}
             >
-              Quitter
+              <img src={close} alt="close" />
             </button>
-            <button
-              type="button"
-              onClick={handleUpdateDog}
-            >
-              Enregistrer
-            </button>
+
+            <p>Attention</p>
+            <p>Vous avez des modifications non enregistrées</p>
+
+            <div className="profile-page__modal__btn">
+              <button
+                className="profile-page__modal__btn-confirm"
+                type="button"
+                onClick={() => {
+                  setIsModalOpen(false);
+                  setDogIsChanged(false);
+                  setisEditingDog(0);
+                }}
+              >
+                Quitter
+              </button>
+              <button
+                className="profile-page__modal__btn-danger"
+                type="button"
+                onClick={handleUpdateDog}
+              >
+                Enregistrer
+              </button>
+            </div>
           </div>
         </div>
       )}
+
+      {/* DOG PICTURE MODAL */}
       {isModalPhotoOpen && (
         <div className="profile-page__modal">
-          <button
-            className="profile-page__modal__close"
-            type="button"
-            onClick={() => setIsModalPhotoOpen(false)}
-          >
-            <img src={close} alt="close" />
-          </button>
-
-          <p>Supprimer la photo ?</p>
-
-          <div className="profile-page__modal__btn">
+          <div className="profile-page__modal__container">
             <button
+              className="profile-page__modal__close"
               type="button"
-              onClick={() => {
-                setIsModalPhotoOpen(false);
-              }}
+              onClick={() => setIsModalPhotoOpen(false)}
             >
-              Non
+              <img src={close} alt="close" />
             </button>
-            <button
-              type="button"
-              onClick={handleDeletePhoto}
-            >
-              Oui
-            </button>
+
+            <p>Supprimer la photo ?</p>
+
+            <div className="profile-page__modal__btn">
+              <button
+                type="button"
+                onClick={() => setIsModalPhotoOpen(false)}
+              >
+                Non
+              </button>
+              <button
+                type="button"
+                onClick={handleDeletePhoto}
+              >
+                Oui
+              </button>
+            </div>
           </div>
         </div>
       )}
