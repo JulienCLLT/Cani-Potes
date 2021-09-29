@@ -114,6 +114,7 @@
         }
       }
       &-description {
+        flex: 1;
       }
     }
   }
@@ -129,6 +130,7 @@
       box-shadow: 0 0 3px black;
       border-radius: 5px;
       display: flex;
+      justify-content: center;
       gap: .5 * vars.$gutter;
       overflow: scroll;
 
