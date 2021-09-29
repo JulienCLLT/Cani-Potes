@@ -162,7 +162,7 @@ const Profile = () => {
                           <img src={sociable} alt="comportement" />
                           {dog.dog_behavior}
                         </span>
-                        <span>{dog.dog_sterilization ? 'Stérélisé' : 'Non stérélisé'}</span>
+                        <span>{dog.dog_sterilization ? 'Stérilisé' : 'Non stérilisé'}</span>
                         <span className="profile-page__dog__details-description">{dog.dog_description}</span>
                       </div>
                     </div>
@@ -181,7 +181,7 @@ const Profile = () => {
                   </form>
                 ))
               }
-        </section>
+            </section>
           </>
         )
       }

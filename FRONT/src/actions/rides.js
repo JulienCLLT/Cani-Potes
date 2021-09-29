@@ -36,6 +36,12 @@ export const deleteRide = (id) => ({
   id,
 });
 
+export const DELETE__RIDE__IN__STATE = 'DELETE__RIDE__IN__STATE';
+export const deleteRideInState = (id) => ({
+  type: DELETE__RIDE__IN__STATE,
+  id,
+});
+
 export const GET__ALL__RIDES = 'GET__ALL__RIDES';
 export const getAllRides = () => ({
   type: GET__ALL__RIDES,
