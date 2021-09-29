@@ -80,6 +80,7 @@
       box-shadow: 0 0 3px black;
       padding: vars.$gutter;
       margin: vars.$gutter 0;
+
       @include lg-screen {
         display: flex;
       }
@@ -87,6 +88,10 @@
   }
 
   &__dog {
+    @include lg-screen {
+      min-width: 400px;
+      width: 400px;
+    }
 
     &__details {
       display: flex;
@@ -95,6 +100,8 @@
       padding: .5 * vars.$gutter;
       margin: 1 * vars.$gutter auto;
       box-shadow: 0 0 3px black;
+      border-radius: 5px;
+
 
       span {
         width: 50%;
@@ -107,18 +114,20 @@
         }
       }
       &-description {
-        flex: 1;
       }
     }
   }
 
   &__dog-pictures {
+    @include lg-screen {
+      max-width: calc(100% - 400px);
+    }
 
     &__container {
-      width: 80%;
       padding: .5 * vars.$gutter;
       margin: 1 * vars.$gutter auto;
       box-shadow: 0 0 3px black;
+      border-radius: 5px;
       display: flex;
       gap: .5 * vars.$gutter;
       overflow: scroll;
