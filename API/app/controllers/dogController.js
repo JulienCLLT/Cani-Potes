@@ -30,29 +30,26 @@ const dogController = {
 
     createDog: async (request, response) => {
         try {
-
-            console.log("ixi");
             const profileId = Number(request.params.profileId);
             if (isNaN(profileId)) {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
+
             //todo avant test
-            
             // verfi si c'est meme que user token
             // const userId = request.userId;
             // if(userId !== profileId ){
             //     throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
             // }
+
+            const newDog = new Dog(request.body);
+            const dogCreated = await newDog.create();
+
+            response.status(201).json(dogCreated);
             
-            //todo la verif facto dans mw? 
-
-
-            // creéer unfo chien, returning ID
-
             // crer photo avec ID chien  returning ID
 
-            response.json("rien")
 
         } catch (error) {
             response.status(500).json(error.message);
