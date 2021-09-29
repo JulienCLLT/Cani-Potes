@@ -1,18 +1,12 @@
 /* eslint-disable linebreak-style */
 
-import axios from 'axios';
+import { axiosInstance } from '../services/axios';
 import {
-  USER_SIGNUP, DOG_SIGN_UP, GET_DOG_BREEDS_AND_BEHAVIORS, saveDogBreedsAndBehaviors, failedToSignup,
+  USER_SIGNUP, DOG_SIGN_UP, GET_DOG_BREEDS_AND_BEHAVIORS,
+  saveDogBreedsAndBehaviors, failedToSignup, nextSignupFormStep,
 } from '../actions/signup';
 
 import { connectUser } from '../actions/users';
-
-const axiosInstance = axios.create({
-  baseURL: 'http://107.22.144.90/api',
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-  },
-});
 
 const signupMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -33,30 +27,42 @@ const signupMiddleware = (store) => (next) => (action) => {
           console.log('response', response);
           // wait for user from db
           store.dispatch(connectUser(response.data.authozization));
+          store.dispatch(nextSignupFormStep());
         }).catch((error) => {
-          console.log('error', error.response.data);
           store.dispatch(failedToSignup(error.response.data));
+          console.log('error', error.response.data);
         });
       next(action);
       break;
     }
 
-    // case DOG_SIGN_UP: {
-    //   const {
-    //     surname, breed_id, birthday, sterilization, behavior_id, dog_owner_id,
-    //   } = action.dogForm;
+    case DOG_SIGN_UP: {
+      const {
+        surname, breed, weight, sexe, birthday, sterilization, behavior, photo, dog_owner_id,
+      } = action.dogForm;
 
-    //   axiosInstance.post('/profile/:id.profile/dogs/:id.dog', {
-    //     surname, breed_id, birthday, sterilization, behavior_id, dog_owner_id,
-    //   })
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       next(action);
-    //     }).catch((error) => {
-    //       console.log(error);
-    //     });
-    //   break;
-    // }
+      axiosInstance.post('/profile/:id.profile/dogs/:id.dog', {
+        surname,
+        breed_id: breed,
+        weight,
+        gender_id: Number(sexe),
+        birthday,
+        sterilization: Boolean(sterilization),
+        behavior_id: Number(behavior),
+        photo,
+        dog_owner_id, //  manque le json
+      })
+        .then((response) => {
+          console.log(response.data);
+          // wait for user from db
+          store.dispatch(connectUser(response.data.authozization));
+          store.dispatch(nextSignupFormStep());
+          next(action);
+        }).catch((error) => {
+          console.log(error);
+        });
+      break;
+    }
 
     case GET_DOG_BREEDS_AND_BEHAVIORS: {
       axiosInstance.get('/characteristic')
