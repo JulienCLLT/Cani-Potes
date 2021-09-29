@@ -1,4 +1,5 @@
 const UserModel = require('../models/userModel');
+const DogModel = require('../models/dogModel');
 const bcrypt = require('../services/bcrypt');
 const jwt = require('../services/jwtoken');
 const apiGeo = require('../services/apiGeo');
@@ -63,7 +64,14 @@ const userController = {
     },
 
     getProfile :async (request, response) => {
+        try {
 
+            const dogs = await DogModel.findById(request.params.idUser);
+            console.log(dogs);
+           response.end() ;
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
     }
 };
 
