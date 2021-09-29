@@ -2,6 +2,7 @@ const {Router} = require('express');
 const router = Router();
 const userController = require('./controllers/userController');
 const checkToken  = require('./middlewares/checkJwt');
+const checkCreateDog = require('./middlewares/checkCreateDog');
 const rideController = require('./controllers/rideController');
 const dogController = require('./controllers/dogController');
 const formController = require('./controllers/formController');
@@ -36,6 +37,6 @@ router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', checkToken
 router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.getOneDog);
 
 //todo ajout token
-router.post('/profile/:profileId(\\d+)/dogs/', dogController.createDog);
+router.post('/profile/:profileId(\\d+)/dogs/', checkCreateDog, dogController.createDog);
 
 module.exports = router;

@@ -30,6 +30,8 @@ const dogController = {
 
     createDog: async (request, response) => {
         try {
+
+            console.log("ixi");
             const profileId = Number(request.params.profileId);
             if (isNaN(profileId)) {
                 throw Error('La valeur de l\'id doit être un nombre');
@@ -43,15 +45,8 @@ const dogController = {
             //     throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
             // }
             
-            console.log('req', request.body.name);
-            // verif presence des valeur obligatoire
-                // surname en txt, longuer max? 
-                // bered_id : int
-                // gender_id int
-                // birthay format
-                // sterilization true false
-                // bejaior d int
-                // dog_owner id 
+            //todo la verif facto dans mw? 
+
 
             // creéer unfo chien, returning ID
 
