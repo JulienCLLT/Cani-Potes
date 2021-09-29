@@ -27,6 +27,42 @@ const dogController = {
             response.status(500).json(error.message);
         }
     },
+
+    createDog: async (request, response) => {
+        try {
+            const profileId = Number(request.params.profileId);
+            if (isNaN(profileId)) {
+                throw Error('La valeur de l\'id doit être un nombre');
+            }
+
+            //todo avant test
+            
+            // verfi si c'est meme que user token
+            // const userId = request.userId;
+            // if(userId !== profileId ){
+            //     throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
+            // }
+            
+            console.log('req', request.body.name);
+            // verif presence des valeur obligatoire
+                // surname en txt, longuer max? 
+                // bered_id : int
+                // gender_id int
+                // birthay format
+                // sterilization true false
+                // bejaior d int
+                // dog_owner id 
+
+            // creéer unfo chien, returning ID
+
+            // crer photo avec ID chien  returning ID
+
+            response.json("rien")
+
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
+    }
 };
 
 module.exports = dogController;

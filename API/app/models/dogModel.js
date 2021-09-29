@@ -21,6 +21,19 @@ class Dog {
         }
     }
 
+    async create() {
+        try {
+            //todo faire function sql 
+            // verif si prenom existe deja dans BDD avec cet id et ce surname
+
+
+            
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
 }
 
 module.exports = Dog;

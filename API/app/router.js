@@ -35,4 +35,7 @@ router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', checkToken
 //todo checktoken
 router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.getOneDog);
 
+//todo ajout token
+router.post('/profile/:profileId(\\d+)/dogs/', dogController.createDog);
+
 module.exports = router;
