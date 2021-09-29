@@ -18,8 +18,12 @@ const userController = {
 
                         if (validedPassword) {
                             const dataUser = await UserModel.dataUserConnexion(result.id);
-                            dataUser.zip_code = await apiGeo(dataUser.zip_code);//authentification ok on genere un token
-                            const token = jwt.signToken({id:result.id});dataUser.authozization = token;//response.set({'authozization': token})
+                            dataUser.position = await apiGeo(dataUser.position);
+                            //authentification ok on genere un token
+                            const token = jwt.signToken({id:result.id});
+                            dataUser.authozization = token;
+                            
+                            //response.set({'authozization': token})
                             response.status(200).json(dataUser);
                         } else {
                             response.status(400).json({ error: "Invalid Password" });
@@ -43,10 +47,12 @@ const userController = {
             const newUser = await user.save();
                 if (newUser) {
                     
-                    //on envoie le nouvel ID en payload du token
-                    const token = jwt.signToken({...newUser});
+                    const dataUser = await UserModel.dataUserConnexion(newUser.id);
+                    dataUser.position = await apiGeo(dataUser.position);
+                    const token = jwt.signToken({id:newUser.id});
+                    dataUser.authozization = token;
                     //response.set({'authozization': token});
-                    response.status(201).json({message:'Welcome new user', authozization: token});
+                    response.status(201).json(dataUser);
                   } else {
                     response.status(204).json('Update done');
                  }
