@@ -80,7 +80,7 @@ const profileInitialState = {
       dog_weight: "24",
       dog_age: '4mois', // convertion en integer de nombre de mois
       dog_sterilization: true,
-      dog_description: "Il est gentil mais faut pas l'emmerder",
+      dog_description: "Elle est partante pour se faire plein de nouveaux amis tous mignons !",
     },
   ],
   isLoading: false,

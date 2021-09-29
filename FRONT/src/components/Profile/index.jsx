@@ -42,15 +42,21 @@ const Profile = () => {
   const [age, setAge] = useState();
   const [sterilization, setSterilization] = useState();
   const [description, setDescription] = useState();
+  const [photoDog, setPhotoDog] = useState();
+  const [dogAndPicIndex, setDogAndPicIndex] = useState({});
 
   // manage modal
   const [dogIsChanged, setDogIsChanged] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalPhotoOpen, setIsModalPhotoOpen] = useState(false);
 
   const handleSetWeight = (value) => {
     setDogIsChanged(true);
     if (value <= 0) {
       setWeight(1);
+    }
+    else if (value >= 200) {
+      setWeight(200);
     }
     else {
       const newWeight = Number(value).toFixed(1);
@@ -61,11 +67,6 @@ const Profile = () => {
   const toggleEditUser = () => {
     setisEditingUser(!isEditingUser);
   };
-
-  // lorsque je clique sur modif un dog
-  // je veux voir les input et leur valeurs sont
-    // trouver le chien grâce à son id dans le state
-    // à la modif d'un champ je setInfo
 
   const toggleEditDog = (index) => {
     if (isEditingDog === index + 1) setisEditingDog(0);
@@ -89,15 +90,21 @@ const Profile = () => {
   };
 
   const handleUpdateUser = () => {
-    console.log('update user in db');
     setisEditingUser(false);
+    // update user in db
   };
 
   const handleUpdateDog = () => {
-    // update dog in db with dog's useState values
     if (dogIsChanged) setDogIsChanged(false);
     if (isModalOpen) setIsModalOpen(false);
     setisEditingDog(0);
+    // update dog in db
+  };
+
+  const handleDeletePhoto = () => {
+    setIsModalPhotoOpen(false);
+    const photoToDelete = profile.dogs[dogAndPicIndex.dogIdx].dog_photo[dogAndPicIndex.picIdx];
+    // dispatch action to delete photo in db
   };
 
   return (
@@ -226,6 +233,8 @@ const Profile = () => {
                             <input
                               type="text"
                               value={surname}
+                              minLength="3"
+                              maxLength="20"
                               onChange={(e) => {
                                 setSurname(e.target.value);
                                 setDogIsChanged(true);
@@ -366,6 +375,7 @@ const Profile = () => {
 
                         {isEditingDog === index + 1 ? (
                           <textarea
+                            maxLength="200"
                             name="description"
                             onChange={(e) => {
                               setDescription(e.target.value);
@@ -383,14 +393,38 @@ const Profile = () => {
                       <h2>Photos de {dog.dog_surname}</h2>
                       <div className="profile-page__dog-pictures__container">
                         {
-                          dog.dog_photo.map((photo) => (
+                          dog.dog_photo.map((photo, photoIndex) => (
                             <div className="profile-page__dog-pictures__container-item" key={photo.photo_id}>
                               <img src={photo.photo_url} alt={dog.dog_surname} />
+                              {isEditingDog === index + 1 && (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setDogAndPicIndex({ dogIdx: index, picIdx: photoIndex });
+                                    setIsModalPhotoOpen(true);
+                                  }}
+                                >
+                                  <img src={close} alt="delete" />
+                                </button>
+                              )}
                             </div>
                           ))
                         }
                       </div>
                     </div>
+                    {(isEditingDog === index + 1) && (dog.dog_photo.length < 5) && (
+                      <input
+                        type="file"
+                        name="photo"
+                        onChange={(e) => setPhotoDog(e.target.value)}
+                      />
+                    )}
+                    {(isEditingDog === index + 1) && (dog.dog_photo.length >= 5) && (
+                      <>
+                        <p>Impossible d'ajouter une photo</p>
+                        <p>Veuillez en retirer</p>
+                      </>
+                    )}
                     {isEditingDog === index + 1 && (
                       <div className="profile-page__info-user__submit">
                         <button
@@ -424,7 +458,6 @@ const Profile = () => {
 
           <div className="profile-page__modal__btn">
             <button
-              className="profile-page__form__submit"
               type="button"
               onClick={() => {
                 setIsModalOpen(false);
@@ -435,15 +468,42 @@ const Profile = () => {
               Quitter
             </button>
             <button
-              className="profile-page__form__submit"
               type="button"
               onClick={handleUpdateDog}
             >
               Enregistrer
             </button>
-
           </div>
+        </div>
+      )}
+      {isModalPhotoOpen && (
+        <div className="profile-page__modal">
+          <button
+            className="profile-page__modal__close"
+            type="button"
+            onClick={() => setIsModalPhotoOpen(false)}
+          >
+            <img src={close} alt="close" />
+          </button>
 
+          <p>Supprimer la photo ?</p>
+
+          <div className="profile-page__modal__btn">
+            <button
+              type="button"
+              onClick={() => {
+                setIsModalPhotoOpen(false);
+              }}
+            >
+              Non
+            </button>
+            <button
+              type="button"
+              onClick={handleDeletePhoto}
+            >
+              Oui
+            </button>
+          </div>
         </div>
       )}
 
