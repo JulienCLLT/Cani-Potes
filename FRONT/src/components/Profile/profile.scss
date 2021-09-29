@@ -76,7 +76,7 @@
 
   &__info-dogs {
 
-    form {
+    article {
       box-shadow: 0 0 3px black;
       padding: vars.$gutter;
       margin: vars.$gutter 0;
@@ -148,7 +148,7 @@
         }
       }
 
-      &-behavior {
+      &-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
