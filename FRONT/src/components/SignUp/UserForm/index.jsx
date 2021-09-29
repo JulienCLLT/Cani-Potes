@@ -2,7 +2,7 @@
 // required les champs
 
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useForm } from 'react-hook-form';
@@ -22,6 +22,12 @@ const UserForm = () => {
     register, handleSubmit, formState: { errors }, watch,
   } = useForm();
 
+  // if error when user signup
+  const failedToSignup = useSelector((state) => state.signup.failedToSignup);
+  const errorMessage = useSelector((state) => state.signup.errorMessage);
+  console.log(failedToSignup);
+  console.log(errorMessage);
+
   const onSubmit = (data) => {
     dispatch(userSignup(data));
     dispatch(nextSignupFormStep());
@@ -32,9 +38,15 @@ const UserForm = () => {
   return (
     <div className={formStep === 1 ? 'signup user-form' : 'hidden'}>
       <h2 className="signup__subtitle">Vous</h2>
+      {/* {
+            failedToSignup && (
+              <span>{errorMessage}</span>
+            )
+          } */}
 
       <div className="user-form__form">
         <form onSubmit={handleSubmit(onSubmit)}>
+
           <div className="user-form__form__input-infos">
             <div className="user-form__form__input-infos__identity">
               {/* Firstname */}
@@ -101,7 +113,17 @@ const UserForm = () => {
                 nous avons besoin de votre code postal.
               </p>
               <div className="user-form__form__input-infos__zipcode__input">
-                <input {...register('zip_code', { required: 'Veuillez entrer un code postal.', minLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' }, maxLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' } })} type="text" placeholder="Code postal" defaultValue="12345" />
+                <input
+                  {...register('zip_code', {
+                    required: 'Veuillez entrer un code postal.',
+                    minLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' },
+                    maxLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' },
+                    pattern: /^(?!00|96|99)\d{5}$/,
+                  })}
+                  type="text"
+                  placeholder="Code postal"
+                  defaultValue="12345"
+                />
                 {errors.zip_code && <p className="errors">{errors.zip_code.message}</p>}
                 {}
               </div>

@@ -2,8 +2,10 @@
 
 import axios from 'axios';
 import {
-  USER_SIGNUP, DOG_SIGN_UP, GET_DOG_BREEDS_AND_BEHAVIORS, saveDogBreedsAndBehaviors,
+  USER_SIGNUP, DOG_SIGN_UP, GET_DOG_BREEDS_AND_BEHAVIORS, saveDogBreedsAndBehaviors, failedToSignup,
 } from '../actions/signup';
+
+import { connectUser } from '../actions/users';
 
 const axiosInstance = axios.create({
   baseURL: 'http://107.22.144.90/api',
@@ -28,9 +30,12 @@ const signupMiddleware = (store) => (next) => (action) => {
         birthday: birthday_user,
       })
         .then((response) => {
-          console.log(response.data);
+          console.log('response', response);
+          // wait for user from db
+          store.dispatch(connectUser(response.data.authozization));
         }).catch((error) => {
-          console.log(error);
+          console.log('error', error.response.data);
+          store.dispatch(failedToSignup(error.response.data));
         });
       next(action);
       break;
