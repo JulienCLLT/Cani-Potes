@@ -1,6 +1,13 @@
 @use '../../styles/vars';
 
+@mixin lg-screen {
+  @media screen and (min-width:900px) {
+      @content
+  }
+};
+
 .profile-page {
+  margin-bottom: 4 * vars.$gutter;
 
   &__header {
     width: 60%;
@@ -51,24 +58,87 @@
       &-field {
         display: flex;
         gap: .5rem;
+      
+        input {
+          width: 50%;
+        }
+      }
+    }
+
+    &__submit {
+      text-align: center;
+
+      button {
+        @extend %btn;
       }
     }
   }
 
   &__info-dogs {
+
+    form {
+      box-shadow: 0 0 3px black;
+      padding: vars.$gutter;
+      margin: vars.$gutter 0;
+      @include lg-screen {
+        display: flex;
+      }
+    }
   }
 
   &__dog {
 
-    &-picture {
-  
-      &__container-item {
-        width: 40px;
+    &__details {
+      display: flex;
+      flex-wrap: wrap;
+      width: 80%;
+      padding: .5 * vars.$gutter;
+      margin: 1 * vars.$gutter auto;
+      box-shadow: 0 0 3px black;
+
+      span {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        gap: .5 * vars.$gutter;
+        
+        img {
+          width: 20px;
+        }
+      }
+      &-description {
+        flex: 1;
+      }
+    }
+  }
+
+  &__dog-pictures {
+
+    &__container {
+      width: 80%;
+      padding: .5 * vars.$gutter;
+      margin: 1 * vars.$gutter auto;
+      box-shadow: 0 0 3px black;
+      display: flex;
+      gap: .5 * vars.$gutter;
+      overflow: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      
+
+      &-item {
+        width: 100px;
+        min-width: 100px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
   
         img {
           width: 100%;
         }
       }
     }
+
   }
 }

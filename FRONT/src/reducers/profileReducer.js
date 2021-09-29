@@ -1,3 +1,5 @@
+/* eslint-disable linebreak-style */
+import { GET__PROFILE__IS__LOADING } from './../actions/users';
 
 const profileInitialState = {
   id: 1,
@@ -31,7 +33,7 @@ const profileInitialState = {
       dog_breed: "caniche",
       dog_gender: "male",
       dog_weight: "27",
-      dog_age: 27, // convertion en integer de nombre de mois
+      dog_age: '13ans', // convertion en integer de nombre de mois
       dog_sterilization: true,
       dog_description: "Il est gentil mais faut pas l'emmerder",
     },
@@ -76,15 +78,21 @@ const profileInitialState = {
       dog_breed: "Berge Allemand",
       dog_gender: "femelle",
       dog_weight: "24",
-      dog_age: 27, // convertion en integer de nombre de mois
+      dog_age: '4mois', // convertion en integer de nombre de mois
       dog_sterilization: true,
       dog_description: "Il est gentil mais faut pas l'emmerder",
     },
   ],
+  isLoading: false,
 };
 
 const profileReducer = (state = profileInitialState, action = {}) => {
   switch (action.type) {
+    case GET__PROFILE__IS__LOADING:
+      return {
+        ...state,
+        isLoading: true,
+      };
     default:
       return state;
   }
