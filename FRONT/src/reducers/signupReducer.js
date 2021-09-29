@@ -8,7 +8,7 @@ const initialState = {
   breeds: [],
 
   // for continue and previous button
-  formStep: 1,
+  formStep: 2,
 
   // to display db errors when submit form
   failedToSignup: false,
@@ -19,10 +19,12 @@ const initialState = {
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case NEXT_SIGNUP_FORM_STEP:
+      console.log('formstep');
       return {
         ...state,
         formStep: state.formStep + 1,
         failedToSignup: false,
+        errorMessage: '',
       };
 
     case SAVE_DOG_BREEDS_AND_BEHAVIORS:
@@ -33,6 +35,7 @@ const reducer = (state = initialState, action = {}) => {
       };
 
     case FAILED_TO_SIGNUP:
+      console.log('failed');
       return {
         ...state,
         failedToSignup: true,

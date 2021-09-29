@@ -1,12 +1,8 @@
 /* eslint-disable linebreak-style */
-import axios from 'axios';
+import { axiosInstance } from '../services/axios';
 import {
   GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, saveAllRides, saveOneRide,
 } from '../actions/rides';
-
-const axiosInstance = axios.create({
-  baseURL: 'http://107.22.144.90/api',
-});
 
 const ridesMiddleware = (store) => (next) => (action) => {
   switch (action.type) {

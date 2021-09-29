@@ -1,12 +1,6 @@
-import axios from 'axios';
+/* eslint-disable linebreak-style */
+import { axiosInstance } from '../services/axios';
 import { connectUser, LOGIN__USER, failedToConnect } from '../actions/users';
-
-const axiosInstance = axios.create({
-  baseURL: 'http://107.22.144.90/api',
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-  },
-});
 
 const signinMiddleware = (store) => (next) => (action) => {
   switch (action.type) {

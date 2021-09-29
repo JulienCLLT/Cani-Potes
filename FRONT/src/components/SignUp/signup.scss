@@ -56,4 +56,11 @@
             color: vars.$color_main;
         }
     }
+    // component userForm and dogForm
+    &__errorMessageDataBase {
+        color: vars.$color_error
+        // background-color: vars.$color_error;
+        // padding: vars.$gutter 0;
+        // max-width: 400px;
+    }
 }

@@ -38,13 +38,6 @@ const DogForm = () => {
   };
   const date = new Date();
 
-  // upload file
-  const uploadFile = ({ target: { files } }) => {
-    console.log([0]);
-    const data = new FormData();
-    data.append('file', files[0]);
-  };
-
   return (
     <div className={formStep === 2 ? 'signup dog' : 'hidden'}>
 
@@ -161,7 +154,7 @@ const DogForm = () => {
               <div className="dog__form__input-infos__others__picture">
                 <label htmlFor="photo_dog">
                   Ajouter une photo de mon chien
-                  <input type="file" placeholder="Photo de mon chien" {...register('photo_dog')} accept="image/png, image/jpeg" onChange={uploadFile} />
+                  <input type="file" placeholder="Photo de mon chien" {...register('photo_dog')} accept="image/png, image/jpeg" />
                 </label>
                 {/* <button type="button" className="dog__form__input-infos__others__add-dog"><img src={add} alt="add icon" />Ajouter un chien</button> */}
               </div>
