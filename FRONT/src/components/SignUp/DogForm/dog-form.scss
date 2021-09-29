@@ -3,6 +3,10 @@
 .dog {
   
   &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; // cache valider
+
 
     &__input-infos {
       height: 520px;
@@ -10,13 +14,15 @@
       &__first {
         margin: vars.$gutter 0;
         display: flex;
-        justify-content: center;
-        // width: 100%;
+        width: 100%;
         // max-width: 400px;
+        justify-content: space-between;
 
         & select, & input {
-        width: 100%;
+        // width: 6.5*vars.$gutter;
         max-width: 150px;
+        height: 2* vars.$gutter;
+        width: 100%;
         }
 
         & select {
@@ -32,6 +38,7 @@
           display: flex;
           flex-wrap: wrap;
           margin-bottom: vars.$gutter;
+          align-items: center;
         }
 
         &__birthday {
@@ -72,11 +79,11 @@
     padding: 0.3*vars.$gutter;
     width: 4*vars.$gutter;
     text-align: center;
-    margin-right: 0.5*vars.$gutter;
-    margin-bottom: 0.8*vars.$gutter;
+    // margin-right: 0.5*vars.$gutter;
+    // margin-bottom: 0.8*vars.$gutter;
   }
 
-  // texts before input
+//   // texts before input
   &__title {
     width: 8*vars.$gutter;
   }
@@ -100,9 +107,9 @@ input[type="number"] {
 	}
 }
 
-input[type="radio"]{
-  display: none;
-}
+// input[type="radio"]{
+//   display: none;
+// }
 
 input[type="radio"]:checked + label {
   border: 0.15*vars.$gutter solid vars.$color_main;

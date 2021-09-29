@@ -6,14 +6,7 @@ import { PropTypes } from 'prop-types';
 
 import './profile.scss';
 
-// import icon
-import race from '../../../../assets/img/profile-simulation/race.svg';
-import sociable from '../../../../assets/img/profile-simulation/sociable.svg';
-
 const Profile = ({participants, host_id}) => {
-  console.log(participants);
-  const rideHost = participants.find((participant) => participant.participant_id === host_id);
-
   participants.sort((a, b) => {
     if (a.participant_id === host_id) {
       return -1;
@@ -24,15 +17,6 @@ const Profile = ({participants, host_id}) => {
   return (
     <div className="profile">
 
-      {/* <div className="profile__user">
-        <div className="profile__user__img-container">
-          <img src={rideHost.participant_photo} alt={`${rideHost.participant_first_name} avatar`} />
-        </div>
-        <h3 className="profile__user__name">
-          {rideHost.participant_first_name} {rideHost.participant_last_name[0].toUpperCase()}.
-        </h3>
-      </div> */}
-
       <section>
         {
           participants.map((participant) => (
@@ -41,10 +25,13 @@ const Profile = ({participants, host_id}) => {
               <Link to={`/profile/${participant.participant_id}`}>
                 <div className="profile__article__avatar">
                   <div className="profile__article__avatar-image">
-                    <img src={participant.participant_photo} alt={participant.participant_first_name} />
+                    <img
+                      src={participant.participant_photo}
+                      alt={participant.participant_first_name}
+                    />
                   </div>
                   <div>
-                    <span>{participant.participant_first_name} {participant.participant_last_name[0].toUpperCase()}.</span>
+                    <span>{participant.participant_first_name}</span>
                   </div>
                 </div>
               </Link>
@@ -76,14 +63,6 @@ const Profile = ({participants, host_id}) => {
           ))
         }
       </section>
-
-      {/* <div className="profile__dog"> */}
-        {/* <img src={dogPic} alt="dog picture" /> mettre en alt nom du chien */}
-        {/* <p className="profile__dog__icon"><img src={race} alt="dog icon" />Race</p>mettre en alt la race du chien ? */}
-        {/* <p className="profile__dog__icon"><img src={sociable} alt="happy icon" />Comportement</p> mettre en alt le comportement du chien ? */}
-      {/* </div> */}
-
-      {/* <Link to={`/profile/${id}`} className="profile_see">Voir le profil</Link> */}
     </div>
   );
 };
@@ -96,7 +75,7 @@ Profile.propTypes = {
           dog_id: PropTypes.number.isRequired,
           dog_photo: PropTypes.string.isRequired,
           dog_surname: PropTypes.string.isRequired,
-          dog_photo_id: PropTypes.number.isRequired
+          dog_photo_id: PropTypes.number.isRequired,
         }),
       ).isRequired,
       participant_id: PropTypes.number.isRequired,

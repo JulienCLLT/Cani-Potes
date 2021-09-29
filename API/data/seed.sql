@@ -43,8 +43,8 @@ INSERT INTO photo(file_name, dog_id) VALUES
 ('https://geo.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.2Es3-website-eu-west-1.2Eamazonaws.2Ecom.2Fgeo.2F2019.2F10.2F28.2Fc9c8ea2c-9750-4039-97c1-ce9f592f4ef4.2Ejpeg/1150x647/background-color/ffffff/quality/70/des-chiens-renifleurs-decouvrent-des-sepultures-vieilles-de-3000-ans-en-croatie.jpg', 4);
 
 INSERT INTO ride(title, description, start_coordinate, end_coordinate, starting_time, duration, max_number_dogs, tag_id, host_id) VALUES
-('Dans le coin', 'un petit tour de quartier pour se rencontrer et y a une fontaine sympa', '{2.290084,49.897443}', '{2.310084,49.877443}', '2021-09-29 19:37:25.631205+02','15 minutes', 5, 1, 1),
-('Cool ici', 'On va rire car mon chien est vraiment foufou', '{3.290084,48.897443}', '{3.290084,48.897443}', '2021-10-14 19:37:25.631205+02', '35 minutes', 4, 2, 3);
+('Dans le coin', 'un petit tour de quartier pour se rencontrer et y a une fontaine sympa', '{49.897443,2.290084}', '{49.877443,2.310084}', '2021-09-29 19:37:25.631205+02','15 minutes', 5, 1, 1),
+('Cool ici', 'On va rire car mon chien est vraiment foufou', '{48.897443,3.290084}', '{48.897443,3.290084}', '2021-10-14 19:37:25.631205+02', '35 minutes', 4, 2, 3);
 
 INSERT INTO member_write_ride (member_id, ride_id, message) VALUES 
 (1, 1, 'Salut vous etes prêts ?'),
