@@ -7,12 +7,11 @@ import { getOneUserById } from '../../actions/users';
 import './profile.scss';
 
 const Profile = () => {
-  const { user, profile } = useSelector(state => state);
+  const { user, profile } = useSelector((state) => state);
   const dispatch = useDispatch();
   const profileIsUser = user.id === profile.id;
 
   const { id } = useParams();
-
 
   useEffect(() => {
     dispatch(getOneUserById(id));
@@ -30,15 +29,15 @@ const Profile = () => {
 
   const handleUpdateUser = () => {
     // look for dispatch with useState here to update user in db and in state.user
-  }
+  };
 
   const handleUpdateDog = (e) => {
     e.preventDefault();
     console.log(e);
-  }
+  };
 
-// todo check with profilereducer about data 
-// todo add form for update user and form for each dog (easier for db)
+  // todo check with profilereducer about data 
+  // todo add form for update user and form for each dog (easier for db)
 
   return (
     <div className="profile-page">
@@ -59,17 +58,17 @@ const Profile = () => {
       <header className="profile-page__header">
         <div>
           <span className="profile-page__header__annoucement">
-            {profileIsUser ? 'Votre profil ' : 'Profil de '} 
+            {profileIsUser ? 'Votre profil ' : 'Profil de '}
           </span>
-          <div className="profile-page__header__avatar" >
+          <div className="profile-page__header__avatar">
             <img src={profile.photo} alt={profile.first_name} />
             {
               isEditing && (
                 <input
                   type="file"
-                  onChange={e => {
-                    setPhotoUser(e.target.value)
-                    console.log(e)
+                  onChange={(e) => {
+                    setPhotoUser(e.target.value);
+                    console.log(e);
                   }}
                 />
               )
@@ -88,7 +87,7 @@ const Profile = () => {
                 <input
                   type="text"
                   value={firstName}
-                  onChange={e => setFirstName(e.target.value)}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               ) : (
                 <span>{profile.first_name}</span>
@@ -112,7 +111,7 @@ const Profile = () => {
                 <input
                   type="number"
                   value={zipcode}
-                  onChange={e => setZipcode(e.target.value)}
+                  onChange={(e) => setZipcode(e.target.value)}
                 />
               ) : (
                 <span>Ville : {profile.zipcode}</span>
