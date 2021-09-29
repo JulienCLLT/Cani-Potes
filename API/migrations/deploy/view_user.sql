@@ -11,6 +11,6 @@ SELECT  member.id,
 				SELECT member_participate_ride.ride_id FROM member_participate_ride WHERE member.id = member_participate_ride.member_id
 				)) as ride_id
 FROM member
-GROUP BYy member.id
+GROUP BY member.id;
 
 COMMIT;

@@ -1,6 +1,7 @@
 const UserModel = require('../models/userModel');
 const bcrypt = require('../services/bcrypt');
 const jwt = require('../services/jwtoken');
+const apiGeo = require('../services/apiGeo');
 
 const userController = {
     login : async (request, response)=>{
@@ -16,19 +17,10 @@ const userController = {
                     const validedPassword = await bcrypt.compare(body.password, result.password);
 
                         if (validedPassword) {
-
-
-                            
-                            //authentification ok on genere un token
-                            const token = jwt.signToken({id:result.id});
-                            //response.set({'authozization': token})
-                            response.status(200).json({ 
-                                id: result.id, 
-                                first_name: result.first_name,
-                                position:"implementation API convertion zipcode ",
-                                rides_id:[],
-                                authozization: token
-                            });
+                            const dataUser = await UserModel.dataUserConnexion(result.id);
+                            dataUser.zip_code = await apiGeo(dataUser.zip_code);//authentification ok on genere un token
+                            const token = jwt.signToken({id:result.id});dataUser.authozization = token;//response.set({'authozization': token})
+                            response.status(200).json(dataUser);
                         } else {
                             response.status(400).json({ error: "Invalid Password" });
                         }
