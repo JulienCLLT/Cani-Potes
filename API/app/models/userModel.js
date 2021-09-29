@@ -67,6 +67,20 @@ class UserModel {
         }
     }
 
+    static async dataUserConnexion (id) {
+        try {
+            const { rows } = await database.query('SELECT * FROM user_basic_information WHERE id = $1',[id]);
+            return rows[0];
+        } catch (error) {
+            if (error.detail) {
+                throw new Error(error.detail)
+            } else {
+                throw error;
+            }
+        }
+
+    }
+
 
 };
 module.exports = UserModel;
