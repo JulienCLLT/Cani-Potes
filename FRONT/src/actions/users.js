@@ -20,3 +20,14 @@ export const LOGOUT__USER = 'LOGOUT__USER';
 export const logoutUser = () => ({
   type: LOGOUT__USER,
 });
+
+export const GET__ONE__USER__BY__ID = 'GET__ONE__USER__BY__ID';
+export const getOneUserById = (id) => ({
+  type: GET__ONE__USER__BY__ID,
+  id,
+});
+
+export const GET__PROFILE__IS__LOADING = 'GET__PROFILE__IS__LOADING';
+export const getProfileIsLoading = () => ({
+  type: GET__PROFILE__IS__LOADING,
+});
