@@ -17,7 +17,7 @@ import doubleArrow from '../../assets/img/info-ride/double_arrow.svg';
 
 import './RideDetails.scss';
 import {
-  addNewMessage, addUserToRide, deleteRide, getOneRideById, removeUserFromRide
+  addNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide
 } from '../../actions/rides';
 
 const RideDetails = () => {
@@ -26,6 +26,7 @@ const RideDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getRideIsLoading());
     dispatch(getOneRideById(id));
   }, []);
 
@@ -34,7 +35,7 @@ const RideDetails = () => {
 
   const {
     ride_id, title, max_number_dogs, participants, starting_time, duration,
-    description, host_first_name, host_id, messages, start_coordinate, end_coordinate,
+    description, host_first_name, host_id, messages, start_coordinate, end_coordinate, isLoading,
   } = useSelector((state) => state.rides.currentRide);
 
   let nbOfDogs = 0;
@@ -105,11 +106,17 @@ const RideDetails = () => {
       <section className="ride-details__infos">
         <div className="ride-details__infos__map">
           <div className="ride-details__leaflet">
-            <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={10} scrollWheelZoom={false}>
-              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <Marker position={start_coordinate} icon={positionIcon} />
-              <Marker position={end_coordinate} icon={positionIcon} />
-            </MapContainer>
+            {
+              isLoading ? (
+                <span>chargement ...</span>
+              ) : (
+                <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={10} scrollWheelZoom={false}>
+                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                  <Marker position={start_coordinate} icon={positionIcon} />
+                  <Marker position={end_coordinate} icon={positionIcon} />
+                </MapContainer>
+              )
+            }
           </div>
           <h2>{title}</h2>
           <span>
@@ -119,9 +126,7 @@ const RideDetails = () => {
         <div className="ride-details__infos__description">
           <p>
             <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
-            Départ le {new Date(starting_time).toLocaleDateString(undefined, {
-              weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',
-            })}
+            Départ le {starting_time}
           </p>
           <p>
             <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
@@ -229,9 +234,7 @@ const RideDetails = () => {
                 >
                   <p>{msg.sender_first_name}
                     <span>
-                      {new Date(starting_time).toLocaleDateString(undefined, {
-                        hour: 'numeric', minute: 'numeric',
-                      })}
+                      {starting_time}
                     </span>
                   </p>
                   <span>{msg.message}</span>

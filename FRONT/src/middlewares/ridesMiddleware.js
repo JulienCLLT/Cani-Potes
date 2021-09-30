@@ -1,7 +1,8 @@
 /* eslint-disable linebreak-style */
 import { axiosInstance } from '../services/axios';
 import {
-  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, saveAllRides, saveOneRide,
+  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE,
+  saveAllRides, saveOneRide, deleteRideInState,
 } from '../actions/rides';
 
 const ridesMiddleware = (store) => (next) => (action) => {
@@ -24,11 +25,25 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .get(`/ride/${action.id}`)
         .then(
           (response) => {
+            console.log(response);
             store.dispatch(saveOneRide(response.data[0]));
           },
         )
         .catch(
           (error) => console.log('erreur : ', error),
+        );
+      break;
+    case DELETE__RIDE:
+      axiosInstance
+        .delete(`/ride/${action.id}`)
+        .then(
+          (response) => {
+            console.log('Ride deleted successfully : ', response);
+            store.dispatch(deleteRideInState(action.id));
+          },
+        )
+        .catch(
+          (error) => console.error("Can't delete ride : ", error)
         );
       break;
     default:

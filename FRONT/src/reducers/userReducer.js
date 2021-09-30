@@ -4,7 +4,7 @@ import { CONNECT__USER } from './../actions/users';
 import { FAILED__TO__CONNECT } from './../actions/users';
 
 const userInitialState = {
-  id: 99,
+  id: 1,
   first_name: 'Jean-Michel',
   last_name: 'Le Test',
   photo: '',
@@ -24,7 +24,7 @@ const userInitialState = {
     },
   ],
   token: '',
-  isLogged: false,
+  isLogged: true,
   failedToConnect: false,
 };
 
