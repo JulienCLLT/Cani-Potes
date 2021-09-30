@@ -5,14 +5,15 @@ import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
-  MapContainer, TileLayer, Marker,
+  MapContainer, TileLayer, Marker, Popup,
 } from 'react-leaflet';
 
 import L from 'leaflet';
 
 import calendar from '../../assets/img/info-ride/calendar.svg';
 import hourglass from '../../assets/img/info-ride/hourglass.svg';
-import mapPin from '../../assets/img/maps-and-flags.svg';
+import startFlag from '../../assets/img/info-ride/startPointFlag.svg';
+import endFlag from '../../assets/img/info-ride/endPointFlag.svg';
 import doubleArrow from '../../assets/img/info-ride/double_arrow.svg';
 
 import './RideDetails.scss';
@@ -72,7 +73,7 @@ const RideDetails = () => {
       setIsModalOpen(true);
     }
     else {
-      dispatch(removeUserFromRide(userProfile.id));
+      dispatch(removeUserFromRide(userProfile.id, id));
     }
   };
 
@@ -95,9 +96,16 @@ const RideDetails = () => {
     });
   };
 
-  const positionIcon = new L.Icon({
-    iconUrl: mapPin,
-    inconRetInaUrl: mapPin,
+  const positionStart = new L.Icon({
+    iconUrl: startFlag,
+    inconRetInaUrl: startFlag,
+    popupAnchor: [-0, -0],
+    iconSize: [22, 35],
+  });
+
+  const positionEnd = new L.Icon({
+    iconUrl: endFlag,
+    inconRetInaUrl: endFlag,
     popupAnchor: [-0, -0],
     iconSize: [22, 35],
   });
@@ -113,10 +121,14 @@ const RideDetails = () => {
               isLoading ? (
                 <span>chargement ...</span>
               ) : (
-                <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={10} scrollWheelZoom={false}>
+                <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={16} scrollWheelZoom>
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <Marker position={start_coordinate} icon={positionIcon} />
-                  <Marker position={end_coordinate} icon={positionIcon} />
+                  <Marker position={start_coordinate} icon={positionStart}>
+                    <Popup>Départ</Popup>
+                  </Marker>
+                  <Marker position={end_coordinate} icon={positionEnd}>
+                    <Popup>Arrivée</Popup>
+                  </Marker>
                 </MapContainer>
               )
             }

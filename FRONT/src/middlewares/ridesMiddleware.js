@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import {
   GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE,
-  saveAllRides, saveOneRide, deleteRideInState,
+  saveAllRides, saveOneRide, deleteRideInState, USER__QUIT__RIDE,
 } from '../actions/rides';
 
 const ridesMiddleware = (store) => (next) => (action) => {
@@ -26,7 +26,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
           },
         )
         .catch(
-          (error) => console.log('erreur : ', error),
+          (error) => console.error('erreur : ', error.response.data),
         );
       next(action);
       break;
@@ -35,12 +35,11 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .get(`/ride/${action.id}`)
         .then(
           (response) => {
-            console.log(response);
             store.dispatch(saveOneRide(response.data[0]));
           },
         )
         .catch(
-          (error) => console.log('erreur : ', error),
+          (error) => console.error('erreur : ', error.response.data),
         );
       break;
     case ADD__USER__TO__RIDE:
@@ -53,6 +52,17 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .catch((error) => {
           console.error("Can't join the ride : ", error.response.data);
         });
+      break;
+    case USER__QUIT__RIDE:
+      axiosInstance
+        .delete(`/ride/${action.rideId}/participation`, {
+          userId: action.userId,
+        })
+        .then((response) => {
+          console.log('You quit this ride : ', response);
+          next(action);
+        })
+        .catch((error) => console.error("Error, can't quit the ride : ", error.response.data));
       break;
     case DELETE__RIDE:
       axiosInstance

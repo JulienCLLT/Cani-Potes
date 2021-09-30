@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import {
-  ADD__USER__TO__RIDE, REMOVE__USER__FROM__RIDE, ADD__NEW__MESSAGE,
+  ADD__USER__TO__RIDE, USER__QUIT__RIDE, ADD__NEW__MESSAGE,
   DELETE__RIDE__IN__STATE, SAVE__ALL__RIDES, SAVE__ONE__RIDE, GET__RIDE__IS__LOADING,
 } from '../actions/rides';
 
@@ -90,14 +90,14 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           ],
         },
       };
-    case REMOVE__USER__FROM__RIDE:
+    case USER__QUIT__RIDE:
       return {
         ...state,
         currentRide: {
           ...state.currentRide,
           participants: [
             ...state.currentRide.participants.filter(
-              (participant) => participant.participant_id !== action.id,
+              (participant) => participant.participant_id !== action.userId,
             ),
           ],
         },
@@ -129,6 +129,11 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
         },
       };
     case SAVE__ONE__RIDE:
+      action.ride.participants.forEach((participant) => {
+        if (participant.dogs === null) {
+          participant.dogs = [];
+        }
+      });
       if (action.ride.messages === null) {
         return {
           ...state,

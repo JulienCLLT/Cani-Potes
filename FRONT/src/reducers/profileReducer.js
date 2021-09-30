@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 import { GET__PROFILE__IS__LOADING } from '../actions/users';
+import { SAVE__PROFILE__IN__STATE } from './../actions/users';
 
 const profileInitialState = {
   id: 1,
@@ -92,6 +93,12 @@ const profileReducer = (state = profileInitialState, action = {}) => {
       return {
         ...state,
         isLoading: true,
+      };
+    case SAVE__PROFILE__IN__STATE:
+      return {
+        ...state,
+        ...action.profile,
+        isLoading: false,
       };
     default:
       return state;

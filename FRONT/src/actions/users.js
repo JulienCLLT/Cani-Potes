@@ -31,3 +31,9 @@ export const GET__PROFILE__IS__LOADING = 'GET__PROFILE__IS__LOADING';
 export const getProfileIsLoading = () => ({
   type: GET__PROFILE__IS__LOADING,
 });
+
+export const SAVE__PROFILE__IN__STATE = 'SAVE__PROFILE__IN__STATE';
+export const saveProfileInState = (profile) => ({
+  type: SAVE__PROFILE__IN__STATE,
+  profile,
+});

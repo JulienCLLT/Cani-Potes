@@ -102,6 +102,7 @@
 
       @include lg-screen {
         display: flex;
+        justify-content: space-between;
         flex-wrap: wrap;
       }
 
@@ -109,6 +110,14 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+
+        span {
+          @include lg-screen {
+            display: flex;
+            align-items: center;
+            gap: .5 * vars.$gutter;
+          }
+        }
 
         .profile-page__edit__dog {
           @extend %edit-btn;
@@ -276,6 +285,38 @@
       }
     }
   }
+
+  &__btn-dogform {
+    display: flex;
+    align-items: center;
+    gap: .5 * vars.$gutter;
+    margin: auto;
+    @extend %btn;
+
+    span {
+      transition: all .3s ease-in-out;
+    }
+
+    .open {
+      transform: rotate(90deg);
+    }
+
+    .close {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &__dogform {
+    &-open {
+      overflow: hidden;
+      animation: appear .5s forwards;
+    }
+
+    &-close {
+      overflow: hidden;
+      animation: disappear .5s forwards;
+    }
+  }
 }
 
 @keyframes fade-in {
@@ -283,5 +324,26 @@
     transform: translate(0, -100%);
   } to {
     transform: translate(0);
+  }
+}
+
+@keyframes appear {
+  from {
+    max-height: 0px;
+  }
+  99% {
+    max-height: 650px;
+  }
+  to {
+    max-height: none;
+  }
+}
+
+@keyframes disappear {
+  from {
+    max-height: 650px;
+  }
+  to {
+    max-height: 0px;
   }
 }

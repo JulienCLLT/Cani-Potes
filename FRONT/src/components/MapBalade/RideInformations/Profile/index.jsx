@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 
 import './profile.scss';
 
-const Profile = ({participants, host_id}) => {
+const Profile = ({ participants, host_id }) => {
   participants.sort((a, b) => {
     if (a.participant_id === host_id) {
       return -1;
@@ -37,12 +37,12 @@ const Profile = ({participants, host_id}) => {
               </Link>
               <div className="profile__article__dogs">
                 {
-                  participant.dogs.map((dog, index) => {
+                  participant.dogs && participant.dogs.map((dog, index) => {
                     if (index < 2) {
                       return (
                         <div className="profile__article__dogs-container" key={`participant${participant.participant_id}dog${dog.dog_id}`}>
                           <div className="profile__article__dogs-image">
-                            <img src={dog.dog_photo} alt={dog.dog_surname} />
+                            <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} />
                           </div>
                           <div>
                             <span>{dog.dog_surname}</span>
@@ -58,7 +58,6 @@ const Profile = ({participants, host_id}) => {
                   })
                 }
               </div>
-
             </article>
           ))
         }
@@ -73,14 +72,24 @@ Profile.propTypes = {
       dogs: PropTypes.arrayOf(
         PropTypes.shape({
           dog_id: PropTypes.number.isRequired,
-          dog_photo: PropTypes.string.isRequired,
+          dog_age: PropTypes.string.isRequired,
+          dog_breed: PropTypes.string.isRequired,
+          dog_photo: PropTypes.arrayOf(
+            PropTypes.shape({
+              photo_id: PropTypes.number.isRequired,
+              photo_url: PropTypes.string.isRequired,
+            }),
+          ).isRequired,
+          dog_gender: PropTypes.string.isRequired,
+          dog_weight: PropTypes.number.isRequired,
           dog_surname: PropTypes.string.isRequired,
-          dog_photo_id: PropTypes.number.isRequired,
+          dog_behavior: PropTypes.string.isRequired,
+          dog_description: PropTypes.string.isRequired,
+          dog_sterilization: PropTypes.bool.isRequired,
         }),
       ).isRequired,
       participant_id: PropTypes.number.isRequired,
       participant_photo: PropTypes.string,
-      participant_last_name: PropTypes.string.isRequired,
       participant_first_name: PropTypes.string.isRequired,
     }),
   ).isRequired,

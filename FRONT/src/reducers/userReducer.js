@@ -1,10 +1,8 @@
 /* eslint-disable linebreak-style */
-import { LOGOUT__USER } from '../actions/users';
-import { CONNECT__USER } from './../actions/users';
-import { FAILED__TO__CONNECT } from './../actions/users';
+import { LOGOUT__USER, FAILED__TO__CONNECT, CONNECT__USER } from '../actions/users';
 
 const userInitialState = {
-  id: 0,
+  id: 1,
   first_name: '',
   position: [43.5667, 4.0833],
   dogs: [
@@ -22,7 +20,7 @@ const userInitialState = {
     },
   ],
   token: '',
-  isLogged: true,
+  isLogged: false,
   failedToConnect: false,
 };
 
