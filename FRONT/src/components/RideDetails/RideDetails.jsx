@@ -17,7 +17,7 @@ import doubleArrow from '../../assets/img/info-ride/double_arrow.svg';
 
 import './RideDetails.scss';
 import {
-  addNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide
+  addNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide,
 } from '../../actions/rides';
 
 const RideDetails = () => {
@@ -49,6 +49,8 @@ const RideDetails = () => {
 
   let joinInMsg = "S'inscrire";
 
+  if (userProfile.dogs.length === 0) joinInMsg = "Vous n'avez pas de chien !";
+
   if (nbOfDogs > max_number_dogs) {
     joinInMsg = 'Plus de place';
   }
@@ -57,9 +59,10 @@ const RideDetails = () => {
   }
 
   const handleJoinIn = () => {
+    if (userProfile.dogs.length === 0) return;
     if (nbOfDogs < max_number_dogs) {
       if ((nbOfDogs + userProfile.dogs.length) < max_number_dogs) {
-        dispatch(addUserToRide(userProfile));
+        dispatch(addUserToRide(userProfile, ride_id));
       }
     }
   };
