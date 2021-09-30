@@ -18,25 +18,7 @@ class Ride {
         }
     }
 
-    /*
 
-    const allRides = [
-  {
-    ride_id: 1,
-    start_coordinate: [48.456, 17.54]
-  },
-  {
-    ride_id: 2,
-    start_coordinate: [48.456, 17.54]
-  },
-  {
-    ride_id: 3,
-    start_coordinate: [48.456, 17.54]
-  },
-]
-
-
-*/
     static async findOneCompleteRide(id) {
         try {
             const query = `SELECT * FROM rides_with_all_informations WHERE ride_id=$1`;
@@ -115,6 +97,33 @@ class Ride {
             const query= `INSERT INTO member_participate_ride(member_id, ride_id) VALUES ($1,$2)`;
             await client.query(query, [memberId, rideId]);
             return null;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
+    //! adapter
+    async create() {
+        try {
+            //todo faire function sql 
+             const query= `INSERT INTO ride(title, description, start_coordinate, end_coordinate, starting_time, duration, max_number_dogs, tag_id, host_id) 
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
+
+             const { rows } = await client.query(query, [
+                this.title, 
+                this.description, 
+                this.start_coordinate, // array
+                this.end_coordinate, //array
+                this.starting_time,
+                this.duration, //interval
+                Number(this.gender_id),
+                Number(this.behavior_id),
+                Number(this.dog_owner_id)
+             ]);
+           
+                this.id = rows[0].id;
+                return rows[0];
         } catch (error) {
             console.error(error);
             throw new Error(error.detail ? error.detail : error.message);
