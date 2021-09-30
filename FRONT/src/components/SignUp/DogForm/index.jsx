@@ -18,7 +18,7 @@ const DogForm = () => {
   // if error with db
   const failedToSignup = useSelector((state) => state.signup.failedToSignup);
   const errorMessage = useSelector((state) => state.signup.errorMessage);
-  console.log(failedToSignup);
+  // console.log(failedToSignup);
   // console.log(errorMessage);
 
   const dispatch = useDispatch();
@@ -34,16 +34,17 @@ const DogForm = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    // dogSignUp(data);
+    dogSignUp(data);
   };
   const date = new Date();
 
   // upload file
-  const uploadFile = ({ target: { files } }) => {
-    console.log([0]);
-    const data = new FormData();
-    data.append('file', files[0]);
-  };
+  // const uploadFile = ({ target: { files } }) => {
+  //   console.log([0]);
+  //   const data = new FormData();
+  //   data.append('file', files[0]);
+  //   console.log('formdata : ', data);
+  // };
 
   return (
     <div className={formStep === 2 ? 'signup dog' : 'hidden'}>
@@ -59,7 +60,7 @@ const DogForm = () => {
             }
             <div className="dog__form__input-infos__first">
               {/* Race */}
-              <div className="dog__form__input-infos__first__errors">
+              <div className="dog__form__input-infos__first__race">
                 <select {...register('breed', { required: 'Veuillez renseigner sa race', valueAsNumber: true })} className="dog__commun">
                   <option value="">Race</option>
                   {
@@ -68,20 +69,11 @@ const DogForm = () => {
                     ))
                   }
                 </select>
-                {/* <select name="race" className="dog__commun">
-                  <option value="">Race</option>
-                  <SearchBar />
-                  {
-                    breeds.map((breed) => (
-                      <option value={breed.label} key={breed.id}>{breed.label}</option>
-                    ))
-                  }
-                </select> */}
                 {errors.race && <p className="errors">{errors.race.message}</p>}
               </div>
 
               {/* Weight */}
-              <div className="dog__form__input-infos__first__errors">
+              <div className="dog__form__input-infos__first__weight">
                 <input type="number" placeholder="Poids (kg)" {...register('weight', { required: 'Veuillez renseigner son poids', valueAsNumber: true })} defaultValue="10" className="dog__commun" />
                 {errors.weight && <p className="errors">{errors.weight.message}</p>}
               </div>
@@ -90,16 +82,19 @@ const DogForm = () => {
 
               {/* Sexe */}
               <div className="dog__form__input-infos__others__sexe">
-                <p className="dog__title">Il s'agit d'un(e)</p>
+                <p>Il s'agit d'un(e)</p>
                 {/* Female */}
-                <input {...register('sexe', { required: 'Veuillez renseigner son sexe' })} type="radio" value="1" id="female" />
-                <label htmlFor="female" className="dog__commun"> Femelle
-                </label>
+                <div className="dog__form__input-infos__others__sexe__label">
+                  <label htmlFor="female"> Femelle
+                    <input {...register('sexe', { required: 'Veuillez renseigner son sexe' })} type="radio" value="1" id="female" />
+                  </label>
 
-                {/* Male */}
-                <input {...register('sexe', { required: 'Veuillez renseigner son sexe' })} type="radio" value="2" id="male" />
-                <label htmlFor="male" className="dog__commun">  Mâle
-                </label>
+                  {/* Male */}
+
+                  <label htmlFor="male" className="dog__form__input-infos__others__sexe__label">  Mâle
+                    <input {...register('sexe', { required: 'Veuillez renseigner son sexe' })} type="radio" value="2" id="male" />
+                  </label>
+                </div>
 
                 {errors.sexe && <p className="errors">{errors.sexe.message}</p>}
               </div>
@@ -120,33 +115,35 @@ const DogForm = () => {
 
               {/* Sterilization */}
               <div className="dog__form__input-infos__others__sterilized">
-                <p className="dog__title">Il est stérilisé</p>
-                <label htmlFor="sterilization-true" className="dog__commun">
-                  <input {...register('sterilization', { required: "Veuillez renseigner s'il est stérilisé" })} type="radio" value="true" id="sterilization-true" />
-                  Oui
-                </label>
-                <label htmlFor="sterilization-false" className="dog__commun">
-                  <input {...register('sterilization', { required: "Veuillez renseigner s'il est stérilisé" })} type="radio" value="false" id="sterilization-false" />
-                  Non
-                </label>
+                <p className="dog__form__input-infos__others__sterilized_p">Il est stérilisé</p>
+                <div className="dog__form__input-infos__others__sterilized__parent-label">
+                  <label htmlFor="sterilization-true" className="dog__form__input-infos__others__sterilized__label">
+                    <input {...register('sterilization', { required: "Veuillez renseigner s'il est stérilisé" })} type="radio" value="true" id="sterilization-true" />
+                    Oui
+                  </label>
+                  <label htmlFor="sterilization-false" className="dog__form__input-infos__others__sterilized__label">
+                    <input {...register('sterilization', { required: "Veuillez renseigner s'il est stérilisé" })} type="radio" value="false" id="sterilization-false" />
+                    Non
+                  </label>
+                </div>
                 {errors.sterilization && <p className="errors">{errors.sterilization.message}</p>}
               </div>
 
               {/* Behavior */}
               <div className="dog__form__input-infos__others__character">
-                <p className="dog__title">Il est plutôt du genre</p>
+                <p className="dog__dog__form__input-infos__others__character__p">Il est plutôt du genre</p>
                 <div className="dog__form__input-infos__others__character__label-flex">
 
                   {
                     behaviors.map((behavior) => (
-                      <label htmlFor={behavior.label} className="dog__commun" key={behavior.id} style={{ textTransform: 'capitalize' }}>
+                      <label htmlFor={behavior.label} className="dog__behavior" key={behavior.id} style={{ textTransform: 'capitalize' }}>
                         <input {...register('behavior', { required: 'Veuillez renseigner son caractère' })} type="radio" value={behavior.id} id={behavior.label} />
                         {behavior.label}
                       </label>
                     ))
                   }
-                  {errors.behavior && <p className="errors">{errors.behavior.message}</p>}
                 </div>
+                {errors.behavior && <p className="errors">{errors.behavior.message}</p>}
               </div>
 
               {/* Surname */}
@@ -161,7 +158,7 @@ const DogForm = () => {
               <div className="dog__form__input-infos__others__picture">
                 <label htmlFor="photo_dog">
                   Ajouter une photo de mon chien
-                  <input type="file" placeholder="Photo de mon chien" {...register('photo_dog')} accept="image/png, image/jpeg" onChange={uploadFile} />
+                  <input type="file" placeholder="Photo de mon chien" {...register('photo_dog')} accept="image/png, image/jpeg" />
                 </label>
                 {/* <button type="button" className="dog__form__input-infos__others__add-dog"><img src={add} alt="add icon" />Ajouter un chien</button> */}
               </div>

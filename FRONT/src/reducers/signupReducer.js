@@ -19,7 +19,6 @@ const initialState = {
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case NEXT_SIGNUP_FORM_STEP:
-      console.log('formstep');
       return {
         ...state,
         formStep: state.formStep + 1,
@@ -35,7 +34,6 @@ const reducer = (state = initialState, action = {}) => {
       };
 
     case FAILED_TO_SIGNUP:
-      console.log('failed');
       return {
         ...state,
         failedToSignup: true,
