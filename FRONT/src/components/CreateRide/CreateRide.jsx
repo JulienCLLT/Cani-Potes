@@ -1,9 +1,19 @@
-import React from 'react';
+/* eslint-disable linebreak-style */
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+
+// import leaflet
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import L from 'leaflet';
 
 import './createRide.scss';
 
+import startPointFlag from '../../assets/img/info-ride/startPointFlag.svg';
+import endPointFlag from '../../assets/img/info-ride/endPointFlag.svg';
+
 const CreateRide = () => {
+  const { user } = useSelector((state) => state);
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
@@ -11,9 +21,48 @@ const CreateRide = () => {
     console.log('submitted data : ', data);
   };
 
-  const hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+  const hours = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+    13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+  ];
   const minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
   const date = new Date();
+
+  const positionStart = new L.Icon({
+    iconUrl: startPointFlag,
+    inconRetInaUrl: startPointFlag,
+    popupAnchor: [-0, -0],
+    iconSize: [45, 55], // iconSize: [32, 45],
+  });
+
+  const positionEnd = new L.Icon({
+    iconUrl: endPointFlag,
+    inconRetInaUrl: endPointFlag,
+    popupAnchor: [-0, -0],
+    iconSize: [45, 55], // iconSize: [32, 45],
+  });
+
+  const [switchPoint, setSwitchPoint] = useState('start');
+  const [startPoint, setStartPoint] = useState(user.position);
+  const [endPoint, setEndPoint] = useState();
+  //* on veut bien voir deux Marker avec une icone différente entre celle de départ et celle d'arrivée
+
+  const LocationMarker = () => {
+    const [position, setPosition] = useState(null);
+    const map = useMapEvents({
+      click(e) {
+        if (switchPoint === 'start') {
+          setStartPoint([e.latlng.lat, e.latlng.lng]);
+        }
+        else if (switchPoint === 'end') {
+          setEndPoint([e.latlng.lat, e.latlng.lng]);
+        }
+      },
+    });
+    return position === null ? null : (
+      <Marker />
+    );
+  };
 
   return (
     <main className="create-ride">
@@ -31,16 +80,33 @@ const CreateRide = () => {
           {errors.title && <span>Le titre est obligatoire</span>}
         </div>
 
-        {/* how to choose coordinates ? with map ? by writing an adress ? */}
         <div className="create-ride__field">
-          <label htmlFor="startingPoint">Point de départ</label>
+          {/* <label htmlFor="startingPoint">Point de départ</label>
           <input
             id="startingPoint"
             name="startingPoint"
             defaultValue="Point de départ"
             {...register('startingPoint', { required: 'startingPoint is needed' })}
           />
-          {errors.startingPoint && <span>Le point de départ est obligatoire</span>}
+          {errors.startingPoint && <span>Le point de départ est obligatoire</span>} */}
+          <div className="create-ride__field__points">
+            <div onClick={() => setSwitchPoint('start')}>Départ</div>
+            <div onClick={() => setSwitchPoint('end')}>Arrivée</div>
+          </div>
+          <MapContainer className="leaflet-container" center={user.position} zoom={16} scrollWheelZoom>
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <Marker
+              position={startPoint}
+              icon={positionStart}
+            />
+            {endPoint && (
+              <Marker
+                position={endPoint}
+                icon={positionEnd}
+              />
+            )}
+            <LocationMarker />
+          </MapContainer>
         </div>
 
         <div className="create-ride__field">

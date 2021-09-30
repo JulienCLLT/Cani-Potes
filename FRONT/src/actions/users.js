@@ -5,7 +5,7 @@ export const loginUser = (data) => ({
 });
 
 export const CONNECT__USER = 'CONNECT__USER';
-export const connectUser = (token, user = {}) => ({
+export const connectUser = (token, user) => ({
   type: CONNECT__USER,
   token,
   user,
