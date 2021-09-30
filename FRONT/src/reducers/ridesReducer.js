@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import {
   ADD__USER__TO__RIDE, REMOVE__USER__FROM__RIDE, ADD__NEW__MESSAGE,
-  DELETE__RIDE, SAVE__ALL__RIDES, SAVE__ONE__RIDE, GET__RIDE__IS__LOADING,
+  DELETE__RIDE__IN__STATE, SAVE__ALL__RIDES, SAVE__ONE__RIDE, GET__RIDE__IS__LOADING,
 } from '../actions/rides';
 
 const ridesInitialState = {
@@ -120,7 +120,7 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           ],
         },
       };
-    case DELETE__RIDE:
+    case DELETE__RIDE__IN__STATE:
       return {
         ...state,
         allRides: state.allRides.map((ride) => ride.ride_id !== action.id),
