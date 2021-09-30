@@ -66,7 +66,7 @@ const userController = {
     getProfile :async (request, response) => {
         try {
 
-            const dogs = await DogModel.findById(request.params.idUser);
+            const dogs = await UserModel.fullProfile(request.params.idUser);
             console.log(dogs);
            response.end() ;
         } catch (error) {
