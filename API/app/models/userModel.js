@@ -83,7 +83,7 @@ class UserModel {
 
     static async fullProfile (idUser) {
         try {
-            const { rows } = await database.query('SELECT * FROM full_profile WHERE member.id = $1',[idUser]);
+            const { rows } = await database.query('SELECT * FROM full_profile WHERE member_id = $1',[idUser]);
             return rows[0];
             
         } catch (error) {

@@ -9,7 +9,11 @@ SELECT  member.id AS member_id,
 		member.last_name,
 		member.photo,
 		member.zip_code,
-		member.birthday,
+		CASE 
+                 WHEN ((NOW()::DATE - member.birthday)/365) < 1 THEN ((NOW()::DATE - member.birthday)/30)::varchar || ' mois' 
+                 WHEN ((NOW()::DATE - member.birthday)/365) = 1 THEN ((NOW()::DATE - member.birthday)/30)::varchar || ' an'
+                 ELSE ((NOW()::DATE - member.birthday)/365)::varchar || ' ans'
+         END AS birthday,
  
 			ARRAY_AGG(DISTINCT jsonb_build_object(
 					 'dog_id', dog.id,
@@ -37,7 +41,7 @@ LEFT JOIN behavior ON dog.behavior_id = behavior.id
 LEFT JOIN breed ON dog.breed_id = breed.id
 LEFT JOIN gender ON dog.gender_id = gender.id
 LEFT JOIN photo ON photo.dog_id = dog.id
-GROUP BY member.id
+GROUP BY member.id;
 
 
 
