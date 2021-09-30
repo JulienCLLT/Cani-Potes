@@ -1,16 +1,12 @@
 /* eslint-disable linebreak-style */
-
 import axios from 'axios';
+import { axiosInstance } from '../services/axios';
 import {
-  USER_SIGNUP, DOG_SIGN_UP, GET_DOG_BREEDS_AND_BEHAVIORS, saveDogBreedsAndBehaviors,
+  USER_SIGNUP, DOG_SIGN_UP, GET_DOG_BREEDS_AND_BEHAVIORS,
+  saveDogBreedsAndBehaviors, failedToSignup, nextSignupFormStep,
 } from '../actions/signup';
 
-const axiosInstance = axios.create({
-  baseURL: 'http://107.22.144.90/api',
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-  },
-});
+import { connectUser } from '../actions/users';
 
 const signupMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
@@ -28,35 +24,68 @@ const signupMiddleware = (store) => (next) => (action) => {
         birthday: birthday_user,
       })
         .then((response) => {
-          console.log(response.data);
+          console.log('response', response);
+          // wait for user from db
+          store.dispatch(connectUser(response.data.authozization));
+          store.dispatch(nextSignupFormStep());
         }).catch((error) => {
-          console.log(error);
+          store.dispatch(failedToSignup(error.response.data));
+          console.log('error', error.response.data);
         });
       next(action);
       break;
     }
 
-    // case DOG_SIGN_UP: {
-    //   const {
-    //     surname, breed_id, birthday, sterilization, behavior_id, dog_owner_id,
-    //   } = action.dogForm;
+    case DOG_SIGN_UP: {
+      const {
+        surname, breed, weight, sexe, birthday, sterilization, behavior, photo, dog_owner_id,
+      } = action.dogForm;
 
-    //   axiosInstance.post('/profile/:id.profile/dogs/:id.dog', {
-    //     surname, breed_id, birthday, sterilization, behavior_id, dog_owner_id,
-    //   })
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       next(action);
-    //     }).catch((error) => {
-    //       console.log(error);
-    //     });
-    //   break;
-    // }
+      // transform data into formData to be able to use mutler
+      const formData = new FormData();
+
+      formData.append('photo', photo);
+      formData.append('surname', surname);
+      formData.append('breed', breed);
+      formData.append('weight', weight);
+      formData.append('gender', sexe);
+      formData.append('birthday', birthday);
+      formData.append('sterilization', sterilization);
+      formData.append('behavior', behavior);
+      formData.append('dog_owner_id', dog_owner_id);
+
+      // axiosInstance.post('/profile/:id.profile/dogs', {
+      //   surname,
+      //   breed_id: breed,
+      //   weight,
+      //   gender_id: Number(sexe),
+      //   birthday,
+      //   sterilization: Boolean(sterilization),
+      //   behavior_id: Number(behavior),
+      //   photo,
+      //   dog_owner_id, //  manque le json
+      // })
+      axios({
+        method: 'POST',
+        url: '/profile/${}/dogs',
+        data: formData,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+        .then((response) => {
+          console.log(response.data);
+          // wait for user from db
+          store.dispatch(connectUser(response.data.authozization));
+          store.dispatch(nextSignupFormStep());
+          next(action);
+        }).catch((error) => {
+          console.log(error);
+        });
+      break;
+    }
 
     case GET_DOG_BREEDS_AND_BEHAVIORS: {
       axiosInstance.get('/characteristic')
         .then((response) => {
-          console.log('response.data', response.data);
           store.dispatch(saveDogBreedsAndBehaviors(response.data));
         }).catch((error) => console.log('get dog breeds and behaviors error', error));
       next(action);

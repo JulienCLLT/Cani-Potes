@@ -27,7 +27,7 @@
         }
       }
 
-      &__email, &__password, &__password--confirmation, &__name, &__first_name, &__picture, &__zipcode__input, &__birthday {
+      &__email, &__password, &__password--confirmation, &__name, &__first_name, &__picture, &__zipcode__input, &__birthday, &__error-message {
         display: flex;
         flex-direction: column;
         margin-top: vars.$gutter;
