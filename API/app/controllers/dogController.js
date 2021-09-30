@@ -1,4 +1,5 @@
 const Dog = require('../models/dogModel');
+const Photo = require('../models/photoModel');
 
 const dogController = {
     
@@ -35,20 +36,22 @@ const dogController = {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
-            console.log("content form:", request.body);
-            console.log("file", request.file);
-
-            //todo avant test
-            // verfi si c'est meme que user token
-            // const userId = request.userId;
-            // if(userId !== profileId ){
-            //     throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
-            // }
+            const userId = request.userId;
+            if(userId !== profileId ){
+                throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
+            }
 
             const newDog = new Dog(request.body);
             const dogCreated = await newDog.create();
 
-            // crer photo avec ID chien  returning ID
+            if(request.file) {
+                console.log("photo");
+                const newPhoto = new Photo({ file : request.file.filename, dogId : dogCreated.id}); 
+                console.log("new phoho", newPhoto);
+                const photoCreated = await newPhoto.addPhoto();
+                console.log(photoCreated);
+                dogCreated.photo = photoCreated;
+            }
 
             response.status(201).json(dogCreated);
 
