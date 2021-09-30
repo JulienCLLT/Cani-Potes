@@ -1,19 +1,20 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { deleteRide, removeUserFromRide } from '../../actions/rides';
 
 import './dashBoard.scss';
 
 const DashBoard = () => {
-    const { profile } = useSelector(state => state);
+    const { profile } = useSelector((state) => state);
+    const dispatch = useDispatch();
 
     return (
         
         <div className="dashboard-page">
             <header className="dashboard-page__header">
                 <h1 className="dashboard-title">Tableau de bord</h1>
-                <div className="dashboard-page__header__avatar-img">
+                <div className="dashboard-avatar">
                     <img src={profile.photo} alt={profile.first_name} />
                 </div>
                 <span>{profile.first_name} {profile.last_name}</span>
@@ -38,8 +39,9 @@ const DashBoard = () => {
                         </NavLink>
                         
                     <button
+                        className="delete-btn"
                         type="button"
-                        onClick={deleteRide}
+                        onClick={() => dispatch(deleteRide())}
                         >
                         Supprimer la balade
                     </button>
@@ -56,8 +58,9 @@ const DashBoard = () => {
                         </NavLink>
                         </span>
                     <button
+                        className="remove-btn"
                         type="button"
-                        onClick={removeUserFromRide}
+                        onClick={() => dispatch(removeUserFromRide())}
                         >
                         Me retirer de la balade
                     </button>
