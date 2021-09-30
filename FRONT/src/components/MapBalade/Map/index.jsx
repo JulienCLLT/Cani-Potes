@@ -40,9 +40,12 @@ const Map = () => {
 
     dispatch(getOneRideById(foundRide.ride_id));
   };
+  const handleDblClick = () => {
+    console.log('michel');
+  };
 
   return (
-    <MapContainer className="leaflet-container" center={user.position} zoom={15} scrollWheelZoom={false}>
+    <MapContainer className="leaflet-container" center={user.position} zoom={15} scrollWheelZoom={false} dblclick={handleDblClick}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <Circle center={user.position} pathOptions={fillBlueOptions} radius={1000} />
 

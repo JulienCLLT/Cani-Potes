@@ -14,7 +14,7 @@ const signinMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           console.log('user connect : ', response);
           // wait for user from db
-          store.dispatch(connectUser(response.data.authozization));
+          store.dispatch(connectUser(response.data.authozization, response.data));
         }).catch((error) => {
           console.error(error);
           store.dispatch(failedToConnect());
