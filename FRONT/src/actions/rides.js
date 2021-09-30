@@ -70,3 +70,15 @@ export const GET__RIDE__IS__LOADING = 'GET__RIDE__IS__LOADING';
 export const getRideIsLoading = () => ({
   type: GET__RIDE__IS__LOADING,
 });
+
+export const CREATE_RIDE = 'CREATE_RIDE';
+export const createRide = (newRide) => ({
+  type: CREATE_RIDE,
+  newRide,
+});
+
+export const FAILED_TO_CREATE_RIDE = 'FAILED_TO_CREATE_RIDE';
+export const failedToCreateRide = (errorMessage) => ({
+  type: FAILED_TO_CREATE_RIDE,
+  errorMessage,
+});
