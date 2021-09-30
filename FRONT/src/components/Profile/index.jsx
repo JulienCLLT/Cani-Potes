@@ -168,7 +168,7 @@ const Profile = () => {
                       <input
                         type="text"
                         value={lastName}
-                        onChange={e => setLastName(e.target.value)}
+                        onChange={(e) => setLastName(e.target.value)}
                       />
                     ) : (
                       <span>{profile.last_name}</span>
@@ -288,7 +288,7 @@ const Profile = () => {
                           </span>
                         )}
 
-                        {/* BREED WAIGHT */}
+                        {/* BREED WEIGHT */}
                         {isEditingDog === index + 1 ? (
                           <div className="profile-page__dog__details-container">
                             <select
