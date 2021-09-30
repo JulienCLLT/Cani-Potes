@@ -33,9 +33,9 @@ export const addNewMessage = (
 });
 
 export const DELETE__RIDE = 'DELETE__RIDE';
-export const deleteRide = (id) => ({
+export const deleteRide = (rideId) => ({
   type: DELETE__RIDE,
-  id,
+  rideId,
 });
 
 export const DELETE__RIDE__IN__STATE = 'DELETE__RIDE__IN__STATE';

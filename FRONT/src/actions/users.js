@@ -37,3 +37,9 @@ export const saveProfileInState = (profile) => ({
   type: SAVE__PROFILE__IN__STATE,
   profile,
 });
+
+export const UPDATE__USER = 'UPDATE__USER';
+export const updateUser = (user) => ({
+  type: UPDATE__USER,
+  user,
+});

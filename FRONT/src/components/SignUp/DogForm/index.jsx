@@ -34,7 +34,7 @@ const DogForm = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    dogSignUp(data);
+    dispatch(dogSignUp(data));
   };
   const date = new Date();
 

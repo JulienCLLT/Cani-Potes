@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // import leaflet
 import {
-  MapContainer, TileLayer, Marker, Circle,
+  MapContainer, TileLayer, Marker, Circle, Popup,
 } from 'react-leaflet';
 import L from 'leaflet';
 
@@ -34,21 +34,22 @@ const Map = () => {
     const { lat, lng } = e.latlng;
     dispatch(getRideIsLoading());
 
-    const foundRide = allRides.find((ride) =>
-      ride.start_coordinate[0] === lat && ride.start_coordinate[1] === lng,
+    const foundRide = allRides.find(
+      (ride) => ride.start_coordinate[0] === lat && ride.start_coordinate[1] === lng,
     );
 
     dispatch(getOneRideById(foundRide.ride_id));
   };
-  const handleDblClick = () => {
-    console.log('michel');
-  };
 
   return (
-    <MapContainer className="leaflet-container" center={user.position} zoom={15} scrollWheelZoom={false} dblclick={handleDblClick}>
+    <MapContainer className="leaflet-container" center={user.position} zoom={15} scrollWheelZoom={false}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <Circle center={user.position} pathOptions={fillBlueOptions} radius={1000} />
-
+      <Marker position={user.position}>
+        <Popup>
+          Votre position
+        </Popup>
+      </Marker>
       {
         allRides.map((ride) => (
           <Marker

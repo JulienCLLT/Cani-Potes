@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getOneUserById, getProfileIsLoading } from '../../actions/users';
+import { getOneUserById, getProfileIsLoading, updateUser } from '../../actions/users';
 import { getDogBreedsAndBehaviors } from '../../actions/signup';
 
 import DogForm from '../SignUp/DogForm/index';
@@ -17,22 +17,22 @@ import dblArrow from '../../assets/img/info-ride/double_arrow.svg';
 const Profile = () => {
   const { user, profile, signup } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const profileIsUser = user.id === profile.id;
+  const profileIsUser = user.id === profile.member_id;
 
   const { id } = useParams();
 
   useEffect(() => {
     // wait for db to send profile before uncomment here
-    // dispatch(getProfileIsLoading());
+    dispatch(getProfileIsLoading());
     dispatch(getDogBreedsAndBehaviors());
     dispatch(getOneUserById(id));
   }, []);
 
   // manage to edit user
   const [isEditingUser, setisEditingUser] = useState(false);
-  const [firstName, setFirstName] = useState(profile.first_name);
-  const [lastName, setLastName] = useState(profile.last_name);
-  const [zipcode, setZipcode] = useState(profile.zipcode);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [zipcode, setZipcode] = useState();
   const [photoUser, setPhotoUser] = useState();
 
   // manage to edit dog
@@ -71,6 +71,9 @@ const Profile = () => {
 
   const toggleEditUser = () => {
     setisEditingUser(!isEditingUser);
+    setFirstName(profile.first_name);
+    setLastName(profile.last_name);
+    setZipcode(profile.zip_code);
   };
 
   const toggleEditDog = (index) => {
@@ -96,7 +99,9 @@ const Profile = () => {
 
   const handleUpdateUser = () => {
     setisEditingUser(false);
-    // update user in db
+    dispatch(updateUser({
+      firstName, lastName, zipcode, photoUser,
+    }));
   };
 
   const handleUpdateDog = () => {
@@ -135,7 +140,6 @@ const Profile = () => {
                 </div>
               )
             }
-
             <header className="profile-page__header">
               <div>
                 <span className="profile-page__header__annoucement">
@@ -195,7 +199,7 @@ const Profile = () => {
                         onChange={(e) => setZipcode(e.target.value)}
                       />
                     ) : (
-                      <span>Ville : {profile.zipcode}</span>
+                      <span>Ville : {profile.zip_code}</span>
                     )
                   }
                 </span>
@@ -206,7 +210,7 @@ const Profile = () => {
               {isEditingUser && (
                 <div className="profile-page__info-user__submit">
                   <button
-                    type="button"
+                    type="submit"
                     onClick={handleUpdateUser}
                   >
                     Enregistrer vos infos

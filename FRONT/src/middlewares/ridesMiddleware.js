@@ -66,11 +66,11 @@ const ridesMiddleware = (store) => (next) => (action) => {
       break;
     case DELETE__RIDE:
       axiosInstance
-        .delete(`/ride/${action.id}`)
+        .delete(`/ride/${action.rideId}`)
         .then(
           (response) => {
             console.log('Ride deleted successfully : ', response);
-            store.dispatch(deleteRideInState(action.id));
+            store.dispatch(deleteRideInState(action.rideId));
           },
         )
         .catch(

@@ -314,7 +314,7 @@
 
     &-close {
       overflow: hidden;
-      animation: disappear .5s forwards;
+      max-height: 0px;
     }
   }
 }
@@ -336,14 +336,5 @@
   }
   to {
     max-height: none;
-  }
-}
-
-@keyframes disappear {
-  from {
-    max-height: 650px;
-  }
-  to {
-    max-height: 0px;
   }
 }

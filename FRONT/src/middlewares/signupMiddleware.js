@@ -32,12 +32,11 @@ const signupMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log('response', response);
-          // wait for user from db
-          store.dispatch(connectUser(response.data.authorization));
+          store.dispatch(connectUser(response.data.authorization, response.data));
           store.dispatch(nextSignupFormStep());
         }).catch((error) => {
           store.dispatch(failedToSignup(error.response.data));
-          console.log('error', error.response.data);
+          console.error('error', error.response.data);
         });
       next(action);
       break;
@@ -74,18 +73,17 @@ const signupMiddleware = (store) => (next) => (action) => {
       // })
       axios({
         method: 'POST',
-        url: '/profile/${}/dogs',
+        url: `/profile/${store.getState().user.id}/dogs`,
         data: formData,
         headers: { 'Content-Type': 'multipart/form-data' },
       })
         .then((response) => {
           console.log(response.data);
-          // wait for user from db
           store.dispatch(connectUser(response.data.authozization));
           store.dispatch(nextSignupFormStep());
           next(action);
         }).catch((error) => {
-          console.log(error);
+          console.error(error.response.data);
         });
       break;
     }
@@ -94,7 +92,7 @@ const signupMiddleware = (store) => (next) => (action) => {
       axiosInstance.get('/characteristic')
         .then((response) => {
           store.dispatch(saveDogBreedsAndBehaviors(response.data));
-        }).catch((error) => console.log('get dog breeds and behaviors error', error));
+        }).catch((error) => console.error('get dog breeds and behaviors error', error.response.data));
       next(action);
       break;
     }
