@@ -1,8 +1,36 @@
+@use '../../styles/vars';
+
 .create-ride {
     padding: 50px;
 
     &__field {
         display: flex;
         margin: .5rem 0;
+    }
+
+    &__field {
+
+        &__map-container {
+            position: relative;
+
+        }
+
+        &__map-points {
+            position: absolute;
+            top: .5 * vars.$gutter;
+            right: .5 * vars.$gutter;
+            z-index: 999;
+            display: flex;
+            gap: .5 * vars.$gutter;
+
+            button {
+                border: 1px solid black;
+                border-radius: 5px;
+
+                &.selected {
+                    background: lime;
+                }
+            }
+        }
     }
 }

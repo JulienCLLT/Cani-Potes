@@ -102,6 +102,33 @@ class Ride {
         }
     }
 
+    //! adapter
+    async create() {
+        try {
+            //todo faire function sql 
+             const query= `INSERT INTO ride(title, description, start_coordinate, end_coordinate, starting_time, duration, max_number_dogs, tag_id, host_id) 
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
+
+             const { rows } = await client.query(query, [
+                this.title, 
+                this.description, 
+                this.start_coordinate, // array
+                this.end_coordinate, //array
+                this.starting_time,
+                this.duration, //interval
+                Number(this.gender_id),
+                Number(this.behavior_id),
+                Number(this.dog_owner_id)
+             ]);
+           
+                this.id = rows[0].id;
+                return rows[0];
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
 }
 
 module.exports = Ride;

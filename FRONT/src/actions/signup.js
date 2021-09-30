@@ -26,3 +26,9 @@ export const saveDogBreedsAndBehaviors = (allBehaviorsAndBreeds) => ({
   type: SAVE_DOG_BREEDS_AND_BEHAVIORS,
   allBehaviorsAndBreeds,
 });
+
+export const FAILED_TO_SIGNUP = 'FAILED_TO_SIGNUP';
+export const failedToSignup = (errorMessage) => ({
+  type: FAILED_TO_SIGNUP,
+  errorMessage,
+});

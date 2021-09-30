@@ -18,7 +18,7 @@ const DogForm = () => {
   // if error with db
   const failedToSignup = useSelector((state) => state.signup.failedToSignup);
   const errorMessage = useSelector((state) => state.signup.errorMessage);
-  // console.log(failedToSignup);
+  console.log(failedToSignup);
   // console.log(errorMessage);
 
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const DogForm = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    dogSignUp(data);
+    // dogSignUp(data);
   };
   const date = new Date();
 
@@ -43,7 +43,6 @@ const DogForm = () => {
   //   console.log([0]);
   //   const data = new FormData();
   //   data.append('file', files[0]);
-  //   console.log('formdata : ', data);
   // };
 
   return (
@@ -69,6 +68,15 @@ const DogForm = () => {
                     ))
                   }
                 </select>
+                {/* <select name="race" className="dog__commun">
+                  <option value="">Race</option>
+                  <SearchBar />
+                  {
+                    breeds.map((breed) => (
+                      <option value={breed.label} key={breed.id}>{breed.label}</option>
+                    ))
+                  }
+                </select> */}
                 {errors.race && <p className="errors">{errors.race.message}</p>}
               </div>
 
@@ -158,7 +166,7 @@ const DogForm = () => {
               <div className="dog__form__input-infos__others__picture">
                 <label htmlFor="photo_dog">
                   Ajouter une photo de mon chien
-                  <input type="file" placeholder="Photo de mon chien" {...register('photo_dog')} accept="image/png, image/jpeg" />
+                  <input type="file" placeholder="Photo de mon chien" {...register('photo_dog')} accept="image/png, image/jpeg" onChange={uploadFile} />
                 </label>
                 {/* <button type="button" className="dog__form__input-infos__others__add-dog"><img src={add} alt="add icon" />Ajouter un chien</button> */}
               </div>
