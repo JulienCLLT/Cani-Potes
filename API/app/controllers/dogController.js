@@ -52,12 +52,11 @@ const dogController = {
 
                 // resize picture and push it in resized file
                 await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
-                .toFile(path.resolve(request.file.destination,'resized',image));
+                .toFile(path.resolve(request.file.destination,'images_resized',image));
                 fs.unlinkSync(request.file.path);
 
                 // insert the photo data in db
                 const newPhoto = new Photo({ file : request.file.filename, dogId : dogCreated.id}); 
-                console.log("new phoho", newPhoto);
                 const photoCreated = await newPhoto.addPhoto();
                 dogCreated.photo = photoCreated;
             }
