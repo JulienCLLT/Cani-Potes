@@ -1,5 +1,6 @@
 module.exports = (request, response, next) => {
   try {
+    console.log(request.body);
     const errorMessage = [];
     if (!request.body.surname) {
       errorMessage.push("Le nom du chien est obligatoire");
