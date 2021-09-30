@@ -7,13 +7,6 @@ const multerConfig = require('./app/middlewares/multerConfig');
 
 const app = express();
 
-// /* for parsing form data */
-// const multer = require('multer');
-// const upload = multer();
-// app.use(upload.array()); 
-// /* */
-
-
 const port = process.env.PORT || 3500;
 
 app.use(cors());

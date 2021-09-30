@@ -35,7 +35,7 @@ const dogController = {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
-            console.log("content form:"), request.body;
+            console.log("content form:", request.body);
             console.log("file", request.file);
 
             //todo avant test
@@ -46,14 +46,11 @@ const dogController = {
             // }
 
             const newDog = new Dog(request.body);
-            //! remettre apres test multer
-            //const dogCreated = await newDog.create();
+            const dogCreated = await newDog.create();
 
-            //!response.status(201).json(dogCreated);
-            response.json("multerok")
-            
             // crer photo avec ID chien  returning ID
 
+            response.status(201).json(dogCreated);
 
         } catch (error) {
             response.status(500).json(error.message);
