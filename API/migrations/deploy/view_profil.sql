@@ -2,7 +2,8 @@
 
 BEGIN;
 
-SELECT  member.id as member_id,
+CREATE VIEW full_profile AS
+SELECT  member.id AS member_id,
 		member.email,
 		member.first_name,
 		member.last_name,
@@ -10,7 +11,7 @@ SELECT  member.id as member_id,
 		member.zip_code,
 		member.birthday,
  
-			array_agg(distinct jsonb_build_object(
+			ARRAY_AGG(DISTINCT jsonb_build_object(
 					 'dog_id', dog.id,
 					 'dog_surname', dog.surname,
 					 'dog_behavior', behavior.label,
@@ -24,19 +25,19 @@ SELECT  member.id as member_id,
                                END ,
 					 'dog_sterilization', dog.sterilization,
 					 'dog_description', dog.description,
-					 'dog_photo', jsonb_build_object(
-												'photo_id', photo.id,
-												'photo_url', photo.file_name)
-							
-					))filter (where dog_owner_id is not null)as dogs
+					 'dog_photo', (SELECT ARRAY_AGG(DISTINCT jsonb_build_object(
+                                                        'photo_id', photo.id,
+                                                        'photo_url', photo.file_name
+                                                        )) 
+                                    FROM photo WHERE photo.dog_id = dog.id GROUP BY photo.dog_id)
+					))FILTER (WHERE dog_owner_id IS NOT NULL)AS dogs
 FROM member 
-left join dog on dog_owner_id = member.id
-left join behavior on dog.behavior_id = behavior.id
-left join breed on dog.breed_id = breed.id
-left join gender on dog.gender_id = gender.id
-left join photo on photo.dog_id = dog.id
-
-group by member.id
+LEFT JOIN dog ON dog_owner_id = member.id
+LEFT JOIN behavior ON dog.behavior_id = behavior.id
+LEFT JOIN breed ON dog.breed_id = breed.id
+LEFT JOIN gender ON dog.gender_id = gender.id
+LEFT JOIN photo ON photo.dog_id = dog.id
+GROUP BY member.id
 
 
 

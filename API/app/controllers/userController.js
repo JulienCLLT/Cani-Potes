@@ -22,7 +22,7 @@ const userController = {
                             dataUser.position = await apiGeo(dataUser.position);
                             //authentification ok on genere un token
                             const token = jwt.signToken({id:result.id});
-                            dataUser.authozization = token;
+                            dataUser.authorization = token;
                             
                             //response.set({'authozization': token})
                             response.status(200).json(dataUser);
@@ -51,7 +51,7 @@ const userController = {
                     const dataUser = await UserModel.dataUserConnexion(newUser.id);
                     dataUser.position = await apiGeo(dataUser.position);
                     const token = jwt.signToken({id:newUser.id});
-                    dataUser.authozization = token;
+                    dataUser.authorization = token;
                     //response.set({'authozization': token});
                     response.status(201).json(dataUser);
                   } else {
