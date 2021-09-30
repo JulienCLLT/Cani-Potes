@@ -1,4 +1,5 @@
 const UserModel = require('../models/userModel');
+const DogModel = require('../models/dogModel');
 const bcrypt = require('../services/bcrypt');
 const jwt = require('../services/jwtoken');
 const apiGeo = require('../services/apiGeo');
@@ -21,7 +22,7 @@ const userController = {
                             dataUser.position = await apiGeo(dataUser.position);
                             //authentification ok on genere un token
                             const token = jwt.signToken({id:result.id});
-                            dataUser.authozization = token;
+                            dataUser.authorization = token;
                             
                             //response.set({'authozization': token})
                             response.status(200).json(dataUser);
@@ -50,7 +51,7 @@ const userController = {
                     const dataUser = await UserModel.dataUserConnexion(newUser.id);
                     dataUser.position = await apiGeo(dataUser.position);
                     const token = jwt.signToken({id:newUser.id});
-                    dataUser.authozization = token;
+                    dataUser.authorization = token;
                     //response.set({'authozization': token});
                     response.status(201).json(dataUser);
                   } else {
@@ -61,6 +62,16 @@ const userController = {
         }
 
     },
+
+    getProfile :async (request, response) => {
+        try {
+
+            const dogs = await UserModel.fullProfile(request.params.idUser);
+           response.status(201).json(dogs);
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
+    }
 };
 
 module.exports = userController;
