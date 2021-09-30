@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import { axiosInstance } from '../services/axios';
 import {
-  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE,
+  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE,
   saveAllRides, saveOneRide, deleteRideInState,
 } from '../actions/rides';
 
@@ -33,6 +33,16 @@ const ridesMiddleware = (store) => (next) => (action) => {
           (error) => console.log('erreur : ', error),
         );
       break;
+    case ADD__USER__TO__RIDE:
+      axiosInstance
+        .post(`/ride/${action.rideId}/participation`)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error("Can't join the ride : ", error);
+        });
+      break;
     case DELETE__RIDE:
       axiosInstance
         .delete(`/ride/${action.id}`)
@@ -43,7 +53,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
           },
         )
         .catch(
-          (error) => console.error("Can't delete ride : ", error)
+          (error) => console.error("Can't delete ride : ", error),
         );
       break;
     default:

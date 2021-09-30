@@ -11,6 +11,6 @@ export const axiosInstance = axios.create({
   baseURL: 'http://107.22.144.90/api',
   headers: {
     'Access-Control-Allow-Origin': '*',
-    // Authorization: `Bearer${token}`,
+    // Authorization: `Bearer ${token}`,
   },
 });
