@@ -2,13 +2,14 @@
 export const ADD__USER__TO__RIDE = 'ADD__USER__TO__RIDE';
 export const addUserToRide = ({
   id, first_name, last_name, photo, dogs,
-}) => ({
+}, rideId) => ({
   type: ADD__USER__TO__RIDE,
   participant_id: id,
   participant_first_name: first_name,
   participant_last_name: last_name,
   participant_photo: photo,
   dogs,
+  rideId,
 });
 
 export const REMOVE__USER__FROM__RIDE = 'REMOVE__USER__FROM__RIDE';
@@ -33,6 +34,12 @@ export const addNewMessage = (
 export const DELETE__RIDE = 'DELETE__RIDE';
 export const deleteRide = (id) => ({
   type: DELETE__RIDE,
+  id,
+});
+
+export const DELETE__RIDE__IN__STATE = 'DELETE__RIDE__IN__STATE';
+export const deleteRideInState = (id) => ({
+  type: DELETE__RIDE__IN__STATE,
   id,
 });
 
