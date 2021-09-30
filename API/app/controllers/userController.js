@@ -67,8 +67,7 @@ const userController = {
         try {
 
             const dogs = await UserModel.fullProfile(request.params.idUser);
-            console.log(dogs);
-           response.end() ;
+           response.status(201).json(dogs);
         } catch (error) {
             response.status(500).json(error.message);
         }
