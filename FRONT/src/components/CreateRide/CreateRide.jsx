@@ -45,7 +45,6 @@ const CreateRide = () => {
   const [switchPoint, setSwitchPoint] = useState('start');
   const [startPoint, setStartPoint] = useState(user.position);
   const [endPoint, setEndPoint] = useState();
-  //* on veut bien voir deux Marker avec une icone différente entre celle de départ et celle d'arrivée
 
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
@@ -80,18 +79,22 @@ const CreateRide = () => {
           {errors.title && <span>Le titre est obligatoire</span>}
         </div>
 
-        <div className="create-ride__field">
-          {/* <label htmlFor="startingPoint">Point de départ</label>
-          <input
-            id="startingPoint"
-            name="startingPoint"
-            defaultValue="Point de départ"
-            {...register('startingPoint', { required: 'startingPoint is needed' })}
-          />
-          {errors.startingPoint && <span>Le point de départ est obligatoire</span>} */}
-          <div className="create-ride__field__points">
-            <div onClick={() => setSwitchPoint('start')}>Départ</div>
-            <div onClick={() => setSwitchPoint('end')}>Arrivée</div>
+        <div className="create-ride__field__map-container">
+          <div className="create-ride__field__map-points">
+            <button
+              className={switchPoint === 'start' && 'selected'}
+              type="button"
+              onClick={() => setSwitchPoint('start')}
+            >
+              Départ
+            </button>
+            <button
+              className={switchPoint === 'end' && 'selected'}
+              type="button"
+              onClick={() => setSwitchPoint('end')}
+            >
+              Arrivée
+            </button>
           </div>
           <MapContainer className="leaflet-container" center={user.position} zoom={16} scrollWheelZoom>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -107,17 +110,6 @@ const CreateRide = () => {
             )}
             <LocationMarker />
           </MapContainer>
-        </div>
-
-        <div className="create-ride__field">
-          <label htmlFor="endingPoint">Point d'arrivée</label>
-          <input
-            id="endingPoint"
-            name="endingPoint"
-            defaultValue="Point d'arrivée"
-            {...register('endingPoint', { required: 'endingPoint is needed' })}
-          />
-          {errors.endingPoint && <span>Le point d'arrivée est obligatoire</span>}
         </div>
 
         <div className="create-ride__field">
@@ -149,16 +141,6 @@ const CreateRide = () => {
           </select>
 
           {errors.startHour || errors.startMin && <span>L'heure de départ est obligatoire</span>}
-        </div>
-
-        <div className="create-ride__field">
-          <p>Heure d'arrivée estimée</p>
-          <p>18h55</p>
-        </div>
-
-        <div className="create-ride__field">
-          <p>Temps de la balade</p>
-          <p>27min</p>
         </div>
 
         <div className="create-ride__field">
