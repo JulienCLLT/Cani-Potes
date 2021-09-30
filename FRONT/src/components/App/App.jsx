@@ -11,7 +11,9 @@ import Connection from '../Connection/Connection';
 import CreateRide from '../CreateRide/CreateRide';
 import SignUp from '../SignUp/index';
 import RideDetails from '../RideDetails/RideDetails';
+import DashBoard from '../DashBoard/DashBoard';
 import SearchBar from '../SignUp/SearchBar';
+
 
 // import './App.scss';
 
@@ -41,6 +43,13 @@ function App() {
           <Header title="Map balade" />
           <main>
             <MapBalade />
+          </main>
+        </Route>
+        <Route exact path="/board">
+          {!isLogged && <Redirect to="/" />}
+          <Header title="Tableau de bord" />
+          <main>
+            <DashBoard />
           </main>
         </Route>
         <Route exact path="/ride/create">
