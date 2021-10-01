@@ -5,6 +5,7 @@ const checkToken = require('./middlewares/checkJwt');
 const rideController = require('./controllers/rideController');
 const dogController = require('./controllers/dogController');
 const formController = require('./controllers/formController');
+const mailController = require('./controllers/mailController');
 
 const multer = require('multer');
 const storage = multer.diskStorage({
@@ -43,5 +44,7 @@ router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogControl
 router.get('/social/profile/:idUser',checkToken,userController.getProfile);
 
 router.patch('/account/edit',checkToken,userController.save);
+
+router.post('/social/message/ride/:idRide',checkToken, mailController.sendMailToRide);
 
 module.exports = router;
