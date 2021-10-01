@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import React, { useEffect, useRef, useState } from 'react';
-import { NavLink, Redirect, useParams } from 'react-router-dom';
+import { Link, Redirect, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -201,14 +201,14 @@ const RideDetails = () => {
                       <img src={close} alt="kick user" />
                     </button>
                   )}
-                  <NavLink
+                  <Link
                     className="ride-details__current-user__avatar"
                     to={`/profile/${participant.participant_id}`}
                     exact
                   >
                     <img src={participant.participant_photo} alt="user" />
                     <span>{participant.participant_first_name}</span>
-                  </NavLink>
+                  </Link>
                   {participant.dogs.map((dog, index) => {
                     if (index < 3) {
                       return (
@@ -232,15 +232,15 @@ const RideDetails = () => {
           </div>
 
           <div className="ride-details__users__creator">
-            <NavLink
+            <Link
               className="ride-details__users__creator__avatar"
-              to="/profile/:id"
+              to={`/profile/${host_id}`}
               exact
             >
               <p>Créateur</p>
               <img src={participants[0].participant_photo} alt={host_first_name} />
               <span>{userProfile.id === host_id ? 'Vous' : host_first_name}</span>
-            </NavLink>
+            </Link>
           </div>
         </div>
 
