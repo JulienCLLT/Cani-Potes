@@ -67,12 +67,30 @@ const ridesMiddleware = (store) => (next) => (action) => {
           (error) => console.error("Can't delete ride : ", error.response.data),
         );
       break;
-    case CREATE_RIDE:
+    case CREATE_RIDE: {
+      const {
+        title, date, startHour, startMin, maxDogs, description,
+      } = action.newRide;
       axiosInstance
-        .post('/ride')
+        .post('/ride', {
+          title,
+          date,
+          startHour,
+          startMin,
+          description,
+
+          start_coordinate: action.startPoint,
+          end_coordinate: action.endPoint,
+          starting_time,
+          duration,
+          max_number_dogs: maxDogs,
+          tag_id: 1, // to modify
+          host_id: store.getState().user.id,
+
+        })
         .then(
           (response) => {
-            console.log('ride created successfully : ', response);
+            console.log('Ride created successfully : ', response);
           },
         )
         .catch(
@@ -81,6 +99,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
             store.dispatch(failedToCreateRide(error.response.data));
           },
         );
+    }
       break;
     default:
       next(action);

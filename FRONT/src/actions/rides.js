@@ -72,9 +72,11 @@ export const getRideIsLoading = () => ({
 });
 
 export const CREATE_RIDE = 'CREATE_RIDE';
-export const createRide = (newRide) => ({
+export const createRide = (newRide, startPoint, endPoint) => ({
   type: CREATE_RIDE,
   newRide,
+  startPoint,
+  endPoint,
 });
 
 export const FAILED_TO_CREATE_RIDE = 'FAILED_TO_CREATE_RIDE';

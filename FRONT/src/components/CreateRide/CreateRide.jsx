@@ -16,17 +16,11 @@ import startPointFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endPointFlag from '../../assets/img/info-ride/endPointFlag.svg';
 
 const CreateRide = () => {
-  const { failedToCreateRide } = useSelector((state) => state.rides);
-  const { errorMessage } = useSelector((state) => state.rides);
+  const { failedToCreateRide, errorMessage } = useSelector((state) => state.rides);
   const { user } = useSelector((state) => state);
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const dispatch = useDispatch();
-  const onSubmit = (data) => {
-    // dispatch action to post data to bdd through middleware and if ride is created, add it to state
-    dispatch(createRide(data));
-    console.log('submitted data : ', data);
-  };
 
   const hours = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
@@ -39,19 +33,23 @@ const CreateRide = () => {
     iconUrl: startPointFlag,
     inconRetInaUrl: startPointFlag,
     popupAnchor: [-0, -0],
-    iconSize: [45, 55], // iconSize: [32, 45],
+    iconSize: [45, 55],
   });
 
   const positionEnd = new L.Icon({
     iconUrl: endPointFlag,
     inconRetInaUrl: endPointFlag,
     popupAnchor: [-0, -0],
-    iconSize: [45, 55], // iconSize: [32, 45],
+    iconSize: [45, 55],
   });
 
   const [switchPoint, setSwitchPoint] = useState('start');
   const [startPoint, setStartPoint] = useState(user.position);
   const [endPoint, setEndPoint] = useState();
+
+  const onSubmit = (data) => {
+    dispatch(createRide(data, startPoint, endPoint));
+  };
 
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
@@ -78,6 +76,7 @@ const CreateRide = () => {
           failedToCreateRide && <span>{errorMessage}</span>
         }
 
+        {/* Title */}
         <div className="create-ride__field">
           <label htmlFor="title">Nom de ma balade</label>
           <input
@@ -123,6 +122,7 @@ const CreateRide = () => {
           </MapContainer>
         </div>
 
+        {/* Date */}
         <div className="create-ride__field">
           <label htmlFor="date">Jour de la balade</label>
           <input
@@ -137,6 +137,7 @@ const CreateRide = () => {
         </div>
 
         <div className="create-ride__field">
+          {/* Start hour */}
           <p>Heure de départ</p>
           <label htmlFor="startHour" />
           <select {...register('startHour', { required: 'Veuillez sélectionner l\'heure de la balade.' })} defaultValue={17}>
@@ -144,6 +145,7 @@ const CreateRide = () => {
 							hours.map((hour) => <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}</option>)
 						}
           </select>
+          {/* Start min */}
           <label htmlFor="startMin" />
           <select {...register('startMin', { required: 'Veuillez sélectionner les minutes de l\'heure de la balade.' })} defaultValue={30}>
             {
@@ -162,6 +164,7 @@ const CreateRide = () => {
           {errors.startHour && <span>{errors.startHour.message}</span>}
         </div>
 
+        {/* Max dog */}
         <div className="create-ride__field">
           <label htmlFor="maxDogs">Nombre maximum de chiens</label>
           <input
@@ -176,6 +179,7 @@ const CreateRide = () => {
           {errors.maxDogs && <span>{errors.maxDogs.message}</span>}
         </div>
 
+        {/* Description */}
         <div className="create-ride__field">
           <label htmlFor="description">Description de ma balade</label>
           <textarea
