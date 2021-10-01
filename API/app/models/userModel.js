@@ -41,8 +41,27 @@ class UserModel {
     async save(){
         try {
             if(this.id){
-                // update
-                await database.query(`UPDATE member SET`)
+                // faire un fonction d'update dynamique en sql;
+                const {rows} = await database.query(`UPDATE member 
+                    SET email = $1,
+                    first_name = $2, 
+                    last_name = $3, 
+                    zip_code = $4, 
+                     
+                    birthday = $5,
+                    updated_at = NOW()
+                    WHERE id = $6`,[
+                        this.email,
+                        this.first_name,
+                        this.last_name,
+                        
+                        this.zip_code,
+                        
+                        this.birthday, 
+                        this.id,
+                    ]);
+                
+                
             }
             else{
                 // insert a facto en fonction SQL
@@ -50,6 +69,7 @@ class UserModel {
                 this.email,
                 this.first_name,
                 this.last_name,
+                
                 this.zip_code,
                 this.password,
                 this.birthday,
