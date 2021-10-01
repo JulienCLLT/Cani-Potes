@@ -43,6 +43,21 @@ class Ride {
         }
     }
 
+    static async findRidesByMember(userId) {
+        try {
+            const query = `
+                SELECT ride.id AS ride_id, host_id, mp.member_id AS participant FROM ride 
+                JOIN member_participate_ride AS mp ON ride.id = mp.ride_id
+                WHERE ride.host_id = $1 OR mp.member_id = $1           
+            `;
+            const { rows } = await client.query(query, [userId]);
+            return rows.map(row => new Ride(row));
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
     static async deleteMessagesByRideId(rideId) {
         try {
             const query = `DELETE FROM member_write_ride WHERE ride_id = $1`;
