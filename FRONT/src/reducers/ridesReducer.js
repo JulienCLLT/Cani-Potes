@@ -2,6 +2,7 @@
 import {
   ADD__USER__TO__RIDE, USER__QUIT__RIDE, ADD__NEW__MESSAGE,
   DELETE__RIDE__IN__STATE, SAVE__ALL__RIDES, SAVE__ONE__RIDE, GET__RIDE__IS__LOADING,
+  FAILED_TO_CREATE_RIDE,
 } from '../actions/rides';
 
 const ridesInitialState = {
@@ -64,6 +65,8 @@ const ridesInitialState = {
       },
     ],
   },
+  failedToCreateRide: false,
+  errorMessage: '',
 };
 
 const ridesReducer = (state = ridesInitialState, action = {}) => {
@@ -158,6 +161,13 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           ...state.currentRide,
           isLoading: true,
         },
+      };
+
+    case FAILED_TO_CREATE_RIDE:
+      return {
+        ...state,
+        failedToCreateRide: true,
+        errorMessage: action.errorMessage,
       };
     default:
       return state;
