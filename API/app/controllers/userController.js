@@ -3,7 +3,6 @@ const DogModel = require('../models/dogModel');
 const bcrypt = require('../services/bcrypt');
 const jwt = require('../services/jwtoken');
 const apiGeo = require('../services/apiGeo');
-const { request, response } = require('express');
 
 const userController = {
     login : async (request, response)=>{
@@ -76,8 +75,12 @@ const userController = {
 
     save : async (request, response)=>{
         try {
-            const idPayloead = request.userId; //normalement on recupe id de l'user dans le payload
-            const resuslt = UserModel.save(idPayload),
+            const idPayload = request.userId; //normalement on recupe id de l'user dans le payload
+            
+            request.body.id = idPayload;
+            const user = new UserModel(request.body);
+            await user.save(user);
+            response.status(204).json('Update done');
         } catch (error) {
             response.status(500).json(error.message);
         }
