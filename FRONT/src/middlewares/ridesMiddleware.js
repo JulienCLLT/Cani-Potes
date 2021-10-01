@@ -3,8 +3,8 @@
 import axios from 'axios';
 
 import {
-  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE,
-  saveAllRides, saveOneRide, deleteRideInState,
+  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE, CREATE_RIDE,
+  saveAllRides, saveOneRide, deleteRideInState, failedToCreateRide,
 } from '../actions/rides';
 
 const ridesMiddleware = (store) => (next) => (action) => {
@@ -65,6 +65,21 @@ const ridesMiddleware = (store) => (next) => (action) => {
         )
         .catch(
           (error) => console.error("Can't delete ride : ", error.response.data),
+        );
+      break;
+    case CREATE_RIDE:
+      axiosInstance
+        .post('/ride')
+        .then(
+          (response) => {
+            console.log('ride created successfully : ', response);
+          },
+        )
+        .catch(
+          (error) => {
+            console.error("Can't create ride : ", error);
+            store.dispatch(failedToCreateRide(error.response.data));
+          },
         );
       break;
     default:
