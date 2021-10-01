@@ -3,8 +3,9 @@
 import axios from 'axios';
 
 import {
-  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE, CREATE_RIDE,
+  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE, CREATE_RIDE, USER__QUIT__RIDE,
   saveAllRides, saveOneRide, deleteRideInState, failedToCreateRide,
+
 } from '../actions/rides';
 
 const ridesMiddleware = (store) => (next) => (action) => {
@@ -26,7 +27,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
           },
         )
         .catch(
-          (error) => console.log('erreur : ', error),
+          (error) => console.error('erreur : ', error.response.data),
         );
       next(action);
       break;
@@ -35,12 +36,11 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .get(`/ride/${action.id}`)
         .then(
           (response) => {
-            console.log(response);
             store.dispatch(saveOneRide(response.data[0]));
           },
         )
         .catch(
-          (error) => console.log('erreur : ', error),
+          (error) => console.error('erreur : ', error.response.data),
         );
       break;
     case ADD__USER__TO__RIDE:
@@ -54,13 +54,24 @@ const ridesMiddleware = (store) => (next) => (action) => {
           console.error("Can't join the ride : ", error.response.data);
         });
       break;
+    case USER__QUIT__RIDE:
+      axiosInstance
+        .delete(`/ride/${action.rideId}/participation`, {
+          userId: action.userId,
+        })
+        .then((response) => {
+          console.log('You quit this ride : ', response);
+          next(action);
+        })
+        .catch((error) => console.error("Error, can't quit the ride : ", error.response.data));
+      break;
     case DELETE__RIDE:
       axiosInstance
-        .delete(`/ride/${action.id}`)
+        .delete(`/ride/${action.rideId}`)
         .then(
           (response) => {
             console.log('Ride deleted successfully : ', response);
-            store.dispatch(deleteRideInState(action.id));
+            store.dispatch(deleteRideInState(action.rideId));
           },
         )
         .catch(

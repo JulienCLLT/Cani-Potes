@@ -1,6 +1,5 @@
 /* eslint-disable linebreak-style */
 import axios from 'axios';
-import { axiosInstance } from '../services/axios';
 import {
   USER_SIGNUP, DOG_SIGN_UP, GET_DOG_BREEDS_AND_BEHAVIORS,
   saveDogBreedsAndBehaviors, failedToSignup, nextSignupFormStep,
@@ -9,6 +8,14 @@ import {
 import { connectUser } from '../actions/users';
 
 const signupMiddleware = (store) => (next) => (action) => {
+  const axiosInstance = axios.create({
+    baseURL: 'http://107.22.144.90/api',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      authorization: `${store.getState().user.token}`,
+    },
+  });
+
   switch (action.type) {
     case USER_SIGNUP: {
       const {
@@ -25,12 +32,11 @@ const signupMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log('response', response);
-          // wait for user from db
-          store.dispatch(connectUser(response.data.authozization));
+          store.dispatch(connectUser(response.data.authorization, response.data));
           store.dispatch(nextSignupFormStep());
         }).catch((error) => {
           store.dispatch(failedToSignup(error.response.data));
-          console.log('error', error.response.data);
+          console.error('error', error.response.data);
         });
       next(action);
       break;
@@ -67,18 +73,17 @@ const signupMiddleware = (store) => (next) => (action) => {
       // })
       axios({
         method: 'POST',
-        url: '/profile/${}/dogs',
+        url: `/profile/${store.getState().user.id}/dogs`,
         data: formData,
         headers: { 'Content-Type': 'multipart/form-data' },
       })
         .then((response) => {
           console.log(response.data);
-          // wait for user from db
           store.dispatch(connectUser(response.data.authozization));
           store.dispatch(nextSignupFormStep());
           next(action);
         }).catch((error) => {
-          console.log(error);
+          console.error(error.response.data);
         });
       break;
     }
@@ -87,7 +92,7 @@ const signupMiddleware = (store) => (next) => (action) => {
       axiosInstance.get('/characteristic')
         .then((response) => {
           store.dispatch(saveDogBreedsAndBehaviors(response.data));
-        }).catch((error) => console.log('get dog breeds and behaviors error', error));
+        }).catch((error) => console.error('get dog breeds and behaviors error', error.response.data));
       next(action);
       break;
     }

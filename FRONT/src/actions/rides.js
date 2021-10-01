@@ -12,10 +12,11 @@ export const addUserToRide = ({
   rideId,
 });
 
-export const REMOVE__USER__FROM__RIDE = 'REMOVE__USER__FROM__RIDE';
-export const removeUserFromRide = (id) => ({
-  type: REMOVE__USER__FROM__RIDE,
-  id,
+export const USER__QUIT__RIDE = 'USER__QUIT__RIDE';
+export const removeUserFromRide = (userId, rideId) => ({
+  type: USER__QUIT__RIDE,
+  userId,
+  rideId,
 });
 
 export const ADD__NEW__MESSAGE = 'ADD__NEW__MESSAGE';
@@ -32,9 +33,9 @@ export const addNewMessage = (
 });
 
 export const DELETE__RIDE = 'DELETE__RIDE';
-export const deleteRide = (id) => ({
+export const deleteRide = (rideId) => ({
   type: DELETE__RIDE,
-  id,
+  rideId,
 });
 
 export const DELETE__RIDE__IN__STATE = 'DELETE__RIDE__IN__STATE';

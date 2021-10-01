@@ -2,34 +2,37 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getOneUserById, getProfileIsLoading } from '../../actions/users';
+import { getOneUserById, getProfileIsLoading, updateUser } from '../../actions/users';
 import { getDogBreedsAndBehaviors } from '../../actions/signup';
+
+import DogForm from '../SignUp/DogForm/index';
 
 import './profile.scss';
 
 import race from '../../assets/img/profile-simulation/race.svg';
 import sociable from '../../assets/img/profile-simulation/sociable.svg';
 import close from '../../assets/img/close.svg';
+import dblArrow from '../../assets/img/info-ride/double_arrow.svg';
 
 const Profile = () => {
   const { user, profile, signup } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const profileIsUser = user.id === profile.id;
+  const profileIsUser = user.id === profile.member_id;
 
   const { id } = useParams();
 
   useEffect(() => {
     // wait for db to send profile before uncomment here
-    // dispatch(getProfileIsLoading());
-    dispatch(getOneUserById(id));
+    dispatch(getProfileIsLoading());
     dispatch(getDogBreedsAndBehaviors());
+    dispatch(getOneUserById(id));
   }, []);
 
   // manage to edit user
   const [isEditingUser, setisEditingUser] = useState(false);
-  const [firstName, setFirstName] = useState(profile.first_name);
-  const [lastName, setLastName] = useState(profile.last_name);
-  const [zipcode, setZipcode] = useState(profile.zipcode);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [zipcode, setZipcode] = useState();
   const [photoUser, setPhotoUser] = useState();
 
   // manage to edit dog
@@ -49,6 +52,8 @@ const Profile = () => {
   const [dogIsChanged, setDogIsChanged] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalPhotoOpen, setIsModalPhotoOpen] = useState(false);
+  const [isModalDeleteDogIsOpen, setIsModalDeleteDogIsOpen] = useState(false);
+  const [isDogFormOpen, setIsDogFormOpen] = useState(false);
 
   const handleSetWeight = (value) => {
     setDogIsChanged(true);
@@ -66,6 +71,9 @@ const Profile = () => {
 
   const toggleEditUser = () => {
     setisEditingUser(!isEditingUser);
+    setFirstName(profile.first_name);
+    setLastName(profile.last_name);
+    setZipcode(profile.zip_code);
   };
 
   const toggleEditDog = (index) => {
@@ -91,7 +99,9 @@ const Profile = () => {
 
   const handleUpdateUser = () => {
     setisEditingUser(false);
-    // update user in db
+    dispatch(updateUser({
+      firstName, lastName, zipcode, photoUser,
+    }));
   };
 
   const handleUpdateDog = () => {
@@ -105,6 +115,12 @@ const Profile = () => {
     setIsModalPhotoOpen(false);
     const photoToDelete = profile.dogs[dogAndPicIndex.dogIdx].dog_photo[dogAndPicIndex.picIdx];
     // dispatch action to delete photo in db
+  };
+
+  const handleDeleteDog = () => {
+    const dogToDelete = profile.dogs[isEditingDog - 1];
+    // dispatch action to delete dog in db
+    setIsModalDeleteDogIsOpen(false);
   };
 
   return (
@@ -124,7 +140,6 @@ const Profile = () => {
                 </div>
               )
             }
-
             <header className="profile-page__header">
               <div>
                 <span className="profile-page__header__annoucement">
@@ -184,7 +199,7 @@ const Profile = () => {
                         onChange={(e) => setZipcode(e.target.value)}
                       />
                     ) : (
-                      <span>Ville : {profile.zipcode}</span>
+                      <span>Ville : {profile.zip_code}</span>
                     )
                   }
                 </span>
@@ -195,7 +210,7 @@ const Profile = () => {
               {isEditingUser && (
                 <div className="profile-page__info-user__submit">
                   <button
-                    type="button"
+                    type="submit"
                     onClick={handleUpdateUser}
                   >
                     Enregistrer vos infos
@@ -209,7 +224,14 @@ const Profile = () => {
                 profile.dogs.map((dog, index) => (
                   <article>
                     <h2>
-                      #{index + 1} Carte de {dog.dog_surname}
+                      <span>
+                        #{index + 1} Carte de {dog.dog_surname}
+                        {isEditingDog === index + 1 ? (
+                          <button type="button" onClick={() => setIsModalDeleteDogIsOpen(true)}>
+                            <img src={close} alt="delete dog" />
+                          </button>
+                        ) : null }
+                      </span>
                       {
                         profileIsUser && (
                           <div
@@ -421,8 +443,7 @@ const Profile = () => {
                     )}
                     {(isEditingDog === index + 1) && (dog.dog_photo.length >= 5) && (
                       <>
-                        <p>Impossible d'ajouter une photo</p>
-                        <p>Veuillez en retirer</p>
+                        <p>Impossible d'ajouter une photo. Veuillez en retirer</p>
                       </>
                     )}
                     {isEditingDog === index + 1 && (
@@ -513,6 +534,51 @@ const Profile = () => {
           </div>
         </div>
       )}
+
+      {/* DOG DELETE MODAL */}
+      {isModalDeleteDogIsOpen && (
+        <div className="profile-page__modal">
+          <div className="profile-page__modal__container">
+            <button
+              className="profile-page__modal__close"
+              type="button"
+              onClick={() => setIsModalDeleteDogIsOpen(false)}
+            >
+              <img src={close} alt="close" />
+            </button>
+
+            <p>Supprimer le chien ?</p>
+
+            <div className="profile-page__modal__btn">
+              <button
+                type="button"
+                onClick={() => setIsModalDeleteDogIsOpen(false)}
+              >
+                Non
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteDog}
+              >
+                Oui
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <button
+        className="profile-page__btn-dogform"
+        type="button"
+        onClick={() => setIsDogFormOpen((old) => !old)}
+      >
+        Ajouter un chien<span className={isDogFormOpen ? 'close' : 'open'}><img src={dblArrow} alt="arrow" /></span>
+      </button>
+      <div
+        className={isDogFormOpen ? 'profile-page__dogform-open' : 'profile-page__dogform-close'}
+      >
+        <DogForm />
+      </div>
 
     </div>
   );
