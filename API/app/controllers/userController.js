@@ -1,10 +1,9 @@
-const UserModel = require('../models/userModel');
-const DogModel = require('../models/dogModel');
 const bcrypt = require('../services/bcrypt');
 const jwt = require('../services/jwtoken');
 const apiGeo = require('../services/apiGeo');
+
+const UserModel = require('../models/userModel');
 const Dog = require('../models/dogModel');
-const dogController = require('./dogController');
 const Ride = require('../models/rideModel');
 
 const userController = {
@@ -100,18 +99,22 @@ const userController = {
                 //todo method dans une autre branche à merger
             }
 
-            // suppression de toutes ses participations aux balades dans lesquelles il est inscrit
+            // suppr All participations aux balades dans lesquelles il est inscrit
             await Ride.deleteParticipationsOfOneMember(userId);
 
-            // liste toutes la balade qu'il a créé
+            const ridesHosted = await Ride.findRidesHostedBy(userId);
+            //todo faire en une seule requete et JOIN ? 
+            for (ride in ridesHosted) {
+                // retirer tous les participants a ces balades 
+                await Ride.deleteAllParticipantsFromRide(ride.id);
 
-            // retirer tous les participants a ces balades (voir fct deja faite) =>  static async deleteAllParticipantsFromRide(rideId) ou refaire avec JOIN
+                //supprimer tous les messages a ppartenant a cette balade 
+                await Ride.deleteMessagesByRideId(ride.id);
+            }
+            await Ride.deleteAllRidesCreatedBy(userId);
+            await UserModel.deleteMember(userId);
 
-            // supprimer tous les messages a ppartenant a cette balade 
-            // supprimer toutes les balade qu'il a créé
-
-
-
+            response.status(204).json;
         } catch (error) {
 
         }

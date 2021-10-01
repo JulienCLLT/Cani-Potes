@@ -115,10 +115,13 @@ class UserModel {
         }
     }
 
-    static async deleteMember(idUser) {
+    static async deleteMember(userId) {
         try {
-
+            const query = `DELETE FROM member WHERE id = $1`;
+            await client.query(query, [userId]);
+            return null;
         } catch (error) {
+            console.error(error);
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
