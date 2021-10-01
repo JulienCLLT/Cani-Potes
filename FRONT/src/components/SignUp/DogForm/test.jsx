@@ -12,9 +12,14 @@ import { dogSignUp, getDogBreedsAndBehaviors } from '../../../actions/signup';
 import './dog-form.scss';
 
 const DogForm = () => {
-  const {
-    formStep, breeds, behaviors, failedToSignup, errorMessage,
-  } = useSelector((state) => state.signup);
+  const formStep = useSelector((state) => state.signup.formStep);
+  const breeds = useSelector((state) => state.signup.breeds);
+  const behaviors = useSelector((state) => state.signup.behaviors);
+  // if error with db
+  const failedToSignup = useSelector((state) => state.signup.failedToSignup);
+  const errorMessage = useSelector((state) => state.signup.errorMessage);
+  console.log(failedToSignup);
+  // console.log(errorMessage);
 
   const dispatch = useDispatch();
 
@@ -28,10 +33,17 @@ const DogForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    dispatch(dogSignUp(data));
+    console.log(data);
+    // dogSignUp(data);
   };
-
   const date = new Date();
+
+  // upload file
+  // const uploadFile = ({ target: { files } }) => {
+  //   console.log([0]);
+  //   const data = new FormData();
+  //   data.append('file', files[0]);
+  // };
 
   return (
     <div className={formStep === 2 ? 'signup dog' : 'hidden'}>
@@ -56,6 +68,15 @@ const DogForm = () => {
                     ))
                   }
                 </select>
+                {/* <select name="race" className="dog__commun">
+                  <option value="">Race</option>
+                  <SearchBar />
+                  {
+                    breeds.map((breed) => (
+                      <option value={breed.label} key={breed.id}>{breed.label}</option>
+                    ))
+                  }
+                </select> */}
                 {errors.race && <p className="errors">{errors.race.message}</p>}
               </div>
 
@@ -145,7 +166,7 @@ const DogForm = () => {
               <div className="dog__form__input-infos__others__picture">
                 <label htmlFor="photo_dog">
                   Ajouter une photo de mon chien
-                  <input type="file" placeholder="Photo de mon chien" {...register('photo_dog')} accept="image/png, image/jpeg" />
+                  <input type="file" placeholder="Photo de mon chien" {...register('photo_dog')} accept="image/png, image/jpeg" onChange={uploadFile} />
                 </label>
                 {/* <button type="button" className="dog__form__input-infos__others__add-dog"><img src={add} alt="add icon" />Ajouter un chien</button> */}
               </div>

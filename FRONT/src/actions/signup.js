@@ -16,6 +16,12 @@ export const dogSignUp = (dogForm) => ({
   dogForm,
 });
 
+export const ADD_DOG_TO_USER = 'ADD_DOG_TO_USER';
+export const addDogToUser = (dog) => ({
+  type: ADD_DOG_TO_USER,
+  dog,
+});
+
 export const GET_DOG_BREEDS_AND_BEHAVIORS = 'GET_DOG_BREEDS_AND_BEHAVIORS';
 export const getDogBreedsAndBehaviors = () => ({
   type: GET_DOG_BREEDS_AND_BEHAVIORS,
@@ -25,4 +31,10 @@ export const SAVE_DOG_BREEDS_AND_BEHAVIORS = 'SAVE_DOG_BREEDS_AND_BEHAVIORS';
 export const saveDogBreedsAndBehaviors = (allBehaviorsAndBreeds) => ({
   type: SAVE_DOG_BREEDS_AND_BEHAVIORS,
   allBehaviorsAndBreeds,
+});
+
+export const FAILED_TO_SIGNUP = 'FAILED_TO_SIGNUP';
+export const failedToSignup = (errorMessage) => ({
+  type: FAILED_TO_SIGNUP,
+  errorMessage,
 });

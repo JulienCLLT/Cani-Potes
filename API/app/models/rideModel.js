@@ -122,12 +122,12 @@ class Ride {
                 Number(this.host_id),
             ])
             return rows[0];
+
         } catch (error) {
             console.error(error);
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
-
 }
 
 module.exports = Ride;

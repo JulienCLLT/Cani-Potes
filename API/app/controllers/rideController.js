@@ -159,6 +159,20 @@ const rideController = {
         } catch (error) {
             response.status(500).json(error.message);
         }
+    },
+
+    // /ride
+    createRide: async (request, response) => {
+        try {
+            // prendre userId du token
+            //todo lier avec joi pour verif
+            const newRide = new Ride(request.body);
+            const rideCreated = await newRide.create(); //todo faire model
+            response.status(201).json(dogCreated);
+            
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
     }
 
 

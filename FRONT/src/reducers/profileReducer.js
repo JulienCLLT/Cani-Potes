@@ -1,26 +1,30 @@
+/* eslint-disable linebreak-style */
+import { GET__PROFILE__IS__LOADING, SAVE__PROFILE__IN__STATE } from '../actions/users';
+
 const profileInitialState = {
-  id: 99,
-  first_name: 'Jean-Jacques',
-  last_name: 'Le cool',
+  membre_id: 0,
+  first_name: '',
+  last_name: '',
   photo: '',
-  dogs: [
-    {
-      dog_id: 101,
-      dog_photo: "img12.jpg",
-      dog_surname: "Nestor",
-      dog_photo_id: 9,
-    },
-    {
-      dog_id: 102,
-      dog_photo: "img14.jpg",
-      dog_surname: "Baveux",
-      dog_photo_id: 11,
-    },
-  ],
+  zip_code: 12345,
+  dogs: [],
+  birthday: '',
+  isLoading: false,
 };
 
 const profileReducer = (state = profileInitialState, action = {}) => {
   switch (action.type) {
+    case GET__PROFILE__IS__LOADING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case SAVE__PROFILE__IN__STATE:
+      return {
+        ...state,
+        ...action.profile,
+        isLoading: false,
+      };
     default:
       return state;
   }

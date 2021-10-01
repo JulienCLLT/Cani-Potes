@@ -1,14 +1,16 @@
+/* eslint-disable linebreak-style */
 import axios from 'axios';
 import { connectUser, LOGIN__USER, failedToConnect } from '../actions/users';
 
-const axiosInstance = axios.create({
-  baseURL: 'http://107.22.144.90/api',
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-  },
-});
-
 const signinMiddleware = (store) => (next) => (action) => {
+  const axiosInstance = axios.create({
+    baseURL: 'http://107.22.144.90/api',
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      authorization: `${store.getState().user.token}`,
+    },
+  });
+
   switch (action.type) {
     case LOGIN__USER: {
       const { email, password } = action.data;
@@ -18,11 +20,10 @@ const signinMiddleware = (store) => (next) => (action) => {
         password,
       })
         .then((response) => {
-          console.log(response);
-          // wait for user from db
-          store.dispatch(connectUser(response.data.authozization));
+          console.log('user connect : ', response);
+          store.dispatch(connectUser(response.data.authorization, response.data));
         }).catch((error) => {
-          console.error(error);
+          console.error(error.reponse.data);
           store.dispatch(failedToConnect());
         });
       break;

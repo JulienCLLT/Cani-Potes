@@ -1,14 +1,11 @@
 /* eslint-disable linebreak-style */
-import { LOGIN__USER, LOGOUT__USER } from '../actions/users';
-import { CONNECT__USER } from './../actions/users';
-import { FAILED__TO__CONNECT } from './../actions/users';
+import { LOGOUT__USER, FAILED__TO__CONNECT, CONNECT__USER } from '../actions/users';
+import { ADD_DOG_TO_USER } from './../actions/signup';
 
 const userInitialState = {
-  id: 99,
-  first_name: 'Jean-Michel',
-  last_name: 'Le Test',
-  photo: '',
-  position: [43.5606, 4.085],
+  id: 1,
+  first_name: '',
+  position: [43.5667, 4.0833],
   dogs: [
     {
       dog_id: 101,
@@ -33,6 +30,10 @@ const userReducer = (state = userInitialState, action = {}) => {
     case CONNECT__USER:
       return {
         ...state,
+        id: action.user.id,
+        first_name: action.user.first_name,
+        position: action.user.position,
+        rideId: action.user.ride_id,
         token: action.token,
         isLogged: true,
       };
@@ -40,6 +41,16 @@ const userReducer = (state = userInitialState, action = {}) => {
       return {
         ...state,
         failedToConnect: true,
+      };
+    case ADD_DOG_TO_USER:
+      return {
+        ...state,
+        dogs: [
+          ...state.dogs,
+          {
+            ...action.dog,
+          },
+        ],
       };
     case LOGOUT__USER:
       return {

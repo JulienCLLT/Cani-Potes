@@ -1,26 +1,37 @@
 @use '../../../styles/vars';
 
 .dog {
+
+  &__behavior {
+    width: 49%;
+    font-size: 0.9* vars.$gutter;
+    border: 0.1 *vars.$gutter solid vars.$color_border-input;
+    border-radius: 3px;
+    padding: 0.3*vars.$gutter;
+    text-align: center;
+  }
   
   &__form {
     display: flex;
     flex-direction: column;
-    align-items: center; // cache valider
+    width: 50%;
+    margin: 0 auto;
 
 
     &__input-infos {
-      height: 520px;
+      // height: 520px;
   
       &__first {
         margin: vars.$gutter 0;
         display: flex;
         width: 100%;
-        // max-width: 400px;
         justify-content: space-between;
 
+        &__race, &__weight {
+          width: 49%;
+        }
+
         & select, & input {
-        // width: 6.5*vars.$gutter;
-        max-width: 150px;
         height: 2* vars.$gutter;
         width: 100%;
         }
@@ -41,6 +52,58 @@
           align-items: center;
         }
 
+        &__sexe {
+          
+          p {
+            width: 30%;
+          }
+
+          &__label {
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+
+ 
+
+            & label {
+              width: 49%;
+              font-size: 0.9* vars.$gutter;
+              border: 0.1 *vars.$gutter solid vars.$color_border-input;
+              border-radius: 3px;
+              padding: 0.3*vars.$gutter;
+              text-align: center;
+            }
+          }
+        }
+
+        &__character {
+          width: 100%;
+          justify-content: space-between;
+          display: flex;
+
+          &__label-flex {
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+          }
+
+          &__p {
+
+          }
+        }
+
+        &__sterilized {
+
+          &__label {
+            font-size: 0.9* vars.$gutter;
+            border: 0.1 *vars.$gutter solid vars.$color_border-input;
+            border-radius: 3px;
+            padding: 0.3*vars.$gutter;
+            width: 35%;
+            text-align: center;
+          }
+        }
+
         &__birthday {
           & input {
             border-radius: 2px;
@@ -48,8 +111,29 @@
           }
         }
 
+        &__sterilized {
+
+          &__parent-label {
+            width: 70%;
+            justify-content: space-between;
+            display: flex;
+          }
+
+          &__label {
+            width: 49%;
+          }
+
+          & p {
+            width: 30%;
+          }
+        }
+
         &__character {
           display: flex;
+
+          & p {
+            
+          }
         }
   
         &__surname{
@@ -77,7 +161,7 @@
     border: 0.1 *vars.$gutter solid vars.$color_border-input;
     border-radius: 3px;
     padding: 0.3*vars.$gutter;
-    width: 4*vars.$gutter;
+    width: 35%;
     text-align: center;
     // margin-right: 0.5*vars.$gutter;
     // margin-bottom: 0.8*vars.$gutter;
@@ -85,8 +169,9 @@
 
 //   // texts before input
   &__title {
-    width: 8*vars.$gutter;
+    width: 10*vars.$gutter;
   }
+
 }
 
 // remove the arrows of input type number
@@ -111,6 +196,6 @@ input[type="number"] {
 //   display: none;
 // }
 
-input[type="radio"]:checked + label {
-  border: 0.15*vars.$gutter solid vars.$color_main;
-}
+// input[type="radio"]:checked + label {
+//   border: 0.15*vars.$gutter solid vars.$color_main;
+// }

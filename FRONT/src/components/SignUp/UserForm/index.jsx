@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
 // action creator
-import { nextSignupFormStep, userSignup } from '../../../actions/signup';
+import { userSignup } from '../../../actions/signup';
 
 import './user-form.scss';
 
@@ -22,9 +22,12 @@ const UserForm = () => {
     register, handleSubmit, formState: { errors }, watch,
   } = useForm();
 
+  // if error when user signup
+  const failedToSignup = useSelector((state) => state.signup.failedToSignup);
+  const errorMessage = useSelector((state) => state.signup.errorMessage);
+
   const onSubmit = (data) => {
     dispatch(userSignup(data));
-    dispatch(nextSignupFormStep());
   };
 
   const date = new Date();
@@ -35,17 +38,23 @@ const UserForm = () => {
 
       <div className="user-form__form">
         <form onSubmit={handleSubmit(onSubmit)}>
+
           <div className="user-form__form__input-infos">
             <div className="user-form__form__input-infos__identity">
+              {
+                failedToSignup && (
+                  <span className="signup__errorMessageDataBase user-form__form__input-infos__error-message">{errorMessage}</span>
+                )
+              }
               {/* Firstname */}
               <div className="user-form__form__input-infos__first_name">
-                <input {...register('first_name', { required: 'Veuillez entrer votre prénom.' })} type="text" placeholder="Prénom" defaultValue="michel" />
+                <input {...register('first_name', { required: 'Veuillez entrer votre prénom.', maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })} type="text" placeholder="Prénom" defaultValue="michel" />
                 {errors.first_name && <p className="errors">{errors.first_name.message}</p>}
               </div>
 
               {/* Name */}
               <div className="user-form__form__input-infos__name">
-                <input {...register('last_name', { required: 'Veuillez entrer votre nom.' })} type="text" placeholder="Nom" defaultValue="test" />
+                <input {...register('last_name', { required: 'Veuillez entrer votre nom.', maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })} type="text" placeholder="Nom" defaultValue="test" />
                 {errors.last_name && <p className="errors">{errors.last_name.message}</p>}
               </div>
 
@@ -57,7 +66,7 @@ const UserForm = () => {
 
               {/* Password */}
               <div className="user-form__form__input-infos__password">
-                <input {...register('password', { required: 'Veuillez entrer un mot de passe.' })} type="password" placeholder="Mot de passe" />
+                <input {...register('password', { required: 'Veuillez entrer un mot de passe.', maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })} type="password" placeholder="Mot de passe" />
                 {errors.password && <p className="errors">{errors.password.message}</p>}
               </div>
 
@@ -101,7 +110,17 @@ const UserForm = () => {
                 nous avons besoin de votre code postal.
               </p>
               <div className="user-form__form__input-infos__zipcode__input">
-                <input {...register('zip_code', { required: 'Veuillez entrer un code postal.', minLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' }, maxLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' } })} type="text" placeholder="Code postal" defaultValue="12345" />
+                <input
+                  {...register('zip_code', {
+                    required: 'Veuillez entrer un code postal.',
+                    minLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' },
+                    maxLength: { value: 5, message: 'Veuillez entrer un code postal à 5 chiffres.' },
+                    pattern: /^(?!00|96|99)\d{5}$/,
+                  })}
+                  type="text"
+                  placeholder="Code postal"
+                  defaultValue="12345"
+                />
                 {errors.zip_code && <p className="errors">{errors.zip_code.message}</p>}
                 {}
               </div>

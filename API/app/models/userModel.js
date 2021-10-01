@@ -55,8 +55,8 @@ class UserModel {
                 this.birthday,
             ]);
             //return le nouvelle id de l'insert
-            
-            return rows[0];
+            this.id = rows[0].id;
+            return this;
             }
         } catch (error) {
             if (error.detail) {
@@ -67,6 +67,33 @@ class UserModel {
         }
     }
 
+    static async dataUserConnexion (id) {
+        try {
+            const { rows } = await database.query('SELECT * FROM user_basic_information WHERE id = $1',[id]);
+            return rows[0];
+        } catch (error) {
+            if (error.detail) {
+                throw new Error(error.detail)
+            } else {
+                throw error;
+            }
+        }
+
+    }
+
+    static async fullProfile (idUser) {
+        try {
+            const { rows } = await database.query('SELECT * FROM full_profile WHERE member_id = $1',[idUser]);
+            return rows[0];
+            
+        } catch (error) {
+            if (error.detail) {
+                throw new Error(error.detail)
+            } else {
+                throw error;
+            }
+        }
+    }
 
 };
 module.exports = UserModel;

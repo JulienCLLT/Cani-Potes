@@ -5,20 +5,23 @@ import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
-  MapContainer, TileLayer, Marker,
+  MapContainer, TileLayer, Marker, Popup,
 } from 'react-leaflet';
 
 import L from 'leaflet';
 
 import calendar from '../../assets/img/info-ride/calendar.svg';
 import hourglass from '../../assets/img/info-ride/hourglass.svg';
-import mapPin from '../../assets/img/maps-and-flags.svg';
+import startFlag from '../../assets/img/info-ride/startPointFlag.svg';
+import endFlag from '../../assets/img/info-ride/endPointFlag.svg';
 import doubleArrow from '../../assets/img/info-ride/double_arrow.svg';
+import close from '../../assets/img/close.svg';
 
 import './RideDetails.scss';
 import {
-  addNewMessage, addUserToRide, deleteRide, getOneRideById, removeUserFromRide
+  addNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide,
 } from '../../actions/rides';
+import { kickUserFromRide } from '../../actions/users';
 
 const RideDetails = () => {
   const { id } = useParams();
@@ -26,27 +29,34 @@ const RideDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getRideIsLoading());
     dispatch(getOneRideById(id));
   }, []);
 
   const { user: userProfile } = useSelector((state) => state);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  
   const {
     ride_id, title, max_number_dogs, participants, starting_time, duration,
-    description, host_first_name, host_id, messages, start_coordinate, end_coordinate,
+    description, host_first_name, host_id, messages, start_coordinate, end_coordinate, isLoading,
   } = useSelector((state) => state.rides.currentRide);
-
+  
+  const userIsHost = userProfile.id === host_id;
+  
   let nbOfDogs = 0;
-
+  
   participants.map((participant) => nbOfDogs += participant.dogs.length);
-
+  
   const { register, handleSubmit, reset } = useForm();
-
+  
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
+  const [isDeleteRideModalOpen, setIsDeleteRideModalOpen] = useState(false);
+  const [isKickUserModalOpen, setIsKickUserModalOpen] = useState(false);
+  const [userKicked, setUserKicked] = useState(0);
 
   let joinInMsg = "S'inscrire";
+
+  if (userProfile.dogs.length === 0) joinInMsg = "Vous n'avez pas de chien !";
 
   if (nbOfDogs > max_number_dogs) {
     joinInMsg = 'Plus de place';
@@ -56,25 +66,32 @@ const RideDetails = () => {
   }
 
   const handleJoinIn = () => {
+    if (userProfile.dogs.length === 0) return;
     if (nbOfDogs < max_number_dogs) {
       if ((nbOfDogs + userProfile.dogs.length) < max_number_dogs) {
-        dispatch(addUserToRide(userProfile));
+        dispatch(addUserToRide(userProfile, ride_id));
       }
     }
   };
 
   const handleQuit = () => {
-    if (userProfile.id === host_id) {
-      setIsModalOpen(true);
+    if (userIsHost) {
+      setIsDeleteRideModalOpen(true);
     }
     else {
-      dispatch(removeUserFromRide(userProfile.id));
+      dispatch(removeUserFromRide(userProfile.id, id));
     }
   };
 
   const handleDelete = () => {
     dispatch(deleteRide(ride_id));
     setIsRedirect(true);
+  };
+
+  const handleKick = () => {
+    dispatch(kickUserFromRide(userKicked, id));
+    setIsKickUserModalOpen(false);
+    setUserKicked(0);
   };
 
   const onSubmit = ({ message }) => {
@@ -91,9 +108,16 @@ const RideDetails = () => {
     });
   };
 
-  const positionIcon = new L.Icon({
-    iconUrl: mapPin,
-    inconRetInaUrl: mapPin,
+  const positionStart = new L.Icon({
+    iconUrl: startFlag,
+    inconRetInaUrl: startFlag,
+    popupAnchor: [-0, -0],
+    iconSize: [22, 35],
+  });
+
+  const positionEnd = new L.Icon({
+    iconUrl: endFlag,
+    inconRetInaUrl: endFlag,
     popupAnchor: [-0, -0],
     iconSize: [22, 35],
   });
@@ -105,11 +129,21 @@ const RideDetails = () => {
       <section className="ride-details__infos">
         <div className="ride-details__infos__map">
           <div className="ride-details__leaflet">
-            <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={10} scrollWheelZoom={false}>
-              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <Marker position={start_coordinate} icon={positionIcon} />
-              <Marker position={end_coordinate} icon={positionIcon} />
-            </MapContainer>
+            {
+              isLoading ? (
+                <span>chargement ...</span>
+              ) : (
+                <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={16} scrollWheelZoom>
+                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                  <Marker position={start_coordinate} icon={positionStart}>
+                    <Popup>Départ</Popup>
+                  </Marker>
+                  <Marker position={end_coordinate} icon={positionEnd}>
+                    <Popup>Arrivée</Popup>
+                  </Marker>
+                </MapContainer>
+              )
+            }
           </div>
           <h2>{title}</h2>
           <span>
@@ -119,9 +153,7 @@ const RideDetails = () => {
         <div className="ride-details__infos__description">
           <p>
             <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
-            Départ le {new Date(starting_time).toLocaleDateString(undefined, {
-              weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric',
-            })}
+            Départ le {starting_time}
           </p>
           <p>
             <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
@@ -159,6 +191,17 @@ const RideDetails = () => {
             {
               participants.map((participant) => (
                 <div className="ride-details__current-user" key={participant.participant_id}>
+                  {userIsHost && participant.participant_id !== userProfile.id && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsKickUserModalOpen(true);
+                        setUserKicked(participant.participant_id);
+                      }}
+                    >
+                      <img src={close} alt="kick user" />
+                    </button>
+                  )}
                   <NavLink
                     className="ride-details__current-user__avatar"
                     to={`/profile/${participant.participant_id}`}
@@ -229,9 +272,7 @@ const RideDetails = () => {
                 >
                   <p>{msg.sender_first_name}
                     <span>
-                      {new Date(starting_time).toLocaleDateString(undefined, {
-                        hour: 'numeric', minute: 'numeric',
-                      })}
+                      {starting_time}
                     </span>
                   </p>
                   <span>{msg.message}</span>
@@ -256,7 +297,7 @@ const RideDetails = () => {
       )}
 
       {
-        isModalOpen && (
+        isDeleteRideModalOpen && (
           <div className="ride-details__modal">
             <p
               className="ride-details__modal__text"
@@ -277,7 +318,7 @@ const RideDetails = () => {
               <button
                 type="button"
                 className="ride-details__modal__back-btn"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setIsDeleteRideModalOpen(false)}
               >
                 Retour
               </button>
@@ -287,6 +328,46 @@ const RideDetails = () => {
                 onClick={() => handleDelete()}
               >
                 Supprimer
+              </button>
+            </div>
+          </div>
+        )
+      }
+
+      {
+        isKickUserModalOpen && (
+          <div className="ride-details__modal">
+            <p
+              className="ride-details__modal__text"
+            >
+              Voulez allez retirer {
+                participants.find(
+                  (participant) => participant.participant_id === userKicked,
+                ).participant_first_name
+              } de la balade ?
+            </p>
+            <p
+              className="ride-details__modal__text"
+            >
+              Continuer ?
+            </p>
+            <div className="ride-details__modal__btn-container">
+              <button
+                type="button"
+                className="ride-details__modal__back-btn"
+                onClick={() => {
+                  setIsKickUserModalOpen(false);
+                  setUserKicked(0);
+                }}
+              >
+                Retour
+              </button>
+              <button
+                type="button"
+                className="ride-details__modal__delete-btn"
+                onClick={() => handleKick()}
+              >
+                Retirer
               </button>
             </div>
           </div>
