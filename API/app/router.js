@@ -19,8 +19,8 @@ router.get('/', checkToken, function (req, res) {
 router.get('/characteristic', formController.getDogCharacteristic);
 
 router.post('/login', userController.login),
-
     router.post('/subscribe', userController.addNewUser);
+router.delete('/account/delete', userController.deleteAccount);
 
 router.get('/rides', rideController.findAll);
 
@@ -40,8 +40,8 @@ router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', checkToken
 //todo checktoken
 router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.getOneDog);
 
-router.get('/social/profile/:idUser',checkToken,userController.getProfile);
+router.get('/social/profile/:idUser', checkToken, userController.getProfile);
 
-router.patch('/account/edit',checkToken,userController.save);
+router.patch('/account/edit', checkToken, userController.save);
 
 module.exports = router;
