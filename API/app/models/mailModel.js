@@ -6,6 +6,8 @@ class Mail {
             this[prop] = data[prop];
         }
     }
+
+    
 };
 
 module.exports = Mail;
