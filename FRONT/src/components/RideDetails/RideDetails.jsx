@@ -19,7 +19,7 @@ import close from '../../assets/img/close.svg';
 
 import './RideDetails.scss';
 import {
-  addNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
+  sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
 } from '../../actions/rides';
 
 const RideDetails = () => {
@@ -94,8 +94,8 @@ const RideDetails = () => {
   };
 
   const onSubmit = ({ message }) => {
-    dispatch(addNewMessage(
-      message, userProfile.id, userProfile.photo, userProfile.first_name, userProfile.last_name,
+    dispatch(sendNewMessage(
+      userProfile.id, id, message,
     ));
 
     reset();

@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import { LOGOUT__USER } from '../actions/users';
 import {
-  ADD__USER__TO__RIDE, USER__QUIT__RIDE, ADD__NEW__MESSAGE,
+  ADD__USER__TO__RIDE, USER__QUIT__RIDE, ADD__MESSAGE__IN__STATE,
   DELETE__RIDE__IN__STATE, SAVE__ALL__RIDES, SAVE__ONE__RIDE, GET__RIDE__IS__LOADING,
   FAILED_TO_CREATE_RIDE, KICK__USER__FROM__RIDE,
 } from '../actions/rides';
@@ -106,7 +106,8 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           ],
         },
       };
-    case ADD__NEW__MESSAGE:
+    case ADD__MESSAGE__IN__STATE:
+      console.log(new Date().toISOString())
       return {
         ...state,
         currentRide: {
@@ -114,7 +115,7 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           messages: [
             ...state.currentRide.messages,
             {
-              sent: new Date().toISOString(),
+              sent: action.sent,
               message: action.message,
               sender_id: action.sender_id,
               sender_photo: action.sender_photo,
