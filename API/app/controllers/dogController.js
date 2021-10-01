@@ -30,8 +30,7 @@ const dogController = {
         try {
             const profileId = Number(request.params.profileId);
             const dogId = Number(request.params.dogId);
-            //todo change token / request.userId
-            const userId = 2;
+            const userId = request.userId;
 
             if (isNaN(profileId) || isNaN(dogId)) {
                 throw Error('La valeur de l\'id doit être un nombre');
