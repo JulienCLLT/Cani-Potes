@@ -48,6 +48,7 @@ const CreateRide = () => {
   const [endPoint, setEndPoint] = useState();
 
   const onSubmit = (data) => {
+    console.log(data);
     dispatch(createRide(data, startPoint, endPoint));
   };
 
@@ -139,14 +140,12 @@ const CreateRide = () => {
         <div className="create-ride__field">
           {/* Start hour */}
           <p>Heure de départ</p>
-          <label htmlFor="startHour" />
           <select {...register('startHour', { required: 'Veuillez sélectionner l\'heure de la balade.' })} defaultValue={17}>
             {
 							hours.map((hour) => <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}</option>)
 						}
           </select>
           {/* Start min */}
-          <label htmlFor="startMin" />
           <select {...register('startMin', { required: 'Veuillez sélectionner les minutes de l\'heure de la balade.' })} defaultValue={30}>
             {
 							minutes.map((minute) => <option key={minute} value={minute}>{minute.toString().padStart(2, '0')}</option>)
@@ -164,9 +163,25 @@ const CreateRide = () => {
           {errors.startHour && <span>{errors.startHour.message}</span>}
         </div>
 
+        {/* Duration */}
+        <div className="create-ride__field">
+          <label htmlFor="duration">Durée de la balade
+            <input
+              id="duration"
+              name="duration"
+              defaultValue={15}
+              type="number"
+              placeholder="Durée (min)"
+              {...register('duration', { maxLength: { value: 3, message: 'Veuillez ne pas dépassez 3 chiffres.' } })}
+            />
+            minutes.
+          </label>
+          {errors.duration && <span>{errors.duration.message}</span>}
+        </div>
+
         {/* Max dog */}
         <div className="create-ride__field">
-          <label htmlFor="maxDogs">Nombre maximum de chiens</label>
+          <label htmlFor="maxDogs">Nombre maximum de chiens.</label>
           <input
             id="maxDogs"
             name="maxDogs"
