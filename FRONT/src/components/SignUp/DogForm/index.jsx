@@ -12,14 +12,9 @@ import { dogSignUp, getDogBreedsAndBehaviors } from '../../../actions/signup';
 import './dog-form.scss';
 
 const DogForm = () => {
-  const formStep = useSelector((state) => state.signup.formStep);
-  const breeds = useSelector((state) => state.signup.breeds);
-  const behaviors = useSelector((state) => state.signup.behaviors);
-  // if error with db
-  const failedToSignup = useSelector((state) => state.signup.failedToSignup);
-  const errorMessage = useSelector((state) => state.signup.errorMessage);
-  // console.log(failedToSignup);
-  // console.log(errorMessage);
+  const {
+    formStep, breeds, behaviors, failedToSignup, errorMessage,
+  } = useSelector((state) => state.signup);
 
   const dispatch = useDispatch();
 
@@ -33,18 +28,10 @@ const DogForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(dogSignUp(data));
   };
-  const date = new Date();
 
-  // upload file
-  // const uploadFile = ({ target: { files } }) => {
-  //   console.log([0]);
-  //   const data = new FormData();
-  //   data.append('file', files[0]);
-  //   console.log('formdata : ', data);
-  // };
+  const date = new Date();
 
   return (
     <div className={formStep === 2 ? 'signup dog' : 'hidden'}>

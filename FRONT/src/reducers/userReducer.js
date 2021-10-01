@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 import { LOGOUT__USER, FAILED__TO__CONNECT, CONNECT__USER } from '../actions/users';
+import { ADD_DOG_TO_USER } from './../actions/signup';
 
 const userInitialState = {
   id: 1,
@@ -40,6 +41,16 @@ const userReducer = (state = userInitialState, action = {}) => {
       return {
         ...state,
         failedToConnect: true,
+      };
+    case ADD_DOG_TO_USER:
+      return {
+        ...state,
+        dogs: [
+          ...state.dogs,
+          {
+            ...action.dog,
+          },
+        ],
       };
     case LOGOUT__USER:
       return {

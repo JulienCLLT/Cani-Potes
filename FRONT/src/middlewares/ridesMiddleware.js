@@ -5,7 +5,6 @@ import axios from 'axios';
 import {
   GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE, CREATE_RIDE, USER__QUIT__RIDE,
   saveAllRides, saveOneRide, deleteRideInState, failedToCreateRide,
-
 } from '../actions/rides';
 
 const ridesMiddleware = (store) => (next) => (action) => {
@@ -47,7 +46,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .post(`/ride/${action.rideId}/participation`)
         .then((response) => {
-          console.log(response);
+          console.log('You join this ride : ', response);
           next(action);
         })
         .catch((error) => {

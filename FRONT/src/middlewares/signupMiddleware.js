@@ -2,7 +2,7 @@
 import axios from 'axios';
 import {
   USER_SIGNUP, DOG_SIGN_UP, GET_DOG_BREEDS_AND_BEHAVIORS,
-  saveDogBreedsAndBehaviors, failedToSignup, nextSignupFormStep,
+  saveDogBreedsAndBehaviors, failedToSignup, nextSignupFormStep, addDogToUser,
 } from '../actions/signup';
 
 import { connectUser } from '../actions/users';
@@ -60,17 +60,6 @@ const signupMiddleware = (store) => (next) => (action) => {
       formData.append('behavior', behavior);
       formData.append('dog_owner_id', dog_owner_id);
 
-      // axiosInstance.post('/profile/:id.profile/dogs', {
-      //   surname,
-      //   breed_id: breed,
-      //   weight,
-      //   gender_id: Number(sexe),
-      //   birthday,
-      //   sterilization: Boolean(sterilization),
-      //   behavior_id: Number(behavior),
-      //   photo,
-      //   dog_owner_id, //  manque le json
-      // })
       axios({
         method: 'POST',
         url: `/profile/${store.getState().user.id}/dogs`,
@@ -79,7 +68,9 @@ const signupMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log(response.data);
-          store.dispatch(connectUser(response.data.authozization));
+          // todo when route back is done
+          // todo  add the new dog in state.user.dogs
+          store.dispatch(addDogToUser(response.data));
           store.dispatch(nextSignupFormStep());
           next(action);
         }).catch((error) => {
