@@ -14,7 +14,6 @@ import RideDetails from '../RideDetails/RideDetails';
 import DashBoard from '../DashBoard/DashBoard';
 import SearchBar from '../SignUp/SearchBar';
 
-
 // import './App.scss';
 
 import '../../styles/reset.scss';
@@ -53,7 +52,7 @@ function App() {
           </main>
         </Route>
         <Route exact path="/ride/create">
-          {!isLogged && <Redirect to="/" />}
+          {/* {!isLogged && <Redirect to="/" />} */}
           <Header title="Créer une balade" />
           <main>
             <CreateRide />
