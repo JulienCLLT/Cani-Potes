@@ -27,12 +27,28 @@ const dogController = {
 
     delete: async (request, response) => {
         try {
-            // delete toute l'entrée du chien dogId
-            // verif profileId = userId
-            // find dogId si existe
-            // si oui, verif host_id = userId
-            // si ok : delete ligne
-            // res status ? 
+            const profileId = Number(request.params.profileId);
+            const dogId = Number(request.params.dogId);
+            //todo change token / request.userId
+            const userId = 1;
+
+            if (isNaN(profileId) || isNaN(dogId)) {
+                throw Error('La valeur de l\'id doit être un nombre');
+            }
+            if (profileId !== userId) {
+                throw Error('Vous ne pouvez pas accéder à cette demande');
+            }
+
+            const dogToDelete = await Dog.findById(dogId);
+            if (!dogToDelete) {
+                throw Error('Ce chien n\'existe pas');
+            }
+            if (dogToDelete.owner_id !== userId) {
+                throw Error('Vous n\'êtes pas le propriétaire du chien');
+            }
+
+            await Dog.delete(dogId);
+            response.status(204);
 
         } catch (error) {
             response.status(500).json(error.message);
