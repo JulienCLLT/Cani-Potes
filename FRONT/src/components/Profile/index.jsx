@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getOneUserById, getProfileIsLoading, updateUser } from '../../actions/users';
-import { getDogBreedsAndBehaviors } from '../../actions/signup';
+import { formstepShowsDogform, getDogBreedsAndBehaviors } from '../../actions/signup';
 
 import DogForm from '../SignUp/DogForm/index';
 
@@ -23,10 +23,11 @@ const Profile = () => {
 
   useEffect(() => {
     // wait for db to send profile before uncomment here
+    dispatch(formstepShowsDogform());
     dispatch(getProfileIsLoading());
     dispatch(getDogBreedsAndBehaviors());
     dispatch(getOneUserById(id));
-  }, []);
+  }, [id]);
 
   // manage to edit user
   const [isEditingUser, setisEditingUser] = useState(false);
@@ -567,18 +568,23 @@ const Profile = () => {
         </div>
       )}
 
-      <button
-        className="profile-page__btn-dogform"
-        type="button"
-        onClick={() => setIsDogFormOpen((old) => !old)}
-      >
-        Ajouter un chien<span className={isDogFormOpen ? 'close' : 'open'}><img src={dblArrow} alt="arrow" /></span>
-      </button>
-      <div
-        className={isDogFormOpen ? 'profile-page__dogform-open' : 'profile-page__dogform-close'}
-      >
-        <DogForm />
-      </div>
+      {/* je ne veux afficher cette partie que SI l'id du profile === l'id du user */}
+      {profileIsUser && (
+        <>
+          <button
+            className="profile-page__btn-dogform"
+            type="button"
+            onClick={() => setIsDogFormOpen((old) => !old)}
+          >
+            Ajouter un chien<span className={isDogFormOpen ? 'close' : 'open'}><img src={dblArrow} alt="arrow" /></span>
+          </button>
+          <div
+            className={isDogFormOpen ? 'profile-page__dogform-open' : 'profile-page__dogform-close'}
+          >
+            <DogForm />
+          </div>
+        </>
+      )}
 
     </div>
   );
