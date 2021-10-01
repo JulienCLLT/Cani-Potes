@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { deleteRide, removeUserFromRide } from '../../actions/rides';
 
 import './dashBoard.scss';
@@ -17,24 +17,24 @@ const DashBoard = () => {
           <img src={profile.photo} alt={profile.first_name} />
         </div>
         <span>{profile.first_name} {profile.last_name}</span>
-        <NavLink
+        <Link
           className="create-ride__btn"
           to="/ride/create"
           exact
         >
           Créer une balade
-        </NavLink>
+        </Link>
       </header>
       <div className="dashboard-info__host">
         <h2>Je suis l'organisateur d'une ballade</h2>
         <p>Quelles infos mettre ici ?</p>
-        <NavLink
-          className="ride-nav"
+        <Link
+          className="ride-"
           to="/ride/:id"
           exact
         >
           Voir la balade
-        </NavLink>
+        </Link>
         <button
           className="delete-btn"
           type="button"
@@ -46,13 +46,13 @@ const DashBoard = () => {
       <div className="dashboard-info__participant">
         <h2>Je participe à une ballade</h2>
         <p>Quelles infos mettre ici ?</p>
-        <NavLink
-          className="ride-nav"
+        <Link
+          className="ride-"
           to="/ride/:id"
           exact
         >
           Voir la balade
-        </NavLink>
+        </Link>
         <button
           className="remove-btn"
           type="button"
