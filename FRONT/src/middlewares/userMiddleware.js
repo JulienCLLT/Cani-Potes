@@ -16,12 +16,15 @@ const userMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .get(`/social/profile/${action.id}`)
         .then((response) => {
-          console.warn(response)
+          console.log('User send by db : ', response);
           const { data: profile } = response;
           if (profile.dogs === null) {
             profile.dogs = [];
           }
-          store.dispatch(saveProfileInState(profile));
+
+          const userId = store.getState().user.id;
+
+          store.dispatch(saveProfileInState(profile, userId));
         })
         .catch((error) => {
           console.error("Can't get profile : ", error.response.data);

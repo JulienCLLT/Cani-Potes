@@ -41,7 +41,10 @@ router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', checkToken
 //todo checktoken
 router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.getOneDog);
 
-router.get('/social/profile/:idUser',checkToken,userController.getProfile);
+router.get('/social/profile/:idUser', checkToken, userController.getProfile);
+
+//todo checktoken
+router.delete('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', dogController.delete);
 
 router.patch('/account/edit',checkToken,userController.save);
 

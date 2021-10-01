@@ -38,3 +38,8 @@ export const failedToSignup = (errorMessage) => ({
   type: FAILED_TO_SIGNUP,
   errorMessage,
 });
+
+export const FORMSTEP_SHOWS_DOGFORM = 'FORMSTEP_SHOWS_DOGFORM';
+export const formstepShowsDogform = () => ({
+  type: FORMSTEP_SHOWS_DOGFORM,
+});
