@@ -34,10 +34,14 @@ const rideController = {
     create: async (request, response) => {
         try {
             //todo when token added on this route
-            //const userId = request.userId;
-            const userId = 1;
+            const userId = request.userId;
 
             const newRide = new Ride(request.body);
+            if (newRide.duration) {
+                newRide.duration += ' minutes';
+            } else {
+                newRide.duration = null;
+            }
             const rideCreated = await newRide.createRide();
             response.status(201).json(rideCreated);
         } catch (error) {
