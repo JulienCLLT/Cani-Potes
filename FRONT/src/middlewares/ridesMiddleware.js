@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 import {
-  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE, CREATE_RIDE, USER__QUIT__RIDE,
+  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE, CREATE_RIDE, USER__QUIT__RIDE, KICK__USER__FROM__RIDE,
   saveAllRides, saveOneRide, deleteRideInState, failedToCreateRide,
 } from '../actions/rides';
 
@@ -110,6 +110,17 @@ const ridesMiddleware = (store) => (next) => (action) => {
           },
         );
     }
+      break;
+    case KICK__USER__FROM__RIDE:
+      axiosInstance
+        .delete(`/ride/${action.rideId}/participation/user/${action.userId}`)
+        .then((response) => {
+          console.log('User kicked from ride : ', response);
+          next(action);
+        })
+        .catch((error) => {
+          console.error("Can't kick the user : ", error.response.data);
+        });
       break;
     default:
       next(action);
