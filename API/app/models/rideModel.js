@@ -91,6 +91,17 @@ class Ride {
         }
     }
 
+    static async deleteParticipationsOfOneMember(memberId) {
+        try {
+            const query = `DELETE FROM member_participate_ride WHERE member_id = $1`;
+            await client.query(query, [memberId]);
+            return null;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
     static async postMemberParticipateRide(memberId, rideId) {
         try {
             const query = `INSERT INTO member_participate_ride(member_id, ride_id) VALUES ($1,$2)`;
