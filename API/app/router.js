@@ -1,27 +1,31 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const router = Router();
 const userController = require('./controllers/userController');
-const checkToken  = require('./middlewares/checkJwt');
+const checkToken = require('./middlewares/checkJwt');
 const rideController = require('./controllers/rideController');
 const dogController = require('./controllers/dogController');
 const formController = require('./controllers/formController');
 
-const multer  = require('multer');
+const multer = require('multer');
 const storage = multer.diskStorage({
-    destination: (request, file, cb)=>{}
+    destination: (request, file, cb) => { }
 })
 const upload = multer({ storage: storage });
 
 router.get('/', checkToken, function (req, res) {
-    res.send('GET request to the homepage token ok '+ req.userId)});
+    res.send('GET request to the homepage token ok ' + req.userId)
+});
 
 router.get('/characteristic', formController.getDogCharacteristic);
 
-router.post('/login',userController.login),
+router.post('/login', userController.login),
 
-router.post('/subscribe',userController.addNewUser);
+    router.post('/subscribe', userController.addNewUser);
 
 router.get('/rides', rideController.findAll);
+
+//todo checktoken
+router.post('/ride', rideController.create);
 
 router.delete('/ride/:rideId(\\d+)', checkToken, rideController.delete);
 //todo quand front ok, rajout checkToken
