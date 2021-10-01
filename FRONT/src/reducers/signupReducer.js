@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
-import { NEXT_SIGNUP_FORM_STEP, SAVE_DOG_BREEDS_AND_BEHAVIORS, FAILED_TO_SIGNUP } from '../actions/signup';
+import { NEXT_SIGNUP_FORM_STEP, SAVE_DOG_BREEDS_AND_BEHAVIORS, FAILED_TO_SIGNUP, FORMSTEP_SHOWS_DOGFORM } from '../actions/signup';
+import { LOGOUT__USER } from '../actions/users';
 
 const initialState = {
 
@@ -8,7 +9,7 @@ const initialState = {
   breeds: [],
 
   // for continue and previous button
-  formStep: 2,
+  formStep: 1,
 
   // to display db errors when submit form
   failedToSignup: false,
@@ -38,6 +39,15 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         failedToSignup: true,
         errorMessage: action.errorMessage,
+      };
+    case FORMSTEP_SHOWS_DOGFORM:
+      return {
+        ...state,
+        formStep: 2,
+      };
+    case LOGOUT__USER:
+      return {
+        ...initialState,
       };
     default:
       return state;

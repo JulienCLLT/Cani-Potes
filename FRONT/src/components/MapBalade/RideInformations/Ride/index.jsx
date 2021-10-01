@@ -14,7 +14,7 @@ import './ride.scss';
 const Ride = ({ ride_id, starting_time, duration, start_coordinate, end_coordinate }) => (
   <div className="ride">
     <p className="ride__detail"><img src={calendar} alt="calendar" />{starting_time}</p>
-    <p className="ride__detail"><img className="icon" src={clock} alt="clock" />{duration.minutes} minutes - 1km</p>
+    <p className="ride__detail"><img className="icon" src={clock} alt="clock" />{duration.minutes ? `${duration.minutes} minutes` : 'Durée non précisée'}</p>
     <p className="ride__detail"><img className="icon" src={starting} alt="starting" />Départ : {start_coordinate}</p>
     <p className="ride__detail"><img className="icon" src={end} alt="arrival" />Arrivée : {end_coordinate}</p>
     <NavLink exact to={`/ride/${ride_id}`}>

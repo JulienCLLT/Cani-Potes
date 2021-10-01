@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
-import { GET__PROFILE__IS__LOADING, SAVE__PROFILE__IN__STATE } from '../actions/users';
+import { GET__PROFILE__IS__LOADING, SAVE__PROFILE__IN__STATE, LOGOUT__USER } from '../actions/users';
 
 const profileInitialState = {
-  membre_id: 0,
+  member_id: 0,
   first_name: '',
   last_name: '',
   photo: '',
@@ -10,6 +10,7 @@ const profileInitialState = {
   dogs: [],
   birthday: '',
   isLoading: false,
+  profileIsUser: false,
 };
 
 const profileReducer = (state = profileInitialState, action = {}) => {
@@ -24,6 +25,11 @@ const profileReducer = (state = profileInitialState, action = {}) => {
         ...state,
         ...action.profile,
         isLoading: false,
+        profileIsUser: action.member_id === action.userId,
+      };
+    case LOGOUT__USER:
+      return {
+        ...profileInitialState,
       };
     default:
       return state;

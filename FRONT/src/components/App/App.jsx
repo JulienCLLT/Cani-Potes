@@ -52,7 +52,7 @@ function App() {
           </main>
         </Route>
         <Route exact path="/ride/create">
-          {/* {!isLogged && <Redirect to="/" />} */}
+          {!isLogged && <Redirect to="/" />}
           <Header title="Créer une balade" />
           <main>
             <CreateRide />
