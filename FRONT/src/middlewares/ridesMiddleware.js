@@ -83,19 +83,15 @@ const ridesMiddleware = (store) => (next) => (action) => {
       } = action.newRide;
       axiosInstance
         .post('/ride', {
-          title,
-          date,
-          startHour,
-          startMin,
-          description,
-          duration,
-
-          start_coordinate: action.startPoint,
-          end_coordinate: action.endPoint,
+          title, //
+          description, //
+          duration, //
+          start_coordinate: action.startPoint, //
+          end_coordinate: action.endPoint, //
           starting_time: `${date} ${startHour}:${startMin}:00+02`, // 2021-10-03 19:37:25.631205+02
-          max_number_dogs: maxDogs,
+          max_number_dogs: maxDogs, //
           tag_id: 1, // to modify
-          host_id: store.getState().user.id,
+          host_id: store.getState().user.id, //
         })
         .then(
           (response) => {
