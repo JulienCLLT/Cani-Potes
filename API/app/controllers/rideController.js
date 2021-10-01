@@ -33,9 +33,13 @@ const rideController = {
 
     create: async (request, response) => {
         try {
-            // recup idUser en cours
-            // model: create avec instance new Ride a pousser
-            // response balade
+            //todo when token added on this route
+            //const userId = request.userId;
+            const userId = 1;
+
+            const newRide = new Ride(request.body);
+            const rideCreated = await newRide.createRide();
+            response.status(201).json(rideCreated);
         } catch (error) {
             response.status(500).json(error.message);
         }
@@ -44,7 +48,6 @@ const rideController = {
     delete: async (request, response) => {
         try {
             const rideId = Number(request.params.rideId);
-            // todo  fausse data en attendant test avec jwt
             const userId = request.userId;
 
             if (isNaN(rideId)) {
