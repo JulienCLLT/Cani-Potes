@@ -44,7 +44,7 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log("User updated : ", response.data);
           next(action);
         })
-        .catch((error) => console.error('Cannot update user : ', error.response.message))
+        .catch((error) => console.error('Cannot update user : ', error.response.message));
       break;
     }
     default:
