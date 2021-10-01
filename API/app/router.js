@@ -42,4 +42,6 @@ router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogControl
 
 router.get('/social/profile/:idUser',checkToken,userController.getProfile);
 
+router.patch('/account/edit',checkToken,userController.save);
+
 module.exports = router;

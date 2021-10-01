@@ -71,7 +71,22 @@ const userController = {
         } catch (error) {
             response.status(500).json(error.message);
         }
+    },
+
+    save : async (request, response)=>{
+        try {
+            const idPayload = request.userId; //normalement on recupe id de l'user dans le payload
+            
+            request.body.id = idPayload;
+            const user = new UserModel(request.body);
+            await user.save(user);
+            response.status(204).json('Update done');
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
     }
 };
+
+
 
 module.exports = userController;
