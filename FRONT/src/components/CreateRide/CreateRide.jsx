@@ -46,7 +46,6 @@ const CreateRide = () => {
   const [switchPoint, setSwitchPoint] = useState('start');
   const [startPoint, setStartPoint] = useState(user.position);
   const [endPoint, setEndPoint] = useState();
-  console.log(endPoint);
 
   const onSubmit = (data) => {
     console.log(data);
