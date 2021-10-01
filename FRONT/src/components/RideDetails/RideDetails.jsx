@@ -15,11 +15,13 @@ import hourglass from '../../assets/img/info-ride/hourglass.svg';
 import startFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endFlag from '../../assets/img/info-ride/endPointFlag.svg';
 import doubleArrow from '../../assets/img/info-ride/double_arrow.svg';
+import close from '../../assets/img/close.svg';
 
 import './RideDetails.scss';
 import {
   addNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide,
 } from '../../actions/rides';
+import { kickUserFromRide } from '../../actions/users';
 
 const RideDetails = () => {
   const { id } = useParams();
@@ -32,21 +34,25 @@ const RideDetails = () => {
   }, []);
 
   const { user: userProfile } = useSelector((state) => state);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  
   const {
     ride_id, title, max_number_dogs, participants, starting_time, duration,
     description, host_first_name, host_id, messages, start_coordinate, end_coordinate, isLoading,
   } = useSelector((state) => state.rides.currentRide);
-
+  
+  const userIsHost = userProfile.id === host_id;
+  
   let nbOfDogs = 0;
-
+  
   participants.map((participant) => nbOfDogs += participant.dogs.length);
-
+  
   const { register, handleSubmit, reset } = useForm();
-
+  
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
+  const [isDeleteRideModalOpen, setIsDeleteRideModalOpen] = useState(false);
+  const [isKickUserModalOpen, setIsKickUserModalOpen] = useState(false);
+  const [userKicked, setUserKicked] = useState(0);
 
   let joinInMsg = "S'inscrire";
 
@@ -69,8 +75,8 @@ const RideDetails = () => {
   };
 
   const handleQuit = () => {
-    if (userProfile.id === host_id) {
-      setIsModalOpen(true);
+    if (userIsHost) {
+      setIsDeleteRideModalOpen(true);
     }
     else {
       dispatch(removeUserFromRide(userProfile.id, id));
@@ -80,6 +86,12 @@ const RideDetails = () => {
   const handleDelete = () => {
     dispatch(deleteRide(ride_id));
     setIsRedirect(true);
+  };
+
+  const handleKick = () => {
+    dispatch(kickUserFromRide(userKicked, id));
+    setIsKickUserModalOpen(false);
+    setUserKicked(0);
   };
 
   const onSubmit = ({ message }) => {
@@ -179,6 +191,17 @@ const RideDetails = () => {
             {
               participants.map((participant) => (
                 <div className="ride-details__current-user" key={participant.participant_id}>
+                  {userIsHost && participant.participant_id !== userProfile.id && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsKickUserModalOpen(true);
+                        setUserKicked(participant.participant_id);
+                      }}
+                    >
+                      <img src={close} alt="kick user" />
+                    </button>
+                  )}
                   <NavLink
                     className="ride-details__current-user__avatar"
                     to={`/profile/${participant.participant_id}`}
@@ -274,7 +297,7 @@ const RideDetails = () => {
       )}
 
       {
-        isModalOpen && (
+        isDeleteRideModalOpen && (
           <div className="ride-details__modal">
             <p
               className="ride-details__modal__text"
@@ -295,7 +318,7 @@ const RideDetails = () => {
               <button
                 type="button"
                 className="ride-details__modal__back-btn"
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setIsDeleteRideModalOpen(false)}
               >
                 Retour
               </button>
@@ -305,6 +328,46 @@ const RideDetails = () => {
                 onClick={() => handleDelete()}
               >
                 Supprimer
+              </button>
+            </div>
+          </div>
+        )
+      }
+
+      {
+        isKickUserModalOpen && (
+          <div className="ride-details__modal">
+            <p
+              className="ride-details__modal__text"
+            >
+              Voulez allez retirer {
+                participants.find(
+                  (participant) => participant.participant_id === userKicked,
+                ).participant_first_name
+              } de la balade ?
+            </p>
+            <p
+              className="ride-details__modal__text"
+            >
+              Continuer ?
+            </p>
+            <div className="ride-details__modal__btn-container">
+              <button
+                type="button"
+                className="ride-details__modal__back-btn"
+                onClick={() => {
+                  setIsKickUserModalOpen(false);
+                  setUserKicked(0);
+                }}
+              >
+                Retour
+              </button>
+              <button
+                type="button"
+                className="ride-details__modal__delete-btn"
+                onClick={() => handleKick()}
+              >
+                Retirer
               </button>
             </div>
           </div>

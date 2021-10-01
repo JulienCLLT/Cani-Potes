@@ -41,7 +41,7 @@ const userMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .patch('/account/edit')
         .then((response) => {
-          console.log("User updated : ", response.data);
+          console.log('User updated : ', response.data);
           next(action);
         })
         .catch((error) => console.error('Cannot update user : ', error.response.message));

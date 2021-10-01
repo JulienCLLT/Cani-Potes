@@ -85,3 +85,10 @@ export const failedToCreateRide = (errorMessage) => ({
   type: FAILED_TO_CREATE_RIDE,
   errorMessage,
 });
+
+export const KICK__USER__FROM__RIDE = 'KICK__USER__FROM__RIDE';
+export const kickUserFromRide = (userId, rideId) => ({
+  type: KICK__USER__FROM__RIDE,
+  userId,
+  rideId,
+});

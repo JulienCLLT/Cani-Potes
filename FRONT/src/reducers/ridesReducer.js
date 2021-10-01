@@ -2,7 +2,7 @@
 import {
   ADD__USER__TO__RIDE, USER__QUIT__RIDE, ADD__NEW__MESSAGE,
   DELETE__RIDE__IN__STATE, SAVE__ALL__RIDES, SAVE__ONE__RIDE, GET__RIDE__IS__LOADING,
-  FAILED_TO_CREATE_RIDE,
+  FAILED_TO_CREATE_RIDE, KICK__USER__FROM__RIDE,
 } from '../actions/rides';
 
 const ridesInitialState = {
@@ -137,6 +137,11 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           participant.dogs = [];
         }
       });
+      if (action.ride.duration === null) {
+        action.ride.duration = {
+          minutes: 'inconnue',
+        };
+      }
       if (action.ride.messages === null) {
         return {
           ...state,
@@ -168,6 +173,16 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
         ...state,
         failedToCreateRide: true,
         errorMessage: action.errorMessage,
+      };
+    case KICK__USER__FROM__RIDE:
+      return {
+        ...state,
+        currentRide: {
+          ...state.currentRide,
+          participants: state.currentRide.participants.map(
+            (participant) => participant.participant_id !== action.rideId,
+          ),
+        },
       };
     default:
       return state;
