@@ -113,10 +113,10 @@ class Ride {
             const { rows } = await client.query(query, [
                 this.title,
                 this.description,
-                this.start_coordinate, //array? 
-                this.end_coordinate, // arra
-                this.starting_time, // timestampTZ
-                this.duration, // with minut
+                this.start_coordinate,
+                this.end_coordinate,
+                this.starting_time,
+                this.duration,
                 Number(this.max_number_dogs),
                 Number(this.tag_id),
                 Number(this.host_id),
