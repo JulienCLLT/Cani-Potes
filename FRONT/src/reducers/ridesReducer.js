@@ -167,7 +167,6 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           isLoading: true,
         },
       };
-
     case FAILED_TO_CREATE_RIDE:
       return {
         ...state,

@@ -19,9 +19,8 @@ import close from '../../assets/img/close.svg';
 
 import './RideDetails.scss';
 import {
-  addNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide,
+  addNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
 } from '../../actions/rides';
-import { kickUserFromRide } from '../../actions/users';
 
 const RideDetails = () => {
   const { id } = useParams();
@@ -34,20 +33,20 @@ const RideDetails = () => {
   }, []);
 
   const { user: userProfile } = useSelector((state) => state);
-  
+
   const {
     ride_id, title, max_number_dogs, participants, starting_time, duration,
     description, host_first_name, host_id, messages, start_coordinate, end_coordinate, isLoading,
   } = useSelector((state) => state.rides.currentRide);
-  
+
   const userIsHost = userProfile.id === host_id;
-  
+
   let nbOfDogs = 0;
-  
+
   participants.map((participant) => nbOfDogs += participant.dogs.length);
-  
+
   const { register, handleSubmit, reset } = useForm();
-  
+
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
   const [isDeleteRideModalOpen, setIsDeleteRideModalOpen] = useState(false);
