@@ -42,6 +42,7 @@ const dogController = {
                 throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
             }
 
+            request.body.dog_owner_id = userId;
 
             const newDog = new Dog(request.body);
             const dogCreated = await newDog.create();
