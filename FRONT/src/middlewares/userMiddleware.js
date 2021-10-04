@@ -34,13 +34,13 @@ const userMiddleware = (store) => (next) => (action) => {
         });
       break;
     case UPDATE__DOG: {
-      console.log(action)
       const {
         surname, behavior, breed, gender, weight, age, sterilization, description, photoDog,
       } = action.updatedDog;
 
       const formData = new FormData();
-      console.log(photoDog)
+      // check it when route will be ok
+      console.log(photoDog);
 
       formData.append('surname', surname);
       formData.append('breed_id', breed);
