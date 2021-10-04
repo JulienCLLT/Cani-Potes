@@ -8,6 +8,8 @@ import {
   MapContainer, TileLayer, Marker, useMapEvents,
 } from 'react-leaflet';
 import L from 'leaflet';
+import EsriLeafletGeoSearch from 'react-esri-leaflet/plugins/EsriLeafletGeoSearch';
+
 import { createRide } from '../../actions/rides';
 
 import './createRide.scss';
@@ -16,6 +18,7 @@ import startPointFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endPointFlag from '../../assets/img/info-ride/endPointFlag.svg';
 
 const CreateRide = () => {
+  const apikey = 'AAPKbde72a12e3ff4574b3edd95295b1d13d5-bGBIhj88MhjknVOZZpLcC1yEkpv4yu2Bx8MRWji_av4Hj2aqwc1AsUJ2UyTK3Q';
   const { failedToCreateRide, errorMessage } = useSelector((state) => state.rides);
   const { user } = useSelector((state) => state);
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -69,6 +72,18 @@ const CreateRide = () => {
     );
   };
 
+  // Reverse geocoding
+  const geocodeService = L.esri.Geocoding.geocodeService({
+    apikey,
+  });
+  geocodeService.reverse('51.484463,-0.195405', { // longitude,latitude
+    maxLocations: 10,
+    distance: 100,
+  }).then((result) => {
+    console.log(result);
+  });
+  console.log(L);
+
   return (
     <main className="create-ride">
       <h2>Création d'une balade</h2>
@@ -120,6 +135,24 @@ const CreateRide = () => {
               />
             )}
             <LocationMarker />
+            <EsriLeafletGeoSearch
+              position="topleft"
+              useMapBounds={false}
+              placeholder="Chercher une adresse ou un endroit"
+              providers={{
+				  arcgisOnlineProvider: {
+				    apikey,
+				  },
+              }}
+              eventHandlers={{
+				  requeststart: () => console.log('Started request...'),
+				  requestend: () => console.log('Ended request...'),
+				  results: (results) => {
+                  console.log([results.latlng.lat, results.latlng.lng]);
+                },
+              }}
+              key={apikey}
+            />
           </MapContainer>
         </div>
 
