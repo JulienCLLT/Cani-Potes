@@ -43,6 +43,19 @@ class Ride {
         }
     }
 
+    static async findRidesHostedBy(userId) {
+        try {
+            const query = `SELECT * FROM ride WHERE ride.host_id = $1`;
+            const { rows } = await client.query(query, [userId]);
+            if (rows[0]) {
+                return new Ride(rows[0]);
+            }
+            return null;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
     static async findRidesByMember(userId) {
         try {
             //todo facto
@@ -72,11 +85,23 @@ class Ride {
         }
     }
 
+    //todo autre Model ? 
     static async deleteMessagesByRideId(rideId) {
         try {
             const query = `DELETE FROM member_write_ride WHERE ride_id = $1`;
             await client.query(query, [rideId]);
             // return qq chose ? 
+            return null;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
+    static async deleteMessagesFromMember(memberId) {
+        try {
+            const query = `DELETE FROM member_write_ride WHERE member_id = $1`;
+            await client.query(query, [memberId]);
             return null;
         } catch (error) {
             console.error(error);
@@ -113,6 +138,28 @@ class Ride {
             const query = `DELETE FROM member_participate_ride WHERE ride_id = $1 AND member_id = $2`;
             await client.query(query, [rideId, memberId]);
             // return qq chose ? 
+            return null;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
+    static async deleteParticipationsOfOneMember(memberId) {
+        try {
+            const query = `DELETE FROM member_participate_ride WHERE member_id = $1`;
+            await client.query(query, [memberId]);
+            return null;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
+    static async deleteAllRidesCreatedBy(userId) {
+        try {
+            const query = `DELETE FROM ride WHERE host_id = $1`;
+            await client.query(query, [userId]);
             return null;
         } catch (error) {
             console.error(error);

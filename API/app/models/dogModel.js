@@ -21,6 +21,16 @@ class Dog {
         }
     }
 
+    static async findDogFromMember(userId) {
+        try {
+            const query = `SELECT id FROM dog WHERE dog_owner_id = $1`;
+            const { rows } = await client.query(query, [userId]);
+            return rows.map(row => new Dog(row));
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
 
     async create() {
         try {

@@ -17,8 +17,8 @@ router.get('/', checkToken, function (req, res) {
 router.get('/characteristic', formController.getDogCharacteristic);
 
 router.post('/login', userController.login),
-
     router.post('/subscribe', userController.addNewUser);
+router.delete('/account/delete', userController.deleteAccount);
 
 router.get('/rides', rideController.findAll);
 
@@ -27,28 +27,24 @@ router.post('/ride', rideController.create);
 router.get('/ride', rideController.getRidesByMember);
 
 router.delete('/ride/:rideId(\\d+)', checkToken, rideController.delete);
-//todo quand front ok, rajout checkToken
-router.get('/ride/:rideId(\\d+)', rideController.findOneRideWithAllInformations);
+router.get('/ride/:rideId(\\d+)', checkToken, rideController.findOneRideWithAllInformations);
 
 router.delete('/ride/:rideId(\\d+)/participation', checkToken, rideController.leaveARide);
-
 router.post('/ride/:rideId(\\d+)/participation', checkToken, rideController.addNewParticipant);
-
 router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', checkToken, rideController.removeUserFromRide);
 
-//todo checktoken
 router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.getOneDog);
-
-router.post('/profile/:profileId(\\d+)/dogs/', multer, dogController.createDog);
+router.post('/profile/:profileId(\\d+)/dogs/', checkToken, multer, dogController.createDog);
+router.delete('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.delete);
 
 router.get('/social/profile/:idUser', checkToken, userController.getProfile);
-
-//todo checktoken
-router.delete('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', dogController.delete);
+router.post('/social/message/ride/:idRide', checkToken, mailController.sendMailToRide);
 
 router.patch('/account/edit', checkToken, userController.save);
 
-router.post('/social/message/ride/:idRide',checkToken, mailController.sendMailToRide);
+
+
+
 
 
 module.exports = router;

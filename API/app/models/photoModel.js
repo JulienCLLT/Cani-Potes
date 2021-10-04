@@ -1,4 +1,5 @@
 const client = require("./../database");
+const fs = require('fs');
 
 class Photo {
     constructor(data = {}) {
@@ -26,8 +27,11 @@ class Photo {
 
     static async deletePhotos(dogId) {
         try {
-            const query = `DELETE FROM photo WHERE dog_id = $1`;
-            await client.query(query, [dogId]);
+
+            const photoToDelete = await client.query(`SELECT file_name FROM photo WHERE dog_id = $1`, [dogId]);
+            await client.query(`DELETE FROM photo WHERE dog_id = $1`, [dogId]);
+            //! a tester
+            //fs.unlinkSync('/dog_resized' + photoToDelete);
             return null;
         } catch (error) {
             console.error(error);
