@@ -13,6 +13,7 @@ import race from '../../assets/img/profile-simulation/race.svg';
 import sociable from '../../assets/img/profile-simulation/sociable.svg';
 import close from '../../assets/img/close.svg';
 import dblArrow from '../../assets/img/info-ride/double_arrow.svg';
+import edit from '../../assets/img/profile-simulation/edit.svg';
 
 const Profile = () => {
   const { user, profile, signup } = useSelector((state) => state);
@@ -163,7 +164,12 @@ const Profile = () => {
                   className="profile-page__edit"
                   onClick={toggleEditUser}
                 >
-                  {isEditingUser ? 'Retour' : 'Modifier'}
+                  {isEditingUser ? 'Retour' : (
+                    <span>
+                      <img src={edit} alt="edit" />
+                      Modifier
+                    </span>
+                  )}
                 </div>
               )
             }
@@ -317,7 +323,12 @@ const Profile = () => {
                               else toggleEditDog(index);
                             }}
                           >
-                            {isEditingDog === index + 1 ? 'Retour' : 'Modifier'}
+                            {isEditingDog === index + 1 ? 'Retour' : (
+                              <span>
+                                <img src={edit} alt="edit" />
+                                Modifier
+                              </span>
+                            )}
                           </div>
                         )
                       }
