@@ -21,13 +21,16 @@ class Dog {
         }
     }
 
-<<<<<<< HEAD
     static async findDogFromMember(userId) {
         try {
             const query = `SELECT id FROM dog WHERE dog_owner_id = $1`;
             const { rows } = await client.query(query, [userId]);
-            return rows.map(row => new Ride(row));
-=======
+            return rows.map(row => new Dog(row));
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
 
     async create() {
         try {
@@ -62,7 +65,6 @@ class Dog {
             const query = `DELETE FROM dog WHERE id = $1`;
             await client.query(query, [id]);
             return null;
->>>>>>> 03ee97fbc2dc361323169ed0299e0aaf41b3f170
         } catch (error) {
             console.error(error);
             throw new Error(error.detail ? error.detail : error.message);

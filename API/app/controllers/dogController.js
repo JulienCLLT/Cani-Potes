@@ -86,6 +86,7 @@ const dogController = {
                 throw Error('Vous n\'êtes pas le propriétaire du chien');
             }
 
+            //todo delete photo sur serveur ? 
             await Photo.deletePhotos(dogId);
             await Dog.delete(dogId);
             response.status(204).json();

@@ -43,7 +43,6 @@ class Ride {
         }
     }
 
-<<<<<<< HEAD
     static async findRidesHostedBy(userId) {
         try {
             const query = `SELECT * FROM ride WHERE ride.host_id = $1`;
@@ -52,7 +51,11 @@ class Ride {
                 return new Ride(rows[0]);
             }
             return null;
-=======
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
     static async findRidesByMember(userId) {
         try {
             //todo facto
@@ -76,22 +79,29 @@ class Ride {
             `;
             const { rows } = await client.query(query, [userId]);
             return rows.map(row => new Ride(row));
->>>>>>> 03ee97fbc2dc361323169ed0299e0aaf41b3f170
         } catch (error) {
             console.error(error);
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
 
-<<<<<<< HEAD
     //todo autre Model ? 
-=======
->>>>>>> 03ee97fbc2dc361323169ed0299e0aaf41b3f170
     static async deleteMessagesByRideId(rideId) {
         try {
             const query = `DELETE FROM member_write_ride WHERE ride_id = $1`;
             await client.query(query, [rideId]);
             // return qq chose ? 
+            return null;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
+    static async deleteMessagesFromMember(memberId) {
+        try {
+            const query = `DELETE FROM member_write_ride WHERE member_id = $1`;
+            await client.query(query, [memberId]);
             return null;
         } catch (error) {
             console.error(error);
