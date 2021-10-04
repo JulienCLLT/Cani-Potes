@@ -6,6 +6,7 @@ const checkToken = require('./middlewares/checkJwt');
 const rideController = require('./controllers/rideController');
 const dogController = require('./controllers/dogController');
 const formController = require('./controllers/formController');
+const mailController = require('./controllers/mailController');
 
 const multer = require('./../app/middlewares/multerConfig');
 
@@ -45,5 +46,7 @@ router.get('/social/profile/:idUser', checkToken, userController.getProfile);
 router.delete('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', dogController.delete);
 
 router.patch('/account/edit', checkToken, userController.save);
+
+router.post('/social/message/ride/:idRide',checkToken, mailController.sendMailToRide);
 
 module.exports = router;

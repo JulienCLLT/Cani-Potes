@@ -33,9 +33,10 @@ export const getProfileIsLoading = () => ({
 });
 
 export const SAVE__PROFILE__IN__STATE = 'SAVE__PROFILE__IN__STATE';
-export const saveProfileInState = (profile) => ({
+export const saveProfileInState = (profile, userId) => ({
   type: SAVE__PROFILE__IN__STATE,
   profile,
+  userId,
 });
 
 export const UPDATE__USER = 'UPDATE__USER';

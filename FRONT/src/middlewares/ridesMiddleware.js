@@ -1,5 +1,4 @@
 /* eslint-disable linebreak-style */
-// import { axiosInstance } from '../services/axios';
 import axios from 'axios';
 
 import {

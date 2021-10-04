@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+import { LOGOUT__USER } from '../actions/users';
 import {
   ADD__USER__TO__RIDE, USER__QUIT__RIDE, ADD__NEW__MESSAGE,
   DELETE__RIDE__IN__STATE, SAVE__ALL__RIDES, SAVE__ONE__RIDE, GET__RIDE__IS__LOADING,
@@ -126,7 +127,7 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
     case DELETE__RIDE__IN__STATE:
       return {
         ...state,
-        allRides: state.allRides.map((ride) => ride.ride_id !== action.id),
+        allRides: state.allRides.filter((ride) => ride.ride_id !== action.id),
         currentRide: {
           ...ridesInitialState.currentRide,
         },
@@ -139,7 +140,7 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
       });
       if (action.ride.duration === null) {
         action.ride.duration = {
-          minutes: 'inconnue',
+          minutes: undefined,
         };
       }
       if (action.ride.messages === null) {
@@ -167,7 +168,6 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           isLoading: true,
         },
       };
-
     case FAILED_TO_CREATE_RIDE:
       return {
         ...state,
@@ -179,10 +179,14 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
         ...state,
         currentRide: {
           ...state.currentRide,
-          participants: state.currentRide.participants.map(
-            (participant) => participant.participant_id !== action.rideId,
+          participants: state.currentRide.participants.filter(
+            (participant) => participant.participant_id !== action.userId,
           ),
         },
+      };
+    case LOGOUT__USER:
+      return {
+        ...ridesInitialState,
       };
     default:
       return state;

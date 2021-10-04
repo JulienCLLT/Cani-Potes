@@ -3,3 +3,5 @@
 sqitch.conf
 test_model.js
 .js
+package-lock.json
+
