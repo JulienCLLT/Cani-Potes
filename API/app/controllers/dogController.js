@@ -47,6 +47,7 @@ const dogController = {
             const newDog = new Dog(request.body);
             const dogCreated = await newDog.create();
 
+
             if (request.file) {
                 const { filename: image } = request.file;
 
@@ -68,8 +69,13 @@ const dogController = {
 
     delete: async (request, response) => {
         try {
+            console.log("request user.id", request.userId);
+
             const profileId = Number(request.params.profileId);
             const dogId = Number(request.params.dogId);
+            console.log("profileId", request.params.profileId);
+            console.log("dogId", request.params.dogId);
+
             const userId = request.userId;
 
             if (isNaN(profileId) || isNaN(dogId)) {
@@ -80,6 +86,7 @@ const dogController = {
             }
 
             const dogToDelete = await Dog.findById(dogId);
+            console.log("dog to delete", dogToDelete);
             if (!dogToDelete) {
                 throw Error('Ce chien n\'existe pas');
             }
