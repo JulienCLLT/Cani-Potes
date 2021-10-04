@@ -19,7 +19,7 @@ JOIN gender AS g
 	ON d.gender_id = g.id
 JOIN member AS m
 	ON d.dog_owner_id = m.id
-JOIN photo AS ph
+LEFT JOIN photo AS ph
 	ON d.id = ph.dog_id 
 GROUP BY d.id, surname, weight, d.birthday, sterilization, description, breed.id, breed.label, b.id, b.label , b.emoji, g.id , g.label, m.id , m.first_name , m.last_name , m.photo;
 
