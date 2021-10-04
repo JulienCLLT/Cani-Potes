@@ -36,7 +36,8 @@ router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', checkToken
 
 //todo checktoken
 router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.getOneDog);
-router.post('/profile/:profileId(\\d+)/dogs/', checkToken, multer, dogController.createDog);
+
+router.post('/profile/:profileId(\\d+)/dogs/', multer, dogController.createDog);
 
 router.get('/social/profile/:idUser', checkToken, userController.getProfile);
 

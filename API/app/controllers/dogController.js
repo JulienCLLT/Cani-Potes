@@ -33,10 +33,13 @@ const dogController = {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
+            /*
             const userId = request.userId;
             if (userId !== profileId) {
                 throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
             }
+            */
+            const userId = 2;
 
             const newDog = new Dog(request.body);
             const dogCreated = await newDog.create();
@@ -46,7 +49,7 @@ const dogController = {
 
                 // resize picture and push it in resized file
                 await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
-                    .toFile(path.resolve(request.file.destination, 'images_resized', image));
+                    .toFile(path.resolve(request.file.destination, 'dog_resized', image));
                 fs.unlinkSync(request.file.path);
 
                 // insert the photo data in db
