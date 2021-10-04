@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { deleteDog, deleteUser, getOneUserById, getProfileIsLoading, updateUser } from '../../actions/users';
+import { deleteDog, deleteUser, getOneUserById, getProfileIsLoading, updateDog, updateUser } from '../../actions/users';
 import { formstepShowsDogform, getDogBreedsAndBehaviors } from '../../actions/signup';
 
 import DogForm from '../SignUp/DogForm/index';
@@ -47,6 +47,7 @@ const Profile = () => {
   const [sterilization, setSterilization] = useState();
   const [description, setDescription] = useState();
   const [photoDog, setPhotoDog] = useState();
+
   const [dogAndPicIndex, setDogAndPicIndex] = useState({});
 
   // manage modal
@@ -111,10 +112,21 @@ const Profile = () => {
   };
 
   const handleUpdateDog = () => {
+    const updatedDog = {
+      surname,
+      behavior,
+      breed,
+      gender,
+      weight,
+      age,
+      sterilization,
+      description,
+      photoDog,
+    };
     if (dogIsChanged) setDogIsChanged(false);
     if (isModalOpen) setIsModalOpen(false);
-    setisEditingDog(0);
-    // update dog in db
+    dispatch(updateDog(user.id, isEditingDog, updatedDog));
+    setisEditingDog(false);
   };
 
   const handleDeletePhoto = () => {

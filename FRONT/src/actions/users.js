@@ -40,6 +40,14 @@ export const saveProfileInState = (profile, userId) => ({
   userId,
 });
 
+export const UPDATE__DOG = 'UPDATE__DOG';
+export const updateDog = (userId, dogId, updatedDog) => ({
+  type: UPDATE__DOG,
+  userId,
+  dogId,
+  updatedDog,
+});
+
 export const UPDATE__USER = 'UPDATE__USER';
 export const updateUser = (user) => ({
   type: UPDATE__USER,
@@ -58,10 +66,9 @@ export const addRidesToUser = (rides) => ({
 });
 
 export const DELETE__DOG = 'DELETE__DOG';
-export const deleteDog = (userId, dogId) => ({
+export const deleteDog = (userId) => ({
   type: DELETE__DOG,
   userId,
-  dogId,
 });
 
 export const DELETE__USER = 'DELETE__USER';

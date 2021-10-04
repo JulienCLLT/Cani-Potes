@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import { GET__PROFILE__IS__LOADING, SAVE__PROFILE__IN__STATE, LOGOUT__USER } from '../actions/users';
+import { GET__PROFILE__IS__LOADING, SAVE__PROFILE__IN__STATE, LOGOUT__USER, DELETE__DOG } from '../actions/users';
 
 const profileInitialState = {
   member_id: 0,
@@ -35,6 +35,11 @@ const profileReducer = (state = profileInitialState, action = {}) => {
     case LOGOUT__USER:
       return {
         ...profileInitialState,
+      };
+    case DELETE__DOG:
+      return {
+        ...state,
+        dogs: state.dogs.filter((dog) => dog.dog_id !== action.dogId),
       };
     default:
       return state;
