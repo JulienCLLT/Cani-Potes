@@ -33,7 +33,8 @@ const rideController = {
 
     getRidesByMember: async (request, response) => {
         try {
-            const userId = request.userId;
+            //const userId = request.userId;
+            const userId = 1;
             const rides = await Ride.findRidesByMember(userId);
             response.status(201).json(rides);
         } catch (error) {
