@@ -65,7 +65,7 @@ class UserModel {
             }
             else{
                 // insert a facto en fonction SQL
-                const {rows} = await database.query(`INSERT INTO member (email, first_name, last_name, zip_code, password, birthday) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,[
+                const {rows} = await database.query(`INSERT INTO member (email, first_name, last_name, zip_code, password, birthday) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,[
                 this.email,
                 this.first_name,
                 this.last_name,
