@@ -24,6 +24,7 @@ router.get('/rides', rideController.findAll);
 
 //todo checktoken
 router.post('/ride', rideController.create);
+router.get('/ride', rideController.getRidesByMember);
 
 router.delete('/ride/:rideId(\\d+)', checkToken, rideController.delete);
 //todo quand front ok, rajout checkToken
@@ -48,5 +49,6 @@ router.delete('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', dogController.delet
 router.patch('/account/edit', checkToken, userController.save);
 
 router.post('/social/message/ride/:idRide',checkToken, mailController.sendMailToRide);
+
 
 module.exports = router;

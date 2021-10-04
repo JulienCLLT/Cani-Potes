@@ -31,9 +31,19 @@ const rideController = {
         }
     },
 
+    getRidesByMember: async (request, response) => {
+        try {
+            //const userId = request.userId;
+            const userId = 1;
+            const rides = await Ride.findRidesByMember(userId);
+            response.status(201).json(rides);
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
+    },
+
     create: async (request, response) => {
         try {
-            //todo when token added on this route
             const userId = request.userId;
 
             const newRide = new Ride(request.body);
@@ -169,7 +179,7 @@ const rideController = {
             const newRide = new Ride(request.body);
             const rideCreated = await newRide.create(); //todo faire model
             response.status(201).json(dogCreated);
-            
+
         } catch (error) {
             response.status(500).json(error.message);
         }
