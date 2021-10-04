@@ -1,5 +1,8 @@
 const Dog = require('../models/dogModel');
 const Photo = require('../models/photoModel');
+const sharp = require('sharp');
+const path = require('path');
+const fs = require('fs');
 
 const dogController = {
 
