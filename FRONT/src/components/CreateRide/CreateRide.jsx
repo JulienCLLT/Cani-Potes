@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -52,6 +52,8 @@ const CreateRide = () => {
   const [switchPoint, setSwitchPoint] = useState('start');
   const [startPoint, setStartPoint] = useState(user.position);
   const [endPoint, setEndPoint] = useState();
+  const [startPointAddress, setStartPointAddress] = useState();
+  const [endPointAddress, setEndPointAddress] = useState();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -63,13 +65,19 @@ const CreateRide = () => {
     apikey,
   });
 
-  // reverse geocoding : convert lat et lng to adress
-  geocodeServiceEsri.reverse().latlng([43.56709901676006, 4.085759665793174]).run((error, result) => {
-    if (error) {
-      console.log(error);
-    }
-    console.log(result);
-  });
+  // reverse geocoding : convert lat and lng to address
+  const geocodingReverse = (latlng, useStatepointAddress) => {
+    console.log('valeur en entrée : ', latlng);
+    geocodeServiceEsri.reverse().latlng(latlng)
+      .run((error, result) => {
+        if (error) {
+          console.log('reverse geocoding error', error);
+        }
+        console.log('geocodingReverse result', result);
+        useStatepointAddress(result.address.LongLabel);
+      });
+    // return address;
+  };
 
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
@@ -77,36 +85,26 @@ const CreateRide = () => {
       click(e) {
         if (switchPoint === 'start') {
           setStartPoint([e.latlng.lat, e.latlng.lng]);
+          geocodingReverse(startPoint, setStartPointAddress);
         }
         else if (switchPoint === 'end') {
           setEndPoint([e.latlng.lat, e.latlng.lng]);
+          // geocodingReverse(endPoint, setEndPointAddress);
+          geocodingReverse([e.latlng.lat, e.latlng.lng], setEndPointAddress);
+          console.log('endPoint in if', endPoint);
+          console.log('endPointAddress in if', endPointAddress);
         }
-        geocodeServiceEsri.reverse().latlng(e.latlng).run((error, result) => {
-          if (error) {
-            console.log(error);
-          }
-          console.log(result);
-        });
       },
     });
     return position === null ? null : (
       <Marker />
     );
   };
-  // console.log(ELG.geocodeService.reverse);
 
-  // Reverse geocoding
-  // const geocodeService = L.esri.Geocoding.geocodeService({
-  //   apikey,
-  // });
-  // geocodeService.reverse('51.484463,-0.195405', { // longitude,latitude
-  //   maxLocations: 10,
-  //   distance: 100,
-  // }).then((result) => {
-  //   console.log(result);
-  // });
-  // console.log(L);
-  // console.log(ELG);
+  console.log('start', startPoint);
+  console.log('end', endPoint);
+  console.log('endPoint');
+  console.log('switchPoint', switchPoint);
 
   return (
     <main className="create-ride">
@@ -172,12 +170,22 @@ const CreateRide = () => {
 				  requeststart: () => console.log('Started request...'),
 				  requestend: () => console.log('Ended request...'),
 				  results: (results) => {
-                  console.log([results.latlng.lat, results.latlng.lng]);
+                  console.log('EsriLeafletGeosearch', [results.latlng.lat, results.latlng.lng]);
                 },
               }}
               key={apikey}
             />
           </MapContainer>
+        </div>
+
+        {/* Start address */}
+        <div>
+          <p>Adresse de départ : {startPointAddress}</p>
+        </div>
+
+        {/* End address */}
+        <div>
+          <p>Adresse d'arrivée : {endPointAddress}</p>
         </div>
 
         {/* Date */}
