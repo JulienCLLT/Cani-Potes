@@ -68,9 +68,3 @@ export const DELETE__USER = 'DELETE__USER';
 export const deleteUser = () => ({
   type: DELETE__USER,
 });
-
-export const ADD_DOG_TO_PROFILE = 'ADD_DOG_TO_PROFILE';
-export const addDogToProfile = (dog) => ({
-  type: ADD_DOG_TO_PROFILE,
-  dog,
-});

@@ -233,7 +233,9 @@ const RideDetails = () => {
                     {participant.dogs.map((dog) => (
                       <article className="ride-details__current-user__current-dog">
                         <div className="dog-avatar">
-                          <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} className="dog-avatar__photo" />
+                          {dog.dog_photo && (
+                            <img src={`http://107.22.144.90/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
+                          )}
                           <span>{dog.dog_surname}</span>
                           <span className="dog-avatar__behavior">
                             <img src={dogBehaviors[dog.dog_behavior]} alt="dog behavior" className="dog-avatar__behavior__logo" />

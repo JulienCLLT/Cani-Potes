@@ -27,7 +27,7 @@ const Profile = () => {
     dispatch(getProfileIsLoading());
     dispatch(getDogBreedsAndBehaviors());
     dispatch(getOneUserById(id));
-  }, [id]);
+  }, [id, signup.formStep]);
 
   // manage to edit user
   const [isEditingUser, setisEditingUser] = useState(false);
@@ -479,7 +479,7 @@ const Profile = () => {
                       <h2>Photos de {dog.dog_surname}</h2>
                       <div className="profile-page__dog-pictures__container">
                         {
-                          dog.dog_photo && dog.dog_photo.map((photo, photoIndex) => (
+                          dog.dog_photo.length > 0 && dog.dog_photo.map((photo, photoIndex) => (
                             <div className="profile-page__dog-pictures__container-item" key={photo.photo_id}>
                               <img src={`http://107.22.144.90/dog_resized/${photo.photo_url}`} alt={dog.dog_surname} />
                               {isEditingDog === index + 1 && (
@@ -496,6 +496,9 @@ const Profile = () => {
                             </div>
                           ))
                         }
+                        {dog.dog_photo.length === 0 && (
+                          <span>Pas de photo !</span>
+                        )}
                       </div>
                     </div>
                     {(isEditingDog === index + 1) && (dog.dog_photo.length < 5) && (

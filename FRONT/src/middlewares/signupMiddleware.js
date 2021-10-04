@@ -74,7 +74,6 @@ const signupMiddleware = (store) => (next) => (action) => {
           console.log(response.data);
           store.dispatch(addDogToUser(response.data));
           store.dispatch(nextSignupFormStep());
-          
           next(action);
         }).catch((error) => {
           console.error(error.response.data);

@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import { GET__PROFILE__IS__LOADING, SAVE__PROFILE__IN__STATE, LOGOUT__USER, ADD_DOG_TO_PROFILE } from '../actions/users';
+import { GET__PROFILE__IS__LOADING, SAVE__PROFILE__IN__STATE, LOGOUT__USER } from '../actions/users';
 
 const profileInitialState = {
   member_id: 0,
@@ -35,16 +35,6 @@ const profileReducer = (state = profileInitialState, action = {}) => {
     case LOGOUT__USER:
       return {
         ...profileInitialState,
-      };
-    case ADD_DOG_TO_PROFILE:
-      return {
-        ...state,
-        dogs: [
-          ...state.dogs,
-          {
-            ...action.dog,
-          },
-        ],
       };
     default:
       return state;
