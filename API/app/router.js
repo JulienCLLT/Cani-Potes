@@ -34,7 +34,7 @@ router.post('/ride/:rideId(\\d+)/participation', checkToken, rideController.addN
 router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', checkToken, rideController.removeUserFromRide);
 
 router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.getOneDog);
-router.post('/profile/:profileId(\\d+)/dogs/', checkToken, multer, dogController.createDog);
+router.post('/profile/:profileId(\\d+)/dogs', checkToken, multer, dogController.createDog);
 router.delete('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.delete);
 
 router.get('/social/profile/:idUser', checkToken, userController.getProfile);
