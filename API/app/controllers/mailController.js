@@ -13,9 +13,7 @@ const mailController ={
             const mail = new MailModel(value);
             const data = await mail.save(mail);
             
-            response.status(201).json({
-                message:'send message',
-                date_message:data.created_at.toString()});
+            response.status(201).json({message:data.message});
         } catch (error) {
             response.status(500).json(error.message);
             
