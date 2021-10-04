@@ -6,14 +6,14 @@
     }
 };
 
-:root {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+// :root {
+//     -ms-overflow-style: none;
+//     scrollbar-width: none;
 
-    &::-webkit-scrollbar {
-        display: none;
-    }
-}
+//     &::-webkit-scrollbar {
+//         display: none;
+//     }
+// }
 
 .ride-details {
     padding: vars.$gutter;
@@ -92,7 +92,7 @@
 
     &__current-user {
         display: flex;
-        align-items: flex-end;
+        // align-items: flex-end;
         margin-bottom: .3rem;
 
         &__avatar {
@@ -103,7 +103,7 @@
             text-align: center;
             margin-right: .5rem;
             width: 60px;
-            font-size: .7rem;
+            font-size: 1rem;
 
             img {
                 width: 40px;
@@ -112,20 +112,74 @@
             }
         }
 
-        &__dogs {
-            display: flex;
-            width: 46px;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-size: .7rem;
-            margin-right: .3rem;
+        // &__dogs {
+        //     display: flex;
+        //     width: 46px;
+        //     flex-direction: column;
+        //     justify-content: center;
+        //     align-items: center;
+        //     text-align: center;
+        //     font-size: .7rem;
+        //     margin-right: .3rem;
 
-            img {
-                width: 25px;
-                border-radius: 50%;
-                margin-bottom: .2rem;
+        //     img {
+        //         width: 25px;
+        //         border-radius: 50%;
+        //         margin-bottom: .2rem;
+        //     }
+        // }
+
+        &__dogs-container {
+            flex: 1;
+            max-width: 260px;
+            display: flex;
+            overflow-x: scroll;
+
+            @include lg-screen{
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+                max-width: none;
+            
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+            }
+        }
+
+        &__current-dog {
+            display: flex;
+            gap: .5 * vars.$gutter;
+            min-width: 100%;
+            max-width: 100%;
+            cursor: grab;
+
+            @include lg-screen {
+                min-width:230px;
+                max-width: 230px;
+            }
+            
+            .dog-avatar {
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                &__photo {
+                    border-radius: 50%;
+                }
+
+                &__behavior {
+                    display: flex;
+                    gap: .3 * vars.$gutter;
+                    
+                    &__logo {
+                        width: 20px;
+                    }
+                }
+            }
+
+            .dog-details {
+                width: 50%
             }
         }
     }

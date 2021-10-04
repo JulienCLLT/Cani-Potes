@@ -65,13 +65,14 @@ const ridesMiddleware = (store) => (next) => (action) => {
       break;
     case SEND__NEW__MESSAGE:
       axiosInstance
-        .post(`/social/messages/ride/${action.rideId}`, {
+        .post(`/social/message/ride/${action.rideId}`, {
           message: action.message,
         })
         .then(
           (response) => {
             console.log('Message sent : ', response);
-            store.dispatch(addMessageInState(response.data));
+            // db is changing the content of the answer
+            store.dispatch(addMessageInState(action.message));
           },
         )
         .catch(

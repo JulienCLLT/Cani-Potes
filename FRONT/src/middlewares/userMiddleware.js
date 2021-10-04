@@ -1,6 +1,9 @@
 /* eslint-disable linebreak-style */
 import axios from 'axios';
-import { GET__ONE__USER__BY__ID, saveProfileInState, UPDATE__USER } from '../actions/users';
+import {
+  GET__ONE__USER__BY__ID, saveProfileInState, UPDATE__USER, GET__RIDES__WITH__USER__IN, addRidesToUser,
+  DELETE__DOG,
+} from '../actions/users';
 
 const userMiddleware = (store) => (next) => (action) => {
   const axiosInstance = axios.create({
@@ -50,6 +53,29 @@ const userMiddleware = (store) => (next) => (action) => {
         .catch((error) => console.error('Cannot update user : ', error.response.message));
       break;
     }
+    case GET__RIDES__WITH__USER__IN: {
+      axiosInstance
+        .get('/ride')
+        .then((response) => {
+          console.log('User participates to these rides : ', response);
+          store.dispatch(addRidesToUser(response.data));
+        })
+        .catch((error) => {
+          console.error("Can't get rides within the user : ", error.response.data);
+        });
+      break;
+    }
+    case DELETE__DOG:
+      axiosInstance
+        .delete(`profile/${action.userId}/dogs/${action.dogId}`)
+        .then((response) => {
+          console.log('Dog deleted successfully : ', response);
+          next(action);
+        })
+        .catch((error) => {
+          console.error('Failed to delete dog : ', error.response.data);
+        });
+      break;
     default:
       next(action);
   }

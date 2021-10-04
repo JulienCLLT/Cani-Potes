@@ -25,6 +25,7 @@ import './RideDetails.scss';
 import {
   sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
 } from '../../actions/rides';
+import { translateDate } from '../../utils/translateDate';
 
 const RideDetails = () => {
   const { id } = useParams();
@@ -170,7 +171,7 @@ const RideDetails = () => {
         <div className="ride-details__infos__description">
           <p>
             <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
-            Départ le {starting_time}
+            Départ le {translateDate(starting_time)}
           </p>
           <p>
             <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
@@ -227,11 +228,33 @@ const RideDetails = () => {
                     <img src={participant.participant_photo} alt="user" />
                     <span>{participant.participant_first_name}</span>
                   </Link>
-                  {participant.dogs.map((dog, index) => {
+
+                  <div className="ride-details__current-user__dogs-container">
+                    {participant.dogs.map((dog) => (
+                      <article className="ride-details__current-user__current-dog">
+                        <div className="dog-avatar">
+                          <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} className="dog-avatar__photo" />
+                          <span>{dog.dog_surname}</span>
+                          <span className="dog-avatar__behavior">
+                            <img src={dogBehaviors[dog.dog_behavior]} alt="dog behavior" className="dog-avatar__behavior__logo" />
+                            {dog.dog_behavior}
+                          </span>
+                        </div>
+                        <div className="dog-details">
+                          <ul>
+                            <li>{dog.dog_breed}</li>
+                            <li>{dog.dog_gender} {dog.dog_weight}kg</li>
+                            <li>{dog.dog_sterilization ? 'Stérilisé' : 'Non stérilizé'}</li>
+                          </ul>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                  {/* {participant.dogs.map((dog, index) => {
                     if (index < 3) {
                       return (
                         <div className="ride-details__current-user__dogs" key={`${dog.dog_id}`}>
-                          <img src={dog.dog_photo[0]} alt={dog.dog_surname} />
+                          <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} />
                           <span>{dog.dog_surname}</span>
                           <span>
                             <img src={dogBehaviors[dog.dog_behavior]} alt="" />
@@ -247,7 +270,7 @@ const RideDetails = () => {
                         </div>
                       );
                     }
-                  })}
+                  })} */}
                 </div>
               ))
             }
@@ -299,7 +322,7 @@ const RideDetails = () => {
                 >
                   <p>{msg.sender_first_name}
                     <span>
-                      {starting_time}
+                      {msg.sent}
                     </span>
                   </p>
                   <span>{msg.message}</span>
