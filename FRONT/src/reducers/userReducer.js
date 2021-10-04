@@ -1,25 +1,12 @@
 /* eslint-disable linebreak-style */
 import { LOGOUT__USER, FAILED__TO__CONNECT, CONNECT__USER } from '../actions/users';
-import { ADD_DOG_TO_USER } from './../actions/signup';
+import { ADD_DOG_TO_USER } from '../actions/signup';
 
 const userInitialState = {
-  id: 1,
+  id: 0,
   first_name: '',
-  position: [43.5667, 4.0833],
-  dogs: [
-    {
-      dog_id: 101,
-      dog_photo: "img12.jpg",
-      dog_surname: "Riri",
-      dog_photo_id: 9,
-    },
-    {
-      dog_id: 102,
-      dog_photo: "img14.jpg",
-      dog_surname: "Fifi",
-      dog_photo_id: 11,
-    },
-  ],
+  position: [],
+  dogs: [],
   token: '',
   isLogged: false,
   failedToConnect: false,
