@@ -1,8 +1,5 @@
 const Dog = require('../models/dogModel');
 const Photo = require('../models/photoModel');
-const sharp = require('sharp');
-const path = require('path');
-const fs = require('fs');
 
 const dogController = {
 
@@ -23,10 +20,7 @@ const dogController = {
             if (dog.owner_id !== profileId) {
                 throw Error('Ce chien n\'appartient pas à ce profil');
             }
-
             response.status(201).json(dog);
-
-
         } catch (error) {
             response.status(500).json(error.message);
         }
@@ -64,6 +58,37 @@ const dogController = {
         } catch (error) {
             response.status(500).json(error.message);
         }
+    },
+
+    delete: async (request, response) => {
+        try {
+            const profileId = Number(request.params.profileId);
+            const dogId = Number(request.params.dogId);
+            const userId = request.userId;
+
+            if (isNaN(profileId) || isNaN(dogId)) {
+                throw Error('La valeur de l\'id doit être un nombre');
+            }
+            if (profileId !== userId) {
+                throw Error('Vous ne pouvez pas accéder à cette demande');
+            }
+
+            const dogToDelete = await Dog.findById(dogId);
+            if (!dogToDelete) {
+                throw Error('Ce chien n\'existe pas');
+            }
+            if (dogToDelete.owner_id !== userId) {
+                throw Error('Vous n\'êtes pas le propriétaire du chien');
+            }
+
+            await Photo.deletePhotos(dogId);
+            await Dog.delete(dogId);
+            response.status(204).json();
+
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
     }
 };
+
 module.exports = dogController;

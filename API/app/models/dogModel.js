@@ -1,4 +1,4 @@
-const client = require("./../database");
+const client = require('./../database');
 
 class Dog {
     constructor(data = {}) {
@@ -20,6 +20,7 @@ class Dog {
             throw new Error(error.detail ? error.detail : error.message);
         }
     }
+
 
     async create() {
         try {
@@ -49,8 +50,18 @@ class Dog {
     }
 
 
+    static async delete(id) {
+        try {
+            const query = `DELETE FROM dog WHERE id = $1`;
+            await client.query(query, [id]);
+            return null;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
 }
 
 module.exports = Dog;
-
 
