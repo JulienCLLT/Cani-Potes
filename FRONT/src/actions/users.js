@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 export const LOGIN__USER = 'LOGIN__USER';
 export const loginUser = (data) => ({
   type: LOGIN__USER,
@@ -61,4 +62,15 @@ export const deleteDog = (userId, dogId) => ({
   type: DELETE__DOG,
   userId,
   dogId,
+});
+
+export const DELETE__USER = 'DELETE__USER';
+export const deleteUser = () => ({
+  type: DELETE__USER,
+});
+
+export const ADD_DOG_TO_PROFILE = 'ADD_DOG_TO_PROFILE';
+export const addDogToProfile = (dog) => ({
+  type: ADD_DOG_TO_PROFILE,
+  dog,
 });

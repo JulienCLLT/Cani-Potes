@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 import axios from 'axios';
 import {
-  GET__ONE__USER__BY__ID, saveProfileInState, UPDATE__USER, GET__RIDES__WITH__USER__IN, addRidesToUser,
-  DELETE__DOG,
+  GET__ONE__USER__BY__ID, UPDATE__USER, GET__RIDES__WITH__USER__IN, DELETE__DOG, DELETE__USER,
+  logoutUser, saveProfileInState, addRidesToUser,
 } from '../actions/users';
 
 const userMiddleware = (store) => (next) => (action) => {
@@ -74,6 +74,17 @@ const userMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           console.error('Failed to delete dog : ', error.response.data);
+        });
+      break;
+    case DELETE__USER:
+      axiosInstance
+        .delete('/account/delete')
+        .then((response) => {
+          console.log('User deleted successfully : ', response);
+          store.dispatch(logoutUser());
+        })
+        .catch((error) => {
+          console.error('Failed to delete account : ', error.response.data);
         });
       break;
     default:
