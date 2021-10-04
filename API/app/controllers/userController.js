@@ -91,10 +91,7 @@ const userController = {
 
     deleteAccount: async (request, response) => {
         try {
-            //! pb si erreur ca stop au milieu (bcp de cas de figure a tester)
-            //! test avec faux userId
-            //const userId = request.userId;
-            const userId = 2
+            const userId = request.userId;
 
             // delete all member's dogs + photos
             const dogsId = await Dog.findDogFromMember(userId);
