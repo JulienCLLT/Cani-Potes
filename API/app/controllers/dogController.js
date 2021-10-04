@@ -5,28 +5,28 @@ const path = require('path');
 const fs = require('fs');
 
 const dogController = {
-    
-    getOneDog : async (request, response) => {
+
+    getOneDog: async (request, response) => {
         try {
             const profileId = Number(request.params.profileId);
             const dogId = Number(request.params.dogId);
 
-            if(isNaN(profileId) || isNaN(dogId)){
+            if (isNaN(profileId) || isNaN(dogId)) {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
             const dog = await Dog.findById(dogId);
-            if(!dog) {
+            if (!dog) {
                 throw Error('Ce chien n\'existe pas');
             }
 
-            if(dog.owner_id !== profileId) {
+            if (dog.owner_id !== profileId) {
                 throw Error('Ce chien n\'appartient pas à ce profil');
             }
 
             response.status(201).json(dog);
 
-            
+
         } catch (error) {
             response.status(500).json(error.message);
         }
@@ -40,23 +40,25 @@ const dogController = {
             }
 
             const userId = request.userId;
-            if(userId !== profileId ){
+            if (userId !== profileId) {
                 throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
             }
+
+            request.body.dog_owner_id = userId;
 
             const newDog = new Dog(request.body);
             const dogCreated = await newDog.create();
 
-            if(request.file) {
+            if (request.file) {
                 const { filename: image } = request.file;
 
                 // resize picture and push it in resized file
                 await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
-                .toFile(path.resolve(request.file.destination,'images_resized',image));
+                    .toFile(path.resolve(request.file.destination, 'images_resized', image));
                 fs.unlinkSync(request.file.path);
 
                 // insert the photo data in db
-                const newPhoto = new Photo({ file : request.file.filename, dogId : dogCreated.id}); 
+                const newPhoto = new Photo({ file: request.file.filename, dogId: dogCreated.id });
                 const photoCreated = await newPhoto.addPhoto();
                 dogCreated.photo = photoCreated;
             }
