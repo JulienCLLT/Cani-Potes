@@ -8,9 +8,10 @@ import {
   MapContainer, TileLayer, Marker, useMapEvents,
 } from 'react-leaflet';
 import L from 'leaflet';
+
+// import esri for geocoding
 import EsriLeafletGeoSearch from 'react-esri-leaflet/plugins/EsriLeafletGeoSearch';
-import * as ELG from 'esri-leaflet-geocoder';
-// import { geocodeService } from 'esri-leaflet-geocoder';
+import { geocodeService } from 'esri-leaflet-geocoder';
 
 import { createRide } from '../../actions/rides';
 
@@ -58,12 +59,17 @@ const CreateRide = () => {
   };
 
   //
-  const geocodeService = ELG.geocodeService({
+  const geocodeServiceEsri = geocodeService({
     apikey,
   });
-  // console.log(geocodeService);
-  // const convert = geocodeService.reverse('51.484463,-0.195405');
-  // console.log(convert);
+
+  // reverse geocoding : convert lat et lng to adress
+  geocodeServiceEsri.reverse().latlng([43.56709901676006, 4.085759665793174]).run((error, result) => {
+    if (error) {
+      console.log(error);
+    }
+    console.log(result);
+  });
 
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
@@ -75,7 +81,7 @@ const CreateRide = () => {
         else if (switchPoint === 'end') {
           setEndPoint([e.latlng.lat, e.latlng.lng]);
         }
-        geocodeService.reverse().latlng(e.latlng).run((error, result) => {
+        geocodeServiceEsri.reverse().latlng(e.latlng).run((error, result) => {
           if (error) {
             console.log(error);
           }
