@@ -107,8 +107,6 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
         },
       };
     case ADD__MESSAGE__IN__STATE: {
-      console.log('on y est !')
-      console.log(state)
       const sender = state.currentRide.participants.find(
         (participant) => participant.participant_id === action.message.sender_id,
       );

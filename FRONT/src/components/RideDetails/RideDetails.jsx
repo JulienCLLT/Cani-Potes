@@ -112,6 +112,16 @@ const RideDetails = () => {
     setUserKicked(0);
   };
 
+  const scrollDownChat = () => {
+    setTimeout(() => {
+      chatZone.current.scrollTo({
+        top: chatZone.current.scrollHeight,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }, 250);
+  };
+
   const onSubmit = ({ message }) => {
     dispatch(sendNewMessage(
       userProfile.id, id, message,
@@ -119,11 +129,7 @@ const RideDetails = () => {
 
     reset();
 
-    chatZone.current.scrollTo({
-      top: chatZone.current.scrollHeight,
-      left: 0,
-      behavior: 'smooth',
-    });
+    scrollDownChat();
   };
 
   const positionStart = new L.Icon({
@@ -299,7 +305,10 @@ const RideDetails = () => {
         <button
           type="button"
           className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
-          onClick={() => setIsChatOpen(!isChatOpen)}
+          onClick={() => {
+            setIsChatOpen(!isChatOpen);
+            scrollDownChat();
+          }}
         >
           {
             isChatOpen ? (
