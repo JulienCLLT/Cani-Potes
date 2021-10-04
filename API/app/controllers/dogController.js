@@ -36,13 +36,12 @@ const dogController = {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
-            /*
+
             const userId = request.userId;
             if (userId !== profileId) {
                 throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
             }
-            */
-            const userId = 2;
+
 
             const newDog = new Dog(request.body);
             const dogCreated = await newDog.create();
