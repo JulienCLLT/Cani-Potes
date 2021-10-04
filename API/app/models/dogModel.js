@@ -12,6 +12,7 @@ class Dog {
             console.log("dog id à supprimer", id);
             const query = `SELECT * FROM dogs_with_all_informations WHERE id=$1`;
             const { rows } = await client.query(query, [id]);
+            console.log("rows", rows);
             if (rows.length > 0) {
                 console.log("y a quelque chose !");
                 return new Dog(rows[0]);
