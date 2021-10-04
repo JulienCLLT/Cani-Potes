@@ -319,10 +319,11 @@ const RideDetails = () => {
             {
               messages.map((msg) => (
                 <div
-                  key={msg.message_id}
+                  key={msg.id}
                   className={msg.sender_id === userProfile.id ? 'ride-details__messages-container__message my-message' : 'ride-details__messages-container__message'}
                 >
-                  <p>{msg.sender_first_name}
+                  <p>
+                    {msg.participants}
                     <span>
                       {msg.sent}
                     </span>

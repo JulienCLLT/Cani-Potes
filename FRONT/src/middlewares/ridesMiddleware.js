@@ -70,9 +70,8 @@ const ridesMiddleware = (store) => (next) => (action) => {
         })
         .then(
           (response) => {
-            console.log('Message sent : ', response);
-            // db is changing the content of the answer
-            store.dispatch(addMessageInState(action.message));
+            console.log('Message sent : ', response.data.message);
+            store.dispatch(addMessageInState(response.data.message));
           },
         )
         .catch(
