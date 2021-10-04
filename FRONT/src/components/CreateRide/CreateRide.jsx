@@ -9,6 +9,8 @@ import {
 } from 'react-leaflet';
 import L from 'leaflet';
 import EsriLeafletGeoSearch from 'react-esri-leaflet/plugins/EsriLeafletGeoSearch';
+import * as ELG from 'esri-leaflet-geocoder';
+// import { geocodeService } from 'esri-leaflet-geocoder';
 
 import { createRide } from '../../actions/rides';
 
@@ -55,9 +57,17 @@ const CreateRide = () => {
     dispatch(createRide(data, startPoint, endPoint));
   };
 
+  //
+  const geocodeService = ELG.geocodeService({
+    apikey,
+  });
+  // console.log(geocodeService);
+  // const convert = geocodeService.reverse('51.484463,-0.195405');
+  // console.log(convert);
+
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
-    const map = useMapEvents({
+    useMapEvents({
       click(e) {
         if (switchPoint === 'start') {
           setStartPoint([e.latlng.lat, e.latlng.lng]);
@@ -65,24 +75,32 @@ const CreateRide = () => {
         else if (switchPoint === 'end') {
           setEndPoint([e.latlng.lat, e.latlng.lng]);
         }
+        geocodeService.reverse().latlng(e.latlng).run((error, result) => {
+          if (error) {
+            console.log(error);
+          }
+          console.log(result);
+        });
       },
     });
     return position === null ? null : (
       <Marker />
     );
   };
+  // console.log(ELG.geocodeService.reverse);
 
   // Reverse geocoding
-  const geocodeService = L.esri.Geocoding.geocodeService({
-    apikey,
-  });
-  geocodeService.reverse('51.484463,-0.195405', { // longitude,latitude
-    maxLocations: 10,
-    distance: 100,
-  }).then((result) => {
-    console.log(result);
-  });
-  console.log(L);
+  // const geocodeService = L.esri.Geocoding.geocodeService({
+  //   apikey,
+  // });
+  // geocodeService.reverse('51.484463,-0.195405', { // longitude,latitude
+  //   maxLocations: 10,
+  //   distance: 100,
+  // }).then((result) => {
+  //   console.log(result);
+  // });
+  // console.log(L);
+  // console.log(ELG);
 
   return (
     <main className="create-ride">
