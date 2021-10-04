@@ -44,3 +44,21 @@ export const updateUser = (user) => ({
   type: UPDATE__USER,
   user,
 });
+
+export const GET__RIDES__WITH__USER__IN = 'GET__RIDES__WITH__USER__IN';
+export const getRidesWithUserIn = () => ({
+  type: GET__RIDES__WITH__USER__IN,
+});
+
+export const ADD__RIDES__TO__USER = 'ADD__RIDES__TO__USER';
+export const addRidesToUser = (rides) => ({
+  type: ADD__RIDES__TO__USER,
+  rides,
+});
+
+export const DELETE__DOG = 'DELETE__DOG';
+export const deleteDog = (userId, dogId) => ({
+  type: DELETE__DOG,
+  userId,
+  dogId,
+});

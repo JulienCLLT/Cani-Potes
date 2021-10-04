@@ -14,13 +14,18 @@ import calendar from '../../assets/img/info-ride/calendar.svg';
 import hourglass from '../../assets/img/info-ride/hourglass.svg';
 import startFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endFlag from '../../assets/img/info-ride/endPointFlag.svg';
-import doubleArrow from '../../assets/img/info-ride/double_arrow.svg';
+import conversation from '../../assets/img/info-ride/conversation.svg';
 import close from '../../assets/img/close.svg';
+import peureux from '../../assets/img/profile-simulation/fearful.svg';
+import joueur from '../../assets/img/profile-simulation/player.png';
+import agressif from '../../assets/img/profile-simulation/aggressive.png';
+import sociable from '../../assets/img/profile-simulation/sociable.svg';
 
 import './RideDetails.scss';
 import {
-  addNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
+  sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
 } from '../../actions/rides';
+import { translateDate } from '../../utils/translateDate';
 
 const RideDetails = () => {
   const { id } = useParams();
@@ -44,6 +49,20 @@ const RideDetails = () => {
   let nbOfDogs = 0;
 
   participants.map((participant) => nbOfDogs += participant.dogs.length);
+
+  participants.sort((a, b) => {
+    if (a.participant_id === host_id) {
+      return -1;
+    }
+    return 0;
+  });
+
+  const dogBehaviors = {
+    peureux,
+    joueur,
+    agressif,
+    sociable,
+  };
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -94,8 +113,8 @@ const RideDetails = () => {
   };
 
   const onSubmit = ({ message }) => {
-    dispatch(addNewMessage(
-      message, userProfile.id, userProfile.photo, userProfile.first_name, userProfile.last_name,
+    dispatch(sendNewMessage(
+      userProfile.id, id, message,
     ));
 
     reset();
@@ -132,7 +151,7 @@ const RideDetails = () => {
               isLoading ? (
                 <span>chargement ...</span>
               ) : (
-                <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={16} scrollWheelZoom>
+                <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={14} scrollWheelZoom>
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                   <Marker position={start_coordinate} icon={positionStart}>
                     <Popup>Départ</Popup>
@@ -152,7 +171,7 @@ const RideDetails = () => {
         <div className="ride-details__infos__description">
           <p>
             <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
-            Départ le {starting_time}
+            Départ le {translateDate(starting_time)}
           </p>
           <p>
             <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
@@ -209,12 +228,38 @@ const RideDetails = () => {
                     <img src={participant.participant_photo} alt="user" />
                     <span>{participant.participant_first_name}</span>
                   </Link>
-                  {participant.dogs.map((dog, index) => {
+
+                  <div className="ride-details__current-user__dogs-container">
+                    {participant.dogs.map((dog) => (
+                      <article className="ride-details__current-user__current-dog">
+                        <div className="dog-avatar">
+                          <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} className="dog-avatar__photo" />
+                          <span>{dog.dog_surname}</span>
+                          <span className="dog-avatar__behavior">
+                            <img src={dogBehaviors[dog.dog_behavior]} alt="dog behavior" className="dog-avatar__behavior__logo" />
+                            {dog.dog_behavior}
+                          </span>
+                        </div>
+                        <div className="dog-details">
+                          <ul>
+                            <li>{dog.dog_breed}</li>
+                            <li>{dog.dog_gender} {dog.dog_weight}kg</li>
+                            <li>{dog.dog_sterilization ? 'Stérilisé' : 'Non stérilizé'}</li>
+                          </ul>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                  {/* {participant.dogs.map((dog, index) => {
                     if (index < 3) {
                       return (
                         <div className="ride-details__current-user__dogs" key={`${dog.dog_id}`}>
-                          <img src={dog.dog_photo[0]} alt="dog" />
+                          <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} />
                           <span>{dog.dog_surname}</span>
+                          <span>
+                            <img src={dogBehaviors[dog.dog_behavior]} alt="" />
+                            {dog.dog_behavior}
+                          </span>
                         </div>
                       );
                     }
@@ -225,7 +270,7 @@ const RideDetails = () => {
                         </div>
                       );
                     }
-                  })}
+                  })} */}
                 </div>
               ))
             }
@@ -254,7 +299,13 @@ const RideDetails = () => {
           className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
           onClick={() => setIsChatOpen(!isChatOpen)}
         >
-          <img src={doubleArrow} alt="arrow" />
+          {
+            isChatOpen ? (
+              <img src={close} alt="close chat" />
+            ) : (
+              <img src={conversation} alt="open chat" />
+            )
+          }
         </button>
         )
       }
@@ -271,7 +322,7 @@ const RideDetails = () => {
                 >
                   <p>{msg.sender_first_name}
                     <span>
-                      {starting_time}
+                      {msg.sent}
                     </span>
                   </p>
                   <span>{msg.message}</span>
