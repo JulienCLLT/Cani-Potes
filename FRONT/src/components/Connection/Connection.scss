@@ -1,0 +1,278 @@
+@use '../../styles/vars';
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+@mixin lg-screen {
+    @media screen and (min-width:900px) {
+        @content
+    }
+}
+
+.connection-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header-connection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1 * vars.$gutter;
+    border-bottom: 1px solid vars.$color_main;
+    background: vars.$color_main;
+
+    &__logo img {
+        width: 60px;
+        border-radius: 50%;
+
+        @include lg-screen {
+            width: 100px;
+        }
+    }
+
+    &__title {
+        display: none;
+        
+        @include lg-screen {
+            font-size: 3rem;
+            display: block;
+            color: white;
+            font-family: 'Indie Flower', cursive;
+        }
+    }
+
+    &__cta {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: .5 * vars.$gutter;
+
+        @include lg-screen {
+            flex-direction: row;
+            gap: 1.5 * vars.$gutter;
+        }
+
+        &__signin, &__signup {
+            @extend %btn;
+            border-radius: 10px;
+            background: white;
+            color: vars.$color_main;
+            padding: .5 * vars.$gutter;
+
+            @include lg-screen {
+                font-size: 1.45rem;
+            }
+        }
+    }
+}
+
+.connection {
+    &__cani-potes {
+        font-family: 'Indie Flower', cursive;
+        font-size: 1.7rem;
+    }
+
+    p {
+        line-height: 1.2;
+    }
+    
+    flex: 1;
+
+    @include lg-screen {
+        width: 70%;
+        margin: auto;
+    }
+
+    &__info {
+        & article {
+            @include lg-screen {
+                display: flex;
+                gap: 2 * vars.$gutter;
+                align-items: center;
+                margin: 3 * vars.$gutter 0;
+            }
+
+            &:nth-child(2) {
+                @include lg-screen {
+                    flex-direction: row-reverse;
+                }
+            }
+        }
+
+        &__title {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2 * vars.$gutter;
+            gap: 1 * vars.$gutter;
+
+            @include lg-screen {
+                margin: 0;
+            }
+
+            &.flex-row-reverse {
+                color: red;
+                @include lg-screen {
+                    flex-direction: row-reverse;
+                }
+            }
+            
+            h2, span {
+                position: absolute;
+                top: 20%;
+                left: 50%;
+                width: 80%;
+                max-width: 350px;
+                z-index: 1;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                font-size: 1.6rem;
+                color: vars.$color__white;
+                text-shadow: 0 0 5px black;
+
+                @include lg-screen {
+                    top: 25%;
+                }
+                
+                strong {
+                    font-family: 'Indie Flower', cursive;
+                    font-size: 1.5em;
+                }
+            }
+            
+            div {
+
+                @include lg-screen {
+                    min-width: 300px;
+                    max-width: 640px;
+                }
+
+                img {
+                    width: 100%;
+                    opacity: .6;
+                }
+            }
+
+        }
+        
+        &__text {
+            width: 87%;
+            margin: 2 * vars.$gutter auto;
+            padding: 1 * vars.$gutter 2 * vars.$gutter  2 * vars.$gutter;
+            border-radius: 5px;
+            box-shadow: 0 1px 5px vars.$color-border-bottom-header;
+            
+            @include lg-screen {
+                width: 60%;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding:  3 * vars.$gutter 2 * vars.$gutter  3 * vars.$gutter;
+            }
+            
+            span:nth-child(1) {
+                font-size: 1.5rem;
+                padding-bottom: 1 * vars.$gutter;
+                border-bottom: 1px solid vars.$color-border-bottom-header;
+                margin-bottom: .7 * vars.$gutter;
+            }
+            
+            p, div {
+                display: flex;
+                flex-direction: column;
+                font-size: 1.3rem;
+                line-height: 1.3;
+            }
+
+
+        }
+
+        &__map {
+            height: 250px;
+            margin-bottom: 1 * vars.$gutter 0;
+            background: grey;
+        }
+    }
+
+    &__modal {
+        background-color: rgba(200, 200, 200, .8);
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 80%;
+        max-width: 600px;
+        transform: translate(-50%, -50%);
+        padding: 3 * vars.$gutter 3 * vars.$gutter;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        z-index: 9999;
+        font-size: 1.3rem;
+
+        &__close {
+            width: 50px;
+            height: 50px;
+            align-self: flex-end;
+            cursor: pointer;
+
+            img {
+                width: 100%;
+            }
+        }
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        @include lg-screen {
+            width: 50%;
+        }
+
+        &__field {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+
+            label {
+                @extend %btn;
+                cursor: initial;
+                font-weight: normal;
+            }
+
+            input {
+                border-radius: 5px;
+                width: 100%;
+                border: none;
+                padding: .5 * vars.$gutter .5 * vars.$gutter;
+            }
+        }
+
+        &__submit {
+            @extend %btn;
+            font-size: inherit;
+        }
+
+        &__failed {
+            color: red;
+            font-size: .8rem;
+            margin-bottom: 1 * vars.$gutter;
+        }
+    }
+
+    &__footer{
+        display: flex;
+        justify-content: center;
+        padding: 1 * vars.$gutter 0 vars.$gutter;
+        background: vars.$color_grey_connection_footer_bg;
+    }
+}

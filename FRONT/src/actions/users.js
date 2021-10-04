@@ -1,0 +1,64 @@
+export const LOGIN__USER = 'LOGIN__USER';
+export const loginUser = (data) => ({
+  type: LOGIN__USER,
+  data,
+});
+
+export const CONNECT__USER = 'CONNECT__USER';
+export const connectUser = (token, user) => ({
+  type: CONNECT__USER,
+  token,
+  user,
+});
+
+export const FAILED__TO__CONNECT = 'FAILED__TO__CONNECT';
+export const failedToConnect = () => ({
+  type: FAILED__TO__CONNECT,
+});
+
+export const LOGOUT__USER = 'LOGOUT__USER';
+export const logoutUser = () => ({
+  type: LOGOUT__USER,
+});
+
+export const GET__ONE__USER__BY__ID = 'GET__ONE__USER__BY__ID';
+export const getOneUserById = (id) => ({
+  type: GET__ONE__USER__BY__ID,
+  id,
+});
+
+export const GET__PROFILE__IS__LOADING = 'GET__PROFILE__IS__LOADING';
+export const getProfileIsLoading = () => ({
+  type: GET__PROFILE__IS__LOADING,
+});
+
+export const SAVE__PROFILE__IN__STATE = 'SAVE__PROFILE__IN__STATE';
+export const saveProfileInState = (profile, userId) => ({
+  type: SAVE__PROFILE__IN__STATE,
+  profile,
+  userId,
+});
+
+export const UPDATE__USER = 'UPDATE__USER';
+export const updateUser = (user) => ({
+  type: UPDATE__USER,
+  user,
+});
+
+export const GET__RIDES__WITH__USER__IN = 'GET__RIDES__WITH__USER__IN';
+export const getRidesWithUserIn = () => ({
+  type: GET__RIDES__WITH__USER__IN,
+});
+
+export const ADD__RIDES__TO__USER = 'ADD__RIDES__TO__USER';
+export const addRidesToUser = (rides) => ({
+  type: ADD__RIDES__TO__USER,
+  rides,
+});
+
+export const DELETE__DOG = 'DELETE__DOG';
+export const deleteDog = (userId, dogId) => ({
+  type: DELETE__DOG,
+  userId,
+  dogId,
+});

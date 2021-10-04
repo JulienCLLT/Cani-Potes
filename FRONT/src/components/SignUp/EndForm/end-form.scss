@@ -1,0 +1,29 @@
+@use '../../../styles/vars';
+
+.end {
+    
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 520px;
+
+        &__p {
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        &__home {
+            @extend %btn;
+            padding: 0 3 * vars.$gutter;
+            line-height: 2;
+            margin: 0 auto;
+            max-width: 250px;
+            width: 100%;
+        }
+    }
+
+    & img {
+        width: vars.$gutter;
+    } 
+}

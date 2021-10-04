@@ -1,0 +1,201 @@
+@use '../../../styles/vars';
+
+.dog {
+
+  &__behavior {
+    width: 49%;
+    font-size: 0.9* vars.$gutter;
+    border: 0.1 *vars.$gutter solid vars.$color_border-input;
+    border-radius: 3px;
+    padding: 0.3*vars.$gutter;
+    text-align: center;
+  }
+  
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+
+
+    &__input-infos {
+      // height: 520px;
+  
+      &__first {
+        margin: vars.$gutter 0;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+
+        &__race, &__weight {
+          width: 49%;
+        }
+
+        & select, & input {
+        height: 2* vars.$gutter;
+        width: 100%;
+        }
+
+        & select {
+          color: vars.$color-border-bottom-header;
+        }
+      }
+  
+      &__others{
+        display: flex;
+        flex-direction: column;
+  
+        &__sexe, &__birthday, &__sterilized, &__character__label-flex {
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: vars.$gutter;
+          align-items: center;
+        }
+
+        &__sexe {
+          
+          p {
+            width: 30%;
+          }
+
+          &__label {
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+
+ 
+
+            & label {
+              width: 49%;
+              font-size: 0.9* vars.$gutter;
+              border: 0.1 *vars.$gutter solid vars.$color_border-input;
+              border-radius: 3px;
+              padding: 0.3*vars.$gutter;
+              text-align: center;
+            }
+          }
+        }
+
+        &__character {
+          width: 100%;
+          justify-content: space-between;
+          display: flex;
+
+          &__label-flex {
+            width: 70%;
+            display: flex;
+            justify-content: space-between;
+          }
+
+          &__p {
+
+          }
+        }
+
+        &__sterilized {
+
+          &__label {
+            font-size: 0.9* vars.$gutter;
+            border: 0.1 *vars.$gutter solid vars.$color_border-input;
+            border-radius: 3px;
+            padding: 0.3*vars.$gutter;
+            width: 35%;
+            text-align: center;
+          }
+        }
+
+        &__birthday {
+          & input {
+            border-radius: 2px;
+            // width: 100%;
+          }
+        }
+
+        &__sterilized {
+
+          &__parent-label {
+            width: 70%;
+            justify-content: space-between;
+            display: flex;
+          }
+
+          &__label {
+            width: 49%;
+          }
+
+          & p {
+            width: 30%;
+          }
+        }
+
+        &__character {
+          display: flex;
+
+          & p {
+            
+          }
+        }
+  
+        &__surname{
+  
+          & input {
+            border: none;
+            // margin-left: 4.4*vars.$gutter;
+            border-bottom: 0.2*vars.$gutter solid vars.$color_border-input;
+          }
+        }
+
+        &__add-dog {
+          & img {
+            width: 9%;
+          }
+        }
+      }
+  
+    }
+  }
+
+  // all inputs
+  &__commun {
+    font-size: 0.9* vars.$gutter;
+    border: 0.1 *vars.$gutter solid vars.$color_border-input;
+    border-radius: 3px;
+    padding: 0.3*vars.$gutter;
+    width: 35%;
+    text-align: center;
+    // margin-right: 0.5*vars.$gutter;
+    // margin-bottom: 0.8*vars.$gutter;
+  }
+
+//   // texts before input
+  &__title {
+    width: 10*vars.$gutter;
+  }
+
+}
+
+// remove the arrows of input type number
+input[type="number"] {
+  /* Firefox */
+	-moz-appearance: textfield;
+
+	/* Chrome */
+	&::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin:0;
+	}
+
+	/* Opéra*/
+	&::-o-inner-spin-button {
+		-o-appearance: none;
+		margin: 0; 
+	}
+}
+
+// input[type="radio"]{
+//   display: none;
+// }
+
+// input[type="radio"]:checked + label {
+//   border: 0.15*vars.$gutter solid vars.$color_main;
+// }

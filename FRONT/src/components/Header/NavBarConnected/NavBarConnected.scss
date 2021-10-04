@@ -1,0 +1,38 @@
+@mixin lg-screen {
+    @media screen and (min-width: 900px) {
+        @content
+    }
+}
+
+.navbar-connected {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    max-width: 600px;
+    margin: auto;
+
+    @include lg-screen {
+        margin: 0;
+        font-size: 1.4rem;
+    }
+
+    &__link {
+        &--active {
+            text-decoration: underline;
+        }
+    }
+
+    &__img {
+        width: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 100%;
+            @include lg-screen {
+                display: none;
+            }
+        }
+    }
+}

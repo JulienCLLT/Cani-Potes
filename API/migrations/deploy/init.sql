@@ -72,11 +72,11 @@ CREATE TABLE ride (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     title TEXT NOT NULL , -- v CHECK (char_length(surname) < 50)
     description TEXT NOT NULL , -- v CHECK (char_length(surname) < 200)
-    start_coordinate NUMERIC(9,2) [] NOT NULL, -- v
+    start_coordinate NUMERIC(9,6) [] NOT NULL, -- v
     end_coordinate NUMERIC(9,6) [] NOT NULL, -- v
     starting_time TIMESTAMPTZ NOT NULL,
     duration INTERVAL, --todo CHECK mniute 
-    max_number_dogs INT NOT NULL, 
+    max_number_dogs INT NOT NULL, --todo mini 2? 
     tag_id INT REFERENCES tag(id) NOT NULL, 
     host_id INT REFERENCES member(id) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

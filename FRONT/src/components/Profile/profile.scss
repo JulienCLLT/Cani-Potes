@@ -1,0 +1,340 @@
+@use '../../styles/vars';
+
+@mixin lg-screen {
+  @media screen and (min-width:900px) {
+      @content
+  }
+};
+
+%edit-btn {
+  cursor: pointer;
+  box-shadow: 0 0 5px black;
+  padding: .5 * vars.$gutter;
+  border-radius: 10px;
+
+  &:hover {
+    box-shadow: 0 0 5px black inset;
+  }
+}
+
+.profile-page {
+  margin-bottom: 4 * vars.$gutter;
+  position: relative;
+
+  &__edit {
+    @extend %edit-btn;
+    position: absolute;
+    top: 1 * vars.$gutter;
+    right: 1 * vars.$gutter;
+  }
+
+  &__header {
+    width: 60%;
+    min-width: 220px;
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+    box-shadow: 0 0 10px  vars.$color-border-input ;
+    border-radius: 30px;
+    padding: .5 * vars.$gutter;
+
+    &__annoucement {
+      font-size: 1.5rem;
+    }
+
+    &__avatar {
+      width: 200px;
+      margin: auto;
+      
+      img {
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+
+    &__avatar-name {
+      font-size: 1.3rem;
+    }
+  }
+
+  &__info-user, &__info-dogs {
+    padding: 0 1 * vars.$gutter;
+    margin: 1 * vars.$gutter 0;
+  }
+
+  &__info-user {
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+      width: 60%;
+      padding: 1 * vars.$gutter;
+      margin: 1 * vars.$gutter auto;
+      box-shadow: 0 0 5px vars.$color-border-input;
+      border-radius: 5px;
+
+      &-field {
+        display: flex;
+        gap: .5rem;
+      
+        input {
+          width: 50%;
+        }
+      }
+    }
+
+    &__submit {
+      text-align: center;
+
+      button {
+        @extend %btn;
+      }
+    }
+  }
+
+  &__info-dogs {
+
+    article {
+      box-shadow: 0 0 3px black;
+      padding: vars.$gutter;
+      margin: vars.$gutter 0;
+
+      @include lg-screen {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      h2 {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+          @include lg-screen {
+            display: flex;
+            align-items: center;
+            gap: .5 * vars.$gutter;
+          }
+        }
+
+        .profile-page__edit__dog {
+          @extend %edit-btn;
+        }
+      }
+
+    }
+  }
+
+  &__dog {
+    &__display-input {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+
+      input[type="date"] {
+        width: 100%;
+      }
+
+      .profile-page__dog__gender-container {
+        display: flex;
+        justify-content: center;
+        font-size: .8rem;
+
+        input {
+          width: 10px;
+          margin: .1 * vars.$gutter auto 0;
+        }
+      }
+    }
+
+    @include lg-screen {
+      min-width: 500px;
+      width: 500px;
+    }
+
+    &__details {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      width: 80%;
+      padding: .5 * vars.$gutter;
+      margin: 1 * vars.$gutter auto;
+      box-shadow: 0 0 3px black;
+      border-radius: 5px;
+
+      select {
+        width: 100%;
+      }
+
+      span, input {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        gap: .5 * vars.$gutter;
+        
+        img {
+          width: 20px;
+        }
+      }
+
+      &-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
+  }
+
+  &__dog-pictures {
+    @include lg-screen {
+      max-width: calc(100% - 500px);
+    }
+
+    &__container {
+      padding: .5 * vars.$gutter;
+      margin: 1 * vars.$gutter auto;
+      box-shadow: 0 0 3px black;
+      border-radius: 5px;
+      display: flex;
+      gap: .5 * vars.$gutter;
+      overflow: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      
+
+      &-item {
+        width: 100px;
+        min-width: 100px;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        position: relative;
+  
+        img {
+          width: 100%;
+        }
+
+        button {
+          position: absolute;
+          padding: 0;
+          top: 0;
+          right: 0;
+          transform: translate(25%, -25%);
+          background: red;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          cursor: pointer;
+
+          &:hover {
+            transform:  translate(25%, -25%) scale(1.2);
+          }
+        }
+      }
+    }
+  }
+
+  &__modal {
+    position: fixed;
+    background: rgba(200, 200, 200, .8);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fade-in .3s ease-in forwards;
+    
+    &__container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.3rem;
+      padding: 2 * vars.$gutter;
+      box-shadow: 0 0 5px black inset;
+      border-radius: 20px;
+    }
+
+    &__close {
+        width: 50px;
+        height: 50px;
+        align-self: flex-end;
+        cursor: pointer;
+    }
+
+    &__btn {
+      display: flex;
+      justify-content: center;
+      gap: 1 * vars.$gutter;
+      margin: 1 * vars.$gutter 0;
+
+      &-confirm {
+        background: lime !important;
+      }
+
+      button {
+        @extend %btn;
+      }
+    }
+  }
+
+  &__btn-dogform {
+    display: flex;
+    align-items: center;
+    gap: .5 * vars.$gutter;
+    margin: auto;
+    @extend %btn;
+
+    span {
+      transition: all .3s ease-in-out;
+    }
+
+    .open {
+      transform: rotate(90deg);
+    }
+
+    .close {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &__dogform {
+    &-open {
+      overflow: hidden;
+      animation: appear .5s forwards;
+    }
+
+    &-close {
+      overflow: hidden;
+      max-height: 0px;
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    transform: translate(0, -100%);
+  } to {
+    transform: translate(0);
+  }
+}
+
+@keyframes appear {
+  from {
+    max-height: 0px;
+  }
+  99% {
+    max-height: 650px;
+  }
+  to {
+    max-height: none;
+  }
+}

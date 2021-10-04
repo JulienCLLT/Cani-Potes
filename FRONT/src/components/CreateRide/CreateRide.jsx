@@ -1,126 +1,213 @@
-import React from 'react';
-import { useForm } from "react-hook-form";
+/* eslint-disable linebreak-style */
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
 
-import '../CreateRide/createRide.scss';
+// import leaflet
+import {
+  MapContainer, TileLayer, Marker, useMapEvents,
+} from 'react-leaflet';
+import L from 'leaflet';
+import { createRide } from '../../actions/rides';
+
+import './createRide.scss';
+
+import startPointFlag from '../../assets/img/info-ride/startPointFlag.svg';
+import endPointFlag from '../../assets/img/info-ride/endPointFlag.svg';
 
 const CreateRide = () => {
-	const { register, handleSubmit, formState: { errors } } = useForm();
+  const { failedToCreateRide, errorMessage } = useSelector((state) => state.rides);
+  const { user } = useSelector((state) => state);
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-	const onSubmit = (data) => {
-		// dispatch action to post data to bdd through middleware and if ride is created, add it to state
-		console.log('submitted data : ', data);
-	};
+  const dispatch = useDispatch();
 
-	const hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ,19 ,20, 21, 22, 23];
-	const minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
-	const date = new Date();
+  const hours = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+    13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+  ];
+  const minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+  const date = new Date();
 
-	return (
-		<main className='create-ride'>
-			<h2>Création d'une balade</h2>
-			<form onSubmit={handleSubmit(onSubmit)}>
+  const positionStart = new L.Icon({
+    iconUrl: startPointFlag,
+    inconRetInaUrl: startPointFlag,
+    popupAnchor: [-0, -0],
+    iconSize: [45, 55],
+  });
 
-				<div className="create-ride__field">
-					<label htmlFor="title">Nom de ma balade</label>
-					<input
-						id='title'
-						name='title'
-						defaultValue="Ma super balade"
-						{...register('title', {required: 'Title is needed'})}
-					/>
-					{errors.title && <span>Le titre est obligatoire</span>}
-				</div>
+  const positionEnd = new L.Icon({
+    iconUrl: endPointFlag,
+    inconRetInaUrl: endPointFlag,
+    popupAnchor: [-0, -0],
+    iconSize: [45, 55],
+  });
 
-				{/* how to choose coordinates ? with map ? by writing an adress ? */}
-				<div className="create-ride__field">
-					<label htmlFor="startingPoint">Point de départ</label>
-					<input
-						id='startingPoint'
-						name='startingPoint'
-						defaultValue="Point de départ"
-						{...register('startingPoint', {required: 'startingPoint is needed'})}
-					/>
-					{errors.startingPoint && <span>Le point de départ est obligatoire</span>}
-				</div>
+  const [switchPoint, setSwitchPoint] = useState('start');
+  const [startPoint, setStartPoint] = useState(user.position);
+  const [endPoint, setEndPoint] = useState();
 
-				<div className="create-ride__field">
-					<label htmlFor="endingPoint">Point d'arrivée</label>
-					<input
-						id='endingPoint'
-						name='endingPoint'
-						defaultValue="Point d'arrivée"
-						{...register('endingPoint', {required: 'endingPoint is needed'})}
-					/>
-					{errors.endingPoint && <span>Le point d'arrivée est obligatoire</span>}
-				</div>
+  const onSubmit = (data) => {
+    console.log(data);
+    dispatch(createRide(data, startPoint, endPoint));
+  };
 
-				<div className="create-ride__field">
-					<label htmlFor="date">Jour de la balade</label>
-					<input
-						id='date'
-						name='date'
-						type='date'
-						defaultValue={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${(date.getUTCDate() + 1).toString().padStart(2, '0')}`}
-						min={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`}
-						{...register('date', {required: 'A day is needed'})}
-					/>
-					{errors.date && <span>Le choix d'une date est obligatoire</span>}
-				</div>
+  const LocationMarker = () => {
+    const [position, setPosition] = useState(null);
+    const map = useMapEvents({
+      click(e) {
+        if (switchPoint === 'start') {
+          setStartPoint([e.latlng.lat, e.latlng.lng]);
+        }
+        else if (switchPoint === 'end') {
+          setEndPoint([e.latlng.lat, e.latlng.lng]);
+        }
+      },
+    });
+    return position === null ? null : (
+      <Marker />
+    );
+  };
 
-				<div className="create-ride__field">
-					<p>Heure de départ</p>
-					<label htmlFor="startHour"></label>
-					<select {...register("startHour")} defaultValue={17}>
-						{
-							hours.map(hour => <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}h</option>)
+  return (
+    <main className="create-ride">
+      <h2>Création d'une balade</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {
+          failedToCreateRide && <span>{errorMessage}</span>
+        }
+
+        {/* Title */}
+        <div className="create-ride__field">
+          <label htmlFor="title">Nom de ma balade</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            defaultValue="Ma super balade"
+            {...register('title', { required: 'Veuillez écrire un titre.', maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })}
+          />
+          {errors.title && <span>{errors.title.message}</span>}
+        </div>
+
+        <div className="create-ride__field__map-container">
+          <div className="create-ride__field__map-points">
+            <button
+              className={switchPoint === 'start' ? 'selected' : ''}
+              type="button"
+              onClick={() => setSwitchPoint('start')}
+            >
+              Départ
+            </button>
+            <button
+              className={switchPoint === 'end' ? 'selected' : ''}
+              type="button"
+              onClick={() => setSwitchPoint('end')}
+            >
+              Arrivée
+            </button>
+          </div>
+          <MapContainer className="leaflet-container" center={user.position} zoom={16} scrollWheelZoom>
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <Marker
+              position={startPoint}
+              icon={positionStart}
+            />
+            {endPoint && (
+              <Marker
+                position={endPoint}
+                icon={positionEnd}
+              />
+            )}
+            <LocationMarker />
+          </MapContainer>
+        </div>
+
+        {/* Date */}
+        <div className="create-ride__field">
+          <label htmlFor="date">Jour de la balade</label>
+          <input
+            id="date"
+            name="date"
+            type="date"
+            defaultValue={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${(date.getUTCDate() + 1).toString().padStart(2, '0')}`}
+            min={`${date.getUTCFullYear().toString().padStart(2, '0')}-${(date.getUTCMonth() + 1).toString().padStart(2, '0')}-${date.getUTCDate().toString().padStart(2, '0')}`}
+            {...register('date', { required: 'Veuillez sélectionner la date de la balade.' })}
+          />
+          {errors.date && <span>{errors.date.message}</span>}
+        </div>
+
+        <div className="create-ride__field">
+          {/* Start hour */}
+          <p>Heure de départ</p>
+          <select {...register('startHour', { required: 'Veuillez sélectionner l\'heure de la balade.' })} defaultValue={17}>
+            {
+							hours.map((hour) => <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}</option>)
 						}
-					</select>
-					<label htmlFor="startMin"></label>
-					<select {...register("startMin")} defaultValue={30}>
-						{
-							minutes.map(minute => <option key={minute} value={minute}>{minute.toString().padStart(2, '0')}</option>)
+          </select>
+          {/* Start min */}
+          <select {...register('startMin', { required: 'Veuillez sélectionner les minutes de l\'heure de la balade.' })} defaultValue={30}>
+            {
+							minutes.map((minute) => <option key={minute} value={minute}>{minute.toString().padStart(2, '0')}</option>)
 						}
-					</select>
+          </select>
+          {/* je convertis en number puis je fais si x<minHour alors erreur */}
+          {/* {errors.startHour || errors.startMin && <span>{errors.startHour.message}</span> } */}
 
-					{errors.startHour || errors.startMin && <span>L'heure de départ est obligatoire</span>}
-				</div>
+          {errors.startHour || errors.startMin && (
+          <>
+            <span>{errors.startHour.message}</span>
+            <span>{errors.starMin.message}</span>
+          </>
+          )}
+          {errors.startHour && <span>{errors.startHour.message}</span>}
+        </div>
 
-				<div className="create-ride__field">
-					<p>Heure d'arrivée estimée</p>
-					<p>18h55</p>
-				</div>
+        {/* Duration */}
+        <div className="create-ride__field">
+          <label htmlFor="duration">Durée de la balade
+            <input
+              id="duration"
+              name="duration"
+              defaultValue={15}
+              type="number"
+              placeholder="Durée (min)"
+              {...register('duration', { maxLength: { value: 3, message: 'Veuillez ne pas dépassez 3 chiffres.' } })}
+            />
+            minutes.
+          </label>
+          {errors.duration && <span>{errors.duration.message}</span>}
+        </div>
 
-				<div className="create-ride__field">
-					<p>Temps de la balade</p>
-					<p>27min</p>
-				</div>
+        {/* Max dog */}
+        <div className="create-ride__field">
+          <label htmlFor="maxDogs">Nombre maximum de chiens.</label>
+          <input
+            id="maxDogs"
+            name="maxDogs"
+            defaultValue={4}
+            type="number"
+            {...register('maxDogs', {
+              required: 'Veuillez remplir le nombre maximum de chiens', max: { value: 5, message: 'Maximum 5 chiens' }, min: { value: 2, message: 'Minimum 2 chiens' },
+            })}
+          />
+          {errors.maxDogs && <span>{errors.maxDogs.message}</span>}
+        </div>
 
-				<div className="create-ride__field">
-					<label htmlFor="maxDogs">Nombre maximum de chiens</label>
-					<input
-						id='maxDogs'
-						name='maxDogs'
-						min={2}
-						defaultValue={4}
-						type='number'
-						{...register('maxDogs', {required: 'maxDogs is needed'})}
-					/>
-					{errors.maxDogs && <span>Le nombre max de chiens est obligatoire</span>}
-				</div>
+        {/* Description */}
+        <div className="create-ride__field">
+          <label htmlFor="description">Description de ma balade</label>
+          <textarea
+            placeholder="Je souhaite me faire des Cani Potes :)"
+            {...register('description', { required: 'Veuillez remplir la description.', maxLength: { value: 200, message: 'Veuillez ne pas dépasser 200 caractères.' } })}
+          />
+          {errors.description && <span>{errors.description.message}</span>}
+        </div>
 
-				<div className="create-ride__field">
-					<label htmlFor="description">Description de ma balade</label>
-					<textarea
-						placeholder='Je souhaite me faire des Cani Potes :)'
-						{...register('description', {required: 'Description is needed'})}
-					/>
-					{errors.description && <span>La description est obligatoire</span>}
-				</div>
-				
-				<input type="submit" />
-			</form>
-		</main>
-	);
+        <input type="submit" />
+      </form>
+    </main>
+  );
 };
 
 export default CreateRide;

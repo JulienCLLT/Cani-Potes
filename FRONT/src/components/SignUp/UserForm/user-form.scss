@@ -1,0 +1,79 @@
+@use '../../../styles/vars';
+
+.user-form {
+
+  &__form {
+    & form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    &__input-infos {
+      // height: 620px;
+      padding-bottom: vars.$gutter;
+
+      &__identity, &__zipcode__input {
+        padding: 0 2*vars.$gutter;
+      }
+
+      &__birthday {
+
+        & label {
+          margin-bottom: 0.5*vars.$gutter;
+          margin-top: 0.5*vars.$gutter;
+          max-width: 400px;
+          width: 100%;
+        }
+      }
+
+      &__email, &__password, &__password--confirmation, &__name, &__first_name, &__picture, &__zipcode__input, &__birthday, &__error-message {
+        display: flex;
+        flex-direction: column;
+        margin-top: vars.$gutter;
+        justify-content: center;
+        align-items: center;
+
+        & label {
+          margin-bottom: 0.4*vars.$gutter;
+          max-width: 400px;
+        }
+      }
+
+      &__zipcode{
+        display: flex;
+        flex-direction: column;
+
+        &__p {
+          font-size: vars.$gutter;
+          text-align: justify; // center pour media queries
+          margin-top: vars.$gutter;
+          max-width: 400px;
+          align-self: center;
+        }
+      }
+    }
+  }
+
+  & input {
+    border: 0.1 *vars.$gutter solid vars.$color_border-input;
+    border-radius: 2px;
+    height: 2*vars.$gutter;
+    box-sizing: content-box;
+    width: 100%;
+    max-width: 400px;
+    // margin: 0 auto;
+  }
+}
+
+.user-form__form__input-infos__picture input {
+  border: none;
+}
+
+// errors message
+.errors {
+  margin: 0 auto;
+  font-size: 0.8* vars.$gutter;
+  color: vars.$color_error;
+  padding-top: 0.2*vars.$gutter;
+}

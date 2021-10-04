@@ -1,0 +1,69 @@
+@use '../../../styles/vars';
+
+.timeline {
+
+    &__line-circle {
+        position: relative;
+
+        &__line {
+            height: 2px;
+            left: 0;
+            background-color: vars.$color_main;
+            margin-bottom: 10px;
+        }
+    
+        &__circle {
+            width: 16px;
+            height: 16px;
+            background-color: vars.$color_main;
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(0,-50%);
+
+            &--complete {
+                background-color: vars.$color_valid;
+            }
+        }
+    }    
+
+    &__title {
+        position: relative;
+
+        & h2 {
+            transform: translate(0,-50%);
+            width: fit-content;
+            position: absolute;
+            // top: 10%;
+            font-weight: normal;
+            font-size: vars.$gutter;
+            padding-top: 0.5*vars.$gutter;
+        }
+
+        & h2:nth-child(1) {
+            left: 17%;
+        }
+
+        & h2:nth-child(2) {
+            left: 51%;
+        }
+
+        & h2:nth-child(3) {
+            left: 94.5%;
+        }
+    }
+
+    & div:nth-child(2) {
+        top: 50%;
+        right: 10%;
+    }
+
+    & div:nth-child(3) {
+        top: 50%;
+        left: 50%;
+    }
+
+    & div:nth-child(4) {
+        top: 50%;
+        left: 10%;
+    }
+}

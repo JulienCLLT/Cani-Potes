@@ -1,0 +1,17 @@
+@use '../../../../styles/vars';
+
+.ride {
+    &__detail {
+        display: flex;
+        gap: .5 * vars.$gutter;
+        align-items: center;
+        padding-left: .5 * vars.$gutter;
+
+        img {
+            width: 7%;
+        }
+    }
+    button {
+        @extend %btn;
+    }
+}
