@@ -43,7 +43,7 @@ const userMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           console.error("Can't get profile : ", error.response.data);
-        })
+        });
       break;
     case UPDATE__DOG: {
       const {
@@ -72,7 +72,7 @@ const userMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log('Dog updated successfully : ', response);
-          // todo update dog with db response with another action creator in a store.dispatch()
+          next(action);
         })
         .catch((error) => {
           console.error('Failed to update dog : ', error.response.data);

@@ -6,6 +6,7 @@ import { deleteDog, deleteDogPhoto, deleteUser, getOneUserById, getProfileIsLoad
 import { formstepShowsDogform, getDogBreedsAndBehaviors } from '../../actions/signup';
 
 import DogForm from '../SignUp/DogForm/index';
+import Loader from '../Loader/index';
 
 import './profile.scss';
 
@@ -23,7 +24,6 @@ const Profile = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    // wait for db to send profile before uncomment here
     dispatch(formstepShowsDogform());
     dispatch(getProfileIsLoading());
     dispatch(getDogBreedsAndBehaviors());
@@ -134,7 +134,6 @@ const Profile = () => {
   const handleDeletePhoto = () => {
     setIsModalPhotoOpen(false);
     const photoToDelete = profile.dogs[dogAndPicIndex.dogIdx].dog_photo[dogAndPicIndex.picIdx];
-    console.log(photoToDelete);
     const dogId = profile.dogs[isEditingDog - 1].dog_id;
     dispatch(deleteDogPhoto(user.id, dogId, photoToDelete.photo_id));
   };
@@ -158,7 +157,7 @@ const Profile = () => {
     <div className="profile-page">
       {
         profile.isLoading ? (
-          <span>chargement ...</span>
+          <Loader />
         ) : (
           <>
             {
@@ -195,20 +194,6 @@ const Profile = () => {
                 <span className="profile-page__header__avatar-name">{profile.first_name}</span>
               </div>
             </header>
-
-            {profileIsUser && (
-              <button
-                className="delete-account-btn"
-                type="button"
-                onClick={() => {
-                  setInputDelete('');
-                  setFailedToDelete(false);
-                  setIsModalAccountOpen(true);
-                }}
-              >
-                Supprimer mon compte
-              </button>
-            )}
 
             {isModalDeleteAccountOpen && (
               <div className="profile-page__modal">
@@ -660,7 +645,6 @@ const Profile = () => {
         </div>
       )}
 
-      {/* je ne veux afficher cette partie que SI l'id du profile === l'id du user */}
       {profileIsUser && (
         <>
           <button
@@ -676,6 +660,20 @@ const Profile = () => {
             <DogForm />
           </div>
         </>
+      )}
+
+      {profileIsUser && (
+        <button
+          className="delete-account-btn"
+          type="button"
+          onClick={() => {
+            setInputDelete('');
+            setFailedToDelete(false);
+            setIsModalAccountOpen(true);
+          }}
+        >
+          Supprimer mon compte
+        </button>
       )}
 
     </div>

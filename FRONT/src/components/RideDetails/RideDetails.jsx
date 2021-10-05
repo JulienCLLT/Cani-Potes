@@ -10,6 +10,8 @@ import {
 
 import L from 'leaflet';
 
+import Loader from '../Loader/index';
+
 import calendar from '../../assets/img/info-ride/calendar.svg';
 import hourglass from '../../assets/img/info-ride/hourglass.svg';
 import startFlag from '../../assets/img/info-ride/startPointFlag.svg';
@@ -163,7 +165,7 @@ const RideDetails = () => {
           <div className="ride-details__leaflet">
             {
               isLoading ? (
-                <span>chargement ...</span>
+                <Loader />
               ) : (
                 <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={14} scrollWheelZoom>
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
