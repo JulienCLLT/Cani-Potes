@@ -77,7 +77,7 @@ const dogController = {
 
             //!todo
             // const userId = request.userId;
-            const userId = 6;
+            const userId = 1;
 
             if (userId !== profileId) {
                 throw Error('Vous ne pouvez pas modifier les chiens de ce profil');
@@ -85,42 +85,18 @@ const dogController = {
 
             request.body.id = userId;
             //todo joi
-            const updatedDog = new Dog(request.body);
+            const dogToUpdate = new Dog(request.body);
 
+            // verif si pas de chien
             // findbyId id dog owner = iduser
 
             // info recu ? 
-            const dogU = await updatedDog.save();
-            console.log("dogU", dogU);
-
-            // creer sqich function update
-
+            await dogToUpdate.save();
+            const dogUpdated = await Dog.findById(userId);
 
             // est-ce que photo ? suppr ou rajout photo ? 
 
-            /*
-
-              async save() {
-        try {
-            if (this.id) {
-                await db.query('SELECT update_boardgame($1)', [this]);
-            } else {
-                const {rows} = await db.query('SELECT new_boardgame($1) AS id', [this]);
-                this.id = rows[0].id;
-                return this;
-            }
-        } catch(error) {
-            console.log(error);
-            if (error.detail) {
-                throw new Error(error.detail)
-            } else {
-                throw error;
-            }
-        }
-    }
-
-    */
-            response.json("ok")
+            response.status(201).json(dogUpdated);
         } catch (error) {
             response.status(500).json(error.message);
         }
