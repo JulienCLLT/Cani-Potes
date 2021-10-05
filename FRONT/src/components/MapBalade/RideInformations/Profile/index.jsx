@@ -42,7 +42,9 @@ const Profile = ({ participants, host_id }) => {
                       return (
                         <div className="profile__article__dogs-container" key={`participant${participant.participant_id}dog${dog.dog_id}`}>
                           <div className="profile__article__dogs-image">
-                            <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} />
+                            {dog.dog_photo && (
+                              <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} />
+                            )}
                           </div>
                           <div>
                             <span>{dog.dog_surname}</span>

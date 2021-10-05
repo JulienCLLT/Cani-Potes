@@ -28,6 +28,7 @@ const DogForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    console.log(data);
     dispatch(dogSignUp(data));
   };
 
@@ -151,7 +152,10 @@ const DogForm = () => {
               </div>
               {/* Description */}
               <div className="dog__form__input-infos__others__description">
-                <textarea placeholder="Une petite description de votre chien et de ce que vous recherchez :)" {...register('description', { maxLength: { value: 200, message: 'Veuillez ne pas dépasser 200 caractères.' } })} />
+                <textarea
+                  placeholder="Une petite description de votre chien et de ce que vous recherchez :)"
+                  {...register('description', { maxLength: { value: 200, message: 'Veuillez ne pas dépasser 200 caractères.' } })}
+                />
               </div>
             </div>
           </div>

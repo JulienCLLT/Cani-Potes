@@ -106,8 +106,11 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           ],
         },
       };
-    case ADD__MESSAGE__IN__STATE:
-      console.log(new Date().toISOString())
+    case ADD__MESSAGE__IN__STATE: {
+      const sender = state.currentRide.participants.find(
+        (participant) => participant.participant_id === action.message.sender_id,
+      );
+
       return {
         ...state,
         currentRide: {
@@ -115,16 +118,17 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           messages: [
             ...state.currentRide.messages,
             {
-              sent: action.sent,
-              message: action.message,
-              sender_id: action.sender_id,
-              sender_photo: action.sender_photo,
-              sender_first_name: action.sender_first_name,
-              sender_last_name: action.sender_last_name,
+              message_id: action.message.id,
+              sent: action.message.sent,
+              message: action.message.message,
+              sender_id: action.message.sender_id,
+              sender_photo: sender.participant_photo,
+              sender_first_name: sender.participant_first_name,
             },
           ],
         },
       };
+    }
     case DELETE__RIDE__IN__STATE:
       return {
         ...state,

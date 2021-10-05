@@ -40,10 +40,12 @@ const dogController = {
                 throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
             }
 
-            request.body.dog_owner_id = request.userId;
-            console.log(request.body);
+            console.log("request body create dog", request.body);
+            request.body.dog_owner_id = userId;
+
             const newDog = new Dog(request.body);
             const dogCreated = await newDog.create();
+
 
             if (request.file) {
                 const { filename: image } = request.file;
@@ -64,70 +66,35 @@ const dogController = {
         }
     },
 
-    delete: async (request, response) => {
-        try {
-            const profileId = Number(request.params.profileId);
-            const dogId = Number(request.params.dogId);
-            const userId = request.userId;
-
-            if (isNaN(profileId) || isNaN(dogId)) {
-                throw Error('La valeur de l\'id doit être un nombre');
-            }
-            if (profileId !== userId) {
-                throw Error('Vous ne pouvez pas accéder à cette demande');
-            }
-
-            const dogToDelete = await Dog.findById(dogId);
-            if (!dogToDelete) {
-                throw Error('Ce chien n\'existe pas');
-            }
-            if (dogToDelete.owner_id !== userId) {
-                throw Error('Vous n\'êtes pas le propriétaire du chien');
-            }
-
-            //todo delete photo sur serveur ? 
-            await Photo.deletePhotos(dogId);
-            await Dog.delete(dogId);
-            response.status(204).json();
-
-        } catch (error) {
-            response.status(500).json(error.message);
-        }
-    },
-
     updateDog: async (request, response) => {
         try {
             const profileId = Number(request.params.profileId);
             const dogId = Number(request.params.dogId);
-            const userId = request.userId;
 
-            console.log("request body", request.body);
+            if (isNaN(profileId) && isNaN(dogId)) {
+                throw Error('La valeur de l\'id doit être un nombre');
+            }
+
+            //!todo
+            // const userId = request.userId;
+            const userId = 6;
+
+            if (userId !== profileId) {
+                throw Error('Vous ne pouvez pas modifier les chiens de ce profil');
+            }
+
+            request.body.id = userId;
+            //todo joi
             const updatedDog = new Dog(request.body);
-            console.log("updated dog", updatedDog);
 
-            // verif si number tout ca
-            // prpofileid = userId
             // findbyId id dog owner = iduser
 
             // info recu ? 
-            // save 
+            const dogU = await updatedDog.save();
+            console.log("dogU", dogU);
 
             // creer sqich function update
-            // faire test avec renvoi de tout
-            // update dynamique
 
-            /*
-            Si formulaire ne revoi rien j'ai quoi ? 
-
-            surname
-            description
-            weight
-            birthday
-            breed_id
-            gender_id
-            behavior_id
-            id
-            */
 
             // est-ce que photo ? suppr ou rajout photo ? 
 
@@ -157,7 +124,45 @@ const dogController = {
         } catch (error) {
             response.status(500).json(error.message);
         }
+    },
+
+    delete: async (request, response) => {
+        try {
+            console.log("request user.id", request.userId);
+
+            const profileId = Number(request.params.profileId);
+            const dogId = Number(request.params.dogId);
+            console.log("profileId", request.params.profileId);
+            console.log("dogId", request.params.dogId);
+
+            const userId = request.userId;
+
+            if (isNaN(profileId) || isNaN(dogId)) {
+                throw Error('La valeur de l\'id doit être un nombre');
+            }
+            if (profileId !== userId) {
+                throw Error('Vous ne pouvez pas accéder à cette demande');
+            }
+
+            const dogToDelete = await Dog.findById(dogId);
+            console.log("dog to delete", dogToDelete);
+            if (!dogToDelete) {
+                throw Error('Ce chien n\'existe pas');
+            }
+            if (dogToDelete.owner_id !== userId) {
+                throw Error('Vous n\'êtes pas le propriétaire du chien');
+            }
+
+            //todo delete photo sur serveur ? 
+            await Photo.deletePhotos(dogId);
+            await Dog.delete(dogId);
+            response.status(204).json();
+
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
     }
+
 };
 
 module.exports = dogController;

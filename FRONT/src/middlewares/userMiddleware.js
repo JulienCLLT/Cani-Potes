@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 import axios from 'axios';
 import {
-  GET__ONE__USER__BY__ID, saveProfileInState, UPDATE__USER, GET__RIDES__WITH__USER__IN, addRidesToUser,
-  DELETE__DOG,
+  GET__ONE__USER__BY__ID, UPDATE__USER, GET__RIDES__WITH__USER__IN, DELETE__DOG, DELETE__USER, UPDATE__DOG,
+  logoutUser, saveProfileInState, addRidesToUser,
 } from '../actions/users';
 
 const userMiddleware = (store) => (next) => (action) => {
@@ -33,6 +33,42 @@ const userMiddleware = (store) => (next) => (action) => {
           console.error("Can't get profile : ", error.response.data);
         });
       break;
+    case UPDATE__DOG: {
+      const {
+        surname, behavior, breed, gender, weight, age, sterilization, description, photoDog,
+      } = action.updatedDog;
+
+      const formData = new FormData();
+      // check it when route will be ok
+      console.log(photoDog);
+
+      formData.append('surname', surname);
+      formData.append('breed_id', breed);
+      formData.append('weight', weight);
+      formData.append('gender_id', gender);
+      formData.append('birthday', age);
+      formData.append('sterilization', sterilization);
+      formData.append('description', description);
+      formData.append('behavior_id', behavior);
+
+      axios({
+        method: 'PATCH',
+        url: `http://107.22.144.90/api/profile/${action.userId}/dogs/${action.dog_id}`,
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          authorization: `${store.getState().user.token}`,
+        },
+      })
+        .then((response) => {
+          console.log('Dog updated successfully : ', response);
+          // update dog with db response with another action creator in a store.dispatch()
+        })
+        .catch((error) => {
+          console.error('Failed to update dog : ', error.response.data);
+        });
+      break;
+    }
     case UPDATE__USER: {
       const {
         firstName, lastName, zipcode, photoUser,
@@ -44,8 +80,15 @@ const userMiddleware = (store) => (next) => (action) => {
       formData.append('zipcode', zipcode);
       formData.append('photo', photoUser);
 
-      axiosInstance
-        .patch('/account/edit')
+      axios({
+        method: 'PATCH',
+        url: 'http://107.22.144.90/api/account/edit',
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          authorization: `${store.getState().user.token}`,
+        },
+      })
         .then((response) => {
           console.log('User updated : ', response.data);
           next(action);
@@ -74,6 +117,17 @@ const userMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           console.error('Failed to delete dog : ', error.response.data);
+        });
+      break;
+    case DELETE__USER:
+      axiosInstance
+        .delete('/account/delete')
+        .then((response) => {
+          console.log('User deleted successfully : ', response);
+          store.dispatch(logoutUser());
+        })
+        .catch((error) => {
+          console.error('Failed to delete account : ', error.response.data);
         });
       break;
     default:
