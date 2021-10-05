@@ -98,29 +98,35 @@ const userController = {
         try {
             const idPayload = request.userId;
             request.body.id = idPayload;
-                
+             // on fait une premiere update sans prendre en compte la photo
+             // en cas insertion d'un email deja valide on catch
+             // si on fait tout en une seul requete a la fin si il y a un confilt d'email le nom de la photo dans 
+             // le fichier public change mais pas en bdd = confilt 
+            const user = new UserModel(request.body);
+            await user.save(user);
+
                 if (request.file) {
                     const { filename: image } = request.file;
 
-                    const oldPhoto = await UserModel.findOne(idPayload);
-
-                        if (oldPhoto.photo != 'avatar.jpg') {
-                            console.log(oldPhoto.photo);
-                            fs.unlinkSync(`public/user_resized/${oldPhoto.photo}`);
-                        };
-                        
-                    //resize picture and push it in resized file
                     await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
                         .toFile(path.resolve(request.file.destination, 'user_resized', image));
                     fs.unlinkSync(request.file.path);
                     
                     //push name path a image resized 
-                    request.body.photo = request.file.filename;
+                    const oldPhoto = await UserModel.findOne(idPayload);
+
+                        if (oldPhoto.photo != 'avatar.jpg') {
+                            
+                            fs.unlinkSync(`public/user_resized/${oldPhoto.photo}`);
+                        };
+                
+                        
+                    const newPhoto = new UserModel({id:idPayload, photo:request.file.filename});
+                    await newPhoto.save(newPhoto);
+                    
                 };
 
-            const user = new UserModel(request.body);
-           
-            await user.save(user);
+
             response.status(204).json('Update done');
         } catch (error) {
             response.status(500).json(error.message);
