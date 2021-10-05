@@ -1,7 +1,8 @@
 /* eslint-disable linebreak-style */
 import axios from 'axios';
 import {
-  GET__ONE__USER__BY__ID, UPDATE__USER, GET__RIDES__WITH__USER__IN, DELETE__DOG, DELETE__USER, UPDATE__DOG,
+  GET__ONE__USER__BY__ID, UPDATE__USER, GET__RIDES__WITH__USER__IN,
+  DELETE__DOG, DELETE__USER, UPDATE__DOG, DELETE__DOG__PHOTO,
   logoutUser, saveProfileInState, addRidesToUser,
 } from '../actions/users';
 
@@ -39,21 +40,20 @@ const userMiddleware = (store) => (next) => (action) => {
       } = action.updatedDog;
 
       const formData = new FormData();
-      // check it when route will be ok
-      console.log(photoDog);
+      // console.log(photoDog);
 
       formData.append('surname', surname);
       formData.append('breed_id', breed);
       formData.append('weight', weight);
       formData.append('gender_id', gender);
-      formData.append('birthday', age);
+      if (age) formData.append('birthday', age);
       formData.append('sterilization', sterilization);
       formData.append('description', description);
       formData.append('behavior_id', behavior);
 
       axios({
         method: 'PATCH',
-        url: `http://107.22.144.90/api/profile/${action.userId}/dogs/${action.dog_id}`,
+        url: `http://107.22.144.90/api/profile/${action.userId}/dogs/${action.dogId}`,
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -62,7 +62,7 @@ const userMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log('Dog updated successfully : ', response);
-          // update dog with db response with another action creator in a store.dispatch()
+          // todo update dog with db response with another action creator in a store.dispatch()
         })
         .catch((error) => {
           console.error('Failed to update dog : ', error.response.data);
@@ -109,6 +109,17 @@ const userMiddleware = (store) => (next) => (action) => {
         });
       break;
     }
+    case DELETE__DOG__PHOTO:
+      axiosInstance
+        .delete(`/profile/${action.userId}/dogs/${action.dogId}/photo/${action.photoId}`)
+        .then((response) => {
+          console.log('Photo deleted successfully : ', response);
+          // todo update it in state
+        })
+        .catch((error) => {
+          console.error('Unable to delete photo : ', error.response.data);
+        });
+      break;
     case DELETE__DOG:
       axiosInstance
         .delete(`profile/${action.userId}/dogs/${action.dogId}`)

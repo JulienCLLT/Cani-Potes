@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { deleteDog, deleteUser, getOneUserById, getProfileIsLoading, updateDog, updateUser } from '../../actions/users';
+import { deleteDog, deleteDogPhoto, deleteUser, getOneUserById, getProfileIsLoading, updateDog, updateUser } from '../../actions/users';
 import { formstepShowsDogform, getDogBreedsAndBehaviors } from '../../actions/signup';
 
 import DogForm from '../SignUp/DogForm/index';
@@ -126,14 +126,17 @@ const Profile = () => {
     };
     if (dogIsChanged) setDogIsChanged(false);
     if (isModalOpen) setIsModalOpen(false);
-    dispatch(updateDog(user.id, isEditingDog, updatedDog));
+    const dogId = profile.dogs[isEditingDog - 1].dog_id;
+    dispatch(updateDog(user.id, dogId, updatedDog));
     setisEditingDog(false);
   };
 
   const handleDeletePhoto = () => {
     setIsModalPhotoOpen(false);
     const photoToDelete = profile.dogs[dogAndPicIndex.dogIdx].dog_photo[dogAndPicIndex.picIdx];
-    // dispatch action to delete photo in db if route is done
+    console.log(photoToDelete);
+    const dogId = profile.dogs[isEditingDog - 1].dog_id;
+    dispatch(deleteDogPhoto(user.id, dogId, photoToDelete.photo_id));
   };
 
   const handleDeleteDog = () => {

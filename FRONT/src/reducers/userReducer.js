@@ -10,7 +10,7 @@ const userInitialState = {
   token: '',
   isLogged: false,
   failedToConnect: false,
-  rides: [],
+  rideId: [],
 };
 
 const userReducer = (state = userInitialState, action = {}) => {

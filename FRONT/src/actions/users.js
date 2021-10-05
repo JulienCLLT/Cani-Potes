@@ -71,6 +71,14 @@ export const deleteDog = (userId) => ({
   userId,
 });
 
+export const DELETE__DOG__PHOTO = 'DELETE__DOG__PHOTO';
+export const deleteDogPhoto = (userId, dogId, photoId) => ({
+  type: DELETE__DOG__PHOTO,
+  userId,
+  dogId,
+  photoId,
+});
+
 export const DELETE__USER = 'DELETE__USER';
 export const deleteUser = () => ({
   type: DELETE__USER,

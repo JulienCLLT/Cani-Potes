@@ -1,10 +1,11 @@
-$color_main: #F85F6A;
+$color_main: #fc575e;
 $color-border-bottom-header: #707070;
 $color-border-input: #D5D5D5;
 $color__white: #fff;
 $color_valid: #4EC133;
 $color_error: #cc0000;
 $color_grey_connection_footer_bg: #434848;
+$color_grey_writing: rgb(100, 100, 100);
 
 $gutter: 1rem;
 
@@ -15,4 +16,8 @@ $gutter: 1rem;
     color: $color__white;
     font-weight: bold;
     cursor: pointer;
+}
+
+%linear-gradient {
+    background: linear-gradient(315deg, #f7b42c 0%, #fc575e 74%);
 }
