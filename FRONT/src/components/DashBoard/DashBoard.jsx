@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteRide, removeUserFromRide } from '../../actions/rides';
 import { getRidesWithUserIn } from '../../actions/users';
+import { translateDate } from '../../utils/translateDate';
 
 import './dashBoard.scss';
-import { translateDate } from './../../utils/translateDate';
 
 const DashBoard = () => {
   const { user } = useSelector((state) => state);
@@ -53,14 +53,14 @@ const DashBoard = () => {
               <div>
                 <Link
                   className="ride-"
-                  to="/ride/:id"
+                  to={`/ride/${ride.ride_id}`}
                 >
                   Voir la balade
                 </Link>
                 <button
                   className="delete-btn"
                   type="button"
-                  onClick={() => dispatch(deleteRide())}
+                  onClick={() => dispatch(deleteRide(ride.ride_id))}
                 >
                   Supprimer la balade
                 </button>
@@ -88,14 +88,14 @@ const DashBoard = () => {
               <div>
                 <Link
                   className="ride-"
-                  to="/ride/:id"
+                  to={`/ride/${ride.ride_id}`}
                 >
                   Voir la balade
                 </Link>
                 <button
                   className="remove-btn"
                   type="button"
-                  onClick={() => dispatch(removeUserFromRide())}
+                  onClick={() => dispatch(removeUserFromRide(user.id, ride.ride_id))}
                 >
                   Me retirer de la balade
                 </button>

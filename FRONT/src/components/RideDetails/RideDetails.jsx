@@ -270,27 +270,6 @@ const RideDetails = () => {
                       </article>
                     ))}
                   </div>
-                  {/* {participant.dogs.map((dog, index) => {
-                    if (index < 3) {
-                      return (
-                        <div className="ride-details__current-user__dogs" key={`${dog.dog_id}`}>
-                          <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} />
-                          <span>{dog.dog_surname}</span>
-                          <span>
-                            <img src={dogBehaviors[dog.dog_behavior]} alt="" />
-                            {dog.dog_behavior}
-                          </span>
-                        </div>
-                      );
-                    }
-                    if (index === (participant.dogs.length - 1)) {
-                      return (
-                        <div className="ride-details__current-user__dogs" key={`${dog.dog_id}`}>
-                          <span>{participant.dogs.length - 3} de plus</span>
-                        </div>
-                      );
-                    }
-                  })} */}
                 </div>
               ))
             }
@@ -311,24 +290,23 @@ const RideDetails = () => {
       </section>
 
       {
-        participants.find((participant) => participant.participant_id === userProfile.id)
-        && (
-        <button
-          type="button"
-          className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
-          onClick={() => {
-            setIsChatOpen(!isChatOpen);
-            scrollDownChat();
-          }}
-        >
-          {
-            isChatOpen ? (
-              <img src={close} alt="close chat" />
-            ) : (
-              <img src={conversation} alt="open chat" />
-            )
-          }
-        </button>
+        participants.find((participant) => participant.participant_id === userProfile.id) && (
+          <button
+            type="button"
+            className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
+            onClick={() => {
+              setIsChatOpen(!isChatOpen);
+              scrollDownChat();
+            }}
+          >
+            {
+              isChatOpen ? (
+                <img src={close} alt="close chat" />
+              ) : (
+                <img src={conversation} alt="open chat" />
+              )
+            }
+          </button>
         )
       }
 
