@@ -81,6 +81,7 @@ const dogController = {
             }
 
             const findDog = await Dog.findById(dogId);
+            console.log("find dog", findDog);
             if (!findDog) {
                 throw Error('Ce chien n\'existe pas');
             }
@@ -89,7 +90,7 @@ const dogController = {
             }
 
             //todo joi
-            request.body.id = userId;
+            request.body.id = dogId;
             const dogToUpdate = new Dog(request.body);
             // info recu ? 
             await dogToUpdate.save();
