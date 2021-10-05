@@ -7,3 +7,4 @@ views_ride 2021-09-22T09:43:30Z Alekiel42 <alexandra.bercoff@gmail.com> # add vi
 view_dog 2021-09-27T09:22:34Z Alekiel42 <alexandra.bercoff@gmail.com> # add a view to find all information about dogs
 view_user 2021-09-28T17:29:09Z JulienCllt <contact.petitoiseau@gmail.com> # view_basic_information for connexion
 view_profil 2021-09-29T18:01:54Z JulienCllt <contact.petitoiseau@gmail.com> # view profile user/dog
+update_dog 2021-10-05T07:32:08Z Alekiel42 <alexandra.bercoff@gmail.com> # add sql function to update dog
