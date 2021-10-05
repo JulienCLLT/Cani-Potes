@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -8,6 +8,11 @@ import {
   MapContainer, TileLayer, Marker, useMapEvents,
 } from 'react-leaflet';
 import L from 'leaflet';
+
+// import esri for geocoding
+import EsriLeafletGeoSearch from 'react-esri-leaflet/plugins/EsriLeafletGeoSearch';
+import { geocodeService } from 'esri-leaflet-geocoder';
+
 import { createRide } from '../../actions/rides';
 
 import './createRide.scss';
@@ -16,6 +21,7 @@ import startPointFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endPointFlag from '../../assets/img/info-ride/endPointFlag.svg';
 
 const CreateRide = () => {
+  const apikey = 'AAPKbde72a12e3ff4574b3edd95295b1d13d5-bGBIhj88MhjknVOZZpLcC1yEkpv4yu2Bx8MRWji_av4Hj2aqwc1AsUJ2UyTK3Q';
   const { failedToCreateRide, errorMessage } = useSelector((state) => state.rides);
   const { user } = useSelector((state) => state);
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -46,21 +52,47 @@ const CreateRide = () => {
   const [switchPoint, setSwitchPoint] = useState('start');
   const [startPoint, setStartPoint] = useState(user.position);
   const [endPoint, setEndPoint] = useState();
+  const [startPointAddress, setStartPointAddress] = useState();
+  const [endPointAddress, setEndPointAddress] = useState();
+  const [searchPosition, setSearchPosition] = useState(user.position);
 
   const onSubmit = (data) => {
     console.log(data);
+    if (!startPoint || !endPoint) {
+      console.warn('Invalid start or end point for ride');
+    }
     dispatch(createRide(data, startPoint, endPoint));
   };
 
+  const geocodeServiceEsri = geocodeService({
+    apikey,
+  });
+
+  // reverse geocoding : convert lat and lng to address
+  const geocodingReverse = (latlng, useStatepointAddress) => {
+    geocodeServiceEsri.reverse().latlng(latlng)
+      .run((error, result) => {
+        if (error) {
+          console.log('reverse geocoding error', error);
+        }
+        useStatepointAddress(result.address.LongLabel);
+      });
+  };
+
+  // initial startPointAddress
+  geocodingReverse(startPoint, setStartPointAddress);
+
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
-    const map = useMapEvents({
+    useMapEvents({
       click(e) {
         if (switchPoint === 'start') {
           setStartPoint([e.latlng.lat, e.latlng.lng]);
+          geocodingReverse(startPoint, setStartPointAddress);
         }
         else if (switchPoint === 'end') {
           setEndPoint([e.latlng.lat, e.latlng.lng]);
+          geocodingReverse([e.latlng.lat, e.latlng.lng], setEndPointAddress);
         }
       },
     });
@@ -68,6 +100,17 @@ const CreateRide = () => {
       <Marker />
     );
   };
+
+  useEffect(() => {
+    if (switchPoint === 'start') {
+      setStartPoint(searchPosition);
+      geocodingReverse(searchPosition, setStartPointAddress);
+    }
+    else {
+      setEndPoint(searchPosition);
+      geocodingReverse(searchPosition, setEndPointAddress);
+    }
+  }, [searchPosition]);
 
   return (
     <main className="create-ride">
@@ -120,7 +163,34 @@ const CreateRide = () => {
               />
             )}
             <LocationMarker />
+            <EsriLeafletGeoSearch
+              position="topleft"
+              useMapBounds={false}
+              placeholder="Chercher une adresse ou un endroit"
+              providers={{
+                arcgisOnlineProvider: {
+                  apikey,
+                },
+              }}
+              eventHandlers={{
+                results: (results) => {
+                  console.log('EsriLeafletGeosearch', [results.latlng.lat, results.latlng.lng]);
+                  setSearchPosition([results.latlng.lat, results.latlng.lng]);
+                },
+              }}
+              key={apikey}
+            />
           </MapContainer>
+        </div>
+
+        {/* Start address */}
+        <div>
+          <p>Adresse de départ : {startPointAddress}</p>
+        </div>
+
+        {/* End address */}
+        <div>
+          <p>Adresse d'arrivée : {endPointAddress}</p>
         </div>
 
         {/* Date */}
@@ -141,18 +211,16 @@ const CreateRide = () => {
           {/* Start hour */}
           <p>Heure de départ</p>
           <select {...register('startHour', { required: 'Veuillez sélectionner l\'heure de la balade.' })} defaultValue={17}>
-            {
-							hours.map((hour) => <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}</option>)
-						}
+            {hours.map(
+              (hour) => <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}</option>,
+            )}
           </select>
           {/* Start min */}
           <select {...register('startMin', { required: 'Veuillez sélectionner les minutes de l\'heure de la balade.' })} defaultValue={30}>
-            {
-							minutes.map((minute) => <option key={minute} value={minute}>{minute.toString().padStart(2, '0')}</option>)
-						}
+            {minutes.map(
+              (minute) => <option key={minute} value={minute}>{minute.toString().padStart(2, '0')}</option>,
+            )}
           </select>
-          {/* je convertis en number puis je fais si x<minHour alors erreur */}
-          {/* {errors.startHour || errors.startMin && <span>{errors.startHour.message}</span> } */}
 
           {errors.startHour || errors.startMin && (
           <>
