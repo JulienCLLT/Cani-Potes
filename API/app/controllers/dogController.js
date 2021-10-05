@@ -35,14 +35,13 @@ const dogController = {
             if (isNaN(profileId)) {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
-
-
             const userId = request.userId;
             if (userId !== profileId) {
                 throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
             }
 
-
+            request.body.dog_owner_id = request.userId;
+            console.log(request.body);
             const newDog = new Dog(request.body);
             const dogCreated = await newDog.create();
 
@@ -102,6 +101,10 @@ const dogController = {
             const dogId = Number(request.params.dogId);
             const userId = request.userId;
 
+            console.log("request body", request.body);
+            const updatedDog = new Dog(request.body);
+            console.log("updated dog", updatedDog);
+
             // verif si number tout ca
             // prpofileid = userId
             // findbyId id dog owner = iduser
@@ -113,8 +116,44 @@ const dogController = {
             // faire test avec renvoi de tout
             // update dynamique
 
+            /*
+            Si formulaire ne revoi rien j'ai quoi ? 
+
+            surname
+            description
+            weight
+            birthday
+            breed_id
+            gender_id
+            behavior_id
+            id
+            */
+
             // est-ce que photo ? suppr ou rajout photo ? 
 
+            /*
+
+              async save() {
+        try {
+            if (this.id) {
+                await db.query('SELECT update_boardgame($1)', [this]);
+            } else {
+                const {rows} = await db.query('SELECT new_boardgame($1) AS id', [this]);
+                this.id = rows[0].id;
+                return this;
+            }
+        } catch(error) {
+            console.log(error);
+            if (error.detail) {
+                throw new Error(error.detail)
+            } else {
+                throw error;
+            }
+        }
+    }
+
+    */
+            response.json("ok")
         } catch (error) {
             response.status(500).json(error.message);
         }
