@@ -54,7 +54,7 @@ JOIN tag ON tag.id = tag_id
 JOIN member AS host ON host.id = host_id  
 LEFT JOIN member_write_ride AS message ON message.ride_id = ride.id 
 LEFT JOIN member_participate_ride ON member_participate_ride.ride_id = ride.id         
-LEFT JOIN member AS sender ON sender.id = message.member_id AND member_participate_ride.member_id = sender.id   
+LEFT JOIN member AS sender ON sender.id = message.member_id OR member_participate_ride.member_id = sender.id   
 LEFT JOIN member AS participant ON participant.id = member_participate_ride.member_id OR participant.id = host.id
 LEFT JOIN dog ON dog.dog_owner_id = member_participate_ride.member_id
 GROUP BY ride.id, tag.label, host.id, host.first_name; 

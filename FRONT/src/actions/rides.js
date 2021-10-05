@@ -19,17 +19,20 @@ export const removeUserFromRide = (userId, rideId) => ({
   rideId,
 });
 
-export const ADD__NEW__MESSAGE = 'ADD__NEW__MESSAGE';
-export const addNewMessage = (
-  message, sender_id, sender_photo, sender_first_name, sender_last_name,
+export const SEND__NEW__MESSAGE = 'SEND__NEW__MESSAGE';
+export const sendNewMessage = (
+  userId, rideId, message,
 ) => ({
-  type: ADD__NEW__MESSAGE,
-  sent: new Date().toISOString(),
+  type: SEND__NEW__MESSAGE,
+  userId,
+  rideId,
   message,
-  sender_id,
-  sender_photo,
-  sender_first_name,
-  sender_last_name,
+});
+
+export const ADD__MESSAGE__IN__STATE = 'ADD__MESSAGE__IN__STATE';
+export const addMessageInState = (message) => ({
+  type: ADD__MESSAGE__IN__STATE,
+  message,
 });
 
 export const DELETE__RIDE = 'DELETE__RIDE';
@@ -84,4 +87,11 @@ export const FAILED_TO_CREATE_RIDE = 'FAILED_TO_CREATE_RIDE';
 export const failedToCreateRide = (errorMessage) => ({
   type: FAILED_TO_CREATE_RIDE,
   errorMessage,
+});
+
+export const KICK__USER__FROM__RIDE = 'KICK__USER__FROM__RIDE';
+export const kickUserFromRide = (userId, rideId) => ({
+  type: KICK__USER__FROM__RIDE,
+  userId,
+  rideId,
 });

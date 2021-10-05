@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
-import { GET__PROFILE__IS__LOADING, SAVE__PROFILE__IN__STATE } from '../actions/users';
+import { GET__PROFILE__IS__LOADING, SAVE__PROFILE__IN__STATE, LOGOUT__USER, DELETE__DOG } from '../actions/users';
 
 const profileInitialState = {
-  membre_id: 0,
+  member_id: 0,
   first_name: '',
   last_name: '',
   photo: '',
@@ -10,6 +10,7 @@ const profileInitialState = {
   dogs: [],
   birthday: '',
   isLoading: false,
+  profileIsUser: false,
 };
 
 const profileReducer = (state = profileInitialState, action = {}) => {
@@ -20,10 +21,25 @@ const profileReducer = (state = profileInitialState, action = {}) => {
         isLoading: true,
       };
     case SAVE__PROFILE__IN__STATE:
+      action.profile.dogs.forEach((dog) => {
+        if (dog.dog_photo === null) {
+          dog.dog_photo = [];
+        }
+      });
       return {
         ...state,
         ...action.profile,
         isLoading: false,
+        profileIsUser: action.member_id === action.userId,
+      };
+    case LOGOUT__USER:
+      return {
+        ...profileInitialState,
+      };
+    case DELETE__DOG:
+      return {
+        ...state,
+        dogs: state.dogs.filter((dog) => dog.dog_id !== action.dogId),
       };
     default:
       return state;

@@ -1,5 +1,6 @@
+/* eslint-disable linebreak-style */
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
 // import images
@@ -8,18 +9,19 @@ import clock from '../../../../assets/img/info-ride/hourglass.svg';
 import starting from '../../../../assets/img/info-ride/map-pin.svg';
 import end from '../../../../assets/img/info-ride/flag.svg';
 
+import { translateDate } from '../../../../utils/translateDate';
 // import css
 import './ride.scss';
 
 const Ride = ({ ride_id, starting_time, duration, start_coordinate, end_coordinate }) => (
   <div className="ride">
-    <p className="ride__detail"><img src={calendar} alt="calendar" />{starting_time}</p>
-    <p className="ride__detail"><img className="icon" src={clock} alt="clock" />{duration.minutes} minutes - 1km</p>
+    <p className="ride__detail"><img src={calendar} alt="calendar" />{translateDate(starting_time)}</p>
+    <p className="ride__detail"><img className="icon" src={clock} alt="clock" />{duration.minutes ? `${duration.minutes} minutes` : 'Durée non précisée'}</p>
     <p className="ride__detail"><img className="icon" src={starting} alt="starting" />Départ : {start_coordinate}</p>
     <p className="ride__detail"><img className="icon" src={end} alt="arrival" />Arrivée : {end_coordinate}</p>
-    <NavLink exact to={`/ride/${ride_id}`}>
+    <Link exact to={`/ride/${ride_id}`}>
       <button type="button">En savoir plus</button>
-    </NavLink>
+    </Link>
   </div>
 );
 

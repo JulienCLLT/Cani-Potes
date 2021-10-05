@@ -1,8 +1,9 @@
 /* eslint-disable linebreak-style */
+import { LOGOUT__USER } from '../actions/users';
 import {
-  ADD__USER__TO__RIDE, USER__QUIT__RIDE, ADD__NEW__MESSAGE,
+  ADD__USER__TO__RIDE, USER__QUIT__RIDE, ADD__MESSAGE__IN__STATE,
   DELETE__RIDE__IN__STATE, SAVE__ALL__RIDES, SAVE__ONE__RIDE, GET__RIDE__IS__LOADING,
-  FAILED_TO_CREATE_RIDE,
+  FAILED_TO_CREATE_RIDE, KICK__USER__FROM__RIDE,
 } from '../actions/rides';
 
 const ridesInitialState = {
@@ -105,7 +106,11 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           ],
         },
       };
-    case ADD__NEW__MESSAGE:
+    case ADD__MESSAGE__IN__STATE: {
+      const sender = state.currentRide.participants.find(
+        (participant) => participant.participant_id === action.message.sender_id,
+      );
+
       return {
         ...state,
         currentRide: {
@@ -113,20 +118,21 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           messages: [
             ...state.currentRide.messages,
             {
-              sent: new Date().toISOString(),
-              message: action.message,
-              sender_id: action.sender_id,
-              sender_photo: action.sender_photo,
-              sender_first_name: action.sender_first_name,
-              sender_last_name: action.sender_last_name,
+              message_id: action.message.id,
+              sent: action.message.sent,
+              message: action.message.message,
+              sender_id: action.message.sender_id,
+              sender_photo: sender.participant_photo,
+              sender_first_name: sender.participant_first_name,
             },
           ],
         },
       };
+    }
     case DELETE__RIDE__IN__STATE:
       return {
         ...state,
-        allRides: state.allRides.map((ride) => ride.ride_id !== action.id),
+        allRides: state.allRides.filter((ride) => ride.ride_id !== action.id),
         currentRide: {
           ...ridesInitialState.currentRide,
         },
@@ -137,6 +143,11 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           participant.dogs = [];
         }
       });
+      if (action.ride.duration === null) {
+        action.ride.duration = {
+          minutes: undefined,
+        };
+      }
       if (action.ride.messages === null) {
         return {
           ...state,
@@ -162,12 +173,25 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           isLoading: true,
         },
       };
-
     case FAILED_TO_CREATE_RIDE:
       return {
         ...state,
         failedToCreateRide: true,
         errorMessage: action.errorMessage,
+      };
+    case KICK__USER__FROM__RIDE:
+      return {
+        ...state,
+        currentRide: {
+          ...state.currentRide,
+          participants: state.currentRide.participants.filter(
+            (participant) => participant.participant_id !== action.userId,
+          ),
+        },
+      };
+    case LOGOUT__USER:
+      return {
+        ...ridesInitialState,
       };
     default:
       return state;

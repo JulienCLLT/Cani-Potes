@@ -1,10 +1,9 @@
 /* eslint-disable linebreak-style */
-// import { axiosInstance } from '../services/axios';
 import axios from 'axios';
 
 import {
-  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE, CREATE_RIDE, USER__QUIT__RIDE,
-  saveAllRides, saveOneRide, deleteRideInState, failedToCreateRide,
+  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE, CREATE_RIDE, USER__QUIT__RIDE, KICK__USER__FROM__RIDE, SEND__NEW__MESSAGE,
+  saveAllRides, saveOneRide, deleteRideInState, failedToCreateRide, addMessageInState,
 } from '../actions/rides';
 
 const ridesMiddleware = (store) => (next) => (action) => {
@@ -64,6 +63,21 @@ const ridesMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => console.error("Error, can't quit the ride : ", error.response.data));
       break;
+    case SEND__NEW__MESSAGE:
+      axiosInstance
+        .post(`/social/message/ride/${action.rideId}`, {
+          message: action.message,
+        })
+        .then(
+          (response) => {
+            console.log('Message sent : ', response.data.message);
+            store.dispatch(addMessageInState(response.data.message));
+          },
+        )
+        .catch(
+          (error) => console.error("Message didn't send : ", error.response.data),
+        );
+      break;
     case DELETE__RIDE:
       axiosInstance
         .delete(`/ride/${action.rideId}`)
@@ -105,6 +119,17 @@ const ridesMiddleware = (store) => (next) => (action) => {
           },
         );
     }
+      break;
+    case KICK__USER__FROM__RIDE:
+      axiosInstance
+        .delete(`/ride/${action.rideId}/participation/user/${action.userId}`)
+        .then((response) => {
+          console.log('User kicked from ride : ', response);
+          next(action);
+        })
+        .catch((error) => {
+          console.error("Can't kick the user : ", error.response.data);
+        });
       break;
     default:
       next(action);

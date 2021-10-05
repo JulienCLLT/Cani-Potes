@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 export const LOGIN__USER = 'LOGIN__USER';
 export const loginUser = (data) => ({
   type: LOGIN__USER,
@@ -33,13 +34,44 @@ export const getProfileIsLoading = () => ({
 });
 
 export const SAVE__PROFILE__IN__STATE = 'SAVE__PROFILE__IN__STATE';
-export const saveProfileInState = (profile) => ({
+export const saveProfileInState = (profile, userId) => ({
   type: SAVE__PROFILE__IN__STATE,
   profile,
+  userId,
+});
+
+export const UPDATE__DOG = 'UPDATE__DOG';
+export const updateDog = (userId, dogId, updatedDog) => ({
+  type: UPDATE__DOG,
+  userId,
+  dogId,
+  updatedDog,
 });
 
 export const UPDATE__USER = 'UPDATE__USER';
 export const updateUser = (user) => ({
   type: UPDATE__USER,
   user,
+});
+
+export const GET__RIDES__WITH__USER__IN = 'GET__RIDES__WITH__USER__IN';
+export const getRidesWithUserIn = () => ({
+  type: GET__RIDES__WITH__USER__IN,
+});
+
+export const ADD__RIDES__TO__USER = 'ADD__RIDES__TO__USER';
+export const addRidesToUser = (rides) => ({
+  type: ADD__RIDES__TO__USER,
+  rides,
+});
+
+export const DELETE__DOG = 'DELETE__DOG';
+export const deleteDog = (userId) => ({
+  type: DELETE__DOG,
+  userId,
+});
+
+export const DELETE__USER = 'DELETE__USER';
+export const deleteUser = () => ({
+  type: DELETE__USER,
 });
