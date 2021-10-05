@@ -42,7 +42,6 @@ class UserModel {
         try {
             if (this.id) {
                 // faire un fonction d'update dynamique en sql;
-                console.log(this);
 
                 const { rows } = await database.query(`SELECT update_user($1)`,[this]);
 

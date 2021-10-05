@@ -102,7 +102,14 @@ const userController = {
                 if (request.file) {
                     const { filename: image } = request.file;
 
-                    // resize picture and push it in resized file
+                    const oldPhoto = await UserModel.findOne(idPayload);
+
+                        if (oldPhoto.photo != 'avatar.jpg') {
+                            console.log(oldPhoto.photo);
+                            fs.unlinkSync(`public/user_resized/${oldPhoto.photo}`);
+                        };
+                        
+                    //resize picture and push it in resized file
                     await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
                         .toFile(path.resolve(request.file.destination, 'user_resized', image));
                     fs.unlinkSync(request.file.path);
@@ -110,8 +117,9 @@ const userController = {
                     //push name path a image resized 
                     request.body.photo = request.file.filename;
                 };
-                
+
             const user = new UserModel(request.body);
+           
             await user.save(user);
             response.status(204).json('Update done');
         } catch (error) {
