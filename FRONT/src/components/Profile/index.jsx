@@ -396,7 +396,7 @@ const Profile = () => {
                           </div>
                         ) : (
                           <span>
-                            {dog.dog_surname} {dog.dog_gender === 'male' ? '♂' : '♀'} {dog.dog_age}
+                            {dog.dog_surname} {dog.dog_gender === 'mâle' ? '♂' : '♀'} {dog.dog_age}
                           </span>
                         )}
 

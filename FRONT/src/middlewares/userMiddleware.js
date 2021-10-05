@@ -2,8 +2,8 @@
 import axios from 'axios';
 import {
   GET__ONE__USER__BY__ID, UPDATE__USER, GET__RIDES__WITH__USER__IN,
-  DELETE__DOG, DELETE__USER, UPDATE__DOG, DELETE__DOG__PHOTO,
-  logoutUser, saveProfileInState, addRidesToUser,
+  DELETE__DOG, DELETE__USER, UPDATE__DOG, DELETE__DOG__PHOTO, USER__GETS__HIS__DOGS,
+  logoutUser, saveProfileInState, addRidesToUser, saveUserDogsInState,
 } from '../actions/users';
 
 const userMiddleware = (store) => (next) => (action) => {
@@ -34,13 +34,23 @@ const userMiddleware = (store) => (next) => (action) => {
           console.error("Can't get profile : ", error.response.data);
         });
       break;
+    case USER__GETS__HIS__DOGS:
+      axiosInstance
+        .get(`/social/profile/${action.userId}`)
+        .then((response) => {
+          console.log('User send by db : ', response);
+          store.dispatch(saveUserDogsInState(response.data));
+        })
+        .catch((error) => {
+          console.error("Can't get profile : ", error.response.data);
+        })
+      break;
     case UPDATE__DOG: {
       const {
         surname, behavior, breed, gender, weight, age, sterilization, description, photoDog,
       } = action.updatedDog;
 
       const formData = new FormData();
-      // console.log(photoDog);
 
       formData.append('surname', surname);
       formData.append('breed_id', breed);

@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import { LOGOUT__USER, FAILED__TO__CONNECT, CONNECT__USER, ADD__RIDES__TO__USER, DELETE__DOG } from '../actions/users';
+import { LOGOUT__USER, FAILED__TO__CONNECT, CONNECT__USER, ADD__RIDES__TO__USER, DELETE__DOG, SAVE__USER__DOGS__IN__STATE } from '../actions/users';
 import { ADD_DOG_TO_USER } from '../actions/signup';
 
 const userInitialState = {
@@ -10,7 +10,7 @@ const userInitialState = {
   token: '',
   isLogged: false,
   failedToConnect: false,
-  rideId: [],
+  rides: [],
 };
 
 const userReducer = (state = userInitialState, action = {}) => {
@@ -29,6 +29,13 @@ const userReducer = (state = userInitialState, action = {}) => {
       return {
         ...state,
         failedToConnect: true,
+      };
+    case SAVE__USER__DOGS__IN__STATE:
+      return {
+        ...state,
+        dogs: [
+          ...action.dogs.dogs,
+        ],
       };
     case ADD_DOG_TO_USER:
       return {
