@@ -27,7 +27,6 @@ class Photo {
 
     static async deletePhotos(dogId) {
         try {
-
             const photoToDelete = await client.query(`SELECT file_name FROM photo WHERE dog_id = $1`, [dogId]);
             await client.query(`DELETE FROM photo WHERE dog_id = $1`, [dogId]);
             //! a tester
@@ -41,6 +40,9 @@ class Photo {
 
     static async deleteOnePhoto(photoId) {
         try {
+            await client.query(`DELETE FROM photo WHERE id = $1`, [photoId]);
+            // delete vraiment tof
+            return null;
         } catch (error) {
             console.error(error);
             throw new Error(error.detail ? error.detail : error.message);

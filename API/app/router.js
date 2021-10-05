@@ -5,6 +5,7 @@ const checkCreateDog = require('./middlewares/checkCreateDog');
 const checkToken = require('./middlewares/checkJwt');
 const rideController = require('./controllers/rideController');
 const dogController = require('./controllers/dogController');
+const photoController = require('./controllers/photoController');
 const formController = require('./controllers/formController');
 const mailController = require('./controllers/mailController');
 
@@ -36,8 +37,7 @@ router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', checkToken
 router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.getOneDog);
 router.post('/profile/:profileId(\\d+)/dogs/', checkToken, multer, dogController.createDog);
 router.delete('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.delete);
-//! checktoken
-router.delete('/profile/:profileId/dogs/:dogId/photo/:photoId', photoController.delete);
+router.delete('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)/photo/:photoId(\\d+)', checkToken, photoController.delete);
 
 router.get('/social/profile/:idUser', checkToken, userController.getProfile);
 router.post('/social/message/ride/:idRide', checkToken, mailController.sendMailToRide);

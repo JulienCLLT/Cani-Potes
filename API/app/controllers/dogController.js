@@ -73,8 +73,6 @@ const dogController = {
 
             const profileId = Number(request.params.profileId);
             const dogId = Number(request.params.dogId);
-            console.log("profileId", request.params.profileId);
-            console.log("dogId", request.params.dogId);
 
             const userId = request.userId;
 
@@ -86,7 +84,6 @@ const dogController = {
             }
 
             const dogToDelete = await Dog.findById(dogId);
-            console.log("dog to delete", dogToDelete);
             if (!dogToDelete) {
                 throw Error('Ce chien n\'existe pas');
             }
