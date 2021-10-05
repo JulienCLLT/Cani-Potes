@@ -76,32 +76,9 @@ class Dog {
 
     async save() {
         try {
-            const query = `	
-                UPDATE dog SET 
-                    surname=COALESCE($1, surname),
-                    description=COALESCE($2, description),
-                    weight=COALESCE($3, weight),
-                    birthday=COALESCE($4, birthday),
-                    sterilization=COALESCE($5, sterilization),
-                    breed_id=COALESCE($6, breed_id),
-                    gender_id=COALESCE($7, gender_id),
-                    behavior_id=COALESCE($8, behavior_id)
-                WHERE id=($9) 
-                RETURNING *
-            `;
+            const query = `SELECT update_dog($1)`;
 
-            //!todo ordre avec [this]
-            const { rows } = await client.query(query, [
-                this.surname,
-                this.description,
-                this.weight,
-                this.birthday,
-                this.sterilization,
-                this.breed_id,
-                this.gender_id,
-                this.behavior_id,
-                this.id
-            ])
+            const { rows } = await client.query(query, [this])
             return rows[0];
         } catch (error) {
             console.error(error);

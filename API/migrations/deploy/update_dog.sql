@@ -2,19 +2,17 @@
 
 BEGIN;
 
-
--- check if now() ok
-CREATE FUNCTION update_dog(TEXT, TEXT, NUMERIC(4,2), DATE, BOOLEAN, INT, INT, INT, TIMESTAMPTZ) RETURNS void AS $$
-    UPDATE dog SET surname=$1, description=$2, weight=$3, birthday=$4, breed_id=$5, gender_id=$6, behavior_id=$7, updated_at=NOW() WHERE id=$8;
-$$ LANGUAGE SQL STRICT;
-
--- a changer
-CREATE OR REPLACE FUNCTION update_user(data json) RETURNS void AS $$
-	UPDATE "user" SET 
-        email=COALESCE(data->>'email', email),
-        user_name=COALESCE(data->>'username', username),
-        "password"=COALESCE(data->>'password', password),
-        updateat=(now())::TIMESTAMPTZ
+CREATE OR REPLACE FUNCTION update_dog(data json) RETURNS void AS $$
+	UPDATE dog SET 
+        surname=COALESCE(data->>'surname', surname),
+        description=COALESCE(data->>'description', description),
+        --weight=COALESCE(data->>'weight', weight),
+        --birthday=COALESCE(data->>'birthday', birthday),
+        --sterilization=COALESCE(data->>'sterilization', sterilization),
+        --breed_id=COALESCE(data->>'breed_id', breed_id),
+        --gender_id=COALESCE(data->>'gender_id', gender_id),
+        --behavior_id=COALESCE(data->>'behavior_id', behavior_id),
+        updated_at=(now())
     WHERE id=(data->>'id')::INT
 $$ LANGUAGE SQL STRICT;
 
