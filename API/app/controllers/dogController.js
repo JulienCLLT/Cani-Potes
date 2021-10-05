@@ -94,6 +94,30 @@ const dogController = {
         } catch (error) {
             response.status(500).json(error.message);
         }
+    },
+
+    updateDog: async (request, response) => {
+        try {
+            const profileId = Number(request.params.profileId);
+            const dogId = Number(request.params.dogId);
+            const userId = request.userId;
+
+            // verif si number tout ca
+            // prpofileid = userId
+            // findbyId id dog owner = iduser
+
+            // info recu ? 
+            // save 
+
+            // creer sqich function update
+            // faire test avec renvoi de tout
+            // update dynamique
+
+            // est-ce que photo ? suppr ou rajout photo ? 
+
+        } catch (error) {
+            response.status(500).json(error.message);
+        }
     }
 };
 
