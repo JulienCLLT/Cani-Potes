@@ -20,12 +20,15 @@ import peureux from '../../assets/img/profile-simulation/fearful.svg';
 import joueur from '../../assets/img/profile-simulation/player.png';
 import agressif from '../../assets/img/profile-simulation/aggressive.png';
 import sociable from '../../assets/img/profile-simulation/sociable.svg';
+import flag from '../../assets/img/info-ride/flag.svg';
 
-import './RideDetails.scss';
 import {
   sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
 } from '../../actions/rides';
 import { translateDate } from '../../utils/translateDate';
+import { reverseGeocoding } from '../../utils/reverseGeocoding';
+
+import './RideDetails.scss';
 
 const RideDetails = () => {
   const { id } = useParams();
@@ -43,6 +46,11 @@ const RideDetails = () => {
     ride_id, title, max_number_dogs, participants, starting_time, duration,
     description, host_first_name, host_id, messages, start_coordinate, end_coordinate, isLoading,
   } = useSelector((state) => state.rides.currentRide);
+
+  const [startPointAddress, setStartPointAddress] = useState('');
+  const [endPointAddress, setEndPointAddress] = useState('');
+  reverseGeocoding(start_coordinate, setStartPointAddress);
+  reverseGeocoding(end_coordinate, setEndPointAddress);
 
   const userIsHost = userProfile.id === host_id;
 
@@ -177,7 +185,12 @@ const RideDetails = () => {
         <div className="ride-details__infos__description">
           <p>
             <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
-            Départ le {translateDate(starting_time)}
+            Départ {startPointAddress} <br />
+            le {translateDate(starting_time)}
+          </p>
+          <p>
+            <span className="ride-details__icon"><img src={flag} alt="flag" /></span>
+            Arrivée {endPointAddress} <br />
           </p>
           <p>
             <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
