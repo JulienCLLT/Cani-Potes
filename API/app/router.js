@@ -22,7 +22,6 @@ router.delete('/account/delete', checkToken, userController.deleteAccount);
 
 router.get('/rides', checkToken, rideController.findAll);
 
-//todo checktoken
 router.post('/ride', checkToken, rideController.create);
 router.get('/ride', checkToken, rideController.getRidesByMember);
 
@@ -34,9 +33,10 @@ router.post('/ride/:rideId(\\d+)/participation', checkToken, rideController.addN
 router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', checkToken, rideController.removeUserFromRide);
 
 router.get('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.getOneDog);
+
 router.post('/profile/:profileId(\\d+)/dogs/', checkToken, multer, dogController.createDog);
-//! checktoken
 router.delete('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogController.delete);
+router.patch('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, multer, dogController.updateDog);
 
 router.get('/social/profile/:idUser', checkToken, userController.getProfile);
 router.post('/social/message/ride/:idRide', checkToken, mailController.sendMailToRide);
