@@ -75,8 +75,7 @@ const dogController = {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
-            //todo const userId = request.userId;
-            const userId = 1;
+            const userId = request.userId;
             if (userId !== profileId) {
                 throw Error('Vous ne pouvez pas modifier les chiens de ce profil');
             }
