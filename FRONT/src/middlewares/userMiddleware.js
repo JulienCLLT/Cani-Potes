@@ -102,6 +102,7 @@ const userMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           console.log('User participates to these rides : ', response);
           store.dispatch(addRidesToUser(response.data));
+          next(action);
         })
         .catch((error) => {
           console.error("Can't get rides within the user : ", error.response.data);

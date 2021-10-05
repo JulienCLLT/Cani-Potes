@@ -16,7 +16,6 @@ export const reverseGeocoding = (latlng, setStateValue) => {
       if (error) {
         console.warn('reverse geocoding error', error);
       }
-      // console.log('result reverse geo : ', result);
       setStateValue(result.address.LongLabel);
     });
 };

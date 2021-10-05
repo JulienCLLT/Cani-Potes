@@ -236,7 +236,7 @@ const RideDetails = () => {
 
                   <div className="ride-details__current-user__dogs-container">
                     {participant.dogs.map((dog) => (
-                      <article className="ride-details__current-user__current-dog">
+                      <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
                         <div className="dog-avatar">
                           {dog.dog_photo && (
                             <img src={`http://107.22.144.90/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
@@ -321,7 +321,6 @@ const RideDetails = () => {
 
       {isChatOpen && (
         <section className="ride-details__chat">
-
           <div className="ride-details__messages-container" ref={chatZone}>
             {
               messages.map((msg) => (
@@ -332,7 +331,8 @@ const RideDetails = () => {
                   <p>
                     {msg.participants}
                     <span>
-                      {msg.sent}
+                      {msg.sender_first_name}
+                      {translateDate(msg.sent)}
                     </span>
                   </p>
                   <span>{msg.message}</span>
