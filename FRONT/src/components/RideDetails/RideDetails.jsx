@@ -229,7 +229,6 @@ const RideDetails = () => {
                   <Link
                     className="ride-details__current-user__avatar"
                     to={`/profile/${participant.participant_id}`}
-                    exact
                   >
                     <img src={participant.participant_photo} alt="user" />
                     <span>{participant.participant_first_name}</span>
@@ -288,7 +287,6 @@ const RideDetails = () => {
             <Link
               className="ride-details__users__creator__avatar"
               to={`/profile/${host_id}`}
-              exact
             >
               <p>Créateur</p>
               <img src={participants[0].participant_photo} alt={host_first_name} />

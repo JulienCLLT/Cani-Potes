@@ -1,7 +1,9 @@
 /* eslint-disable linebreak-style */
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+
+import { reverseGeocoding } from '../../../../utils/reverseGeocoding';
 
 // import images
 import calendar from '../../../../assets/img/info-ride/calendar.svg';
@@ -13,17 +15,25 @@ import { translateDate } from '../../../../utils/translateDate';
 // import css
 import './ride.scss';
 
-const Ride = ({ ride_id, starting_time, duration, start_coordinate, end_coordinate }) => (
-  <div className="ride">
-    <p className="ride__detail"><img src={calendar} alt="calendar" />{translateDate(starting_time)}</p>
-    <p className="ride__detail"><img className="icon" src={clock} alt="clock" />{duration.minutes ? `${duration.minutes} minutes` : 'Durée non précisée'}</p>
-    <p className="ride__detail"><img className="icon" src={starting} alt="starting" />Départ : {start_coordinate}</p>
-    <p className="ride__detail"><img className="icon" src={end} alt="arrival" />Arrivée : {end_coordinate}</p>
-    <Link exact to={`/ride/${ride_id}`}>
-      <button type="button">En savoir plus</button>
-    </Link>
-  </div>
-);
+const Ride = ({ ride_id, starting_time, duration, start_coordinate, end_coordinate }) => {
+  const [startPointAddress, setStartPointAddress] = useState('');
+  const [endPointAddress, setEndPointAddress] = useState('');
+
+  reverseGeocoding(start_coordinate, setStartPointAddress);
+  reverseGeocoding(end_coordinate, setEndPointAddress);
+
+  return (
+    <div className="ride">
+      <p className="ride__detail"><img src={calendar} alt="calendar" />{translateDate(starting_time)}</p>
+      <p className="ride__detail"><img className="icon" src={clock} alt="clock" />{duration.minutes ? `${duration.minutes} minutes` : 'Durée non précisée'}</p>
+      <p className="ride__detail"><img className="icon" src={starting} alt="starting" />Départ : {startPointAddress}</p>
+      <p className="ride__detail"><img className="icon" src={end} alt="arrival" />Arrivée : {endPointAddress}</p>
+      <Link to={`/ride/${ride_id}`}>
+        <button type="button">En savoir plus</button>
+      </Link>
+    </div>
+  )
+};
 
 Ride.propTypes = {
   ride_id: PropTypes.number.isRequired,

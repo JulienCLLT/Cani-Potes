@@ -25,7 +25,6 @@ const DashBoard = () => {
         <Link
           className="create-ride__btn"
           to="/ride/create"
-          exact
         >
           Créer une balade
         </Link>
@@ -36,7 +35,6 @@ const DashBoard = () => {
         <Link
           className="ride-"
           to="/ride/:id"
-          exact
         >
           Voir la balade
         </Link>
@@ -54,7 +52,6 @@ const DashBoard = () => {
         <Link
           className="ride-"
           to="/ride/:id"
-          exact
         >
           Voir la balade
         </Link>
