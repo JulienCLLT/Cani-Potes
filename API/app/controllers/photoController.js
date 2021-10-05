@@ -16,7 +16,8 @@ const photoController = {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
-            const userId = request.body.userId;
+            const userId = request.userId;
+
             if (profileId !== userId) {
                 throw Error('Vous ne pouvez pas accéder à cette demande');
             }
