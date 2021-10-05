@@ -41,6 +41,6 @@ router.delete('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)', checkToken, dogCont
 router.get('/social/profile/:idUser', checkToken, userController.getProfile);
 router.post('/social/message/ride/:idRide', checkToken, mailController.sendMailToRide);
 
-router.patch('/account/edit', checkToken, userController.save);
+router.patch('/account/edit', checkToken, multer, userController.updateUser);
 
 module.exports = router;

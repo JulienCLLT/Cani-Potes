@@ -42,37 +42,13 @@ class UserModel {
         try {
             if (this.id) {
                 // faire un fonction d'update dynamique en sql;
-                const { rows } = await database.query(`UPDATE member 
-                    SET email = $1,
-                    first_name = $2, 
-                    last_name = $3, 
-                    zip_code = $4, 
-                     
-                    birthday = $5,
-                    updated_at = NOW()
-                    WHERE id = $6`, [
-                    this.email,
-                    this.first_name,
-                    this.last_name,
-                    this.zip_code,
-                    this.birthday,
-                    this.id,
-                ]);
+                console.log(this);
+
+                const { rows } = await database.query(`SELECT update_user($1)`,[this]);
 
 
             }
             else {
-
-                // insert a facto en fonction SQL
-                // const { rows } = await database.query(`INSERT INTO member (email, first_name, last_name, zip_code, password, birthday, photo) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`, [
-                //     this.email,
-                //     this.first_name,
-                //     this.last_name,
-                //     this.zip_code,
-                //     this.password,
-                //     this.birthday,
-                //     this.photo,
-                // ]);
                 const {rows}= await database.query('SELECT insert_user($1)',[this]);
                 
                 //return le nouvelle id de l'insert

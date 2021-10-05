@@ -46,11 +46,7 @@ const userController = {
 
     addNewUser: async (request, response) => {
         try {
-             
-
-            
-
-            if (request.file) {
+             if (request.file) {
                 const { filename: image } = request.file;
 
                 // resize picture and push it in resized file
@@ -98,11 +94,23 @@ const userController = {
         }
     },
 
-    save: async (request, response) => {
+    updateUser: async (request, response) => {
         try {
-            const idPayload = request.userId; //normalement on recupe id de l'user dans le payload
-
+            const idPayload = request.userId;
             request.body.id = idPayload;
+                
+                if (request.file) {
+                    const { filename: image } = request.file;
+
+                    // resize picture and push it in resized file
+                    await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
+                        .toFile(path.resolve(request.file.destination, 'user_resized', image));
+                    fs.unlinkSync(request.file.path);
+                    
+                    //push name path a image resized 
+                    request.body.photo = request.file.filename;
+                };
+                
             const user = new UserModel(request.body);
             await user.save(user);
             response.status(204).json('Update done');
