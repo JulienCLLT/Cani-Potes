@@ -112,6 +112,16 @@ const RideDetails = () => {
     setUserKicked(0);
   };
 
+  const scrollDownChat = () => {
+    setTimeout(() => {
+      chatZone.current.scrollTo({
+        top: chatZone.current.scrollHeight,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }, 250);
+  };
+
   const onSubmit = ({ message }) => {
     dispatch(sendNewMessage(
       userProfile.id, id, message,
@@ -119,11 +129,7 @@ const RideDetails = () => {
 
     reset();
 
-    chatZone.current.scrollTo({
-      top: chatZone.current.scrollHeight,
-      left: 0,
-      behavior: 'smooth',
-    });
+    scrollDownChat();
   };
 
   const positionStart = new L.Icon({
@@ -233,7 +239,9 @@ const RideDetails = () => {
                     {participant.dogs.map((dog) => (
                       <article className="ride-details__current-user__current-dog">
                         <div className="dog-avatar">
-                          <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} className="dog-avatar__photo" />
+                          {dog.dog_photo && (
+                            <img src={`http://107.22.144.90/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
+                          )}
                           <span>{dog.dog_surname}</span>
                           <span className="dog-avatar__behavior">
                             <img src={dogBehaviors[dog.dog_behavior]} alt="dog behavior" className="dog-avatar__behavior__logo" />
@@ -297,7 +305,10 @@ const RideDetails = () => {
         <button
           type="button"
           className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
-          onClick={() => setIsChatOpen(!isChatOpen)}
+          onClick={() => {
+            setIsChatOpen(!isChatOpen);
+            scrollDownChat();
+          }}
         >
           {
             isChatOpen ? (
@@ -317,10 +328,11 @@ const RideDetails = () => {
             {
               messages.map((msg) => (
                 <div
-                  key={msg.message_id}
+                  key={msg.id}
                   className={msg.sender_id === userProfile.id ? 'ride-details__messages-container__message my-message' : 'ride-details__messages-container__message'}
                 >
-                  <p>{msg.sender_first_name}
+                  <p>
+                    {msg.participants}
                     <span>
                       {msg.sent}
                     </span>

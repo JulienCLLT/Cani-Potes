@@ -5,7 +5,7 @@ import {
   saveDogBreedsAndBehaviors, failedToSignup, nextSignupFormStep, addDogToUser,
 } from '../actions/signup';
 
-import { connectUser } from '../actions/users';
+import { connectUser, getOneUserById } from '../actions/users';
 
 const signupMiddleware = (store) => (next) => (action) => {
   const axiosInstance = axios.create({
@@ -44,32 +44,34 @@ const signupMiddleware = (store) => (next) => (action) => {
 
     case DOG_SIGN_UP: {
       const {
-        surname, breed, weight, sexe, birthday, sterilization, behavior, photo, dog_owner_id,
+        surname, breed, weight, sexe, birthday, sterilization, behavior, photo_dog, dog_owner_id, description,
       } = action.dogForm;
 
       // transform data into formData to be able to use mutler
       const formData = new FormData();
 
-      formData.append('photo', photo);
+      formData.append('photo', photo_dog[0]);
       formData.append('surname', surname);
-      formData.append('breed', breed);
+      formData.append('breed_id', breed);
       formData.append('weight', weight);
-      formData.append('gender', sexe);
+      formData.append('gender_id', sexe);
       formData.append('birthday', birthday);
       formData.append('sterilization', sterilization);
-      formData.append('behavior', behavior);
+      formData.append('behavior_id', behavior);
       formData.append('dog_owner_id', dog_owner_id);
+      formData.append('description', description);
 
       axios({
         method: 'POST',
-        url: `/profile/${store.getState().user.id}/dogs`,
+        url: `http://107.22.144.90/api/profile/${store.getState().user.id}/dogs`,
         data: formData,
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          authorization: `${store.getState().user.token}`,
+        },
       })
         .then((response) => {
           console.log(response.data);
-          // todo when route back is done
-          // todo  add the new dog in state.user.dogs
           store.dispatch(addDogToUser(response.data));
           store.dispatch(nextSignupFormStep());
           next(action);
