@@ -54,9 +54,7 @@ class UserModel {
                     this.email,
                     this.first_name,
                     this.last_name,
-
                     this.zip_code,
-
                     this.birthday,
                     this.id,
                 ]);
@@ -64,18 +62,21 @@ class UserModel {
 
             }
             else {
-                // insert a facto en fonction SQL
-                const { rows } = await database.query(`INSERT INTO member (email, first_name, last_name, zip_code, password, birthday) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [
-                    this.email,
-                    this.first_name,
-                    this.last_name,
 
-                    this.zip_code,
-                    this.password,
-                    this.birthday,
-                ]);
+                // insert a facto en fonction SQL
+                // const { rows } = await database.query(`INSERT INTO member (email, first_name, last_name, zip_code, password, birthday, photo) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`, [
+                //     this.email,
+                //     this.first_name,
+                //     this.last_name,
+                //     this.zip_code,
+                //     this.password,
+                //     this.birthday,
+                //     this.photo,
+                // ]);
+                const {rows}= await database.query('SELECT insert_user($1)',[this]);
+                
                 //return le nouvelle id de l'insert
-                this.id = rows[0].id;
+                this.id = rows[0].insert_user;
                 return this;
             }
         } catch (error) {
@@ -86,6 +87,10 @@ class UserModel {
             }
         }
     }
+
+
+
+
 
     static async dataUserConnexion(id) {
         try {

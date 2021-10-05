@@ -17,7 +17,7 @@ router.get('/', checkToken, function (req, res) {
 router.get('/characteristic', formController.getDogCharacteristic);
 
 router.post('/login', userController.login);
-router.post('/subscribe', userController.addNewUser);
+router.post('/subscribe', multer,userController.addNewUser);
 router.delete('/account/delete', checkToken, userController.deleteAccount);
 
 router.get('/rides', checkToken, rideController.findAll);
