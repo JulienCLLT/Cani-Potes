@@ -54,30 +54,33 @@ const CreateRide = () => {
   const [endPoint, setEndPoint] = useState();
   const [startPointAddress, setStartPointAddress] = useState();
   const [endPointAddress, setEndPointAddress] = useState();
+  const [searchPosition, setSearchPosition] = useState(user.position);
 
   const onSubmit = (data) => {
     console.log(data);
+    if (!startPoint || !endPoint) {
+      console.warn('Invalid start or end point for ride');
+    }
     dispatch(createRide(data, startPoint, endPoint));
   };
 
-  //
   const geocodeServiceEsri = geocodeService({
     apikey,
   });
 
   // reverse geocoding : convert lat and lng to address
   const geocodingReverse = (latlng, useStatepointAddress) => {
-    console.log('valeur en entrée : ', latlng);
     geocodeServiceEsri.reverse().latlng(latlng)
       .run((error, result) => {
         if (error) {
           console.log('reverse geocoding error', error);
         }
-        console.log('geocodingReverse result', result);
         useStatepointAddress(result.address.LongLabel);
       });
-    // return address;
   };
+
+  // initial startPointAddress
+  geocodingReverse(startPoint, setStartPointAddress);
 
   const LocationMarker = () => {
     const [position, setPosition] = useState(null);
@@ -89,10 +92,7 @@ const CreateRide = () => {
         }
         else if (switchPoint === 'end') {
           setEndPoint([e.latlng.lat, e.latlng.lng]);
-          // geocodingReverse(endPoint, setEndPointAddress);
           geocodingReverse([e.latlng.lat, e.latlng.lng], setEndPointAddress);
-          console.log('endPoint in if', endPoint);
-          console.log('endPointAddress in if', endPointAddress);
         }
       },
     });
@@ -101,10 +101,16 @@ const CreateRide = () => {
     );
   };
 
-  console.log('start', startPoint);
-  console.log('end', endPoint);
-  console.log('endPoint');
-  console.log('switchPoint', switchPoint);
+  useEffect(() => {
+    if (switchPoint === 'start') {
+      setStartPoint(searchPosition);
+      geocodingReverse(searchPosition, setStartPointAddress);
+    }
+    else {
+      setEndPoint(searchPosition);
+      geocodingReverse(searchPosition, setEndPointAddress);
+    }
+  }, [searchPosition]);
 
   return (
     <main className="create-ride">
@@ -162,15 +168,14 @@ const CreateRide = () => {
               useMapBounds={false}
               placeholder="Chercher une adresse ou un endroit"
               providers={{
-				  arcgisOnlineProvider: {
-				    apikey,
-				  },
+                arcgisOnlineProvider: {
+                  apikey,
+                },
               }}
               eventHandlers={{
-				  requeststart: () => console.log('Started request...'),
-				  requestend: () => console.log('Ended request...'),
-				  results: (results) => {
+                results: (results) => {
                   console.log('EsriLeafletGeosearch', [results.latlng.lat, results.latlng.lng]);
+                  setSearchPosition([results.latlng.lat, results.latlng.lng]);
                 },
               }}
               key={apikey}
@@ -206,18 +211,16 @@ const CreateRide = () => {
           {/* Start hour */}
           <p>Heure de départ</p>
           <select {...register('startHour', { required: 'Veuillez sélectionner l\'heure de la balade.' })} defaultValue={17}>
-            {
-							hours.map((hour) => <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}</option>)
-						}
+            {hours.map(
+              (hour) => <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}</option>,
+            )}
           </select>
           {/* Start min */}
           <select {...register('startMin', { required: 'Veuillez sélectionner les minutes de l\'heure de la balade.' })} defaultValue={30}>
-            {
-							minutes.map((minute) => <option key={minute} value={minute}>{minute.toString().padStart(2, '0')}</option>)
-						}
+            {minutes.map(
+              (minute) => <option key={minute} value={minute}>{minute.toString().padStart(2, '0')}</option>,
+            )}
           </select>
-          {/* je convertis en number puis je fais si x<minHour alors erreur */}
-          {/* {errors.startHour || errors.startMin && <span>{errors.startHour.message}</span> } */}
 
           {errors.startHour || errors.startMin && (
           <>
