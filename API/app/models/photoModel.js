@@ -39,6 +39,15 @@ class Photo {
         }
     }
 
+    static async deleteOnePhoto(photoId) {
+        try {
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
+
 
 }
 
