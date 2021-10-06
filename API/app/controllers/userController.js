@@ -1,6 +1,9 @@
 const bcrypt = require('../services/bcrypt');
 const jwt = require('../services/jwtoken');
 const apiGeo = require('../services/apiGeo');
+const sharp = require('sharp');
+const path = require('path');
+const fs = require('fs');
 
 const UserModel = require('../models/userModel');
 const Dog = require('../models/dogModel');
@@ -43,14 +46,29 @@ const userController = {
 
     addNewUser: async (request, response) => {
         try {
+             if (request.file) {
+                const { filename: image } = request.file;
+
+                // resize picture and push it in resized file
+                await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
+                    .toFile(path.resolve(request.file.destination, 'user_resized', image));
+                fs.unlinkSync(request.file.path);
+                
+                //push name path a image resized 
+                request.body.photo = request.file.filename;
+            };
+            
+            
             const user = new UserModel(request.body);
 
-            //on Bcrypt et remplace direct le password
+           
+                //on Bcrypt et remplace direct le password
             user.password = await bcrypt.hash(user.password);
-
+            
             const newUser = await user.save();
+            
+                //bloc code creation du json de reponse.
             if (newUser) {
-
                 const dataUser = await UserModel.dataUserConnexion(newUser.id);
                 dataUser.position = await apiGeo(dataUser.position);
                 const token = jwt.signToken({ id: newUser.id });
@@ -76,13 +94,39 @@ const userController = {
         }
     },
 
-    save: async (request, response) => {
+    updateUser: async (request, response) => {
         try {
-            const idPayload = request.userId; //normalement on recupe id de l'user dans le payload
-
+            const idPayload = request.userId;
             request.body.id = idPayload;
+             // on fait une premiere update sans prendre en compte la photo
+             // en cas insertion d'un email deja valide on catch
+             // si on fait tout en une seul requete a la fin si il y a un confilt d'email le nom de la photo dans 
+             // le fichier public change mais pas en bdd = confilt 
             const user = new UserModel(request.body);
             await user.save(user);
+
+                if (request.file) {
+                    const { filename: image } = request.file;
+
+                    await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
+                        .toFile(path.resolve(request.file.destination, 'user_resized', image));
+                    fs.unlinkSync(request.file.path);
+                    
+                    //push name path a image resized 
+                    const oldPhoto = await UserModel.findOne(idPayload);
+
+                        if (oldPhoto.photo != 'avatar.jpg') {
+                            
+                            fs.unlinkSync(`public/user_resized/${oldPhoto.photo}`);
+                        };
+                
+                        
+                    const newPhoto = new UserModel({id:idPayload, photo:request.file.filename});
+                    await newPhoto.save(newPhoto);
+                    
+                };
+
+
             response.status(204).json('Update done');
         } catch (error) {
             response.status(500).json(error.message);
