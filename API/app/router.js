@@ -29,6 +29,7 @@ router.get('/ride', checkToken, rideController.getRidesByMember);
 router.delete('/ride/:rideId(\\d+)', checkToken, rideController.delete);
 router.get('/ride/:rideId(\\d+)', checkToken, rideController.findOneRideWithAllInformations);
 
+
 router.delete('/ride/:rideId(\\d+)/participation', checkToken, rideController.leaveARide);
 router.post('/ride/:rideId(\\d+)/participation', checkToken, rideController.addNewParticipant);
 router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', checkToken, rideController.removeUserFromRide);
