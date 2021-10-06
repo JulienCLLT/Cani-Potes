@@ -1,8 +1,5 @@
-const Photo = require('../models/photoModel');
-const Dog = require('../models/dogModel');
-const sharp = require('sharp');
-const path = require('path');
-const fs = require('fs');
+const { PhotoModel, DogModel } = require('../models');
+
 
 const photoController = {
 
@@ -21,7 +18,7 @@ const photoController = {
             if (profileId !== userId) {
                 throw Error('Vous ne pouvez pas accéder à cette demande');
             }
-            const dogToDelete = await Dog.findById(dogId);
+            const dogToDelete = await DogModel.findById(dogId);
             if (!dogToDelete) {
                 throw Error('Ce chien n\'existe pas');
             }
@@ -29,7 +26,7 @@ const photoController = {
                 throw Error('Vous n\'êtes pas le propriétaire du chien');
             }
 
-            await Photo.deleteOnePhoto(photoId);
+            await PhotoModel.deleteOnePhoto(photoId);
             response.status(204).json();
 
         } catch (error) {
