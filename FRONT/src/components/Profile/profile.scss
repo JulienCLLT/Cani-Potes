@@ -30,11 +30,10 @@
 
   &__header {
     width: 60%;
-    min-width: 220px;
+    // min-width: 220px;
     max-width: 300px;
-    margin: auto;
+    margin: 1rem auto;
     text-align: center;
-    box-shadow: 0 0 10px  vars.$color-border-input ;
     border-radius: 30px;
     padding: .5 * vars.$gutter;
 

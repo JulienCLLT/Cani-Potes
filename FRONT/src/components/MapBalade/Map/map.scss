@@ -21,3 +21,12 @@
 .leaflet-popup-content {
     border-radius: 5px;
 }
+
+.leaflet-popup-tip {
+    @extend %linear-gradient;
+}
+
+.leaflet-bar, .leaflet-touch .leaflet-bar a {
+    background-color: #fa774d;
+    opacity: 0.7;
+}

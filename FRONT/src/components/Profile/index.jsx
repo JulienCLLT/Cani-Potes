@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { deleteDog, deleteDogPhoto, deleteUser, getOneUserById, getProfileIsLoading, updateDog, updateUser } from '../../actions/users';
+import {
+  deleteDog, deleteDogPhoto, deleteUser, getOneUserById, getProfileIsLoading, updateDog, updateUser,
+} from '../../actions/users';
 import { formstepShowsDogform, getDogBreedsAndBehaviors } from '../../actions/signup';
 
 import DogForm from '../SignUp/DogForm/index';
@@ -178,9 +180,9 @@ const Profile = () => {
 
             <header className="profile-page__header">
               <div>
-                <span className="profile-page__header__annoucement">
+                {/* <span className="profile-page__header__annoucement">
                   {profileIsUser ? 'Votre profil ' : 'Profil de '}
-                </span>
+                </span> */}
                 <div className="profile-page__header__avatar">
                   <img src={`http://100.25.13.11/user_resized/${profile.photo}`} alt={profile.first_name} />
                   {
