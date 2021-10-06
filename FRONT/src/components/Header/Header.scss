@@ -11,11 +11,11 @@
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 999;
+    z-index: 9999;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: vars.$color_main;
+    @extend %linear-gradient;
 
     @include lg-screen {
         position: static;

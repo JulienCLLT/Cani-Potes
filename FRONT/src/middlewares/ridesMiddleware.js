@@ -34,6 +34,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .get(`/ride/${action.id}`)
         .then(
           (response) => {
+            console.log('ride retournée : ', response)
             store.dispatch(saveOneRide(response.data[0]));
           },
         )
@@ -97,19 +98,20 @@ const ridesMiddleware = (store) => (next) => (action) => {
       } = action.newRide;
       axiosInstance
         .post('/ride', {
-          title, //
-          description, //
-          duration, //
-          start_coordinate: action.startPoint, //
-          end_coordinate: action.endPoint, //
-          starting_time: `${date} ${startHour}:${startMin}:00+02`, // 2021-10-03 19:37:25.631205+02
-          max_number_dogs: maxDogs, //
-          tag_id: 1, // to modify
-          host_id: store.getState().user.id, //
+          title,
+          description,
+          duration,
+          start_coordinate: action.startPoint,
+          end_coordinate: action.endPoint,
+          starting_time: `${date} ${startHour}:${startMin}:00+02`,
+          max_number_dogs: maxDogs,
+          tag_id: 1, // todo modify later in v2
+          host_id: store.getState().user.id,
         })
         .then(
           (response) => {
             console.log('Ride created successfully : ', response);
+            next(action);
           },
         )
         .catch(

@@ -48,19 +48,19 @@ const UserForm = () => {
               }
               {/* Firstname */}
               <div className="user-form__form__input-infos__first_name">
-                <input {...register('first_name', { required: 'Veuillez entrer votre prénom.', maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })} type="text" placeholder="Prénom" defaultValue="michel" />
+                <input {...register('first_name', { required: 'Veuillez entrer votre prénom.', maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })} type="text" placeholder="Prénom" />
                 {errors.first_name && <p className="errors">{errors.first_name.message}</p>}
               </div>
 
               {/* Name */}
               <div className="user-form__form__input-infos__name">
-                <input {...register('last_name', { required: 'Veuillez entrer votre nom.', maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })} type="text" placeholder="Nom" defaultValue="test" />
+                <input {...register('last_name', { required: 'Veuillez entrer votre nom.', maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })} type="text" placeholder="Nom" />
                 {errors.last_name && <p className="errors">{errors.last_name.message}</p>}
               </div>
 
               {/* Email */}
               <div className="user-form__form__input-infos__email">
-                <input {...register('email', { required: 'Veuillez entrer un email.' })} type="email" placeholder="Email" defaultValue="michel@gmail.com" />
+                <input {...register('email', { required: 'Veuillez entrer un email.' })} type="email" placeholder="Email" />
                 {errors.email && <p className="errors">{errors.email.message}</p>}
               </div>
 
@@ -119,7 +119,6 @@ const UserForm = () => {
                   })}
                   type="text"
                   placeholder="Code postal"
-                  defaultValue="12345"
                 />
                 {errors.zip_code && <p className="errors">{errors.zip_code.message}</p>}
                 {}

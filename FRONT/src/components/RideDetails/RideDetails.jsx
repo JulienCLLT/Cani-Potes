@@ -10,6 +10,8 @@ import {
 
 import L from 'leaflet';
 
+import Loader from '../Loader/index';
+
 import calendar from '../../assets/img/info-ride/calendar.svg';
 import hourglass from '../../assets/img/info-ride/hourglass.svg';
 import startFlag from '../../assets/img/info-ride/startPointFlag.svg';
@@ -20,12 +22,15 @@ import peureux from '../../assets/img/profile-simulation/fearful.svg';
 import joueur from '../../assets/img/profile-simulation/player.png';
 import agressif from '../../assets/img/profile-simulation/aggressive.png';
 import sociable from '../../assets/img/profile-simulation/sociable.svg';
+import flag from '../../assets/img/info-ride/flag.svg';
 
-import './RideDetails.scss';
 import {
   sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
 } from '../../actions/rides';
 import { translateDate } from '../../utils/translateDate';
+import { reverseGeocoding } from '../../utils/reverseGeocoding';
+
+import './RideDetails.scss';
 
 const RideDetails = () => {
   const { id } = useParams();
@@ -43,6 +48,11 @@ const RideDetails = () => {
     ride_id, title, max_number_dogs, participants, starting_time, duration,
     description, host_first_name, host_id, messages, start_coordinate, end_coordinate, isLoading,
   } = useSelector((state) => state.rides.currentRide);
+
+  const [startPointAddress, setStartPointAddress] = useState('');
+  const [endPointAddress, setEndPointAddress] = useState('');
+  reverseGeocoding(start_coordinate, setStartPointAddress);
+  reverseGeocoding(end_coordinate, setEndPointAddress);
 
   const userIsHost = userProfile.id === host_id;
 
@@ -155,7 +165,7 @@ const RideDetails = () => {
           <div className="ride-details__leaflet">
             {
               isLoading ? (
-                <span>chargement ...</span>
+                <Loader />
               ) : (
                 <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={14} scrollWheelZoom>
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -177,7 +187,12 @@ const RideDetails = () => {
         <div className="ride-details__infos__description">
           <p>
             <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
-            Départ le {translateDate(starting_time)}
+            Départ {startPointAddress} <br />
+            le {translateDate(starting_time)}
+          </p>
+          <p>
+            <span className="ride-details__icon"><img src={flag} alt="flag" /></span>
+            Arrivée {endPointAddress} <br />
           </p>
           <p>
             <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
@@ -229,7 +244,6 @@ const RideDetails = () => {
                   <Link
                     className="ride-details__current-user__avatar"
                     to={`/profile/${participant.participant_id}`}
-                    exact
                   >
                     <img src={participant.participant_photo} alt="user" />
                     <span>{participant.participant_first_name}</span>
@@ -237,7 +251,7 @@ const RideDetails = () => {
 
                   <div className="ride-details__current-user__dogs-container">
                     {participant.dogs.map((dog) => (
-                      <article className="ride-details__current-user__current-dog">
+                      <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
                         <div className="dog-avatar">
                           {dog.dog_photo && (
                             <img src={`http://107.22.144.90/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
@@ -258,27 +272,6 @@ const RideDetails = () => {
                       </article>
                     ))}
                   </div>
-                  {/* {participant.dogs.map((dog, index) => {
-                    if (index < 3) {
-                      return (
-                        <div className="ride-details__current-user__dogs" key={`${dog.dog_id}`}>
-                          <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} />
-                          <span>{dog.dog_surname}</span>
-                          <span>
-                            <img src={dogBehaviors[dog.dog_behavior]} alt="" />
-                            {dog.dog_behavior}
-                          </span>
-                        </div>
-                      );
-                    }
-                    if (index === (participant.dogs.length - 1)) {
-                      return (
-                        <div className="ride-details__current-user__dogs" key={`${dog.dog_id}`}>
-                          <span>{participant.dogs.length - 3} de plus</span>
-                        </div>
-                      );
-                    }
-                  })} */}
                 </div>
               ))
             }
@@ -288,7 +281,6 @@ const RideDetails = () => {
             <Link
               className="ride-details__users__creator__avatar"
               to={`/profile/${host_id}`}
-              exact
             >
               <p>Créateur</p>
               <img src={participants[0].participant_photo} alt={host_first_name} />
@@ -300,30 +292,28 @@ const RideDetails = () => {
       </section>
 
       {
-        participants.find((participant) => participant.participant_id === userProfile.id)
-        && (
-        <button
-          type="button"
-          className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
-          onClick={() => {
-            setIsChatOpen(!isChatOpen);
-            scrollDownChat();
-          }}
-        >
-          {
-            isChatOpen ? (
-              <img src={close} alt="close chat" />
-            ) : (
-              <img src={conversation} alt="open chat" />
-            )
-          }
-        </button>
+        participants.find((participant) => participant.participant_id === userProfile.id) && (
+          <button
+            type="button"
+            className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
+            onClick={() => {
+              setIsChatOpen(!isChatOpen);
+              scrollDownChat();
+            }}
+          >
+            {
+              isChatOpen ? (
+                <img src={close} alt="close chat" />
+              ) : (
+                <img src={conversation} alt="open chat" />
+              )
+            }
+          </button>
         )
       }
 
       {isChatOpen && (
         <section className="ride-details__chat">
-
           <div className="ride-details__messages-container" ref={chatZone}>
             {
               messages.map((msg) => (
@@ -334,7 +324,8 @@ const RideDetails = () => {
                   <p>
                     {msg.participants}
                     <span>
-                      {msg.sent}
+                      {msg.sender_first_name}
+                      {translateDate(msg.sent)}
                     </span>
                   </p>
                   <span>{msg.message}</span>

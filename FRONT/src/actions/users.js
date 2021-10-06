@@ -12,6 +12,18 @@ export const connectUser = (token, user) => ({
   user,
 });
 
+export const USER__GETS__HIS__DOGS = 'USER__GETS__HIS__DOGS';
+export const userGetsHisDogs = (userId) => ({
+  type: USER__GETS__HIS__DOGS,
+  userId,
+});
+
+export const SAVE__USER__DOGS__IN__STATE = 'SAVE__USER__DOGS__IN__STATE';
+export const saveUserDogsInState = (dogs) => ({
+  type: SAVE__USER__DOGS__IN__STATE,
+  dogs,
+});
+
 export const FAILED__TO__CONNECT = 'FAILED__TO__CONNECT';
 export const failedToConnect = () => ({
   type: FAILED__TO__CONNECT,
@@ -69,6 +81,14 @@ export const DELETE__DOG = 'DELETE__DOG';
 export const deleteDog = (userId) => ({
   type: DELETE__DOG,
   userId,
+});
+
+export const DELETE__DOG__PHOTO = 'DELETE__DOG__PHOTO';
+export const deleteDogPhoto = (userId, dogId, photoId) => ({
+  type: DELETE__DOG__PHOTO,
+  userId,
+  dogId,
+  photoId,
 });
 
 export const DELETE__USER = 'DELETE__USER';

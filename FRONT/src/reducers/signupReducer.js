@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 import { NEXT_SIGNUP_FORM_STEP, SAVE_DOG_BREEDS_AND_BEHAVIORS, FAILED_TO_SIGNUP, FORMSTEP_SHOWS_DOGFORM } from '../actions/signup';
 import { LOGOUT__USER } from '../actions/users';
+import { UPDATE__DOG } from './../actions/users';
 
 const initialState = {
 
@@ -44,6 +45,12 @@ const reducer = (state = initialState, action = {}) => {
       return {
         ...state,
         formStep: 2,
+      };
+    case UPDATE__DOG:
+      return {
+        ...state,
+        // force rerender and call db for fresh data
+        formStep: 1,
       };
     case LOGOUT__USER:
       return {

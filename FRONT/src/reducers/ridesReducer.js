@@ -1,9 +1,9 @@
 /* eslint-disable linebreak-style */
-import { LOGOUT__USER } from '../actions/users';
+import { GET__RIDES__WITH__USER__IN, LOGOUT__USER } from '../actions/users';
 import {
   ADD__USER__TO__RIDE, USER__QUIT__RIDE, ADD__MESSAGE__IN__STATE,
   DELETE__RIDE__IN__STATE, SAVE__ALL__RIDES, SAVE__ONE__RIDE, GET__RIDE__IS__LOADING,
-  FAILED_TO_CREATE_RIDE, KICK__USER__FROM__RIDE,
+  FAILED_TO_CREATE_RIDE, KICK__USER__FROM__RIDE, CREATE_RIDE,
 } from '../actions/rides';
 
 const ridesInitialState = {
@@ -67,6 +67,7 @@ const ridesInitialState = {
     ],
   },
   failedToCreateRide: false,
+  rideIsCreated: false,
   errorMessage: '',
 };
 
@@ -188,6 +189,17 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
             (participant) => participant.participant_id !== action.userId,
           ),
         },
+      };
+    case CREATE_RIDE:
+      return {
+        ...state,
+        rideIsCreated: true,
+      };
+    case GET__RIDES__WITH__USER__IN:
+      // when redirect on /board, clean state to be able to go back on /ride/create
+      return {
+        ...state,
+        rideIsCreated: false,
       };
     case LOGOUT__USER:
       return {
