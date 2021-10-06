@@ -1,7 +1,9 @@
 /* eslint-disable linebreak-style */
-import { LOGOUT__USER, FAILED__TO__CONNECT, CONNECT__USER, ADD__RIDES__TO__USER, DELETE__DOG, SAVE__USER__DOGS__IN__STATE } from '../actions/users';
+import {
+  LOGOUT__USER, FAILED__TO__CONNECT, CONNECT__USER, ADD__RIDES__TO__USER,
+  DELETE__DOG, SAVE__USER__DOGS__IN__STATE, REINIT__RENDER__AGAIN, RENDER__AGAIN,
+} from '../actions/users';
 import { ADD_DOG_TO_USER } from '../actions/signup';
-import { DELETE__DOG__PHOTO } from './../actions/users';
 
 const userInitialState = {
   id: 0,
@@ -12,6 +14,7 @@ const userInitialState = {
   isLogged: false,
   failedToConnect: false,
   rides: [],
+  renderAgain: false,
 };
 
 const userReducer = (state = userInitialState, action = {}) => {
@@ -57,11 +60,16 @@ const userReducer = (state = userInitialState, action = {}) => {
         ...state,
         rides: action.rides,
       };
-    // case DELETE__DOG__PHOTO:
-    //   return {
-    //     ...state,
-    //     dogs: 
-    //   };
+    case RENDER__AGAIN:
+      return {
+        ...state,
+        renderAgain: true,
+      };
+    case REINIT__RENDER__AGAIN:
+      return {
+        ...state,
+        renderAgain: false,
+      };
     case DELETE__DOG:
       return {
         ...state,
