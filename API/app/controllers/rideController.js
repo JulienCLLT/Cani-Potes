@@ -35,6 +35,7 @@ const rideController = {
         try {
             const userId = request.userId;
             const rides = await Ride.findRidesByMember(userId);
+            console.log("rides", rides);
             response.status(201).json(rides);
         } catch (error) {
             response.status(500).json(error.message);
