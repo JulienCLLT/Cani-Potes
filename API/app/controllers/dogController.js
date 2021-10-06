@@ -1,4 +1,6 @@
 const { PhotoModel, DogModel } = require('../models');
+const { sharpResizeImage } = require('../services');
+
 const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs');
@@ -47,12 +49,9 @@ const dogController = {
 
 
             if (request.file) {
-                const { filename: image } = request.file;
+                
+                sharpResizeImage.sharpResize(request.file, 'dog_resized');
 
-                // resize picture and push it in resized file
-                await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
-                    .toFile(path.resolve(request.file.destination, 'dog_resized', image));
-                fs.unlinkSync(request.file.path);
 
                 // insert the photo data in db
                 const newPhoto = new PhotoModel({ file: request.file.filename, dogId: dogCreated.id });
@@ -95,12 +94,8 @@ const dogController = {
             const dogUpdated = await DogModel.findById(dogId);
 
             if (request.file) {
-                const { filename: image } = request.file;
 
-                // resize picture and push it in resized file
-                await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
-                    .toFile(path.resolve(request.file.destination, 'dog_resized', image));
-                fs.unlinkSync(request.file.path);
+                sharpResizeImage.sharpResize(request.file, 'dog_resized');
 
                 // insert the photo data in db
                 const newPhoto = new PhotoModel({ file: request.file.filename, dogId: dogId });

@@ -1,6 +1,4 @@
-const { bcrypt, jwt, apiGeo } = require('../services');
-const sharp = require('sharp');
-const path = require('path');
+const { bcrypt, jwt, apiGeo, sharpResizeImage } = require('../services');
 const fs = require('fs');
 
 
@@ -43,14 +41,9 @@ const userController = {
     addNewUser: async (request, response) => {
         try {
              if (request.file) {
-                const { filename: image } = request.file;
-
-                // resize picture and push it in resized file
-                await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
-                    .toFile(path.resolve(request.file.destination, 'user_resized', image));
-                fs.unlinkSync(request.file.path);
                 
-                //push name path a image resized 
+                sharpResizeImage.sharpResize(request.file, 'user_resized');
+
                 request.body.photo = request.file.filename;
             };
             
@@ -92,6 +85,7 @@ const userController = {
 
     updateUser: async (request, response) => {
         try {
+
             const idPayload = request.userId;
             request.body.id = idPayload;
              // on fait une premiere update sans prendre en compte la photo
@@ -100,15 +94,11 @@ const userController = {
              // le fichier public change mais pas en bdd = confilt 
             const user = new UserModel(request.body);
             await user.save(user);
-
                 if (request.file) {
-                    const { filename: image } = request.file;
 
-                    await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
-                        .toFile(path.resolve(request.file.destination, 'user_resized', image));
-                    fs.unlinkSync(request.file.path);
+                    sharpResizeImage.sharpResize(request.file, 'user_resized');
                     
-                    //push name path a image resized 
+                    
                     const oldPhoto = await UserModel.findOne(idPayload);
 
                         if (oldPhoto.photo != 'avatar.jpg') {
@@ -118,6 +108,7 @@ const userController = {
                 
                         
                     const newPhoto = new UserModel({id:idPayload, photo:request.file.filename});
+
                     await newPhoto.save(newPhoto);
                     
                 };

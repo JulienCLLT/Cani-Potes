@@ -1,4 +1,4 @@
-const database = require('../database');
+const client = require('../database');
 
 class UserModel {
     constructor(data = {}) {
@@ -9,7 +9,7 @@ class UserModel {
 
     static async login(email) {
         try {
-            const { rows } = await database.query('SELECT email, password, id FROM member WHERE email=$1', [email]);
+            const { rows } = await client.query('SELECT email, password, id FROM member WHERE email=$1', [email]);
             //return new UserModel(rows[0]) ; quelle version est plus propre ?
             return rows[0];
 
@@ -25,7 +25,7 @@ class UserModel {
 
     static async findOne(userId) {
         try {
-            const { rows } = await database.query('SELECT id, photo FROM member WHERE id=$1', [userId]);
+            const { rows } = await client.query('SELECT id, photo FROM member WHERE id=$1', [userId]);
             //return new UserModel(rows[0]) ; quelle version est plus propre ?
             return rows[0];
 
@@ -43,12 +43,12 @@ class UserModel {
             if (this.id) {
                 // faire un fonction d'update dynamique en sql;
 
-                const { rows } = await database.query(`SELECT update_user($1)`,[this]);
+                const { rows } = await client.query(`SELECT update_user($1)`,[this]);
 
 
             }
             else {
-                const {rows}= await database.query('SELECT insert_user($1)',[this]);
+                const {rows}= await client.query('SELECT insert_user($1)',[this]);
                 
                 //return le nouvelle id de l'insert
                 this.id = rows[0].insert_user;
@@ -69,7 +69,7 @@ class UserModel {
 
     static async dataUserConnexion(id) {
         try {
-            const { rows } = await database.query('SELECT * FROM user_basic_information WHERE id = $1', [id]);
+            const { rows } = await client.query('SELECT * FROM user_basic_information WHERE id = $1', [id]);
             return rows[0];
         } catch (error) {
             if (error.detail) {
@@ -83,7 +83,7 @@ class UserModel {
 
     static async fullProfile(idUser) {
         try {
-            const { rows } = await database.query('SELECT * FROM full_profile WHERE member_id = $1', [idUser]);
+            const { rows } = await client.query('SELECT * FROM full_profile WHERE member_id = $1', [idUser]);
             return rows[0];
 
         } catch (error) {
@@ -98,7 +98,7 @@ class UserModel {
     static async deleteMember(userId) {
         try {
             const query = `DELETE FROM member WHERE id = $1`;
-            await database.query(query, [userId]);
+            await client.query(query, [userId]);
             return null;
         } catch (error) {
             console.error(error);
