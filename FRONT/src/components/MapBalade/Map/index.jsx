@@ -34,7 +34,11 @@ const Map = () => {
     iconSize: [22, 35],
   });
 
-  const fillBlueOptions = { fillColor: 'blue' };
+  const fillBlueOptions = {
+    fillColor: '#fc575e',
+    fillOpacity: 0.15,
+    color: '#fc575e',
+  };
 
   const handleClick = (e) => {
     const { lat, lng } = e.latlng;

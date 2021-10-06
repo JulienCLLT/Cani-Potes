@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 // import leaflet
 import {
@@ -20,9 +21,13 @@ import './createRide.scss';
 import startPointFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endPointFlag from '../../assets/img/info-ride/endPointFlag.svg';
 
+// QUAND je submit ma balade,
+// SI elle est bien enregistreé dans la bdd, je passe rideIsCreated à true (qui enclenchera un redirect)
+// QUAND j'arrive sur la page où je suis redirect, je dois repasser rideIsCreated à false (sinon je ne pourrais pas revenir sur CreateRide)
+
 const CreateRide = () => {
   const apikey = 'AAPKbde72a12e3ff4574b3edd95295b1d13d5-bGBIhj88MhjknVOZZpLcC1yEkpv4yu2Bx8MRWji_av4Hj2aqwc1AsUJ2UyTK3Q';
-  const { failedToCreateRide, errorMessage } = useSelector((state) => state.rides);
+  const { failedToCreateRide, errorMessage, rideIsCreated } = useSelector((state) => state.rides);
   const { user } = useSelector((state) => state);
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -114,6 +119,7 @@ const CreateRide = () => {
 
   return (
     <main className="create-ride">
+      {rideIsCreated && <Redirect to="/board" />}
       <h2>Création d'une balade</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         {
@@ -127,7 +133,7 @@ const CreateRide = () => {
             type="text"
             id="title"
             name="title"
-            defaultValue="Ma super balade"
+            placeholder="Balade le long du canal"
             {...register('title', { required: 'Veuillez écrire un titre.', maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })}
           />
           {errors.title && <span>{errors.title.message}</span>}
@@ -237,7 +243,6 @@ const CreateRide = () => {
             <input
               id="duration"
               name="duration"
-              defaultValue={15}
               type="number"
               placeholder="Durée (min)"
               {...register('duration', { maxLength: { value: 3, message: 'Veuillez ne pas dépassez 3 chiffres.' } })}
@@ -249,14 +254,14 @@ const CreateRide = () => {
 
         {/* Max dog */}
         <div className="create-ride__field">
-          <label htmlFor="maxDogs">Nombre maximum de chiens.</label>
+          <label htmlFor="maxDogs">Nombre maximum de chiens</label>
           <input
             id="maxDogs"
             name="maxDogs"
-            defaultValue={4}
             type="number"
+            placeholder="Nombre de chiens"
             {...register('maxDogs', {
-              required: 'Veuillez remplir le nombre maximum de chiens', max: { value: 5, message: 'Maximum 5 chiens' }, min: { value: 2, message: 'Minimum 2 chiens' },
+              required: 'Veuillez remplir le nombre maximum de chiens', max: { value: 20, message: 'Maximum 20 chiens' }, min: { value: 2, message: 'Minimum 2 chiens' },
             })}
           />
           {errors.maxDogs && <span>{errors.maxDogs.message}</span>}
@@ -266,7 +271,7 @@ const CreateRide = () => {
         <div className="create-ride__field">
           <label htmlFor="description">Description de ma balade</label>
           <textarea
-            placeholder="Je souhaite me faire des Cani Potes :)"
+            placeholder="Je souhaite me faire des Cani Potes !"
             {...register('description', { required: 'Veuillez remplir la description.', maxLength: { value: 200, message: 'Veuillez ne pas dépasser 200 caractères.' } })}
           />
           {errors.description && <span>{errors.description.message}</span>}

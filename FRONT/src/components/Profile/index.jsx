@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { deleteDog, deleteUser, getOneUserById, getProfileIsLoading, updateDog, updateUser } from '../../actions/users';
+import { deleteDog, deleteDogPhoto, deleteUser, getOneUserById, getProfileIsLoading, updateDog, updateUser } from '../../actions/users';
 import { formstepShowsDogform, getDogBreedsAndBehaviors } from '../../actions/signup';
 
 import DogForm from '../SignUp/DogForm/index';
+import Loader from '../Loader/index';
 
 import './profile.scss';
 
@@ -23,7 +24,6 @@ const Profile = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    // wait for db to send profile before uncomment here
     dispatch(formstepShowsDogform());
     dispatch(getProfileIsLoading());
     dispatch(getDogBreedsAndBehaviors());
@@ -126,14 +126,16 @@ const Profile = () => {
     };
     if (dogIsChanged) setDogIsChanged(false);
     if (isModalOpen) setIsModalOpen(false);
-    dispatch(updateDog(user.id, isEditingDog, updatedDog));
+    const dogId = profile.dogs[isEditingDog - 1].dog_id;
+    dispatch(updateDog(user.id, dogId, updatedDog));
     setisEditingDog(false);
   };
 
   const handleDeletePhoto = () => {
     setIsModalPhotoOpen(false);
     const photoToDelete = profile.dogs[dogAndPicIndex.dogIdx].dog_photo[dogAndPicIndex.picIdx];
-    // dispatch action to delete photo in db if route is done
+    const dogId = profile.dogs[isEditingDog - 1].dog_id;
+    dispatch(deleteDogPhoto(user.id, dogId, photoToDelete.photo_id));
   };
 
   const handleDeleteDog = () => {
@@ -155,7 +157,7 @@ const Profile = () => {
     <div className="profile-page">
       {
         profile.isLoading ? (
-          <span>chargement ...</span>
+          <Loader />
         ) : (
           <>
             {
@@ -192,20 +194,6 @@ const Profile = () => {
                 <span className="profile-page__header__avatar-name">{profile.first_name}</span>
               </div>
             </header>
-
-            {profileIsUser && (
-              <button
-                className="delete-account-btn"
-                type="button"
-                onClick={() => {
-                  setInputDelete('');
-                  setFailedToDelete(false);
-                  setIsModalAccountOpen(true);
-                }}
-              >
-                Supprimer mon compte
-              </button>
-            )}
 
             {isModalDeleteAccountOpen && (
               <div className="profile-page__modal">
@@ -393,7 +381,7 @@ const Profile = () => {
                           </div>
                         ) : (
                           <span>
-                            {dog.dog_surname} {dog.dog_gender === 'male' ? '♂' : '♀'} {dog.dog_age}
+                            {dog.dog_surname} {dog.dog_gender === 'mâle' ? '♂' : '♀'} {dog.dog_age}
                           </span>
                         )}
 
@@ -657,7 +645,6 @@ const Profile = () => {
         </div>
       )}
 
-      {/* je ne veux afficher cette partie que SI l'id du profile === l'id du user */}
       {profileIsUser && (
         <>
           <button
@@ -673,6 +660,20 @@ const Profile = () => {
             <DogForm />
           </div>
         </>
+      )}
+
+      {profileIsUser && (
+        <button
+          className="delete-account-btn"
+          type="button"
+          onClick={() => {
+            setInputDelete('');
+            setFailedToDelete(false);
+            setIsModalAccountOpen(true);
+          }}
+        >
+          Supprimer mon compte
+        </button>
       )}
 
     </div>

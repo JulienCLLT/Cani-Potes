@@ -1,9 +1,10 @@
+/* eslint-disable linebreak-style */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import home from '../../../assets/navbar/location.png';
-import board from '../../../assets/navbar/tablet.png';
+import home from '../../../assets/navbar/location.svg';
+import board from '../../../assets/navbar/board.svg';
 import profile from '../../../assets/navbar/user.svg';
 import logout from '../../../assets/navbar/log-out.svg';
 
@@ -13,7 +14,7 @@ import './NavBarConnected.scss';
 
 const NavBarConnected = () => {
   const dispatch = useDispatch();
-  const { id } = useSelector(state => state.user);
+  const { id } = useSelector((state) => state.user);
 
   return (
     <nav className="navbar-connected">

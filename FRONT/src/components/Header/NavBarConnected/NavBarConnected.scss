@@ -1,3 +1,5 @@
+@use '../../../styles/vars';
+
 @mixin lg-screen {
     @media screen and (min-width: 900px) {
         @content
@@ -9,6 +11,7 @@
     display: flex;
     justify-content: space-around;
     max-width: 600px;
+    padding: .5 *vars.$gutter 0;
     margin: auto;
 
     @include lg-screen {

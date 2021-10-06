@@ -47,7 +47,6 @@ const signupMiddleware = (store) => (next) => (action) => {
         surname, breed, weight, sexe, birthday, sterilization, behavior, photo_dog, dog_owner_id, description,
       } = action.dogForm;
 
-      // transform data into formData to be able to use mutler
       const formData = new FormData();
 
       formData.append('photo', photo_dog[0]);

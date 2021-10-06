@@ -43,7 +43,7 @@ const Profile = ({ participants, host_id }) => {
                         <div className="profile__article__dogs-container" key={`participant${participant.participant_id}dog${dog.dog_id}`}>
                           <div className="profile__article__dogs-image">
                             {dog.dog_photo && (
-                              <img src={dog.dog_photo[0].photo_url} alt={dog.dog_surname} />
+                              <img src={`http://107.22.144.90/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} />
                             )}
                           </div>
                           <div>
