@@ -1,6 +1,7 @@
-const {userController, rideController, dogController, photoController, formController, mailController} =require('./controllers');
+const {userController, rideController, dogController, photoController, formController, mailController} = require('./controllers');
 const checkToken = require('./middlewares/checkJwt');
 const multer = require('./../app/middlewares/multerConfig');
+const express =  require('express');
 const router = express.Router();
 
 

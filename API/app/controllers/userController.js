@@ -1,14 +1,10 @@
-const bcrypt = require('../services/bcrypt');
-const jwt = require('../services/jwtoken');
-const apiGeo = require('../services/apiGeo');
+const { bcrypt, jwt, apiGeo } = require('../services');
 const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs');
 
-const UserModel = require('../models/userModel');
-const Dog = require('../models/dogModel');
-const Ride = require('../models/rideModel');
-const Photo = require('../models/photoModel');
+
+const { UserModel, DogModel, RideModel, PhotoModel } = require('../models');
 
 const userController = {
     login: async (request, response) => {
@@ -138,28 +134,28 @@ const userController = {
             const userId = request.userId;
 
             // delete all member's dogs + photos
-            const dogsId = await Dog.findDogFromMember(userId);
+            const dogsId = await DogModel.findDogFromMember(userId);
             for (dog of dogsId) {
                 //todo verfi suppression photo du fichier
-                await Photo.deletePhotos(dog.id);
-                await Dog.delete(dog.id);
+                await PhotoModel.deletePhotos(dog.id);
+                await DogModel.delete(dog.id);
             }
 
             // delete his participations to ride
-            await Ride.deleteParticipationsOfOneMember(userId);
+            await RideModel.deleteParticipationsOfOneMember(userId);
             // delete all messages sent by user
-            await Ride.deleteMessagesFromMember(userId);
+            await RideModel.deleteMessagesFromMember(userId);
 
-            const ridesHosted = await Ride.findRidesHostedBy(userId);
+            const ridesHosted = await RideModel.findRidesHostedBy(userId);
             if (ridesHosted) {
                 for (ride in ridesHosted) {
                     // retirer tous les participants a ces balades 
-                    await Ride.deleteAllParticipantsFromRide(ride.id);
+                    await RideModel.deleteAllParticipantsFromRide(ride.id);
                     //supprimer tous les messages a ppartenant a cette balade 
-                    await Ride.deleteMessagesByRideId(ride.id);
+                    await RideModel.deleteMessagesByRideId(ride.id);
                 }
             }
-            await Ride.deleteAllRidesCreatedBy(userId);
+            await RideModel.deleteAllRidesCreatedBy(userId);
             // delete message
             await UserModel.deleteMember(userId);
 

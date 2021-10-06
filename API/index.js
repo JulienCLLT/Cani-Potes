@@ -7,7 +7,9 @@ const app = express();
 
 const port = process.env.PORT || 3500;
 
-app.use(cors());
+app.use(cors({
+    'Access-Control-Allow-Origin': '*',
+  }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

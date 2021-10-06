@@ -1,19 +1,22 @@
 const bcrypt = require("bcrypt");
 
-const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS, 10);
+
+const bcryptService = {
+
+    SALT_ROUNDS:parseInt(process.env.SALT_ROUNDS, 10),
+
+    async hash (password) {
+        const salt = await bcrypt.genSalt(this.SALT_ROUNDS);
+        const hashed = await bcrypt.hash(password, salt);
+        return hashed;
+    },
+
+    async compare (password, hashed) {
+        const match = await bcrypt.compare(password, hashed);
+        return match;
+    }
+};
 
 
-async function hash(password) {
-    const salt = await bcrypt.genSalt(SALT_ROUNDS);
-    const hashed = await bcrypt.hash(password, salt);
-    return hashed;
-}
-
-// compare return boolean
-async function compare(password, hashed) {
-    const match = await bcrypt.compare(password, hashed);
-    return match;
-}
-
-module.exports = { hash, compare };
+module.exports = bcryptService ;
 

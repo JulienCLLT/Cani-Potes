@@ -15,7 +15,6 @@ async function fetchApi (zipcode) {
     
 };
 
-// fetchApi(73230);
 
 module.exports = fetchApi; 
 
