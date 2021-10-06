@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteRide, removeUserFromRide } from '../../actions/rides';
@@ -18,9 +18,6 @@ const DashBoard = () => {
 
   const hostedRides = user.rides.filter((ride) => ride.host_id === user.id);
   const notHostedRides = user.rides.filter((ride) => ride.host_id !== user.id);
-
-  console.log(hostedRides);
-  console.log(notHostedRides);
 
   return (
     <div className="dashboard-page">
@@ -45,11 +42,16 @@ const DashBoard = () => {
               <div>
                 <p>#{index + 1} {ride.title} - {translateDate(ride.starting_time)}</p>
                 <p>
-                  {/* {
+                  {
                     ride.participants ? ride.participants.reduce(
-                      (a, b) => a.dogs[0] + b.dogs[0],
+                      (total, item) => item.dogs.length + total, 0,
                     ) : 0
-                  } / {ride.max_number_dogs} chiens */}
+                  }
+                  {
+                    ride.participants.reduce(
+                      (total, item) => item.dogs.length + total, 0,
+                    ) > 1 ? ' chiens' : 'chien'
+                  }
                 </p>
               </div>
               <div>
@@ -82,11 +84,16 @@ const DashBoard = () => {
               <div>
                 <p>#{index + 1} {ride.title} - {translateDate(ride.starting_time)}</p>
                 <p>
-                  {/* {
+                  {
                     ride.participants ? ride.participants.reduce(
-                      (a, b) => a.dogs.length + (b.dogs.length || 0),
-                    ) : '0'
-                  } / {ride.max_number_dogs} chiens */}
+                      (total, item) => item.dogs.length + total, 0,
+                    ) : 0
+                  }
+                  {
+                    ride.participants.reduce(
+                      (total, item) => item.dogs.length + total, 0,
+                    ) > 1 ? ' chiens' : 'chien'
+                  }
                 </p>
               </div>
               <div>
