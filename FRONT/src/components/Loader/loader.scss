@@ -42,12 +42,6 @@ $colors: (
   $--y-4,
 );
 
-h2 {
-  display: block;
-  color: white;
-  font-weight: 100;
-  text-align: center;
-}
 
 .mosaic {
   display: flex;
@@ -58,44 +52,52 @@ h2 {
   font-family: 'Lato';
   font-weight: 300;
   font-size: 24px;
-}
 
-.mosaic-loader {
-  --cell-size: 64px;
-  --cell-spacing: 1px;
-  --border-width: 1px;
-  --cells: 4;
-  --total-size: calc(var(--cells) * (var(--cell-size) + 2 * var(--cell-spacing)));
+  h2 {
+    display: block;
+    color: white;
+    font-weight: 100;
+    text-align: center;
+  }
   
-  display: flex;
-  flex-wrap: wrap;
-  width: var(--total-size);
-  height: var(--total-size);
-  
-  > .cell {
-    --cell-color: white;
-    flex: 0 0 var(--cell-size);
-    margin: var(--cell-spacing);
-    background-color: transparent;
-    box-sizing: border-box;
-    border: var(--border-width) solid var(--cell-color);
+  .mosaic-loader {
+    --cell-size: 64px;
+    --cell-spacing: 1px;
+    --border-width: 1px;
+    --cells: 4;
+    --total-size: calc(var(--cells) * (var(--cell-size) + 2 * var(--cell-spacing)));
     
-    animation: 1.5s ripple ease infinite;
+    display: flex;
+    flex-wrap: wrap;
+    width: var(--total-size);
+    height: var(--total-size);
     
-    $delays: (2 * 4) - 2;
-    @for $i from 1 through $delays {
-      &.d-#{$i} {
-        animation-delay: $i * 100ms;
+    > .cell {
+      --cell-color: white;
+      flex: 0 0 var(--cell-size);
+      margin: var(--cell-spacing);
+      background-color: transparent;
+      box-sizing: border-box;
+      border: var(--border-width) solid var(--cell-color);
+      
+      animation: 1.5s ripple ease infinite;
+      
+      $delays: (2 * 4) - 2;
+      @for $i from 1 through $delays {
+        &.d-#{$i} {
+          animation-delay: $i * 100ms;
+        }
       }
-    }
-    
-    @for $i from 1 through length($colors) {
-      &:nth-child(#{$i}) {
-        --cell-color: #{nth($colors, $i)};
+      
+      @for $i from 1 through length($colors) {
+        &:nth-child(#{$i}) {
+          --cell-color: #{nth($colors, $i)};
+        }
       }
     }
   }
 }
+
 
 @keyframes ripple {
   0% {

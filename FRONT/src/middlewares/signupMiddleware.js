@@ -9,7 +9,7 @@ import { connectUser, getOneUserById } from '../actions/users';
 
 const signupMiddleware = (store) => (next) => (action) => {
   const axiosInstance = axios.create({
-    baseURL: 'http://107.22.144.90/api',
+    baseURL: 'http://100.25.13.11/api',
     headers: {
       'Access-Control-Allow-Origin': '*',
       authorization: `${store.getState().user.token}`,
@@ -19,16 +19,27 @@ const signupMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case USER_SIGNUP: {
       const {
-        first_name, last_name, email, password, birthday_user, zip_code,
+        first_name, last_name, email, password, birthday_user, zip_code, photo,
       } = action.userForm;
 
-      axiosInstance.post('/subscribe', {
-        email,
-        first_name,
-        last_name,
-        zip_code,
-        password,
-        birthday: birthday_user,
+      const formData = new FormData();
+
+      formData.append('first_name', first_name);
+      formData.append('last_name', last_name);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('birthday', birthday_user);
+      formData.append('zip_code', zip_code);
+      if (photo[0]) formData.append('photo', photo[0]);
+
+      axios({
+        method: 'POST',
+        url: 'http://100.25.13.11/api/subscribe',
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          authorization: `${store.getState().user.token}`,
+        },
       })
         .then((response) => {
           console.log('response', response);
@@ -62,7 +73,7 @@ const signupMiddleware = (store) => (next) => (action) => {
 
       axios({
         method: 'POST',
-        url: `http://107.22.144.90/api/profile/${store.getState().user.id}/dogs`,
+        url: `http://100.25.13.11/api/profile/${store.getState().user.id}/dogs`,
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',

@@ -112,15 +112,17 @@
         justify-content: space-between;
 
         span {
-          @include lg-screen {
-            display: flex;
-            align-items: center;
-            gap: .5 * vars.$gutter;
-          }
+          display: flex;
+          align-items: center;
         }
 
         .profile-page__edit__dog {
           @extend %edit-btn;
+
+          span {
+            display: flex;
+            align-items: center;
+          }
         }
       }
 
@@ -195,6 +197,7 @@
     }
 
     &__container {
+      width: auto;
       padding: .5 * vars.$gutter;
       margin: 1 * vars.$gutter auto;
       box-shadow: 0 0 3px black;

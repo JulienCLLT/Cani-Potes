@@ -8,7 +8,7 @@ import {
 
 const userMiddleware = (store) => (next) => (action) => {
   const axiosInstance = axios.create({
-    baseURL: 'http://107.22.144.90/api',
+    baseURL: 'http://100.25.13.11/api',
     headers: {
       'Access-Control-Allow-Origin': '*',
       authorization: `${store.getState().user.token}`,
@@ -60,10 +60,11 @@ const userMiddleware = (store) => (next) => (action) => {
       formData.append('sterilization', sterilization);
       formData.append('description', description);
       formData.append('behavior_id', behavior);
+      if (photoDog) formData.append('photo', photoDog);
 
       axios({
         method: 'PATCH',
-        url: `http://107.22.144.90/api/profile/${action.userId}/dogs/${action.dogId}`,
+        url: `http://100.25.13.11/api/profile/${action.userId}/dogs/${action.dogId}`,
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -83,16 +84,17 @@ const userMiddleware = (store) => (next) => (action) => {
       const {
         firstName, lastName, zipcode, photoUser,
       } = action.user;
+
       const formData = new FormData();
 
       formData.append('first_name', firstName);
       formData.append('last_name', lastName);
-      formData.append('zipcode', zipcode);
-      formData.append('photo', photoUser);
+      formData.append('zip_code', zipcode);
+      if (photoUser) formData.append('photo', photoUser);
 
       axios({
         method: 'PATCH',
-        url: 'http://107.22.144.90/api/account/edit',
+        url: 'http://100.25.13.11/api/account/edit',
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -124,7 +126,7 @@ const userMiddleware = (store) => (next) => (action) => {
         .delete(`/profile/${action.userId}/dogs/${action.dogId}/photo/${action.photoId}`)
         .then((response) => {
           console.log('Photo deleted successfully : ', response);
-          // todo update it in state
+          // next(action);
         })
         .catch((error) => {
           console.error('Unable to delete photo : ', error.response.data);

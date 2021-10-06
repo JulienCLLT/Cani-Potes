@@ -77,29 +77,31 @@ const Connection = () => {
           <article>
             <div className="connection__info__map">
               <h2>
-                Ne promenez plus votre chien seul, <br />
+                Ne promenez plus votre chien seul(e),
                 rejoignez des Cani'Potes !
               </h2>
-              <div>
-                <img src={mapHome} alt="map example" />
-              </div>
-              <p>
-                Via la carte interactive, visualisez les balades autour de chez vous et rejoignez les.
-                <br />
-                La promenade de vos rêves n'existe pas ? Créez la vôtre pour la proposer aux autres Cani'Potes.
-              </p>
-            </div>
-            <div className="connection__info__text">
-              <div>
-                <h2>Commencez l'aventure simplement</h2>
-                <ol>
-                  <li>Je me crée un compte en cliquant sur "Inscription".</li>
-                  <li>Je renseigne mes informations et celles de mon / mes chiens.</li>
-                  <li>Et c'est parti pour de belles rencontre.</li>
-                </ol>
+              <div className="connection__info__map-row-reverse">
+                <div>
+                  <img src={mapHome} alt="map example" />
+                </div>
+                <p>
+                  Via la carte interactive, visualisez les balades autour de chez vous et rejoignez-les.
+                  <br />
+                  La promenade de vos rêves n'existe pas ? Créez la vôtre pour la proposer aux autres Cani'Potes.
+                </p>
               </div>
             </div>
           </article>
+          <div className="connection__info__text connection__info__text-center">
+            <div>
+              <h2>Commencez l'aventure simplement</h2>
+              <ol>
+                <li>Je me crée un compte en cliquant sur "Inscription".</li>
+                <li>Je renseigne mes informations et celles de mon / mes chiens.</li>
+                <li>Et c'est parti pour de belles rencontres !</li>
+              </ol>
+            </div>
+          </div>
         </div>
 
         {isModalOpen && (
