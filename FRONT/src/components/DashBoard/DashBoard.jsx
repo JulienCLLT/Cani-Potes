@@ -19,15 +19,15 @@ const DashBoard = () => {
   const hostedRides = user.rides.filter((ride) => ride.host_id === user.id);
   const notHostedRides = user.rides.filter((ride) => ride.host_id !== user.id);
 
+  console.log(hostedRides);
+  console.log(notHostedRides);
+
   return (
     <div className="dashboard-page">
 
       <header className="dashboard-page__header">
         <h1 className="dashboard-title">Tableau de bord</h1>
-        <div className="dashboard-avatar">
-          <img src={user.photo} alt={user.first_name} />
-        </div>
-        <span>{user.first_name} {user.last_name}</span>
+        <span>{user.first_name}</span>
         <Link
           className="create-ride__btn"
           to="/ride/create"
@@ -79,11 +79,11 @@ const DashBoard = () => {
             <div key={ride.ride_id}>
               <div>
                 <p>#{index + 1} {ride.title} - {translateDate(ride.starting_time)}</p>
-                <p>
+                {/* <p>
                   {ride.participants.reduce(
                     (a, b) => a.dogs[0] + b.dogs[0],
                   )} chiens
-                </p>
+                </p> */}
               </div>
               <div>
                 <Link

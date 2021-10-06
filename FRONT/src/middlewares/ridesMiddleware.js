@@ -8,7 +8,7 @@ import {
 
 const ridesMiddleware = (store) => (next) => (action) => {
   const axiosInstance = axios.create({
-    baseURL: 'http://107.22.144.90/api',
+    baseURL: 'http://100.25.13.11/api',
     headers: {
       'Access-Control-Allow-Origin': '*',
       authorization: `${store.getState().user.token}`,

@@ -245,7 +245,7 @@ const RideDetails = () => {
                     className="ride-details__current-user__avatar"
                     to={`/profile/${participant.participant_id}`}
                   >
-                    <img src={participant.participant_photo} alt="user" />
+                    <img src={`http://100.25.13.11/user_resized/${participant.participant_photo}`} alt="user" />
                     <span>{participant.participant_first_name}</span>
                   </Link>
 
@@ -254,7 +254,7 @@ const RideDetails = () => {
                       <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
                         <div className="dog-avatar">
                           {dog.dog_photo && (
-                            <img src={`http://107.22.144.90/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
+                            <img src={`http://100.25.13.11/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
                           )}
                           <span>{dog.dog_surname}</span>
                           <span className="dog-avatar__behavior">
@@ -283,7 +283,7 @@ const RideDetails = () => {
               to={`/profile/${host_id}`}
             >
               <p>Créateur</p>
-              <img src={participants[0].participant_photo} alt={host_first_name} />
+              <img src={`http://100.25.13.11/user_resized/${participants[0].participant_photo}`} alt={host_first_name} />
               <span>{userProfile.id === host_id ? 'Vous' : host_first_name}</span>
             </Link>
           </div>
