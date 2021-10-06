@@ -89,14 +89,7 @@ function App() {
         <Route exact path="/ride/:id">
           {!isLogged ? (
             <Redirect to="/" />
-          ) : (
-            <>
-              <Header title="Détails une balade" />
-              <main>
-                <RideDetails />
-              </main>
-            </>
-          )}
+          ) : (<RideDetails />)}
         </Route>
 
         <Route exact path="/profile/:id">

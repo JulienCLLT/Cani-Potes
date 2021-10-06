@@ -87,15 +87,15 @@
         &__dogs {
             display: flex;
             align-items: stretch;
+            gap: 5px;
 
             &-container {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 align-items: center;
-                gap: 5px;
             }
-
+            
             &-image {
                 width: 40px;
                 height: 40px;
@@ -107,7 +107,9 @@
             }
 
             &-surname {
-                text-align: center;
+                width: 50px;
+                overflow: hidden;
+                text-align: left;
             }
 
             &-more-dogs {

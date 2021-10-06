@@ -28,9 +28,11 @@
         top: 1rem;
         left: 1rem;
         z-index: 999;
+        display: none;
 
         @include lg-screen {
             position: static;
+            display: initial;
         }
 
         &__container {
