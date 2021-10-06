@@ -35,16 +35,12 @@ function App() {
 
         </Route>
         <Route exact path="/signup">
-          {isLogged ? (
-            <Redirect to="/home" />
-          ) : (
-            <>
-              <Header />
-              <main>
-                <SignUp />
-              </main>
-            </>
-          )}
+          <>
+            <Header />
+            <main>
+              <SignUp />
+            </main>
+          </>
         </Route>
 
         <Route exact path="/home">

@@ -45,11 +45,11 @@ const DashBoard = () => {
               <div>
                 <p>#{index + 1} {ride.title} - {translateDate(ride.starting_time)}</p>
                 <p>
-                  {
+                  {/* {
                     ride.participants ? ride.participants.reduce(
                       (a, b) => a.dogs[0] + b.dogs[0],
                     ) : 0
-                  } / {ride.max_number_dogs} chiens
+                  } / {ride.max_number_dogs} chiens */}
                 </p>
               </div>
               <div>
