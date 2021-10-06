@@ -34,18 +34,21 @@ import { reverseGeocoding } from '../../utils/reverseGeocoding';
 
 import './RideDetails.scss';
 import Header from '../Header/Header';
+import { reinitRenderAgain } from '../../actions/users';
 
 const RideDetails = () => {
   const { id } = useParams();
   const chatZone = useRef();
   const dispatch = useDispatch();
 
+  const { user: userProfile } = useSelector((state) => state);
+
   useEffect(() => {
+    dispatch(reinitRenderAgain());
     dispatch(getRideIsLoading());
     dispatch(getOneRideById(id));
-  }, []);
+  }, [userProfile.renderAgain]);
 
-  const { user: userProfile } = useSelector((state) => state);
 
   const {
     ride_id, title, max_number_dogs, participants, starting_time, duration,

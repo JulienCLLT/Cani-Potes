@@ -5,6 +5,7 @@ import {
   GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE, CREATE_RIDE, USER__QUIT__RIDE, KICK__USER__FROM__RIDE, SEND__NEW__MESSAGE,
   saveAllRides, saveOneRide, deleteRideInState, failedToCreateRide, addMessageInState,
 } from '../actions/rides';
+import { renderAgain } from '../actions/users';
 
 const ridesMiddleware = (store) => (next) => (action) => {
   const axiosInstance = axios.create({
@@ -47,6 +48,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .post(`/ride/${action.rideId}/participation`)
         .then((response) => {
           console.log('You join this ride : ', response);
+          store.dispatch(renderAgain());
           next(action);
         })
         .catch((error) => {
