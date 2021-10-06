@@ -10,5 +10,9 @@
     a {
         color: vars.$color_grey_writing;
         font-size: .8rem;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }

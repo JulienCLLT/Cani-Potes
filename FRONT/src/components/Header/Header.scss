@@ -15,11 +15,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: white;
     @extend %linear-gradient;
 
     @include lg-screen {
         position: static;
-        padding: 1rem 0 1rem 5rem;
+        padding: 0;
     }
 
     &__logo {
@@ -36,7 +37,7 @@
             width: 60px;
 
             @include lg-screen {
-                width: 100px;
+                width: 60px;
             }
             
             img {

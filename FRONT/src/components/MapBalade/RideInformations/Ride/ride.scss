@@ -1,17 +1,28 @@
 @use '../../../../styles/vars';
 
 .ride {
+    width: calc(100% - 2rem);
+    border-radius: 8px;
+    margin: .5rem auto;
+    padding: .3rem;
+    background: rgba(255, 255, 255, .5);
+    
     &__detail {
         display: flex;
         gap: .5 * vars.$gutter;
-        align-items: center;
+        align-items: flex-start;
         padding-left: .5 * vars.$gutter;
 
         img {
             width: 7%;
         }
     }
-    button {
-        @extend %btn;
+
+    p:nth-child(1) {
+        margin-top: 0;
+    }
+
+    p:last-child {
+        margin-bottom: 0;
     }
 }

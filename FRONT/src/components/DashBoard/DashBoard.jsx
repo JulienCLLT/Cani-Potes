@@ -45,9 +45,11 @@ const DashBoard = () => {
               <div>
                 <p>#{index + 1} {ride.title} - {translateDate(ride.starting_time)}</p>
                 <p>
-                  {ride.participants.reduce(
-                    (a, b) => a.dogs[0] + b.dogs[0],
-                  )} / {ride.max_number_dogs} chiens
+                  {
+                    ride.participants ? ride.participants.reduce(
+                      (a, b) => a.dogs[0] + b.dogs[0],
+                    ) : 0
+                  } / {ride.max_number_dogs} chiens
                 </p>
               </div>
               <div>
@@ -79,11 +81,13 @@ const DashBoard = () => {
             <div key={ride.ride_id}>
               <div>
                 <p>#{index + 1} {ride.title} - {translateDate(ride.starting_time)}</p>
-                {/* <p>
-                  {ride.participants.reduce(
-                    (a, b) => a.dogs[0] + b.dogs[0],
-                  )} chiens
-                </p> */}
+                <p>
+                  {/* {
+                    ride.participants ? ride.participants.reduce(
+                      (a, b) => a.dogs.length + (b.dogs.length || 0),
+                    ) : '0'
+                  } / {ride.max_number_dogs} chiens */}
+                </p>
               </div>
               <div>
                 <Link
