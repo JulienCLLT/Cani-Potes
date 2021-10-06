@@ -17,8 +17,8 @@ const RideInformations = () => {
 
   return (
     <Popup className="ride-informations">
-      <h1><img className="icon" src={rideImage} alt="clock" />{currentRide.title}</h1>
       <div className="ride-informations__all">
+        <h1><img className="icon" src={rideImage} alt="clock" />{currentRide.title}</h1>
         {
           currentRide.isLoading ? (
             <Loader />

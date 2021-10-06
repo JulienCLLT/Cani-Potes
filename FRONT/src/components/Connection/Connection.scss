@@ -1,6 +1,5 @@
 @use '../../styles/vars';
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
-// @import url();
 
 @mixin lg-screen {
     @media screen and (min-width:900px) {
@@ -34,6 +33,10 @@
     border-bottom: 1px solid vars.$color_main;
     @extend %linear-gradient;
 
+    @include lg-screen {
+        padding: 0 vars.$gutter;
+    }
+
     &__logo img {
         width: 60px;
         border-radius: 50%;
@@ -57,7 +60,7 @@
     &__cta {
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: stretch;
         gap: .5 * vars.$gutter;
 
         @include lg-screen {
@@ -71,9 +74,15 @@
             background: white;
             color: vars.$color_main;
             padding: .5 * vars.$gutter;
+            transition: all .2s ease;
 
             @include lg-screen {
                 font-size: 1.45rem;
+            }
+
+            &:hover {
+                box-shadow: 0 0 6px black;
+                transition: all .2s ease;
             }
         }
     }
@@ -221,13 +230,36 @@
             &-center {
                 @include lg-screen {
                     width: 100%;
-                    margin: auto;
+                    margin: 0 auto 2rem;
                 }
 
                 ol {
                     align-self: center;
-                    text-align: left;
-                    font-size: 1.15rem;
+
+                    @include lg-screen {
+                        text-align: left;
+                    }
+
+                    div {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+
+                        img {
+                            width: 27px;
+                        }
+                    }
+
+                    li {
+                        text-align: center;
+                        margin: .5rem 0;
+
+                        @include lg-screen {
+                            font-size: 1.35rem;
+                            font-weight: 300;
+                            color: black;
+                        }
+                    }
                 }
             }
         }

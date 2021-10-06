@@ -21,10 +21,6 @@ import './createRide.scss';
 import startPointFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endPointFlag from '../../assets/img/info-ride/endPointFlag.svg';
 
-// QUAND je submit ma balade,
-// SI elle est bien enregistreé dans la bdd, je passe rideIsCreated à true (qui enclenchera un redirect)
-// QUAND j'arrive sur la page où je suis redirect, je dois repasser rideIsCreated à false (sinon je ne pourrais pas revenir sur CreateRide)
-
 const CreateRide = () => {
   const apikey = 'AAPKbde72a12e3ff4574b3edd95295b1d13d5-bGBIhj88MhjknVOZZpLcC1yEkpv4yu2Bx8MRWji_av4Hj2aqwc1AsUJ2UyTK3Q';
   const { failedToCreateRide, errorMessage, rideIsCreated } = useSelector((state) => state.rides);

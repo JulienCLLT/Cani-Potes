@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // import leaflet
 import {
-  MapContainer, TileLayer, Marker, Circle,
+  MapContainer, TileLayer, Marker, Circle, ZoomControl,
 } from 'react-leaflet';
 import L from 'leaflet';
 
@@ -54,8 +54,14 @@ const Map = () => {
   const [currentPosition, setCurrentPosition] = useState();
 
   return (
-    <MapContainer className="leaflet-container" center={user.position} zoom={15} scrollWheelZoom={false}>
+    <MapContainer
+      className="leaflet-container"
+      center={user.position}
+      zoom={15}
+      zoomControl={false}
+    >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <ZoomControl position="topright" />
       <Circle
         center={currentPosition || user.position}
         pathOptions={fillBlueOptions}
@@ -84,7 +90,7 @@ const Map = () => {
       }
 
       <EsriLeafletGeoSearch
-        position="topleft"
+        position="topright"
         useMapBounds={false}
         placeholder="Chercher une adresse ou un endroit"
         providers={{

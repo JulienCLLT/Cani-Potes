@@ -16,23 +16,22 @@
 
     @include lg-screen {
         margin: 0;
-        font-size: 1.4rem;
+        font-size: 1.1rem;
     }
 
     &__link {
         &--active {
-            text-decoration: underline;
+            font-weight: bold;
         }
     }
 
     &__img {
-        width: 25px;
         display: flex;
         flex-direction: column;
         align-items: center;
 
         img {
-            width: 100%;
+            width: 25px;
             @include lg-screen {
                 display: none;
             }
