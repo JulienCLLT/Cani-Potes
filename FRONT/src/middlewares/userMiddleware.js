@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
   GET__ONE__USER__BY__ID, UPDATE__USER, GET__RIDES__WITH__USER__IN,
   DELETE__DOG, DELETE__USER, UPDATE__DOG, DELETE__DOG__PHOTO, USER__GETS__HIS__DOGS,
-  logoutUser, saveProfileInState, addRidesToUser, saveUserDogsInState,
+  logoutUser, saveProfileInState, addRidesToUser, saveUserDogsInState, renderAgain,
 } from '../actions/users';
 
 const userMiddleware = (store) => (next) => (action) => {
@@ -73,6 +73,7 @@ const userMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log('Dog updated successfully : ', response);
+          store.dispatch(renderAgain());
           next(action);
         })
         .catch((error) => {
@@ -126,7 +127,7 @@ const userMiddleware = (store) => (next) => (action) => {
         .delete(`/profile/${action.userId}/dogs/${action.dogId}/photo/${action.photoId}`)
         .then((response) => {
           console.log('Photo deleted successfully : ', response);
-          // next(action);
+          store.dispatch(renderAgain());
         })
         .catch((error) => {
           console.error('Unable to delete photo : ', error.response.data);
@@ -137,6 +138,7 @@ const userMiddleware = (store) => (next) => (action) => {
         .delete(`profile/${action.userId}/dogs/${action.dogId}`)
         .then((response) => {
           console.log('Dog deleted successfully : ', response);
+          store.dispatch(renderAgain());
           next(action);
         })
         .catch((error) => {

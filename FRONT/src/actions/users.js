@@ -95,3 +95,13 @@ export const DELETE__USER = 'DELETE__USER';
 export const deleteUser = () => ({
   type: DELETE__USER,
 });
+
+export const RENDER__AGAIN = 'RENDER__AGAIN';
+export const renderAgain = () => ({
+  type: RENDER__AGAIN,
+});
+
+export const REINIT__RENDER__AGAIN = 'REINIT__RENDER__AGAIN';
+export const reinitRenderAgain = () => ({
+  type: REINIT__RENDER__AGAIN,
+});
