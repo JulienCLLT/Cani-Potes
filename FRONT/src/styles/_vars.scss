@@ -5,19 +5,37 @@ $color__white: #fff;
 $color_valid: #4EC133;
 $color_error: #cc0000;
 $color_grey_connection_footer_bg: #434848;
+$color_yellow: #f7b42c;
 $color_grey_writing: rgb(100, 100, 100);
 
 $gutter: 1rem;
 
 %btn {
-    background: $color_main;
-    padding: .2rem .5rem;
-    border-radius: 5px;
-    color: $color__white;
+    background: white;
+    padding: .3rem 1rem;
+    border-radius: 20px;
+    border: 1px solid $color_main;
+    color: $color_main;
     font-weight: bold;
     cursor: pointer;
+    transition: all .2s ease-in-out;
+    text-align: center;
+
+    &:hover {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
+        transform: translate(0, -2px);
+        @extend %linear-gradient;
+        color: white;
+        transition: all .2s ease-in-out;
+    }
 }
 
 %linear-gradient {
     background: linear-gradient(315deg, #f7b42c 0%, #fc575e 74%);
+}
+
+%title-background {
+    @extend %linear-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

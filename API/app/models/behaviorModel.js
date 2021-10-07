@@ -1,4 +1,4 @@
-const client = require('./../database');
+const client = require('../database');
 
 class Behavior {
     constructor(data={}) {

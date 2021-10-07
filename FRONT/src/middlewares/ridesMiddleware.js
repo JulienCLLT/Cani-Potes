@@ -6,10 +6,11 @@ import {
   saveAllRides, saveOneRide, deleteRideInState, failedToCreateRide, addMessageInState,
 } from '../actions/rides';
 import { renderAgain } from '../actions/users';
+import { dburlWithApi } from '../utils/dburl';
 
 const ridesMiddleware = (store) => (next) => (action) => {
   const axiosInstance = axios.create({
-    baseURL: 'http://100.25.13.11/api',
+    baseURL: dburlWithApi,
     headers: {
       'Access-Control-Allow-Origin': '*',
       authorization: `${store.getState().user.token}`,

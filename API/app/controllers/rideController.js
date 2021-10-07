@@ -1,10 +1,9 @@
-const Ride = require('../models/rideModel');
-const User = require('../models/userModel');
+const {RideModel, UserModel} = require('../models');
 
 const rideController = {
     findAll: async (_, response) => {
         try {
-            const rides = await Ride.findAll();
+            const rides = await RideModel.findAll();
             response.status(201).json(rides);
         } catch (error) {
             response.status(500).json(error.message);
@@ -19,7 +18,7 @@ const rideController = {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
-            const ride = await Ride.findOneCompleteRide(rideId);
+            const ride = await RideModel.findOneCompleteRide(rideId);
             if (ride.length === 0) {
                 throw Error('La balade n\'existe pas');
             }
@@ -34,8 +33,7 @@ const rideController = {
     getRidesByMember: async (request, response) => {
         try {
             const userId = request.userId;
-            const rides = await Ride.findRidesByMember(userId);
-            console.log("rides", rides);
+            const rides = await RideModel.findRidesByMember(userId);
             response.status(201).json(rides);
         } catch (error) {
             response.status(500).json(error.message);
@@ -46,7 +44,7 @@ const rideController = {
         try {
             const userId = request.userId;
 
-            const newRide = new Ride(request.body);
+            const newRide = new RideModel(request.body);
             if (newRide.duration) {
                 newRide.duration += ' minutes';
             } else {
@@ -68,7 +66,7 @@ const rideController = {
                 throw Error('La valeur de l\'id Ride doit être un nombre');
             }
 
-            const rideToDelete = await Ride.findById(rideId);
+            const rideToDelete = await RideModel.findById(rideId);
             if (!rideToDelete) {
                 throw Error('La balade que vous souhaitez supprimer n\'existe pas');
             }
@@ -78,9 +76,9 @@ const rideController = {
             }
 
             // delete messages and member from this ride, then ride
-            await Ride.deleteMessagesByRideId(rideId);
-            await Ride.deleteAllParticipantsFromRide(rideId);
-            await Ride.deleteRide(rideId);
+            await RideModel.deleteMessagesByRideId(rideId);
+            await RideModel.deleteAllParticipantsFromRide(rideId);
+            await RideModel.deleteRide(rideId);
 
             response.status(204).json("La balade a été supprimée");
         } catch (error) {
@@ -98,7 +96,7 @@ const rideController = {
                 throw Error('La valeur de l\'id Ride doit être un nombre');
             }
 
-            await Ride.deleteMemberParticipateRide(userId, rideId);
+            await RideModel.deleteMemberParticipateRide(userId, rideId);
 
             response.status(204).json("Le membre a été retiré de la balade");
         } catch (error) {
@@ -117,7 +115,7 @@ const rideController = {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
-            const ride = await Ride.findById(rideId);
+            const ride = await RideModel.findById(rideId);
             if (!ride) {
                 throw Error('La balade n\'existe pas');
             }
@@ -128,7 +126,7 @@ const rideController = {
                 throw Error('Vous ne pouvez pas vous retirer d\'une balade que vous organisez');
             }
 
-            await Ride.deleteMemberParticipateRide(userId, rideId);
+            await RideModel.deleteMemberParticipateRide(userId, rideId);
 
             response.status(204).json("Le membre a été retiré de la balade");
 
@@ -148,12 +146,12 @@ const rideController = {
                 throw Error('La valeur de l\'id Ride doit être un nombre');
             }
 
-            const newParticipant = await User.findOne(userId);
+            const newParticipant = await UserModel.findOne(userId);
             if (!newParticipant) {
                 throw Error('Le membre que vous souhaitez rajouter n\'existe pas');
             }
 
-            const ride = await Ride.findById(rideId);
+            const ride = await RideModel.findById(rideId);
             if (!ride) {
                 throw Error('La balade à laquelle vous souhaitez vous rajouter n\'existe pas');
             }
@@ -163,7 +161,7 @@ const rideController = {
 
             // todo verif si clé existe deja paire /membre ou pas deja inscrit dans balade
 
-            await Ride.postMemberParticipateRide(userId, rideId);
+            await RideModel.postMemberParticipateRide(userId, rideId);
 
             response.status(201).json(newParticipant)
         } catch (error) {
@@ -171,19 +169,6 @@ const rideController = {
         }
     },
 
-    // /ride
-    createRide: async (request, response) => {
-        try {
-            // prendre userId du token
-            //todo lier avec joi pour verif
-            const newRide = new Ride(request.body);
-            const rideCreated = await newRide.create(); //todo faire model
-            response.status(201).json(dogCreated);
-
-        } catch (error) {
-            response.status(500).json(error.message);
-        }
-    }
 
 
 };

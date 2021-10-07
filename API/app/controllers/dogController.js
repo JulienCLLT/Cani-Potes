@@ -1,9 +1,6 @@
-const Dog = require('../models/dogModel');
-const Photo = require('../models/photoModel');
-const sharp = require('sharp');
-const path = require('path');
-const fs = require('fs');
-const { findDogFromMember } = require('../models/dogModel');
+const { PhotoModel, DogModel } = require('../models');
+const { sharpResizeImage } = require('../services');
+
 
 const dogController = {
 
@@ -16,7 +13,7 @@ const dogController = {
                 throw Error('La valeur de l\'id doit être un nombre');
             }
 
-            const dog = await Dog.findById(dogId);
+            const dog = await DogModel.findById(dogId);
             if (!dog) {
                 throw Error('Ce chien n\'existe pas');
             }
@@ -41,23 +38,20 @@ const dogController = {
                 throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
             }
 
-            console.log("request body create dog", request.body);
+            
             request.body.dog_owner_id = userId;
 
-            const newDog = new Dog(request.body);
+            const newDog = new DogModel(request.body);
             const dogCreated = await newDog.create();
 
 
             if (request.file) {
-                const { filename: image } = request.file;
+                
+                sharpResizeImage.sharpResize(request.file, 'dog_resized');
 
-                // resize picture and push it in resized file
-                await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
-                    .toFile(path.resolve(request.file.destination, 'dog_resized', image));
-                fs.unlinkSync(request.file.path);
 
                 // insert the photo data in db
-                const newPhoto = new Photo({ file: request.file.filename, dogId: dogCreated.id });
+                const newPhoto = new PhotoModel({ file: request.file.filename, dogId: dogCreated.id });
                 const photoCreated = await newPhoto.addPhoto();
                 dogCreated.photo = photoCreated;
             }
@@ -80,8 +74,8 @@ const dogController = {
                 throw Error('Vous ne pouvez pas modifier les chiens de ce profil');
             }
 
-            const findDog = await Dog.findById(dogId);
-            console.log("find dog", findDog);
+            const findDog = await DogModel.findById(dogId);
+            
             if (!findDog) {
                 throw Error('Ce chien n\'existe pas');
             }
@@ -91,21 +85,17 @@ const dogController = {
 
             //todo joi
             request.body.id = dogId;
-            const dogToUpdate = new Dog(request.body);
+            const dogToUpdate = new DogModel(request.body);
             // info recu ? 
             await dogToUpdate.save();
-            const dogUpdated = await Dog.findById(dogId);
+            const dogUpdated = await DogModel.findById(dogId);
 
             if (request.file) {
-                const { filename: image } = request.file;
 
-                // resize picture and push it in resized file
-                await sharp(request.file.path).resize(200, 200).jpeg({ quality: 90 })
-                    .toFile(path.resolve(request.file.destination, 'dog_resized', image));
-                fs.unlinkSync(request.file.path);
+                sharpResizeImage.sharpResize(request.file, 'dog_resized');
 
                 // insert the photo data in db
-                const newPhoto = new Photo({ file: request.file.filename, dogId: dogId });
+                const newPhoto = new PhotoModel({ file: request.file.filename, dogId: dogId });
                 const photoCreated = await newPhoto.addPhoto();
                 dogUpdated.photo = photoCreated;
             }
@@ -117,7 +107,7 @@ const dogController = {
 
     delete: async (request, response) => {
         try {
-            console.log("request user.id", request.userId);
+            
 
             const profileId = Number(request.params.profileId);
             const dogId = Number(request.params.dogId);
@@ -131,7 +121,7 @@ const dogController = {
                 throw Error('Vous ne pouvez pas accéder à cette demande');
             }
 
-            const dogToDelete = await Dog.findById(dogId);
+            const dogToDelete = await DogModel.findById(dogId);
             if (!dogToDelete) {
                 throw Error('Ce chien n\'existe pas');
             }
@@ -140,8 +130,8 @@ const dogController = {
             }
 
             //todo delete photo sur serveur ? 
-            await Photo.deletePhotos(dogId);
-            await Dog.delete(dogId);
+            await PhotoModel.deletePhotos(dogId);
+            await DogModel.delete(dogId);
             response.status(204).json();
 
         } catch (error) {

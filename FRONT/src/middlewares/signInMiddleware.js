@@ -1,10 +1,11 @@
 /* eslint-disable linebreak-style */
 import axios from 'axios';
 import { connectUser, LOGIN__USER, failedToConnect } from '../actions/users';
+import { dburlWithApi } from '../utils/dburl';
 
 const signinMiddleware = (store) => (next) => (action) => {
   const axiosInstance = axios.create({
-    baseURL: 'http://100.25.13.11/api',
+    baseURL: dburlWithApi,
     headers: {
       'Access-Control-Allow-Origin': '*',
       authorization: `${store.getState().user.token}`,
@@ -15,7 +16,7 @@ const signinMiddleware = (store) => (next) => (action) => {
     case LOGIN__USER: {
       const { email, password } = action.data;
 
-      axiosInstance.post('/login', {
+      axiosInstance.post('/login/', {
         email,
         password,
       })

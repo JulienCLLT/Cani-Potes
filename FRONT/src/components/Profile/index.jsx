@@ -19,6 +19,7 @@ import dblArrow from '../../assets/img/info-ride/double_arrow.svg';
 import edit from '../../assets/img/profile-simulation/edit.svg';
 import DeleteAccModal from './DeleteAccModal';
 import DogSection from './DogSection/index';
+import { dburlWithoutApi } from '../../utils/dburl';
 
 const Profile = () => {
   const { user, profile, signup } = useSelector((state) => state);
@@ -167,9 +168,9 @@ const Profile = () => {
         ) : (
           <>
             <header className="profile-page__header">
-              <div>
+              <div className="profile-page__header-container">
                 <div className="profile-page__header__avatar">
-                  <img src={`http://100.25.13.11/user_resized/${profile.photo}`} alt={profile.first_name} />
+                  <img src={`${dburlWithoutApi}/user_resized/${profile.photo}`} alt={profile.first_name} />
                   {
                     isEditingUser && (
                       <input
@@ -196,7 +197,7 @@ const Profile = () => {
                 {
                   profileIsUser && (
                     <div
-                      className="profile-page__header__edit"
+                      className="profile-page__header__edit  edit-btn"
                       onClick={toggleEditUser}
                     >
                       {isEditingUser ? 'Retour' : (
