@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import React from 'react';
-import close from '../../../assets/img/close.svg';
+// import close from '../../../assets/img/close.svg';
 
 const DeleteAccModal = ({
   setIsModalAccountOpen, inputDelete, setInputDelete, failedToDelete, handleDeleteAccount, firstName,
@@ -12,7 +12,8 @@ const DeleteAccModal = ({
         type="button"
         onClick={() => setIsModalAccountOpen(false)}
       >
-        <img src={close} alt="close" />
+        {/* <img src={close} alt="close" /> */}
+        X
       </button>
       <p>ATTENTION, vous êtes sur le point de supprimer votre compte</p>
       <p>Cette action est irréversible</p>

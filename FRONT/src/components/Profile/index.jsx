@@ -15,7 +15,6 @@ import Loader from '../Loader/index';
 
 import './profile.scss';
 
-import close from '../../assets/img/close.svg';
 import dblArrow from '../../assets/img/info-ride/double_arrow.svg';
 import edit from '../../assets/img/profile-simulation/edit.svg';
 import DeleteAccModal from './DeleteAccModal';
@@ -326,7 +325,7 @@ const Profile = () => {
               type="button"
               onClick={() => setIsModalOpen(false)}
             >
-              <img src={close} alt="close" />
+              ✖
             </button>
 
             <p>Attention</p>

@@ -17,7 +17,7 @@ import hourglass from '../../assets/img/info-ride/hourglass-orange.svg';
 import startFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endFlag from '../../assets/img/info-ride/endPointFlag.svg';
 import conversation from '../../assets/img/info-ride/conversation.svg';
-import close from '../../assets/img/close.svg';
+// import close from '../../assets/img/close.svg';
 import star from '../../assets/img/star.svg';
 import peureux from '../../assets/img/profile-simulation/fearful.svg';
 import joueur from '../../assets/img/profile-simulation/player.png';
@@ -240,7 +240,8 @@ const RideDetails = () => {
                               setUserKicked(participant.participant_id);
                             }}
                           >
-                            <img src={close} alt="kick user" />
+                            {/* <img src={close} alt="kick user" /> */}
+                            X
                           </button>
                         )}
                         <div className="ride-details__current-user__avatar">
@@ -333,7 +334,8 @@ const RideDetails = () => {
               >
                 {
                   isChatOpen ? (
-                    <img src={close} alt="close chat" />
+                    // <img src={close} alt="close chat" />
+                    X
                   ) : (
                     <img src={conversation} alt="open chat" />
                   )

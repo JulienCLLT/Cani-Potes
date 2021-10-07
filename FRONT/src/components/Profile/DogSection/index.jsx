@@ -2,7 +2,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-import close from '../../../assets/img/close.svg';
+// import close from '../../../assets/img/close.svg';
 import edit from '../../../assets/img/profile-simulation/edit.svg';
 import race from '../../../assets/img/profile-simulation/race.svg';
 
@@ -213,7 +213,8 @@ const DogSection = ({
                       setIsModalPhotoOpen(true);
                     }}
                   >
-                    <img src={close} alt="delete" />
+                    {/* <img src={close} alt="delete" /> */}
+                    X
                   </button>
                 )}
               </div>

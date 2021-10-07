@@ -318,14 +318,17 @@
     }
 
     &__modal {
-        background-color: rgba(200, 200, 200, .8);
+        background-color: rgba(255, 255, 255, 1);
+        // background: linear-gradient(315deg, #f7b42c 0%, #fc575e 74%);
+        background: linear-gradient(315deg, rgba(252, 87, 94, 0.7), rgb(247, 180, 44, 0.9) 74%);
+        // opacity: 0.8;
         position: fixed;
         top: 50%;
         left: 50%;
         width: 80%;
-        max-width: 600px;
+        max-width: 290px;
         transform: translate(-50%, -50%);
-        padding: 3 * vars.$gutter 3 * vars.$gutter;
+        // padding: 3 * vars.$gutter 3 * vars.$gutter;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -335,10 +338,13 @@
         font-size: 1.3rem;
 
         &__close {
-            width: 50px;
-            height: 50px;
+            // width: 5px;
+            // height: 5px;
             align-self: flex-end;
             cursor: pointer;
+            padding: 0.4*vars.$gutter 0.7* vars.$gutter;
+            color: white;
+            
 
             img {
                 width: 100%;
@@ -350,6 +356,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding-bottom: vars.$gutter;
 
         @include lg-screen {
             width: 50%;
@@ -360,13 +367,14 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 1rem;
+            gap: 0.5rem;
             margin-bottom: 1rem;
 
             label {
-                @extend %btn;
                 cursor: initial;
-                font-weight: normal;
+                // font-weight: normal;
+                font-size: 1.1*vars.$gutter;
+                color: white;
             }
 
             input {
@@ -374,12 +382,17 @@
                 width: 100%;
                 border: none;
                 padding: .5 * vars.$gutter .5 * vars.$gutter;
+                font-size: 1.1*vars.$gutter;
             }
         }
 
         &__submit {
             @extend %btn;
-            font-size: inherit;
+            font-size: vars.$gutter;
+            border-radius: 10px;
+            background: white;
+            color: vars.$color_main;
+            padding: .5 * vars.$gutter;
         }
 
         &__failed {
