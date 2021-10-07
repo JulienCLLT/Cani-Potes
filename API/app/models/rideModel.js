@@ -58,7 +58,7 @@ class Ride {
     }
     static async findRidesByMember(userId) {
         try {
-            // id ride where user is enroller (host or participant)
+            // select id from ride where user is enrolled (host or participant)
             const query_id = `
                 SELECT DISTINCT id
                 FROM ride
@@ -67,12 +67,10 @@ class Ride {
             `;
             const idRide = await client.query(query_id, [userId]);
             const arrayId = idRide.rows.map(elem => elem.id);
-            console.log(arrayId);
 
-            //! change ca IN
-            const query = `SELECT * FROM rides_by_member WHERE id IN (VARIADIC ARRAY $1)`;
+            // select rides where id 
+            const query = `SELECT * FROM rides_by_member WHERE id = ANY($1)`;
             const { rows } = await client.query(query, [arrayId]);
-            console.log(rows);
             return rows.map(row => new Ride(row));
         } catch (error) {
             console.error(error);
