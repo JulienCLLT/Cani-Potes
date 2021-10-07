@@ -6,7 +6,9 @@ import { PropTypes } from 'prop-types';
 
 import './profile.scss';
 
-const Profile = ({ participants, host_id }) => {
+const Profile = ({ ride_id, participants, host_id }) => {
+
+
   participants.sort((a, b) => {
     if (a.participant_id === host_id) {
       return -1;
@@ -17,16 +19,16 @@ const Profile = ({ participants, host_id }) => {
   return (
     <div className="profile">
 
-      <section>
+      <section className="profile__section">
         {
           participants.map((participant) => (
-            <article className="profile__article" key={`participant${participant.participant_id}`}>
+            <Link to={`/profile/${participant.participant_id}`}>
+              <article className="profile__article" key={`participant${participant.participant_id}`}>
 
-              <Link to={`/profile/${participant.participant_id}`}>
                 <div className="profile__article__avatar">
                   <div className="profile__article__avatar-image">
                     <img
-                      src={participant.participant_photo}
+                      src={`http://100.25.13.11/user_resized/${participant.participant_photo}`}
                       alt={participant.participant_first_name}
                     />
                   </div>
@@ -34,36 +36,42 @@ const Profile = ({ participants, host_id }) => {
                     <span>{participant.participant_first_name}</span>
                   </div>
                 </div>
-              </Link>
-              <div className="profile__article__dogs">
-                {
-                  participant.dogs && participant.dogs.map((dog, index) => {
-                    if (index < 2) {
-                      return (
-                        <div className="profile__article__dogs-container" key={`participant${participant.participant_id}dog${dog.dog_id}`}>
-                          <div className="profile__article__dogs-image">
-                            {dog.dog_photo && (
-                              <img src={`http://107.22.144.90/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} />
-                            )}
+                <div className="profile__article__dogs">
+                  {
+                    participant.dogs && participant.dogs.map((dog, index) => {
+                      if (index < 2) {
+                        return (
+                          <div className="profile__article__dogs-container" key={`participant${participant.participant_id}dog${dog.dog_id}`}>
+                            <div className="profile__article__dogs-image">
+                              {dog.dog_photo && (
+                                <img src={`http://100.25.13.11/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} />
+                              )}
+                            </div>
+                            <div className="profile__article__dogs-surname">
+                              <span>{dog.dog_surname}</span>
+                            </div>
                           </div>
-                          <div>
-                            <span>{dog.dog_surname}</span>
-                          </div>
-                        </div>
-                      );
-                    }
-                    if (index === participant.dogs.length - 1) {
-                      return (
-                        <span>{participant.dogs.length - 2} chien{participant.dogs.length - 2 > 1 && 's'} de plus</span>
-                      );
-                    }
-                  })
-                }
-              </div>
-            </article>
+                        );
+                      }
+                      if (index === participant.dogs.length - 1) {
+                        return (
+                          <span className="profile__article__dogs-more-dogs">{participant.dogs.length - 2} chien{participant.dogs.length - 2 > 1 && 's'} de plus</span>
+                        );
+                      }
+                    })
+                  }
+                </div>
+              </article>
+            
+            </Link>
           ))
         }
       </section>
+      <div className="profile__learn-more">
+        <Link to={`/ride/${ride_id}`}>
+          <button type="button">En savoir plus</button>
+        </Link>
+      </div>
     </div>
   );
 };

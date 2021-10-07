@@ -11,6 +11,7 @@ import close from '../../assets/img/close.svg';
 import logo from '../../assets/navbar/canipotes_logo.jpg';
 import dogHome from '../../assets/img/home-dogs.jpg';
 import mapHome from '../../assets/img/home_map.png';
+import paw from '../../assets/img/paw.svg';
 
 const Connection = () => {
   const dispatch = useDispatch();
@@ -96,9 +97,18 @@ const Connection = () => {
             <div>
               <h2>Commencez l'aventure simplement</h2>
               <ol>
-                <li>Je me crée un compte en cliquant sur "Inscription".</li>
-                <li>Je renseigne mes informations et celles de mon / mes chiens.</li>
-                <li>Et c'est parti pour de belles rencontres !</li>
+                <div><img src={paw} alt="paw" /><img src={paw} alt="paw" /><img src={paw} alt="paw" /></div>
+                <li>
+                  Je me crée un compte en cliquant sur "Inscription".
+                </li>
+                <div><img src={paw} alt="paw" /><img src={paw} alt="paw" /><img src={paw} alt="paw" /></div>
+                <li>
+                  Je renseigne mes informations et celles de mon / mes chiens.
+                </li>
+                <div><img src={paw} alt="paw" /><img src={paw} alt="paw" /><img src={paw} alt="paw" /></div>
+                <li>
+                  Et c'est parti pour de belles rencontres !
+                </li>
               </ol>
             </div>
           </div>

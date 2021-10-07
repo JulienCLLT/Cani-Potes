@@ -35,16 +35,12 @@ function App() {
 
         </Route>
         <Route exact path="/signup">
-          {isLogged ? (
-            <Redirect to="/home" />
-          ) : (
-            <>
-              <Header />
-              <main>
-                <SignUp />
-              </main>
-            </>
-          )}
+          <>
+            <Header />
+            <main>
+              <SignUp />
+            </main>
+          </>
         </Route>
 
         <Route exact path="/home">
@@ -89,14 +85,7 @@ function App() {
         <Route exact path="/ride/:id">
           {!isLogged ? (
             <Redirect to="/" />
-          ) : (
-            <>
-              <Header title="Détails une balade" />
-              <main>
-                <RideDetails />
-              </main>
-            </>
-          )}
+          ) : (<RideDetails />)}
         </Route>
 
         <Route exact path="/profile/:id">

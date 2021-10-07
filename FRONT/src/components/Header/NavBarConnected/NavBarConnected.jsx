@@ -26,7 +26,7 @@ const NavBarConnected = () => {
       >
         <div className="navbar-connected__img">
           <img src={home} alt="home" />
-          <span>Home</span>
+          <span>Carte</span>
         </div>
       </NavLink>
 
@@ -38,7 +38,7 @@ const NavBarConnected = () => {
       >
         <div className="navbar-connected__img">
           <img src={board} alt="board" />
-          <span>Board</span>
+          <span>Tableau de bord</span>
         </div>
       </NavLink>
 
@@ -49,8 +49,8 @@ const NavBarConnected = () => {
         exact
       >
         <div className="navbar-connected__img">
-          <img src={profile} alt="profile" />
-          <span>Profile</span>
+          <img src={profile} alt="profil" />
+          <span>Profil</span>
         </div>
       </NavLink>
 
@@ -61,8 +61,8 @@ const NavBarConnected = () => {
         exact
       >
         <div className="navbar-connected__img">
-          <img src={logout} alt="logout" />
-          <span>Logout</span>
+          <img src={logout} alt="deconnexion" />
+          <span>Déconnexion</span>
         </div>
       </NavLink>
     </nav>

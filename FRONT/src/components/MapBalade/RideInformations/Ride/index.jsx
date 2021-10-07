@@ -15,7 +15,7 @@ import { translateDate } from '../../../../utils/translateDate';
 // import css
 import './ride.scss';
 
-const Ride = ({ ride_id, starting_time, duration, start_coordinate, end_coordinate }) => {
+const Ride = ({ starting_time, duration, start_coordinate, end_coordinate }) => {
   const [startPointAddress, setStartPointAddress] = useState('');
   const [endPointAddress, setEndPointAddress] = useState('');
 
@@ -28,15 +28,11 @@ const Ride = ({ ride_id, starting_time, duration, start_coordinate, end_coordina
       <p className="ride__detail"><img className="icon" src={clock} alt="clock" />{duration.minutes ? `${duration.minutes} minutes` : 'Durée non précisée'}</p>
       <p className="ride__detail"><img className="icon" src={starting} alt="starting" />Départ : {startPointAddress}</p>
       <p className="ride__detail"><img className="icon" src={end} alt="arrival" />Arrivée : {endPointAddress}</p>
-      <Link to={`/ride/${ride_id}`}>
-        <button type="button">En savoir plus</button>
-      </Link>
     </div>
-  )
+  );
 };
 
 Ride.propTypes = {
-  ride_id: PropTypes.number.isRequired,
   starting_time: PropTypes.string.isRequired,
   duration: PropTypes.shape({
     minutes: PropTypes.number.isRequired,

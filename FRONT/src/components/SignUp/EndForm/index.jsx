@@ -1,14 +1,16 @@
 /* eslint-disable linebreak-style */
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { endOfSignup } from '../../../actions/signup';
 
 import happy from '../../../assets/img/sunglasses.svg';
 
 import './end-form.scss';
 
 const EndForm = () => {
+  const dispatch = useDispatch();
   const formStep = useSelector((state) => state.signup.formStep);
 
   return (
@@ -20,7 +22,13 @@ const EndForm = () => {
           <p>Tu peux enfin trouver les balades près de chez toi <img src={happy} alt="happy smiley" /></p>
         </div>
 
-        <Link to="/home" className="end__content__home">Chercher une balade</Link>
+        <Link
+          to="/home"
+          className="end__content__home"
+          onClick={() => dispatch(endOfSignup())}
+        >
+          Chercher une balade
+        </Link>
       </div>
     </div>
   );

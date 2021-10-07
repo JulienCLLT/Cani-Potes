@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteRide, removeUserFromRide } from '../../actions/rides';
@@ -19,50 +19,57 @@ const DashBoard = () => {
   const hostedRides = user.rides.filter((ride) => ride.host_id === user.id);
   const notHostedRides = user.rides.filter((ride) => ride.host_id !== user.id);
 
-  console.log(hostedRides);
-  console.log(notHostedRides);
-
   return (
-    <div className="dashboard-page">
+    <div className="dashboard">
 
-      <header className="dashboard-page__header">
-        <h1 className="dashboard-title">Tableau de bord</h1>
+      <header className="dashboard__header">
+        <h1 className="dashboard__header__title">Tableau de bord</h1>
         <span>{user.first_name}</span>
+
         <Link
-          className="create-ride__btn"
+          className="dashboard__header__btn"
           to="/ride/create"
         >
           Créer une balade
         </Link>
       </header>
 
-      <section className="dashboard-info__host">
-        <h2>Je suis l'organisateur de ces balades</h2>
+      <section className="dashboard__hostedrides">
+        <h2 className="dashboard__hostedrides__title">Je suis l'organisateur de ces balades</h2>
 
         {
           hostedRides.length > 0 ? (hostedRides.map((ride, index) => (
-            <div key={ride.ride_id}>
+            <div key={ride.ride_id} className="dashboard__hostedrides__container">
               <div>
-                <p>#{index + 1} {ride.title} - {translateDate(ride.starting_time)}</p>
+                <p>#{index + 1} {ride.title}</p>
+                <p>{translateDate(ride.starting_time)}</p>
                 <p>
-                  {ride.participants.reduce(
-                    (a, b) => a.dogs[0] + b.dogs[0],
-                  )} / {ride.max_number_dogs} chiens
+                  {
+                    ride.participants ? ride.participants.reduce(
+                      (total, item) => item.dogs.length + total, 0,
+                    ) : 0
+                  }
+                  {
+                    ride.participants.reduce(
+                      (total, item) => item.dogs.length + total, 0,
+                    ) > 1 ? ' chiens' : 'chien'
+                  }
                 </p>
               </div>
-              <div>
+
+              <div className="dashboard__hostedrides__link-container">
                 <Link
-                  className="ride-"
+                  className="dashboard__hostedrides__link"
                   to={`/ride/${ride.ride_id}`}
                 >
-                  Voir la balade
+                  Détails
                 </Link>
                 <button
-                  className="delete-btn"
+                  className="dashboard__hostedrides__link"
                   type="button"
                   onClick={() => dispatch(deleteRide(ride.ride_id))}
                 >
-                  Supprimer la balade
+                  Supprimer
                 </button>
               </div>
             </div>
@@ -72,32 +79,40 @@ const DashBoard = () => {
         }
       </section>
 
-      <section className="dashboard-info__participant">
-        <h2>Je participe à ces balades</h2>
+      <section className="dashboard__nothostedrides">
+        <h2 className="dashboard__nothostedrides__title">Je participe à ces balades</h2>
         {
           notHostedRides.length > 0 ? (notHostedRides.map((ride, index) => (
-            <div key={ride.ride_id}>
+            <div key={ride.ride_id} className="dashboard__nothostedrides__container">
               <div>
-                <p>#{index + 1} {ride.title} - {translateDate(ride.starting_time)}</p>
-                {/* <p>
-                  {ride.participants.reduce(
-                    (a, b) => a.dogs[0] + b.dogs[0],
-                  )} chiens
-                </p> */}
+                <p>#{index + 1} {ride.title}</p>
+                <p>{translateDate(ride.starting_time)}</p>
+                <p>
+                  {
+                    ride.participants ? ride.participants.reduce(
+                      (total, item) => item.dogs.length + total, 0,
+                    ) : 0
+                  }
+                  {
+                    ride.participants.reduce(
+                      (total, item) => item.dogs.length + total, 0,
+                    ) > 1 ? ' chiens' : 'chien'
+                  }
+                </p>
               </div>
-              <div>
+              <div className="dashboard__nothostedrides__link-container">
                 <Link
-                  className="ride-"
+                  className="dashboard__nothostedrides__link"
                   to={`/ride/${ride.ride_id}`}
                 >
-                  Voir la balade
+                  Détails
                 </Link>
                 <button
-                  className="remove-btn"
+                  className="dashboard__nothostedrides__link"
                   type="button"
                   onClick={() => dispatch(removeUserFromRide(user.id, ride.ride_id))}
                 >
-                  Me retirer de la balade
+                  Quitter
                 </button>
               </div>
             </div>

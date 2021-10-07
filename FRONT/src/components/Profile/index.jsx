@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { deleteDog, deleteDogPhoto, deleteUser, getOneUserById, getProfileIsLoading, updateDog, updateUser } from '../../actions/users';
-import { formstepShowsDogform, getDogBreedsAndBehaviors } from '../../actions/signup';
+import { deleteDog, deleteDogPhoto, deleteUser, getOneUserById, getProfileIsLoading, reinitRenderAgain, updateDog, updateUser } from '../../actions/users';
+import { getDogBreedsAndBehaviors } from '../../actions/signup';
 
 import DogForm from '../SignUp/DogForm/index';
 import Loader from '../Loader/index';
@@ -22,13 +22,6 @@ const Profile = () => {
   const profileIsUser = user.id === profile.member_id;
 
   const { id } = useParams();
-
-  useEffect(() => {
-    dispatch(formstepShowsDogform());
-    dispatch(getProfileIsLoading());
-    dispatch(getDogBreedsAndBehaviors());
-    dispatch(getOneUserById(id));
-  }, [id, signup.formStep]);
 
   // manage to edit user
   const [isEditingUser, setisEditingUser] = useState(false);
@@ -62,6 +55,15 @@ const Profile = () => {
   const [isModalDeleteAccountOpen, setIsModalAccountOpen] = useState(false);
   const [inputDelete, setInputDelete] = useState('');
   const [failedToDelete, setFailedToDelete] = useState(false);
+
+  useEffect(() => {
+    setisEditingUser(false);
+    setisEditingDog(false);
+    dispatch(reinitRenderAgain());
+    dispatch(getProfileIsLoading());
+    dispatch(getDogBreedsAndBehaviors());
+    dispatch(getOneUserById(id));
+  }, [id, user.renderAgain]);
 
   const handleSetWeight = (value) => {
     setDogIsChanged(true);

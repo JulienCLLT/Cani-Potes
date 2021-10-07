@@ -5,7 +5,7 @@ const { Router } = require('express');
 const router = Router();
 
 router.post('/login', userController.login);
-router.post('/subscribe', multer,userController.addNewUser);
+router.post('/subscribe', multer, userController.addNewUser);
 router.delete('/account/delete', checkToken, userController.deleteAccount);
 router.patch('/account/edit', checkToken, multer, userController.updateUser);
 router.get('/social/profile/:idUser', checkToken, userController.getProfile);

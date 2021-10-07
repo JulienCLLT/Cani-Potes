@@ -44,7 +44,9 @@ INSERT INTO photo(file_name, dog_id) VALUES
 
 INSERT INTO ride(title, description, start_coordinate, end_coordinate, starting_time, duration, max_number_dogs, tag_id, host_id) VALUES
 ('Dans le coin', 'un petit tour de quartier pour se rencontrer et y a une fontaine sympa', '{49.897443,2.290084}', '{49.877443,2.310084}', '2021-09-29 19:37:25.631205+02','15 minutes', 5, 1, 1),
-('Cool ici', 'On va rire car mon chien est vraiment foufou', '{48.897443,3.290084}', '{48.897443,3.290084}', '2021-10-14 19:37:25.631205+02', '35 minutes', 4, 2, 3);
+('Cool ici', 'On va rire car mon chien est vraiment foufou', '{48.897443,3.290084}', '{48.897443,3.290084}', '2021-10-14 19:37:25.631205+02', '35 minutes', 4, 2, 3),
+('troisieme balade', 'Ca roule des pattes', '{48.897443,3.290084}', '{48.897443,3.290084}', '2021-10-14 19:37:25.631205+02', '24 minutes', 4, 2, 1),
+('balade 4', 'balade du turfu', '{48.897443,3.290084}', '{48.897443,3.290084}', '2021-10-14 19:37:25.631205+02', '6 minutes', 4, 2, 2);
 
 INSERT INTO member_write_ride (member_id, ride_id, message) VALUES 
 (1, 1, 'Salut vous etes prêts ?'),
@@ -55,6 +57,8 @@ INSERT INTO member_write_ride (member_id, ride_id, message) VALUES
 
 INSERT INTO member_participate_ride (member_id, ride_id) VALUES 
 (2, 1),
-(3, 1);
+(3, 1),
+(1,2),
+(3, 3);
 
 COMMIT;

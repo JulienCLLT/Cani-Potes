@@ -18,11 +18,13 @@ import startFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endFlag from '../../assets/img/info-ride/endPointFlag.svg';
 import conversation from '../../assets/img/info-ride/conversation.svg';
 import close from '../../assets/img/close.svg';
+import star from '../../assets/img/star.svg';
 import peureux from '../../assets/img/profile-simulation/fearful.svg';
 import joueur from '../../assets/img/profile-simulation/player.png';
 import agressif from '../../assets/img/profile-simulation/aggressive.png';
 import sociable from '../../assets/img/profile-simulation/sociable.svg';
 import flag from '../../assets/img/info-ride/flag.svg';
+import starting from '../../assets/img/info-ride/map-pin.svg';
 
 import {
   sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
@@ -31,18 +33,22 @@ import { translateDate } from '../../utils/translateDate';
 import { reverseGeocoding } from '../../utils/reverseGeocoding';
 
 import './RideDetails.scss';
+import Header from '../Header/Header';
+import { reinitRenderAgain } from '../../actions/users';
 
 const RideDetails = () => {
   const { id } = useParams();
   const chatZone = useRef();
   const dispatch = useDispatch();
 
+  const { user: userProfile } = useSelector((state) => state);
+
   useEffect(() => {
+    dispatch(reinitRenderAgain());
     dispatch(getRideIsLoading());
     dispatch(getOneRideById(id));
-  }, []);
+  }, [userProfile.renderAgain]);
 
-  const { user: userProfile } = useSelector((state) => state);
 
   const {
     ride_id, title, max_number_dogs, participants, starting_time, duration,
@@ -146,287 +152,302 @@ const RideDetails = () => {
     iconUrl: startFlag,
     inconRetInaUrl: startFlag,
     popupAnchor: [-0, -0],
-    iconSize: [22, 35],
+    iconSize: [35, 42],
   });
 
   const positionEnd = new L.Icon({
     iconUrl: endFlag,
     inconRetInaUrl: endFlag,
     popupAnchor: [-0, -0],
-    iconSize: [22, 35],
+    iconSize: [35, 42],
   });
 
   return (
-    <div className="ride-details">
-      {isRedirect && <Redirect to="/home" />}
-      <h1 className="ride-details__title">Détails d'une balade</h1>
-      <section className="ride-details__infos">
-        <div className="ride-details__infos__map">
-          <div className="ride-details__leaflet">
-            {
-              isLoading ? (
-                <Loader />
-              ) : (
-                <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={14} scrollWheelZoom>
-                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <Marker position={start_coordinate} icon={positionStart}>
-                    <Popup>Départ</Popup>
-                  </Marker>
-                  <Marker position={end_coordinate} icon={positionEnd}>
-                    <Popup>Arrivée</Popup>
-                  </Marker>
-                </MapContainer>
-              )
-            }
-          </div>
-          <h2>{title}</h2>
-          <span>
-            {nbOfDogs} / {max_number_dogs} chiens
-          </span>
-        </div>
-        <div className="ride-details__infos__description">
-          <p>
-            <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
-            Départ {startPointAddress} <br />
-            le {translateDate(starting_time)}
-          </p>
-          <p>
-            <span className="ride-details__icon"><img src={flag} alt="flag" /></span>
-            Arrivée {endPointAddress} <br />
-          </p>
-          <p>
-            <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
-            Durée : {duration.minutes}min
-          </p>
-          <p>{description}</p>
-        </div>
-      </section>
+    <>
+      <Header title={title} />
+      <main>
+        <div className="ride-details">
+          {isRedirect && <Redirect to="/home" />}
+          <section className="ride-details__infos">
+            <div className="ride-details__infos__map">
+              <div className="ride-details__leaflet">
+                {
+                  isLoading ? (
+                    <Loader />
+                  ) : (
+                    <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={16} scrollWheelZoom zoomControl={false}>
+                      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                      <Marker position={start_coordinate} icon={positionStart}>
+                        <Popup>Départ</Popup>
+                      </Marker>
+                      <Marker position={end_coordinate} icon={positionEnd}>
+                        <Popup>Arrivée</Popup>
+                      </Marker>
+                    </MapContainer>
+                  )
+                }
+              </div>
+              <span>
+                {nbOfDogs} / {max_number_dogs} chiens
+              </span>
+            </div>
+            <div className="ride-details__infos__description">
+              <p>
+                <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
+                {translateDate(starting_time)}
+              </p>
+              <p>
+                <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
+                Durée : {duration.minutes}min
+              </p>
+              <p>
+                <span className="ride-details__icon"><img src={starting} alt="starting" /></span>
+                Départ : <br />{startPointAddress}<br />
+              </p>
+              <p>
+                <span className="ride-details__icon"><img src={flag} alt="flag" /></span>
+                Arrivée : <br />{endPointAddress}<br />
+              </p>
+              <p>{description}</p>
+            </div>
+          </section>
 
-      <section className="ride-details__users">
-        <div className="ride-details__users__infos">
-          <span>{participants.length} Cani Potes</span>
-          {
-            participants.find((participant) => participant.participant_id === userProfile.id)
-              ? (
-                <button
-                  type="button"
-                  onClick={() => handleQuit()}
-                >
-                  Se désinscrire
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => handleJoinIn()}
-                >
-                  {joinInMsg}
-                </button>
-              )
-          }
-        </div>
-
-        <div className="ride-details__container">
-          <div className="ride-details__users__registered">
-            {
-              participants.map((participant) => (
-                <div className="ride-details__current-user" key={participant.participant_id}>
-                  {userIsHost && participant.participant_id !== userProfile.id && (
+          <section className="ride-details__users">
+            <div className="ride-details__users__infos">
+              <span>{participants.length} Cani Potes</span>
+              {
+                participants.find((participant) => participant.participant_id === userProfile.id)
+                  ? (
                     <button
                       type="button"
-                      onClick={() => {
-                        setIsKickUserModalOpen(true);
-                        setUserKicked(participant.participant_id);
-                      }}
+                      onClick={() => handleQuit()}
                     >
-                      <img src={close} alt="kick user" />
+                      Se désinscrire
                     </button>
-                  )}
-                  <Link
-                    className="ride-details__current-user__avatar"
-                    to={`/profile/${participant.participant_id}`}
-                  >
-                    <img src={`http://100.25.13.11/user_resized/${participant.participant_photo}`} alt="user" />
-                    <span>{participant.participant_first_name}</span>
-                  </Link>
-
-                  <div className="ride-details__current-user__dogs-container">
-                    {participant.dogs.map((dog) => (
-                      <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
-                        <div className="dog-avatar">
-                          {dog.dog_photo && (
-                            <img src={`http://100.25.13.11/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
-                          )}
-                          <span>{dog.dog_surname}</span>
-                          <span className="dog-avatar__behavior">
-                            <img src={dogBehaviors[dog.dog_behavior]} alt="dog behavior" className="dog-avatar__behavior__logo" />
-                            {dog.dog_behavior}
-                          </span>
-                        </div>
-                        <div className="dog-details">
-                          <ul>
-                            <li>{dog.dog_breed}</li>
-                            <li>{dog.dog_gender} {dog.dog_weight}kg</li>
-                            <li>{dog.dog_sterilization ? 'Stérilisé' : 'Non stérilizé'}</li>
-                          </ul>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-                </div>
-              ))
-            }
-          </div>
-
-          <div className="ride-details__users__creator">
-            <Link
-              className="ride-details__users__creator__avatar"
-              to={`/profile/${host_id}`}
-            >
-              <p>Créateur</p>
-              <img src={`http://100.25.13.11/user_resized/${participants[0].participant_photo}`} alt={host_first_name} />
-              <span>{userProfile.id === host_id ? 'Vous' : host_first_name}</span>
-            </Link>
-          </div>
-        </div>
-
-      </section>
-
-      {
-        participants.find((participant) => participant.participant_id === userProfile.id) && (
-          <button
-            type="button"
-            className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
-            onClick={() => {
-              setIsChatOpen(!isChatOpen);
-              scrollDownChat();
-            }}
-          >
-            {
-              isChatOpen ? (
-                <img src={close} alt="close chat" />
-              ) : (
-                <img src={conversation} alt="open chat" />
-              )
-            }
-          </button>
-        )
-      }
-
-      {isChatOpen && (
-        <section className="ride-details__chat">
-          <div className="ride-details__messages-container" ref={chatZone}>
-            {
-              messages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={msg.sender_id === userProfile.id ? 'ride-details__messages-container__message my-message' : 'ride-details__messages-container__message'}
-                >
-                  <p>
-                    {msg.participants}
-                    <span>
-                      {msg.sender_first_name}
-                      {translateDate(msg.sent)}
-                    </span>
-                  </p>
-                  <span>{msg.message}</span>
-                </div>
-              ))
-            }
-          </div>
-          <div className="ride-details__new-message">
-            <form onSubmit={handleSubmit(onSubmit)} className="ride-details__form">
-              <input
-                id="message"
-                name="message"
-                type="text"
-                placeholder="Nouveau message"
-                {...register('message', { required: true })}
-              />
-              <button type="submit">Envoyer</button>
-            </form>
-          </div>
-
-        </section>
-      )}
-
-      {
-        isDeleteRideModalOpen && (
-          <div className="ride-details__modal">
-            <p
-              className="ride-details__modal__text"
-            >
-              Attention, vous êtes l'organisateur de cette balade
-            </p>
-            <p
-              className="ride-details__modal__text"
-            >
-              En vous retirant vous la supprimerez
-            </p>
-            <p
-              className="ride-details__modal__text"
-            >
-              Continuer ?
-            </p>
-            <div className="ride-details__modal__btn-container">
-              <button
-                type="button"
-                className="ride-details__modal__back-btn"
-                onClick={() => setIsDeleteRideModalOpen(false)}
-              >
-                Retour
-              </button>
-              <button
-                type="button"
-                className="ride-details__modal__delete-btn"
-                onClick={() => handleDelete()}
-              >
-                Supprimer
-              </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => handleJoinIn()}
+                    >
+                      {joinInMsg}
+                    </button>
+                  )
+              }
             </div>
-          </div>
-        )
-      }
 
-      {
-        isKickUserModalOpen && (
-          <div className="ride-details__modal">
-            <p
-              className="ride-details__modal__text"
-            >
-              Voulez allez retirer {
-                participants.find(
-                  (participant) => participant.participant_id === userKicked,
-                ).participant_first_name
-              } de la balade ?
-            </p>
-            <p
-              className="ride-details__modal__text"
-            >
-              Continuer ?
-            </p>
-            <div className="ride-details__modal__btn-container">
+            <div className="ride-details__container">
+              <div className="ride-details__users__registered">
+                {
+                  participants.map((participant) => (
+                    <Link to={`/profile/${participant.participant_id}`} className="ride-details__current-user-link">
+                      <div className="ride-details__current-user" key={participant.participant_id}>
+                        {userIsHost && participant.participant_id !== userProfile.id && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsKickUserModalOpen(true);
+                              setUserKicked(participant.participant_id);
+                            }}
+                          >
+                            <img src={close} alt="kick user" />
+                          </button>
+                        )}
+                        <div className="ride-details__current-user__avatar">
+                          <img src={`http://100.25.13.11/user_resized/${participant.participant_photo}`} alt="user" />
+                          <div className="ride-details__current-user__avatar-name">
+                            {host_id === participant.participant_id && (
+                              <div className="ride-details__current-user__star">
+                                <img src={star} alt="star" />
+                              </div>
+                            )} {participant.participant_first_name}
+                          </div>
+                        </div>
+
+                        <div className="ride-details__current-user__dogs-container">
+                          {participant.dogs.map((dog) => (
+                            <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
+                              <div className="dog-avatar">
+                                {dog.dog_photo && (
+                                  <img src={`http://100.25.13.11/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
+                                )}
+                                <span>{dog.dog_surname}</span>
+                                <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
+
+                              </div>
+                              <div className="dog-details">
+                                <ul>
+                                  <li>
+                                    <span className="dog-details__behavior">
+                                      <img src={dogBehaviors[dog.dog_behavior]} alt="dog behavior" className="dog-details__behavior__logo" />
+                                      {dog.dog_behavior}
+                                    </span>
+                                  </li>
+                                  <li>{dog.dog_breed}</li>
+                                  <li>{dog.dog_age} {dog.dog_weight}kg</li>
+                                  <li>{dog.dog_sterilization ? 'Stérilisé' : 'Non stérilisé'}</li>
+                                </ul>
+                              </div>
+                            </article>
+                          ))}
+                        </div>
+                      </div>
+                    </Link>
+                  ))
+                }
+              </div>
+
+              {/* <div className="ride-details__users__creator">
+                <Link
+                  className="ride-details__users__creator__avatar"
+                  to={`/profile/${host_id}`}
+                >
+                  <p>Créateur</p>
+                  <img src={`http://100.25.13.11/user_resized/${participants[0].participant_photo}`} alt={host_first_name} />
+                  <span>{userProfile.id === host_id ? 'Vous' : host_first_name}</span>
+                </Link>
+              </div> */}
+            </div>
+
+          </section>
+
+          {
+            participants.find((participant) => participant.participant_id === userProfile.id) && (
               <button
                 type="button"
-                className="ride-details__modal__back-btn"
+                className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
                 onClick={() => {
-                  setIsKickUserModalOpen(false);
-                  setUserKicked(0);
+                  setIsChatOpen(!isChatOpen);
+                  scrollDownChat();
                 }}
               >
-                Retour
+                {
+                  isChatOpen ? (
+                    <img src={close} alt="close chat" />
+                  ) : (
+                    <img src={conversation} alt="open chat" />
+                  )
+                }
               </button>
-              <button
-                type="button"
-                className="ride-details__modal__delete-btn"
-                onClick={() => handleKick()}
-              >
-                Retirer
-              </button>
-            </div>
-          </div>
-        )
-      }
-    </div>
+            )
+          }
+
+          {isChatOpen && (
+            <section className="ride-details__chat">
+              <div className="ride-details__messages-container" ref={chatZone}>
+                {
+                  messages.map((msg) => (
+                    <div
+                      key={msg.id}
+                      className={msg.sender_id === userProfile.id ? 'ride-details__messages-container__message my-message' : 'ride-details__messages-container__message'}
+                    >
+                      <p>
+                        {msg.participants}
+                        <span>
+                          {msg.sender_first_name}
+                          {translateDate(msg.sent)}
+                        </span>
+                      </p>
+                      <span>{msg.message}</span>
+                    </div>
+                  ))
+                }
+              </div>
+              <div className="ride-details__new-message">
+                <form onSubmit={handleSubmit(onSubmit)} className="ride-details__form">
+                  <input
+                    id="message"
+                    name="message"
+                    type="text"
+                    placeholder="Nouveau message"
+                    {...register('message', { required: true })}
+                  />
+                  <button type="submit">Envoyer</button>
+                </form>
+              </div>
+
+            </section>
+          )}
+
+          {
+            isDeleteRideModalOpen && (
+              <div className="ride-details__modal">
+                <p
+                  className="ride-details__modal__text"
+                >
+                  Attention, vous êtes l'organisateur de cette balade
+                </p>
+                <p
+                  className="ride-details__modal__text"
+                >
+                  En vous retirant vous la supprimerez
+                </p>
+                <p
+                  className="ride-details__modal__text"
+                >
+                  Continuer ?
+                </p>
+                <div className="ride-details__modal__btn-container">
+                  <button
+                    type="button"
+                    className="ride-details__modal__back-btn"
+                    onClick={() => setIsDeleteRideModalOpen(false)}
+                  >
+                    Retour
+                  </button>
+                  <button
+                    type="button"
+                    className="ride-details__modal__delete-btn"
+                    onClick={() => handleDelete()}
+                  >
+                    Supprimer
+                  </button>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            isKickUserModalOpen && (
+              <div className="ride-details__modal">
+                <p
+                  className="ride-details__modal__text"
+                >
+                  Voulez allez retirer {
+                    participants.find(
+                      (participant) => participant.participant_id === userKicked,
+                    ).participant_first_name
+                  } de la balade ?
+                </p>
+                <p
+                  className="ride-details__modal__text"
+                >
+                  Continuer ?
+                </p>
+                <div className="ride-details__modal__btn-container">
+                  <button
+                    type="button"
+                    className="ride-details__modal__back-btn"
+                    onClick={() => {
+                      setIsKickUserModalOpen(false);
+                      setUserKicked(0);
+                    }}
+                  >
+                    Retour
+                  </button>
+                  <button
+                    type="button"
+                    className="ride-details__modal__delete-btn"
+                    onClick={() => handleKick()}
+                  >
+                    Retirer
+                  </button>
+                </div>
+              </div>
+            )
+          }
+        </div>
+      </main>
+    </>
   );
 };
 
