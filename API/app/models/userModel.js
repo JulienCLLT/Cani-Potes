@@ -14,11 +14,7 @@ class UserModel {
             return rows[0];
 
         } catch (error) {
-            if (error.detail) {
-                throw new Error(error.detail)
-            } else {
-                throw error;
-            }
+            throw new Error(error.detail ? error.detail : error.message);
         }
     }
 
@@ -30,36 +26,25 @@ class UserModel {
             return rows[0];
 
         } catch (error) {
-            if (error.detail) {
-                throw new Error(error.detail)
-            } else {
-                throw error;
-            }
+            throw new Error(error.detail ? error.detail : error.message);
         }
     }
 
     async save() {
         try {
             if (this.id) {
-                // faire un fonction d'update dynamique en sql;
 
                 const { rows } = await client.query(`SELECT update_user($1)`,[this]);
-
-
             }
             else {
                 const {rows}= await client.query('SELECT insert_user($1)',[this]);
                 
-                //return le nouvelle id de l'insert
+
                 this.id = rows[0].insert_user;
                 return this;
             }
         } catch (error) {
-            if (error.detail) {
-                throw new Error(error.detail)
-            } else {
-                throw error;
-            }
+            throw new Error(error.detail ? error.detail : error.message);
         }
     }
 
@@ -72,11 +57,7 @@ class UserModel {
             const { rows } = await client.query('SELECT * FROM user_basic_information WHERE id = $1', [id]);
             return rows[0];
         } catch (error) {
-            if (error.detail) {
-                throw new Error(error.detail)
-            } else {
-                throw error;
-            }
+            throw new Error(error.detail ? error.detail : error.message);
         }
 
     }
@@ -87,11 +68,7 @@ class UserModel {
             return rows[0];
 
         } catch (error) {
-            if (error.detail) {
-                throw new Error(error.detail)
-            } else {
-                throw error;
-            }
+            throw new Error(error.detail ? error.detail : error.message);
         }
     }
 

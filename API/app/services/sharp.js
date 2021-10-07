@@ -4,17 +4,26 @@ const fs = require('fs');
 
 const sharpResizeImage = {
 
-    async sharpResize ({request},pathfile){
-
-        await sharp(request.file.path).resize(200, 200)
-        .jpeg({ quality: 90 })
-        .toFile(path.resolve(
-            request.file.destination, `${pathfile}`, request.file
+    async sharpResize (request,nameFolderStore){
+        try {
+            await sharp(request.path).resize(200, 200)
+            .jpeg({ quality: 90 })
+            .toFile(path.resolve(
+            request.destination, `${nameFolderStore}`, request.filename
             ));
 
-        fs.unlinkSync(request.file.path);
+            fs.unlinkSync(request.path);
+        } catch (error) {
+            throw error;
+        }
+        
 
         
+    },
+
+     delOldImage: (nameFolderStore ,nameOldImage,) => {
+
+         fs.unlinkSync(`public/${nameFolderStore}/${nameOldImage}`);
     }
 
 };

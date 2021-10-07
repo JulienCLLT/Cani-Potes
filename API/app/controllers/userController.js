@@ -1,8 +1,8 @@
 const { bcrypt, jwt, apiGeo, sharpResizeImage } = require('../services');
-const fs = require('fs');
-
-
 const { UserModel, DogModel, RideModel, PhotoModel } = require('../models');
+
+
+
 
 const userController = {
     login: async (request, response) => {
@@ -24,7 +24,7 @@ const userController = {
                     const token = jwt.signToken({ id: result.id });
                     dataUser.authorization = token;
 
-                    //response.set({'authozization': token})
+                    //response.set({'authorization': token})
                     response.status(200).json(dataUser);
                 } else {
                     response.status(400).json({ error: "Invalid Password" });
@@ -40,23 +40,19 @@ const userController = {
 
     addNewUser: async (request, response) => {
         try {
-             if (request.file) {
-                
-                sharpResizeImage.sharpResize(request.file, 'user_resized');
 
+            if (request.file) {
+
+                sharpResizeImage.sharpResize(request.file, 'user_resized');
+                
+                //push name path a image resized 
                 request.body.photo = request.file.filename;
             };
             
-            
             const user = new UserModel(request.body);
-
-           
-                //on Bcrypt et remplace direct le password
             user.password = await bcrypt.hash(user.password);
-            
             const newUser = await user.save();
             
-                //bloc code creation du json de reponse.
             if (newUser) {
                 const dataUser = await UserModel.dataUserConnexion(newUser.id);
                 dataUser.position = await apiGeo(dataUser.position);
@@ -88,29 +84,21 @@ const userController = {
 
             const idPayload = request.userId;
             request.body.id = idPayload;
-             // on fait une premiere update sans prendre en compte la photo
-             // en cas insertion d'un email deja valide on catch
-             // si on fait tout en une seul requete a la fin si il y a un confilt d'email le nom de la photo dans 
-             // le fichier public change mais pas en bdd = confilt 
+             // on check la validité du mail avant toute modif avec la contrainte sql 
             const user = new UserModel(request.body);
             await user.save(user);
-                if (request.file) {
 
+                if (request.file) {
                     sharpResizeImage.sharpResize(request.file, 'user_resized');
-                    
-                    
                     const oldPhoto = await UserModel.findOne(idPayload);
 
                         if (oldPhoto.photo != 'avatar.jpg') {
-                            
-                            fs.unlinkSync(`public/user_resized/${oldPhoto.photo}`);
+                            sharpResizeImage.delOldImage('user_resized', oldPhoto.photo);
                         };
                 
-                        
                     const newPhoto = new UserModel({id:idPayload, photo:request.file.filename});
 
                     await newPhoto.save(newPhoto);
-                    
                 };
 
 

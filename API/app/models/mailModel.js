@@ -22,11 +22,7 @@ class Mail {
         
             return rows [0]
         } catch (error) {
-            if (error.detail) {
-                throw new Error(error.detail)
-            } else {
-                throw error;
-            }
+            throw new Error(error.detail ? error.detail : error.message);
         }
         
     }
