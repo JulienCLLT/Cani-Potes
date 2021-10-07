@@ -12,7 +12,7 @@ const jwtToken = {
         } catch (error) {
             throw error;
         }
-    }
+    },
 
 }
 

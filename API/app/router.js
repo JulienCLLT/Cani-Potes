@@ -1,8 +1,6 @@
 const {userController, rideController, dogController, photoController, formController, mailController} = require('./controllers');
 const checkToken = require('./middlewares/checkJwt');
 const multer = require('./../app/middlewares/multerConfig');
-// const express =  require('express');
-// const router = express.Router();
 const { Router } = require('express');
 const router = Router();
 
@@ -20,7 +18,7 @@ router.route('/ride')
     .get(checkToken, rideController.getRidesByMember)
     .post(checkToken, rideController.create);
 
-    router.route('/ride/:rideId(\\d+)')
+router.route('/ride/:rideId(\\d+)')
     .get(checkToken, rideController.findOneRideWithAllInformations)
     .delete(checkToken, rideController.delete);
 

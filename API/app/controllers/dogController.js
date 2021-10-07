@@ -1,9 +1,6 @@
 const { PhotoModel, DogModel } = require('../models');
 const { sharpResizeImage } = require('../services');
 
-const sharp = require('sharp');
-const path = require('path');
-const fs = require('fs');
 
 const dogController = {
 
