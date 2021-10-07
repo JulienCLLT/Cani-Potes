@@ -23,8 +23,7 @@ const DashBoard = () => {
     <div className="dashboard">
 
       <header className="dashboard__header">
-        <h1 className="dashboard__header__title">Tableau de bord</h1>
-        <span>{user.first_name}</span>
+        <h1>Tableau de bord</h1>
 
         <Link
           className="dashboard__header__btn"
@@ -37,81 +36,82 @@ const DashBoard = () => {
       <section className="dashboard__hostedrides">
         <h2 className="dashboard__hostedrides__title">Je suis l'organisateur de ces balades</h2>
 
-        {
-          hostedRides.length > 0 ? (hostedRides.map((ride, index) => (
-            <div key={ride.ride_id} className="dashboard__hostedrides__container">
-              <div>
-                <p>#{index + 1} {ride.title}</p>
-                <p>{translateDate(ride.starting_time)}</p>
-                <p>
-                  {
-                    ride.participants ? ride.participants.reduce(
-                      (total, item) => item.dogs.length + total, 0,
-                    ) : 0
-                  }
-                  chiens
-                </p>
-              </div>
+        <div className="dashboard__hostedrides__block">
+          {
+            hostedRides.length > 0 ? (hostedRides.map((ride, index) => (
+              <div key={ride.ride_id} className="dashboard__hostedrides__container">
+                <div>
+                  <p className="dashboard__hostedrides__name">#{index + 1} {ride.title}</p>
+                  <p>{translateDate(ride.starting_time)}</p>
+                  <p>
+                    {
+                      ride.dogs_enrolled ? `${ride.dogs_enrolled.length} ` : '0 '
+                    }
+                    chien{ride.dogs_enrolled && ride.dogs_enrolled.length > 1 ? 's' : null}
+                  </p>
+                </div>
 
-              <div className="dashboard__hostedrides__link-container">
-                <Link
-                  className="dashboard__hostedrides__link"
-                  to={`/ride/${ride.ride_id}`}
-                >
-                  Détails
-                </Link>
-                <button
-                  className="dashboard__hostedrides__link"
-                  type="button"
-                  onClick={() => dispatch(deleteRide(ride.ride_id))}
-                >
-                  Supprimer
-                </button>
+                <div className="dashboard__hostedrides__link-container">
+                  <Link
+                    className="dashboard__hostedrides__link"
+                    to={`/ride/${ride.ride_id}`}
+                  >
+                    Détails
+                  </Link>
+                  <button
+                    className="dashboard__hostedrides__link"
+                    type="button"
+                    onClick={() => dispatch(deleteRide(ride.ride_id))}
+                  >
+                    Supprimer
+                  </button>
+                </div>
               </div>
-            </div>
-          ))) : (
-            <div>Vous n'organisez aucune balade</div>
-          )
-        }
+            ))) : (
+              <div>Vous n'organisez aucune balade</div>
+            )
+          }
+        </div>
       </section>
 
       <section className="dashboard__nothostedrides">
         <h2 className="dashboard__nothostedrides__title">Je participe à ces balades</h2>
-        {
-          notHostedRides.length > 0 ? (notHostedRides.map((ride, index) => (
-            <div key={ride.ride_id} className="dashboard__nothostedrides__container">
-              <div>
-                <p>#{index + 1} {ride.title}</p>
-                <p>{translateDate(ride.starting_time)}</p>
-                <p>
-                  {
-                    ride.participants ? ride.participants.reduce(
-                      (total, item) => item.dogs.length + total, 0,
-                    ) : 0
-                  }
-                  chiens
-                </p>
+
+        <div className="dashboard__nothostedrides__block">
+          {
+            notHostedRides.length > 0 ? (notHostedRides.map((ride, index) => (
+              <div key={ride.ride_id} className="dashboard__nothostedrides__container">
+                <div>
+                  <p className="dashboard__nothostedrides__name">#{index + 1} {ride.title}</p>
+                  <p>{translateDate(ride.starting_time)}</p>
+                  <p>
+                    {
+                      ride.dogs_enrolled ? `${ride.dogs_enrolled.length} ` : '0 '
+                    }
+                    chien{ride.dogs_enrolled && ride.dogs_enrolled.length > 1 ? 's' : null}
+                  </p>
+                </div>
+                <div className="dashboard__nothostedrides__link-container">
+                  <Link
+                    className="dashboard__nothostedrides__link"
+                    to={`/ride/${ride.ride_id}`}
+                  >
+                    Détails
+                  </Link>
+                  <button
+                    className="dashboard__nothostedrides__link"
+                    type="button"
+                    onClick={() => dispatch(removeUserFromRide(user.id, ride.ride_id))}
+                  >
+                    Quitter
+                  </button>
+                </div>
               </div>
-              <div className="dashboard__nothostedrides__link-container">
-                <Link
-                  className="dashboard__nothostedrides__link"
-                  to={`/ride/${ride.ride_id}`}
-                >
-                  Détails
-                </Link>
-                <button
-                  className="dashboard__nothostedrides__link"
-                  type="button"
-                  onClick={() => dispatch(removeUserFromRide(user.id, ride.ride_id))}
-                >
-                  Quitter
-                </button>
-              </div>
-            </div>
-          ))) : (
-            <div>Vous ne participez à aucune balade</div>
-          )
-        }
+            ))) : (
+              <div>Vous ne participez à aucune balade dont vous n'êtes pas l'organisateur.</div>
+            )
+          }
+        </div>
       </section>
     </div>
   );

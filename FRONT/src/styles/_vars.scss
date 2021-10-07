@@ -19,6 +19,7 @@ $gutter: 1rem;
     font-weight: bold;
     cursor: pointer;
     transition: all .2s ease-in-out;
+    text-align: center;
 
     &:hover {
         box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
@@ -31,4 +32,10 @@ $gutter: 1rem;
 
 %linear-gradient {
     background: linear-gradient(315deg, #f7b42c 0%, #fc575e 74%);
+}
+
+%title-background {
+    @extend %linear-gradient;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
