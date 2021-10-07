@@ -163,10 +163,8 @@ const DogSection = ({
           <>
             <div className="profile-page__dog__first">
               <div className="profile-page__dog__first__surname-gender">
-                {/* Surname */}
-                <span>{dog.dog_surname}</span>
-                {/* Gender */}
-                <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
+                {/* Surname Gender */}
+                <span>{dog.dog_surname} {dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
               </div>
               {/* Birthday */}
               <span>{dog.dog_age}</span>
@@ -200,7 +198,6 @@ const DogSection = ({
       </div>
 
       <div className="profile-page__dog-pictures">
-        <h2>Photos de {dog.dog_surname}</h2>
         <div className="profile-page__dog-pictures__container">
           {
             dog.dog_photo.length > 0 && dog.dog_photo.map((photo, photoIndex) => (
@@ -252,7 +249,7 @@ const DogSection = ({
                   Retour
                 </span>
               ) : (
-                <span>
+                <span className="edit-btn">
                   <img src={edit} alt="edit" />
                   Modifier
                 </span>

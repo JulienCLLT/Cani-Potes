@@ -169,7 +169,7 @@ const Profile = () => {
         ) : (
           <>
             <header className="profile-page__header">
-              <div>
+              <div className="profile-page__header-container">
                 <div className="profile-page__header__avatar">
                   <img src={`${dburlWithoutApi}/user_resized/${profile.photo}`} alt={profile.first_name} />
                   {
@@ -198,7 +198,7 @@ const Profile = () => {
                 {
                   profileIsUser && (
                     <div
-                      className="profile-page__header__edit"
+                      className="profile-page__header__edit  edit-btn"
                       onClick={toggleEditUser}
                     >
                       {isEditingUser ? 'Retour' : (
