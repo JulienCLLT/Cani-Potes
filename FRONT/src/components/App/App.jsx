@@ -17,6 +17,7 @@ import DashBoard from '../DashBoard/DashBoard';
 
 import '../../styles/reset.scss';
 import Profile from '../Profile';
+import CaniCrew from './../CaniCrew/index';
 
 function App() {
   const { isLogged } = useSelector((state) => state.user);
@@ -99,6 +100,10 @@ function App() {
               </main>
             </>
           )}
+        </Route>
+
+        <Route exact path="/cani-crew">
+          <CaniCrew />
         </Route>
 
         <Route>

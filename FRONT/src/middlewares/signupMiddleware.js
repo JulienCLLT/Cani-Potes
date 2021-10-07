@@ -6,10 +6,11 @@ import {
 } from '../actions/signup';
 
 import { connectUser, getOneUserById } from '../actions/users';
+import { dburlWithApi } from '../utils/dburl';
 
 const signupMiddleware = (store) => (next) => (action) => {
   const axiosInstance = axios.create({
-    baseURL: 'http://100.25.13.11/api',
+    baseURL: dburlWithApi,
     headers: {
       'Access-Control-Allow-Origin': '*',
       authorization: `${store.getState().user.token}`,
@@ -34,7 +35,7 @@ const signupMiddleware = (store) => (next) => (action) => {
 
       axios({
         method: 'POST',
-        url: 'http://100.25.13.11/api/subscribe',
+        url: `${dburlWithApi}/subscribe`,
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -73,7 +74,7 @@ const signupMiddleware = (store) => (next) => (action) => {
 
       axios({
         method: 'POST',
-        url: `http://100.25.13.11/api/profile/${store.getState().user.id}/dogs`,
+        url: `${dburlWithApi}/profile/${store.getState().user.id}/dogs`,
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',

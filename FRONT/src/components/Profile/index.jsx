@@ -15,6 +15,7 @@ import dblArrow from '../../assets/img/info-ride/double_arrow.svg';
 import edit from '../../assets/img/profile-simulation/edit.svg';
 import DeleteAccModal from './DeleteAccModal';
 import DogSection from './DogSection/index';
+import { dburlWithoutApi } from '../../utils/dburl';
 
 const Profile = () => {
   const { user, profile, signup } = useSelector((state) => state);
@@ -184,7 +185,7 @@ const Profile = () => {
                   {profileIsUser ? 'Votre profil ' : 'Profil de '}
                 </span>
                 <div className="profile-page__header__avatar">
-                  <img src={`http://100.25.13.11/user_resized/${profile.photo}`} alt={profile.first_name} />
+                  <img src={`${dburlWithoutApi}/user_resized/${profile.photo}`} alt={profile.first_name} />
                   {
                     isEditingUser && (
                       <input

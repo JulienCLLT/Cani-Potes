@@ -35,6 +35,7 @@ import { reverseGeocoding } from '../../utils/reverseGeocoding';
 import './RideDetails.scss';
 import Header from '../Header/Header';
 import { reinitRenderAgain } from '../../actions/users';
+import { dburlWithoutApi } from '../../utils/dburl';
 
 const RideDetails = () => {
   const { id } = useParams();
@@ -253,7 +254,7 @@ const RideDetails = () => {
                           </button>
                         )}
                         <div className="ride-details__current-user__avatar">
-                          <img src={`http://100.25.13.11/user_resized/${participant.participant_photo}`} alt="user" />
+                          <img src={`${dburlWithoutApi}/user_resized/${participant.participant_photo}`} alt="user" />
                           <div className="ride-details__current-user__avatar-name">
                             {host_id === participant.participant_id && (
                               <div className="ride-details__current-user__star">
@@ -268,7 +269,7 @@ const RideDetails = () => {
                             <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
                               <div className="dog-avatar">
                                 {dog.dog_photo && (
-                                  <img src={`http://100.25.13.11/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
+                                  <img src={`${dburlWithoutApi}/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
                                 )}
                                 <span>{dog.dog_surname}</span>
                                 <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
@@ -302,7 +303,7 @@ const RideDetails = () => {
                   to={`/profile/${host_id}`}
                 >
                   <p>Créateur</p>
-                  <img src={`http://100.25.13.11/user_resized/${participants[0].participant_photo}`} alt={host_first_name} />
+                  <img src={`${dburlWithoutApi}/user_resized/${participants[0].participant_photo}`} alt={host_first_name} />
                   <span>{userProfile.id === host_id ? 'Vous' : host_first_name}</span>
                 </Link>
               </div> */}

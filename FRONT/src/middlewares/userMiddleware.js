@@ -5,10 +5,11 @@ import {
   DELETE__DOG, DELETE__USER, UPDATE__DOG, DELETE__DOG__PHOTO, USER__GETS__HIS__DOGS,
   logoutUser, saveProfileInState, addRidesToUser, saveUserDogsInState, renderAgain,
 } from '../actions/users';
+import { dburlWithApi } from '../utils/dburl';
 
 const userMiddleware = (store) => (next) => (action) => {
   const axiosInstance = axios.create({
-    baseURL: 'http://100.25.13.11/api',
+    baseURL: dburlWithApi,
     headers: {
       'Access-Control-Allow-Origin': '*',
       authorization: `${store.getState().user.token}`,
@@ -64,7 +65,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       axios({
         method: 'PATCH',
-        url: `http://100.25.13.11/api/profile/${action.userId}/dogs/${action.dogId}`,
+        url: `${dburlWithApi}/profile/${action.userId}/dogs/${action.dogId}`,
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -95,7 +96,7 @@ const userMiddleware = (store) => (next) => (action) => {
 
       axios({
         method: 'PATCH',
-        url: 'http://100.25.13.11/api/account/edit',
+        url: `${dburlWithApi}/account/edit`,
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data',
