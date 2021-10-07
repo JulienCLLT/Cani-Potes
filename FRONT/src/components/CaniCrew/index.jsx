@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import logo from '../../assets/navbar/canipotes_logo.jpg';
+import logo from '../../assets/navbar/canipotes_logo.png';
 import github from '../../assets/team/github.png';
 import linkedin from '../../assets/team/linkedin.png';
 

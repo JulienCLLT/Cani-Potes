@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteRide, removeUserFromRide } from '../../actions/rides';
-import { getRidesWithUserIn } from '../../actions/users';
+import { deleteRide, userQuitRide } from '../../actions/rides';
+import { getRidesWithUserIn, reinitRenderAgain } from '../../actions/users';
 import { translateDate } from '../../utils/translateDate';
 
 import './dashBoard.scss';
@@ -13,8 +13,9 @@ const DashBoard = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(reinitRenderAgain());
     dispatch(getRidesWithUserIn());
-  }, []);
+  }, [user.renderAgain]);
 
   const hostedRides = user.rides.filter((ride) => ride.host_id === user.id);
   const notHostedRides = user.rides.filter((ride) => ride.host_id !== user.id);
@@ -101,7 +102,9 @@ const DashBoard = () => {
                   <button
                     className="dashboard__nothostedrides__link"
                     type="button"
-                    onClick={() => dispatch(removeUserFromRide(user.id, ride.id))}
+                    onClick={() => {
+                      dispatch(userQuitRide(user.id, ride.id));
+                    }}
                   >
                     Quitter
                   </button>

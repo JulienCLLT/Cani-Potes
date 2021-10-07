@@ -13,7 +13,7 @@ export const addUserToRide = ({
 });
 
 export const USER__QUIT__RIDE = 'USER__QUIT__RIDE';
-export const removeUserFromRide = (userId, rideId) => ({
+export const userQuitRide = (userId, rideId) => ({
   type: USER__QUIT__RIDE,
   userId,
   rideId,

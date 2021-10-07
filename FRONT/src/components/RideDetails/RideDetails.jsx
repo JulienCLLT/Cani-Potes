@@ -29,7 +29,7 @@ import nbdog from '../../assets/img/info-ride/nbdog.svg';
 import nbcanipote from '../../assets/img/info-ride/nbcanipote.svg';
 
 import {
-  sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
+  sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, userQuitRide, kickUserFromRide,
 } from '../../actions/rides';
 import { translateDate } from '../../utils/translateDate';
 import { reverseGeocoding } from '../../utils/reverseGeocoding';
@@ -115,7 +115,7 @@ const RideDetails = () => {
       setIsDeleteRideModalOpen(true);
     }
     else {
-      dispatch(removeUserFromRide(userProfile.id, id));
+      dispatch(userQuitRide(userProfile.id, id));
     }
   };
 
