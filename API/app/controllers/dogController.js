@@ -49,7 +49,6 @@ const dogController = {
 
                 sharpResizeImage.sharpResize(request.file, 'dog_resized');
 
-
                 // insert the photo data in db
                 const newPhoto = new PhotoModel({ file: request.file.filename, dogId: dogCreated.id });
                 const photoCreated = await newPhoto.addPhoto();

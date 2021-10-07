@@ -1,4 +1,4 @@
-const {userController, rideController, dogController, photoController, formController, mailController} = require('./controllers');
+const { userController, rideController, dogController, photoController, formController, mailController } = require('./controllers');
 const checkToken = require('./middlewares/checkJwt');
 const multer = require('./../app/middlewares/multerConfig');
 const { Router } = require('express');
@@ -9,10 +9,6 @@ router.post('/subscribe', multer, userController.addNewUser);
 router.delete('/account/delete', checkToken, userController.deleteAccount);
 router.patch('/account/edit', checkToken, multer, userController.updateUser);
 router.get('/social/profile/:idUser', checkToken, userController.getProfile);
-
-
-
-
 
 router.route('/ride')
     .get(checkToken, rideController.getRidesByMember)
@@ -28,10 +24,6 @@ router.route('/ride/:rideId(\\d+)/participation')
 
 router.get('/rides', checkToken, rideController.findAll);
 router.delete('/ride/:rideId(\\d+)/participation/user/:userId(\\d+)', checkToken, rideController.removeUserFromRide);
-
-
-
-
 
 router.route('/profile/:profileId(\\d+)/dogs/:dogId(\\d+)')
     .get(checkToken, dogController.getOneDog)
