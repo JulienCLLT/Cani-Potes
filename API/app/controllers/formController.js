@@ -1,11 +1,11 @@
-const Breed = require('../models/breedModel');
-const Behavior = require('../models/behaviorModel');
+const { BreedModel, BehaviorModel } = require('../models');
+
 
 const formController = {
     getDogCharacteristic : async (_, response)=>{   
         try {
-            const breeds = await Breed.findAll();
-            const behaviors = await Behavior.findAll();
+            const breeds = await BreedModel.findAll();
+            const behaviors = await BehaviorModel.findAll();
 
             response.status(201).json({breeds, behaviors});
         } catch (error) {

@@ -1,4 +1,4 @@
-const client = require("./../database");
+const client = require("../database");
 const fs = require('fs');
 
 class Photo {

@@ -3,19 +3,25 @@ const fetch = require('../../node_modules/node-fetch');
 
 
 async function fetchApi (zipcode) {
-    const response = await fetch(`https://api-adresse.data.gouv.fr/search/?q=postcode=${zipcode}`);
-    const data = await response.json();
+    try {
+        const response = await fetch(`https://api-adresse.data.gouv.fr/search/?q=postcode=${zipcode}`);
+        const data = await response.json();
+
+          if (data.features.length == 0) {
+             const placebo = [45.58129716336006, 5.978390832230138];
+             return placebo;
+            };
+
+        const result = await data.features[0].geometry.coordinates;
+        return result.reverse();
+
+    } catch (error) {
+        throw error;
+    }
     
-    if (data.features.length == 0) {
-        const placebo = [45.58129716336006, 5.978390832230138];
-        return placebo;
-    };
-    const result = await data.features[0].geometry.coordinates;
-    return result.reverse();
     
 };
 
-// fetchApi(73230);
 
 module.exports = fetchApi; 
 

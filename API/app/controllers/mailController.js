@@ -1,4 +1,4 @@
-const MailModel = require('../models/mailModel');
+const { MailModel } = require('../models');
 const schemaMessage  = require('../services/joi');
 
 
