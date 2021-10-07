@@ -1,8 +1,13 @@
 /* eslint-disable linebreak-style */
+// eslint-disable-next-line no-unused-vars
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { deleteDog, deleteDogPhoto, deleteUser, getOneUserById, getProfileIsLoading, reinitRenderAgain, updateDog, updateUser } from '../../actions/users';
+
+import {
+  deleteDog, deleteDogPhoto, deleteUser, getOneUserById,
+  getProfileIsLoading, reinitRenderAgain, updateDog, updateUser,
+} from '../../actions/users';
 import { getDogBreedsAndBehaviors } from '../../actions/signup';
 
 import DogForm from '../SignUp/DogForm/index';
@@ -163,27 +168,8 @@ const Profile = () => {
           <Loader />
         ) : (
           <>
-            {
-              profileIsUser && (
-                <div
-                  className="profile-page__edit"
-                  onClick={toggleEditUser}
-                >
-                  {isEditingUser ? 'Retour' : (
-                    <span>
-                      <img src={edit} alt="edit" />
-                      Modifier
-                    </span>
-                  )}
-                </div>
-              )
-            }
-
             <header className="profile-page__header">
               <div>
-                <span className="profile-page__header__annoucement">
-                  {profileIsUser ? 'Votre profil ' : 'Profil de '}
-                </span>
                 <div className="profile-page__header__avatar">
                   <img src={`${dburlWithoutApi}/user_resized/${profile.photo}`} alt={profile.first_name} />
                   {
@@ -195,7 +181,35 @@ const Profile = () => {
                     )
                   }
                 </div>
-                <span className="profile-page__header__avatar-name">{profile.first_name}</span>
+                <div className="profile-page__header__user">
+                  <span className="profile-page__header__user__avatar-name">{profile.first_name}</span>
+                  {
+                    isEditingUser ? (
+                      <input
+                        type="number"
+                        value={zipcode}
+                        onChange={(e) => setZipcode(e.target.value)}
+                      />
+                    ) : (
+                      <span className="profile-page__header__user__zipcode">{profile.zip_code}</span>
+                    )
+                  }
+                </div>
+                {
+                  profileIsUser && (
+                    <div
+                      className="profile-page__header__edit"
+                      onClick={toggleEditUser}
+                    >
+                      {isEditingUser ? 'Retour' : (
+                        <>
+                          <img src={edit} alt="edit" />
+                          Modifier
+                        </>
+                      )}
+                    </div>
+                  )
+                }
               </div>
             </header>
 
@@ -224,49 +238,33 @@ const Profile = () => {
                   Supprimer mon compte
                 </button>
               )}
-              <h2>Informations sur l'utilisateur</h2>
-              <p className="profile-page__info-user__content">
-                <span className="profile-page__info-user__content-field">
-                  {
-                    isEditingUser ? (
+              { isEditingUser && (
+                <p className="profile-page__info-user__content">
+                  <span className="profile-page__info-user__content-field">
+                    {
+                    isEditingUser && (
                       <input
                         type="text"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                       />
-                    ) : (
-                      <span>{profile.first_name}</span>
                     )
                   }
-                  {
-                    isEditingUser ? (
+                    {
+                    isEditingUser && (
                       <input
                         type="text"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                       />
-                    ) : (
-                      <span>{profile.last_name}</span>
                     )
                   }
-                </span>
-                <span className="profile-page__info-user__content-field">
-                  {
-                    isEditingUser ? (
-                      <input
-                        type="number"
-                        value={zipcode}
-                        onChange={(e) => setZipcode(e.target.value)}
-                      />
-                    ) : (
-                      <span>Ville : {profile.zip_code}</span>
-                    )
-                  }
-                </span>
-                <span className="profile-page__info-user__content-field">
+                  </span>
+                  {/* <span className="profile-page__info-user__content-field">
                   <span>Nombre de chien{profile.dogs.length > 1 && 's'} : {profile.dogs.length}</span>
-                </span>
-              </p>
+                </span> */}
+                </p>
+              )}
               {isEditingUser && (
                 <div className="profile-page__info-user__submit">
                   <button
