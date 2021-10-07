@@ -73,7 +73,7 @@ class Ride {
                             )
                     ) FILTER (WHERE mp.member_id IS NOT NULL) AS participants
             FROM ride 
-            LEFT JOIN member_participate_ride AS mp ON ride.id = mp.ride_id
+            LEFT JOIN member_participate_ride AS mp ON ride.id = mp.ride_id 
             WHERE ride.host_id = $1 OR mp.member_id = $1
             GROUP BY ride.id, host_id, title, starting_time, max_number_dogs      
             `;
