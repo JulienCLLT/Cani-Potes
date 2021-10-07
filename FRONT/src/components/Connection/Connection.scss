@@ -68,14 +68,13 @@
             background: white;
             color: vars.$color_main;
             padding: .5 * vars.$gutter;
-            transition: all .2s ease;
 
             @include lg-screen {
                 font-size: 1.45rem;
             }
 
             &:hover {
-                box-shadow: 0 0 6px black;
+                box-shadow: 0 0 10px vars.$color-border-input;
                 transition: all .2s ease;
             }
         }
@@ -320,12 +319,10 @@
         top: 50%;
         left: 50%;
         width: 80%;
-        max-width: 290px;
+        max-width: 400px;
         transform: translate(-50%, -50%);
-        // padding: 3 * vars.$gutter 3 * vars.$gutter;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         border-radius: 10px;
         z-index: 9999;

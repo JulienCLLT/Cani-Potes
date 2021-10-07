@@ -6,12 +6,14 @@
 
 .signup-main {
     padding: vars.$gutter;
+    // @extend %linear-gradient;
 
     & h1 {
         text-align: center;
         font-size: 2*vars.$gutter;
         margin: vars.$gutter 0;
         font-weight: bold;
+        @extend %title-background;
     }
 }
 
@@ -21,12 +23,15 @@
 
     & h2 {
         text-align: center;
-        font-size: 1.3*vars.$gutter;
+        font-size: 1.5*vars.$gutter;
         font-weight: bold;
+        margin: auto;
         margin-top : 2*vars.$gutter;
-        margin-bottom : vars.$gutter;
-        box-shadow: 0 0 20px vars.$color-border-input;
-        padding: 0.2*vars.$gutter 0;
+        padding-bottom : vars.$gutter;
+        // box-shadow: 0 0 20px vars.$color-border-input;
+        border-bottom: 1px solid vars.$color-main;
+        @extend %title-background;
+        max-width: 400px;
     }
 
     &__back-submit {
@@ -47,6 +52,8 @@
         &__submit {
             @extend %btn;
             margin-left: 0.5*vars.$gutter;
+            @extend %linear-gradient;
+            color: white;
         }
     
         &__back {

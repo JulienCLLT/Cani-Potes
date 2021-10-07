@@ -212,15 +212,15 @@ const RideDetails = () => {
               </p>
               <p>
                 <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
-                Durée : {duration.minutes}min
+                {duration.minutes} minutes
               </p>
               <p>
                 <span className="ride-details__icon"><img src={starting} alt="starting" /></span>
-                Départ : <br />{startPointAddress}<br />
+                Départ : <br />{startPointAddress}
               </p>
               <p>
                 <span className="ride-details__icon"><img src={flag} alt="flag" /></span>
-                Arrivée : <br />{endPointAddress}<br />
+                Arrivée : <br />{endPointAddress}
               </p>
               <p>{description}</p>
             </div>

@@ -15,7 +15,9 @@ import { translateDate } from '../../../../utils/translateDate';
 // import css
 import './ride.scss';
 
-const Ride = ({ starting_time, duration, start_coordinate, end_coordinate }) => {
+const Ride = ({
+  starting_time, duration, start_coordinate, end_coordinate,
+}) => {
   const [startPointAddress, setStartPointAddress] = useState('');
   const [endPointAddress, setEndPointAddress] = useState('');
 
@@ -24,10 +26,10 @@ const Ride = ({ starting_time, duration, start_coordinate, end_coordinate }) => 
 
   return (
     <div className="ride">
-      <p className="ride__detail"><img src={calendar} alt="calendar" />{translateDate(starting_time)}</p>
-      <p className="ride__detail"><img className="icon" src={clock} alt="clock" />{duration.minutes ? `${duration.minutes} minutes` : 'Durée non précisée'}</p>
-      <p className="ride__detail"><img className="icon" src={starting} alt="starting" />Départ : {startPointAddress}</p>
-      <p className="ride__detail"><img className="icon" src={end} alt="arrival" />Arrivée : {endPointAddress}</p>
+      <p className="ride__detail"><img img className="ride__detail__icon" src={calendar} alt="calendar" />{translateDate(starting_time)}</p>
+      <p className="ride__detail"><img className="ride__detail__icon" src={clock} alt="clock" />{duration.minutes ? `${duration.minutes} minutes` : 'Durée non précisée'}</p>
+      <p className="ride__detail"><img className="ride__detail__icon" src={starting} alt="starting" />Départ : {startPointAddress}</p>
+      <p className="ride__detail"><img className="ride__detail__icon" src={end} alt="arrival" />Arrivée : {endPointAddress}</p>
     </div>
   );
 };

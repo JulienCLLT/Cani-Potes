@@ -121,6 +121,9 @@
             color: vars.$color_grey_writing;
             line-height: 1.5;
             padding: vars.$gutter 0;
+            background-color: rgba(247, 180, 44, 0.2);
+            padding: 3*vars.$gutter;
+            border-radius: 8px;
             
 
             @include lg-screen {
@@ -139,7 +142,7 @@
 
     &__current-user-link {
         box-shadow: 0 2px 5px black;
-        max-width: 325px;
+        max-width: 270px;
         box-shadow: 0 0 3px rgba(0, 0, 0, .2);
         border-radius: 8px;
         transition: all .3s ease-in-out;
@@ -155,7 +158,7 @@
         }
 
         @include lg-screen {
-            width: 300px;
+            width: 270px;
             height: 400px;
             overflow-y: scroll;
             -ms-overflow-style: none;
@@ -454,7 +457,9 @@
         button {
             @extend %btn;
             margin: .5rem 0;
-            font-size: 1.3* vars.$gutter;
+            font-size: 1.5* vars.$gutter;
+            background-color: vars.$color-main;
+            color: white;
         }
     }
 }

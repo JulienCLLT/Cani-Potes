@@ -14,7 +14,6 @@ $gutter: 1rem;
     background: white;
     padding: .3rem 1rem;
     border-radius: 20px;
-    border: 1px solid $color_main;
     color: $color_main;
     font-weight: bold;
     cursor: pointer;
@@ -22,10 +21,8 @@ $gutter: 1rem;
     text-align: center;
 
     &:hover {
-        box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
         transform: translate(0, -2px);
-        @extend %linear-gradient;
-        color: white;
         transition: all .2s ease-in-out;
     }
 }
