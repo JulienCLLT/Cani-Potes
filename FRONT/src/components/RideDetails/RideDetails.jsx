@@ -94,7 +94,7 @@ const RideDetails = () => {
 
   if (userProfile.dogs.length === 0) joinInMsg = "Vous n'avez pas de chien !";
 
-  if (nbOfDogs > max_number_dogs) {
+  if (nbOfDogs >= max_number_dogs) {
     joinInMsg = 'Plus de place';
   }
   if (nbOfDogs < max_number_dogs && (nbOfDogs + userProfile.dogs.length) > max_number_dogs) {
@@ -212,7 +212,7 @@ const RideDetails = () => {
               </p>
               <p>
                 <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
-                Durée : {duration.minutes}min
+                Durée : {duration.minutes ? `${duration.minutes} min` : 'indeterminée'}
               </p>
               <p>
                 <span className="ride-details__icon"><img src={starting} alt="starting" /></span>

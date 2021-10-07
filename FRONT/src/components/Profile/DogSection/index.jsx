@@ -221,14 +221,14 @@ const DogSection = ({
             <span>Pas de photo !</span>
           )}
         </div>
+        {(isEditingDog === index + 1) && (dog.dog_photo.length < 5) && (
+          <input
+            type="file"
+            name="photo"
+            onChange={(e) => setPhotoDog(e.target.files[0])}
+          />
+        )}
       </div>
-      {(isEditingDog === index + 1) && (dog.dog_photo.length < 5) && (
-        <input
-          type="file"
-          name="photo"
-          onChange={(e) => setPhotoDog(e.target.files[0])}
-        />
-      )}
       {(isEditingDog === index + 1) && (dog.dog_photo.length >= 5) && (
         <>
           <p>Impossible d'ajouter une photo. Veuillez en retirer</p>
