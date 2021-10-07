@@ -18,7 +18,6 @@ SELECT
         WHERE d.dog_owner_id = ride.host_id OR d.dog_owner_id = mpr.member_id 
         GROUP BY d.id
     ) AS dogs_enrolled
-FROM ride  
-WHERE ride.host_id = $1;
+FROM ride;
 
 COMMIT;

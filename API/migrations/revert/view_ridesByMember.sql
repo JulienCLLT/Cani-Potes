@@ -2,5 +2,5 @@
 
 BEGIN;
 
-DROP VIEW rides_by_member ;
+DROP VIEW rides_by_member;
 COMMIT;

@@ -18,13 +18,15 @@ router.get('/', checkToken, function (req, res) {
 router.get('/characteristic', formController.getDogCharacteristic);
 
 router.post('/login', userController.login);
-router.post('/subscribe', multer,userController.addNewUser);
+router.post('/subscribe', multer, userController.addNewUser);
 router.delete('/account/delete', checkToken, userController.deleteAccount);
 
 router.get('/rides', checkToken, rideController.findAll);
 
 router.post('/ride', checkToken, rideController.create);
-router.get('/ride', checkToken, rideController.getRidesByMember);
+
+//!
+router.get('/ride', rideController.getRidesByMember);
 
 router.delete('/ride/:rideId(\\d+)', checkToken, rideController.delete);
 router.get('/ride/:rideId(\\d+)', checkToken, rideController.findOneRideWithAllInformations);
