@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteRide, removeUserFromRide } from '../../actions/rides';
-import { getRidesWithUserIn } from '../../actions/users';
+import { deleteRide, userQuitRide } from '../../actions/rides';
+import { getRidesWithUserIn, reinitRenderAgain } from '../../actions/users';
 import { translateDate } from '../../utils/translateDate';
 
 import './dashBoard.scss';
@@ -13,8 +13,9 @@ const DashBoard = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(reinitRenderAgain());
     dispatch(getRidesWithUserIn());
-  }, []);
+  }, [user.renderAgain]);
 
   const hostedRides = user.rides.filter((ride) => ride.host_id === user.id);
   const notHostedRides = user.rides.filter((ride) => ride.host_id !== user.id);
@@ -39,7 +40,7 @@ const DashBoard = () => {
         <div className="dashboard__hostedrides__block">
           {
             hostedRides.length > 0 ? (hostedRides.map((ride, index) => (
-              <div key={ride.ride_id} className="dashboard__hostedrides__container">
+              <div key={ride.id} className="dashboard__hostedrides__container">
                 <div>
                   <p className="dashboard__hostedrides__name">#{index + 1} {ride.title}</p>
                   <p>{translateDate(ride.starting_time)}</p>
@@ -54,14 +55,14 @@ const DashBoard = () => {
                 <div className="dashboard__hostedrides__link-container">
                   <Link
                     className="dashboard__hostedrides__link"
-                    to={`/ride/${ride.ride_id}`}
+                    to={`/ride/${ride.id}`}
                   >
                     Détails
                   </Link>
                   <button
                     className="dashboard__hostedrides__link"
                     type="button"
-                    onClick={() => dispatch(deleteRide(ride.ride_id))}
+                    onClick={() => dispatch(deleteRide(ride.id))}
                   >
                     Supprimer
                   </button>
@@ -80,7 +81,7 @@ const DashBoard = () => {
         <div className="dashboard__nothostedrides__block">
           {
             notHostedRides.length > 0 ? (notHostedRides.map((ride, index) => (
-              <div key={ride.ride_id} className="dashboard__nothostedrides__container">
+              <div key={ride.id} className="dashboard__nothostedrides__container">
                 <div>
                   <p className="dashboard__nothostedrides__name">#{index + 1} {ride.title}</p>
                   <p>{translateDate(ride.starting_time)}</p>
@@ -94,14 +95,16 @@ const DashBoard = () => {
                 <div className="dashboard__nothostedrides__link-container">
                   <Link
                     className="dashboard__nothostedrides__link"
-                    to={`/ride/${ride.ride_id}`}
+                    to={`/ride/${ride.id}`}
                   >
                     Détails
                   </Link>
                   <button
                     className="dashboard__nothostedrides__link"
                     type="button"
-                    onClick={() => dispatch(removeUserFromRide(user.id, ride.ride_id))}
+                    onClick={() => {
+                      dispatch(userQuitRide(user.id, ride.id));
+                    }}
                   >
                     Quitter
                   </button>

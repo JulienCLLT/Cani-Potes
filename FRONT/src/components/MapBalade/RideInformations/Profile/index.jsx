@@ -22,8 +22,8 @@ const Profile = ({ ride_id, participants, host_id }) => {
       <section className="profile__section">
         {
           participants.map((participant) => (
-            <Link to={`/profile/${participant.participant_id}`}>
-              <article className="profile__article" key={`participant${participant.participant_id}`}>
+            <Link to={`/profile/${participant.participant_id}`} key={`participant${participant.participant_id}`}>
+              <article className="profile__article">
 
                 <div className="profile__article__avatar">
                   <div className="profile__article__avatar-image">
@@ -55,7 +55,7 @@ const Profile = ({ ride_id, participants, host_id }) => {
                       }
                       if (index === participant.dogs.length - 1) {
                         return (
-                          <span className="profile__article__dogs-more-dogs">{participant.dogs.length - 2} chien{participant.dogs.length - 2 > 1 && 's'} de plus</span>
+                          <span className="profile__article__dogs-more-dogs" key={`participant${participant.participant_id}dog${dog.dog_id}`}>{participant.dogs.length - 2} chien{participant.dogs.length - 2 > 1 && 's'} de plus</span>
                         );
                       }
                     })

@@ -1,13 +1,17 @@
 /* eslint-disable linebreak-style */
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import logo from '../../assets/navbar/canipotes_logo.jpg';
+import logo from '../../assets/navbar/canipotes_logo.png';
 import github from '../../assets/team/github.png';
 import linkedin from '../../assets/team/linkedin.png';
 
 import alex from '../../assets/team/alex.jpg';
 import alexPet from '../../assets/team/alex_pet.jpg';
+import raph from '../../assets/team/raph.jpg';
+import raphPet from '../../assets/team/raph_pet.jpg';
+import anne from '../../assets/team/anne.jpg';
+import annePet from '../../assets/team/anne_pet.jpg';
 
 import './canicrew.scss';
 
@@ -19,8 +23,8 @@ const CaniCrew = () => {
       firstName: 'Raphaël',
       ghLink: 'https://github.com/RaphaelCharousset',
       linkedinLink: 'https://www.linkedin.com/in/raphaelcharousset/',
-      photo: logo,
-      petPhoto: logo,
+      photo: raph,
+      petPhoto: raphPet,
       role: 'Lead Front & Git Master',
       text: 'Il suffit de display flex !',
     },
@@ -28,8 +32,8 @@ const CaniCrew = () => {
       firstName: 'Anne',
       ghLink: 'https://github.com/AnneOsolin',
       linkedinLink: 'https://www.linkedin.com/in/anne-osolin-7b5163200/',
-      photo: logo,
-      petPhoto: logo,
+      photo: anne,
+      petPhoto: annePet,
       role: 'Git Master',
       text: 'Vive les conflits avec git merge!',
     },
@@ -119,15 +123,15 @@ const CaniCrew = () => {
                 </div>
 
                 <p className="card__content__avatar-social">
-                  <Link to={devs[count].ghLink}>
+                  <a href={devs[count].ghLink} target="_blank" rel="noreferrer">
                     <img src={github} alt="github" className="github" />
-                  </Link>
+                  </a>
 
                   {devs[count].firstName}
 
-                  <Link to={devs[count].ghLink}>
+                  <a href={devs[count].linkedinLink} target="_blank" rel="noreferrer">
                     <img src={linkedin} alt="linkedin" className="linkedin" />
-                  </Link>
+                  </a>
                 </p>
               </div>
 
