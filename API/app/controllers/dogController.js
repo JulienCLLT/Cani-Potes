@@ -38,12 +38,10 @@ const dogController = {
                 throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
             }
 
-
             request.body.dog_owner_id = userId;
 
             const newDog = new DogModel(request.body);
             const dogCreated = await newDog.create();
-
 
             if (request.file) {
 
@@ -106,8 +104,6 @@ const dogController = {
 
     delete: async (request, response) => {
         try {
-
-
             const profileId = Number(request.params.profileId);
             const dogId = Number(request.params.dogId);
 
@@ -128,11 +124,9 @@ const dogController = {
                 throw Error('Vous n\'êtes pas le propriétaire du chien');
             }
 
-            //todo delete photo sur serveur ? 
             await PhotoModel.deletePhotos(dogId);
             await DogModel.delete(dogId);
             response.status(204).json();
-
 
         } catch (error) {
             response.status(500).json(error.message);
