@@ -37,7 +37,6 @@
 
         &__container {
             width: 60px;
-            border-radius: 50%;
             overflow: visible;
 
             @include lg-screen {
@@ -47,6 +46,7 @@
             
             img {
                 width: 100%;
+                border-radius: 50%;
             }
         }
     }
