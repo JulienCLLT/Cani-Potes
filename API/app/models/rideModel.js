@@ -78,7 +78,6 @@ class Ride {
         }
     }
 
-    //todo autre Model ? 
     static async deleteMessagesByRideId(rideId) {
         try {
             const query = `DELETE FROM member_write_ride WHERE ride_id = $1`;
@@ -173,7 +172,6 @@ class Ride {
 
     async createRide() {
         try {
-            //todo facto : SQL function
             //todo JOI
             const query = `
                 INSERT INTO ride(title,description,start_coordinate,end_coordinate, starting_time, duration, max_number_dogs, tag_id, host_id)

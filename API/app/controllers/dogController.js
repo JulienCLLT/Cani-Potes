@@ -38,7 +38,7 @@ const dogController = {
                 throw Error('Vous ne pouvez pas ajouter de chien à ce profil');
             }
 
-            
+
             request.body.dog_owner_id = userId;
 
             const newDog = new DogModel(request.body);
@@ -46,7 +46,7 @@ const dogController = {
 
 
             if (request.file) {
-                
+
                 sharpResizeImage.sharpResize(request.file, 'dog_resized');
 
 
@@ -75,7 +75,7 @@ const dogController = {
             }
 
             const findDog = await DogModel.findById(dogId);
-            
+
             if (!findDog) {
                 throw Error('Ce chien n\'existe pas');
             }
@@ -107,7 +107,7 @@ const dogController = {
 
     delete: async (request, response) => {
         try {
-            
+
 
             const profileId = Number(request.params.profileId);
             const dogId = Number(request.params.dogId);
@@ -133,6 +133,7 @@ const dogController = {
             await PhotoModel.deletePhotos(dogId);
             await DogModel.delete(dogId);
             response.status(204).json();
+
 
         } catch (error) {
             response.status(500).json(error.message);

@@ -34,7 +34,6 @@ class Dog {
 
     async create() {
         try {
-            //todo faire function sql
             // verif si prenom existe deja dans BDD avec cet id et ce surname
             const query = `INSERT INTO dog(surname, description, weight, birthday, sterilization, breed_id, gender_id, behavior_id, dog_owner_id) 
              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *`;
