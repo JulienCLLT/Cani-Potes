@@ -17,7 +17,7 @@ const sharpResizeImage = {
         }
     },
 
-    delOldImage: (nameFolderStore, nameOldImage,) => {
+    delOldImage: (nameFolderStore, nameOldImage) => {
         fs.unlinkSync(`public/${nameFolderStore}/${nameOldImage}`);
     }
 
