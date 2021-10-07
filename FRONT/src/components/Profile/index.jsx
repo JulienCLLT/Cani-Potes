@@ -167,27 +167,8 @@ const Profile = () => {
           <Loader />
         ) : (
           <>
-            {
-              profileIsUser && (
-                <div
-                  className="profile-page__edit"
-                  onClick={toggleEditUser}
-                >
-                  {isEditingUser ? 'Retour' : (
-                    <>
-                      <img src={edit} alt="edit" />
-                      Modifier
-                    </>
-                  )}
-                </div>
-              )
-            }
-
             <header className="profile-page__header">
               <div>
-                {/* <span className="profile-page__header__annoucement">
-                  {profileIsUser ? 'Votre profil ' : 'Profil de '}
-                </span> */}
                 <div className="profile-page__header__avatar">
                   <img src={`http://100.25.13.11/user_resized/${profile.photo}`} alt={profile.first_name} />
                   {
@@ -213,6 +194,21 @@ const Profile = () => {
                     )
                   }
                 </div>
+                {
+                  profileIsUser && (
+                    <div
+                      className="profile-page__header__edit"
+                      onClick={toggleEditUser}
+                    >
+                      {isEditingUser ? 'Retour' : (
+                        <>
+                          <img src={edit} alt="edit" />
+                          Modifier
+                        </>
+                      )}
+                    </div>
+                  )
+                }
               </div>
             </header>
 

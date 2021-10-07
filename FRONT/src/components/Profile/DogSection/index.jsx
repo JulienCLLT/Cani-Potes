@@ -161,10 +161,12 @@ const DogSection = ({
         ) : (
           <>
             <div className="profile-page__dog__first">
-              {/* Surname */}
-              <span>{dog.dog_surname}</span>
-              {/* Gender */}
-              <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
+              <div className="profile-page__dog__first__surname-gender">
+                {/* Surname */}
+                <span>{dog.dog_surname}</span>
+                {/* Gender */}
+                <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
+              </div>
               {/* Birthday */}
               <span>{dog.dog_age}</span>
             </div>

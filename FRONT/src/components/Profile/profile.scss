@@ -82,6 +82,16 @@
       // margin: 1 * vars.$gutter auto;
       // border-radius: 5px;
 
+      &__first {
+        display: flex;
+        justify-content: space-between;
+
+        &__surname-gender {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+
       select {
         width: 100%;
       }
