@@ -12,8 +12,8 @@ import L from 'leaflet';
 
 import Loader from '../Loader/index';
 
-import calendar from '../../assets/img/info-ride/calendar.svg';
-import hourglass from '../../assets/img/info-ride/hourglass.svg';
+import calendar from '../../assets/img/info-ride/calendar-blue.svg';
+import hourglass from '../../assets/img/info-ride/hourglass-orange.svg';
 import startFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endFlag from '../../assets/img/info-ride/endPointFlag.svg';
 import conversation from '../../assets/img/info-ride/conversation.svg';
@@ -23,8 +23,10 @@ import peureux from '../../assets/img/profile-simulation/fearful.svg';
 import joueur from '../../assets/img/profile-simulation/player.png';
 import agressif from '../../assets/img/profile-simulation/aggressive.png';
 import sociable from '../../assets/img/profile-simulation/sociable.svg';
-import flag from '../../assets/img/info-ride/flag.svg';
-import starting from '../../assets/img/info-ride/map-pin.svg';
+import flag from '../../assets/img/info-ride/flag-green.svg';
+import starting from '../../assets/img/info-ride/map-pin-red.svg';
+import nbdog from '../../assets/img/info-ride/nbdog.svg';
+import nbcanipote from '../../assets/img/info-ride/nbcanipote.svg';
 
 import {
   sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
@@ -48,7 +50,6 @@ const RideDetails = () => {
     dispatch(getRideIsLoading());
     dispatch(getOneRideById(id));
   }, [userProfile.renderAgain]);
-
 
   const {
     ride_id, title, max_number_dogs, participants, starting_time, duration,
@@ -164,14 +165,14 @@ const RideDetails = () => {
 
   return (
     <>
-      <Header title={title} />
+      <Header />
       <main>
         <div className="ride-details">
           {isRedirect && <Redirect to="/home" />}
-          <section className="ride-details__infos">
-            <div className="ride-details__infos__map">
-              <div className="ride-details__leaflet">
-                {
+          <section className="ride-details__map">
+            {/* <div className="ride-details__infos__map"> */}
+            <div className="ride-details__leaflet">
+              {
                   isLoading ? (
                     <Loader />
                   ) : (
@@ -186,10 +187,22 @@ const RideDetails = () => {
                     </MapContainer>
                   )
                 }
+            </div>
+            {/* </div> */}
+          </section>
+          <section className="ride-details__infos">
+            <div className="ride-details__infos__header">
+              <h2>{title}</h2>
+              <div className="ride-details__infos__header__number">
+                <span>
+                  <img src={nbdog} alt="icon dog" />
+                  {nbOfDogs} / {max_number_dogs} chiens
+                </span>
+                <span>
+                  <img src={nbcanipote} alt="icon human" />
+                  {participants.length} Cani Potes
+                </span>
               </div>
-              <span>
-                {nbOfDogs} / {max_number_dogs} chiens
-              </span>
             </div>
             <div className="ride-details__infos__description">
               <p>
@@ -213,28 +226,6 @@ const RideDetails = () => {
           </section>
 
           <section className="ride-details__users">
-            <div className="ride-details__users__infos">
-              <span>{participants.length} Cani Potes</span>
-              {
-                participants.find((participant) => participant.participant_id === userProfile.id)
-                  ? (
-                    <button
-                      type="button"
-                      onClick={() => handleQuit()}
-                    >
-                      Se désinscrire
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => handleJoinIn()}
-                    >
-                      {joinInMsg}
-                    </button>
-                  )
-              }
-            </div>
-
             <div className="ride-details__container">
               <div className="ride-details__users__registered">
                 {
@@ -309,6 +300,26 @@ const RideDetails = () => {
             </div>
 
           </section>
+          <div className="ride-details__registration">
+            {
+                participants.find((participant) => participant.participant_id === userProfile.id)
+                  ? (
+                    <button
+                      type="button"
+                      onClick={() => handleQuit()}
+                    >
+                      Se désinscrire
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => handleJoinIn()}
+                    >
+                      {joinInMsg}
+                    </button>
+                  )
+              }
+          </div>
 
           {
             participants.find((participant) => participant.participant_id === userProfile.id) && (

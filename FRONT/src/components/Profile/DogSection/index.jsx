@@ -27,119 +27,104 @@ const DogSection = ({
 
   return (
     <article>
-      <h2>
-        <span>
-          #{index + 1} Carte de {dog.dog_surname}
-          {isEditingDog === index + 1 ? (
-            <button type="button" onClick={() => setIsModalDeleteDogIsOpen(true)}>
-              <img src={close} alt="delete dog" />
-            </button>
-          ) : null }
-        </span>
-        {
-          profileIsUser && (
-            <div
-              className="profile-page__edit__dog"
-              onClick={() => {
-                if (dogIsChanged) setIsModalOpen(true);
-                else toggleEditDog(index);
-              }}
-            >
-              {isEditingDog === index + 1 ? 'Retour' : (
-                <span>
-                  <img src={edit} alt="edit" />
-                  Modifier
-                </span>
-              )}
-            </div>
-          )
-        }
-      </h2>
       <div className="profile-page__dog">
-        <div className="profile-page__dog__details">
-
-          {/* SURNAME GENDER BIRTHDAY */}
-          {isEditingDog === index + 1 ? (
-            <div className="profile-page__dog__display-input">
-              <input
-                type="text"
-                value={surname}
-                minLength="3"
-                maxLength="20"
-                onChange={(e) => {
-                  setSurname(e.target.value);
-                  setDogIsChanged(true);
-                }}
-              />
-              <span className="profile-page__dog__gender-container">
-                <label htmlFor="femelle">
-                  Femelle
-                  <input
-                    id="femelle"
-                    type="radio"
-                    name="gender"
-                    value={1}
-                    checked={gender === 1}
-                    onChange={() => {
-                      setGender(1);
-                      setDogIsChanged(true);
-                    }}
-                  />
-                </label>
-                <label htmlFor="male">
-                  Mâle
-                  <input
-                    id="male"
-                    type="radio"
-                    name="gender"
-                    value={2}
-                    checked={gender === 2}
-                    onChange={() => {
-                      setGender(2);
-                      setDogIsChanged(true);
-                    }}
-                  />
-                </label>
-              </span>
-              <label htmlFor="birthday">
-                Naissance
+        {/* SURNAME GENDER BIRTHDAY */}
+        {isEditingDog === index + 1 ? (
+          <>
+            {/* <div className="profile-page__dog__display-input"> */}
+            {/* Surname */}
+            <input
+              type="text"
+              value={surname}
+              minLength="3"
+              maxLength="20"
+              onChange={(e) => {
+                setSurname(e.target.value);
+                setDogIsChanged(true);
+              }}
+            />
+            {/* Gender */}
+            <span className="profile-page__dog__gender-container">
+              <label htmlFor="femelle">
+                Femelle
                 <input
-                  type="date"
-                  name="birthday"
-                  onChange={(e) => {
-                    setAge(e.target.value);
+                  id="femelle"
+                  type="radio"
+                  name="gender"
+                  value={1}
+                  checked={gender === 1}
+                  onChange={() => {
+                    setGender(1);
                     setDogIsChanged(true);
                   }}
                 />
               </label>
-            </div>
-          ) : (
-            <span>
-              {dog.dog_surname} {dog.dog_gender === 'mâle' ? '♂' : '♀'} {dog.dog_age}
+              <label htmlFor="male">
+                Mâle
+                <input
+                  id="male"
+                  type="radio"
+                  name="gender"
+                  value={2}
+                  checked={gender === 2}
+                  onChange={() => {
+                    setGender(2);
+                    setDogIsChanged(true);
+                  }}
+                />
+              </label>
             </span>
-          )}
-
-          {/* BREED WEIGHT */}
-          {isEditingDog === index + 1 ? (
-            <div className="profile-page__dog__details-container">
-              <select
-                name="breed"
+            {/* Birthday */}
+            <label htmlFor="birthday">
+              Date de naissance
+              <input
+                type="date"
+                name="birthday"
                 onChange={(e) => {
-                  setBreed(e.target.value);
+                  setAge(e.target.value);
                   setDogIsChanged(true);
                 }}
-                defaultValue={breed}
-              >
-                {signup.breeds.map((currentBreed) => (
-                  <option
-                    key={currentBreed.id}
-                    value={currentBreed.id}
-                  >
-                    {currentBreed.label}
-                  </option>
-                ))}
-              </select>
-              Poids (en kg)
+              />
+            </label>
+            {/* Race */}
+            <select
+              name="breed"
+              onChange={(e) => {
+                setBreed(e.target.value);
+                setDogIsChanged(true);
+              }}
+              defaultValue={breed}
+            >
+              {signup.breeds.map((currentBreed) => (
+                <option
+                  key={currentBreed.id}
+                  value={currentBreed.id}
+                >
+                  {currentBreed.label}
+                </option>
+              ))}
+            </select>
+            {/* Behavior */}
+            <select
+              name="behavior"
+              onChange={(e) => {
+                setBehavior(e.target.value);
+                setDogIsChanged(true);
+              }}
+              defaultValue={behavior}
+            >
+              {signup.behaviors.map((currentBehavior) => (
+                <option
+                  key={currentBehavior.id}
+                  value={currentBehavior.id}
+                >
+                  {currentBehavior.label}
+                </option>
+              ))}
+            </select>
+            {/* Weight */}
+            <div>
+              <label htmlFor="weight">Poids (en kg)</label>
               <input
                 type="number"
                 name="weight"
@@ -148,65 +133,21 @@ const DogSection = ({
                 onChange={(e) => handleSetWeight(e.target.value)}
               />
             </div>
-          ) : (
-            <div className="profile-page__dog__details-container">
-              <span>
-                <img src={race} alt="race" />
-                {dog.dog_breed}
-              </span>
-              {dog.dog_weight}kg
-            </div>
-          )}
-
-          {/* BEHAVIOR STERILIZATION */}
-          <div className="profile-page__dog__details-container">
-            {isEditingDog === index + 1 ? (
-              <>
-                <select
-                  name="behavior"
-                  onChange={(e) => {
-                    setBehavior(e.target.value);
-                    setDogIsChanged(true);
-                  }}
-                  defaultValue={behavior}
-                >
-                  {signup.behaviors.map((currentBehavior) => (
-                    <option
-                      key={currentBehavior.id}
-                      value={currentBehavior.id}
-                    >
-                      {currentBehavior.label}
-                    </option>
-                  ))}
-                </select>
-                <label htmlFor="sterilization">
-                  <input
-                    type="checkbox"
-                    name="sterilization"
-                    id="sterilization"
-                    checked={sterilization}
-                    onChange={() => {
-                      setSterilization((old) => !old);
-                      setDogIsChanged(true);
-                    }}
-                  />
-                  Stérilisé
-                </label>
-              </>
-            ) : (
-              <>
-                <span>
-                  <img src={dogBehaviors[dog.dog_behavior]} alt="comportement" />
-                  {dog.dog_behavior}
-                </span>
-                {dog.dog_sterilization ? 'Stérilisé' : 'Non stérilisé'}
-              </>
-            )}
-          </div>
-
-          {/* DESCRIPTION */}
-
-          {isEditingDog === index + 1 ? (
+            {/* Sterilization */}
+            <label htmlFor="sterilization">
+              <input
+                type="checkbox"
+                name="sterilization"
+                id="sterilization"
+                checked={sterilization}
+                onChange={() => {
+                  setSterilization((old) => !old);
+                  setDogIsChanged(true);
+                }}
+              />
+              Stérilisé
+            </label>
+            {/* Description */}
             <textarea
               maxLength="200"
               name="description"
@@ -216,10 +157,43 @@ const DogSection = ({
               }}
               defaultValue={description}
             />
-          ) : (
+          </>
+        ) : (
+          <>
+            <div className="profile-page__dog__first">
+              {/* Surname */}
+              <span>{dog.dog_surname}</span>
+              {/* Gender */}
+              <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
+              {/* Birthday */}
+              <span>{dog.dog_age}</span>
+            </div>
+            <div className="profile-page__dog__second">
+              {/* Race */}
+              <span>
+                <img src={race} alt="race" />
+                {dog.dog_breed}
+              </span>
+              {/* Behavior */}
+              <span>
+                <img src={dogBehaviors[dog.dog_behavior]} alt="comportement" />
+                {dog.dog_behavior}
+              </span>
+            </div>
+            <div className="profile-page__dog__first">
+              {/* Weight */}
+              <span>
+                {dog.dog_weight}kg
+              </span>
+              {/* Sterilization */}
+              <span>
+                {dog.dog_sterilization ? 'Stérilisé' : 'Non stérilisé'}
+              </span>
+            </div>
+            {/* Description */}
             <div>{dog.dog_description}</div>
-          )}
-        </div>
+          </>
+        )}
       </div>
 
       <div className="profile-page__dog-pictures">
@@ -260,16 +234,48 @@ const DogSection = ({
           <p>Impossible d'ajouter une photo. Veuillez en retirer</p>
         </>
       )}
-      {isEditingDog === index + 1 && (
-        <div className="profile-page__info-user__submit">
-          <button
-            type="button"
-            onClick={handleUpdateDog}
-          >
-            Enregistrer les infos
-          </button>
+      <div className="profile-page__buttons">
+        <div className="profile-page__buttons__return-submit">
+
+          { profileIsUser && (
+            <div
+              onClick={() => {
+                if (dogIsChanged) setIsModalOpen(true);
+                else toggleEditDog(index);
+              }}
+            >
+              {isEditingDog === index + 1 ? (
+                <span className="profile-page__buttons__return-submit__return">
+                  Retour
+                </span>
+              ) : (
+                <span>
+                  <img src={edit} alt="edit" />
+                  Modifier
+                </span>
+              )}
+            </div>
+          )}
+
+          {isEditingDog === index + 1 && (
+          <div className="profile-page__buttons__return-submit__submit">
+            <button
+              type="button"
+              onClick={handleUpdateDog}
+            >
+              Enregistrer les infos
+            </button>
+          </div>
+          )}
         </div>
-      )}
+
+        {isEditingDog === index + 1 ? (
+          <button className="profile-page__buttons__delete" type="button" onClick={() => setIsModalDeleteDogIsOpen(true)}>
+            {/* <img src={close} alt="delete dog" /> */}
+            Supprimer
+          </button>
+        ) : null }
+      </div>
     </article>
   );
 };

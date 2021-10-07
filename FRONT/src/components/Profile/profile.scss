@@ -21,13 +21,6 @@
   margin-bottom: 4 * vars.$gutter;
   position: relative;
 
-  &__edit {
-    @extend %edit-btn;
-    position: absolute;
-    top: 1 * vars.$gutter;
-    right: 1 * vars.$gutter;
-  }
-
   &__header {
     width: 60%;
     // min-width: 220px;
@@ -37,8 +30,19 @@
     border-radius: 30px;
     padding: .5 * vars.$gutter;
 
-    &__annoucement {
-      font-size: 1.5rem;
+    &__user {
+      display: flex;
+      flex-direction: column;
+      margin-top: 0.5*vars.$gutter;
+      font-size: 1.4*vars.$gutter;
+
+      &__avatar-name {
+        margin-bottom: 0.3*vars.$gutter;
+      }
+
+      &__zipcode {
+        font-size: vars.$gutter;
+      }
     }
 
     &__avatar {
@@ -50,49 +54,11 @@
         border-radius: 50%;
       }
     }
-
-    &__avatar-name {
-      font-size: 1.3rem;
-    }
-  }
-
-  &__info-user, &__info-dogs {
-    padding: 0 1 * vars.$gutter;
-    margin: 1 * vars.$gutter 0;
-  }
-
-  &__info-user {
-
-    &__content {
-      display: flex;
-      flex-direction: column;
-      gap: .3rem;
-      width: 60%;
-      padding: 1 * vars.$gutter;
-      margin: 1 * vars.$gutter auto;
-      box-shadow: 0 0 5px vars.$color-border-input;
-      border-radius: 5px;
-
-      &-field {
-        display: flex;
-        gap: .5rem;
-      
-        input {
-          width: 50%;
-        }
-      }
-    }
-
-    &__submit {
-      text-align: center;
-
-      button {
-        @extend %btn;
-      }
-    }
   }
 
   &__info-dogs {
+    padding: 0 1 * vars.$gutter;
+    margin: 1 * vars.$gutter 0;
 
     article {
       box-shadow: 0 0 3px black;
@@ -104,68 +70,17 @@
         justify-content: space-between;
         flex-wrap: wrap;
       }
-
-      h2 {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-
-        span {
-          display: flex;
-          align-items: center;
-        }
-
-        .profile-page__edit__dog {
-          @extend %edit-btn;
-
-          span {
-            display: flex;
-            align-items: center;
-          }
-        }
-      }
-
     }
   }
 
   &__dog {
-    &__display-input {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-
-      input[type="date"] {
-        width: 100%;
-      }
-
-      .profile-page__dog__gender-container {
-        display: flex;
-        justify-content: center;
-        font-size: .8rem;
-
-        input {
-          width: 10px;
-          margin: .1 * vars.$gutter auto 0;
-        }
-      }
-    }
-
-    @include lg-screen {
-      min-width: 500px;
-      width: 500px;
-    }
-
-    &__details {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      width: 80%;
-      padding: .5 * vars.$gutter;
-      margin: 1 * vars.$gutter auto;
-      box-shadow: 0 0 3px black;
-      border-radius: 5px;
+      // display: flex;
+      // flex-direction: column;
+      // flex-wrap: wrap;
+      // width: 80%;
+      // padding: .5 * vars.$gutter;
+      // margin: 1 * vars.$gutter auto;
+      // border-radius: 5px;
 
       select {
         width: 100%;
@@ -182,11 +97,9 @@
         }
       }
 
-      &-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
+    @include lg-screen {
+      min-width: 500px;
+      width: 500px;
     }
   }
 
@@ -205,9 +118,9 @@
       gap: .5 * vars.$gutter;
       overflow: scroll;
 
-      &::-webkit-scrollbar {
-        display: none;
-      }
+      // &::-webkit-scrollbar {
+        // display: none;
+      // }
       
 
       &-item {

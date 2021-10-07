@@ -49,11 +49,7 @@ const DashBoard = () => {
                       (total, item) => item.dogs.length + total, 0,
                     ) : 0
                   }
-                  {
-                    ride.participants.reduce(
-                      (total, item) => item.dogs.length + total, 0,
-                    ) > 1 ? ' chiens' : 'chien'
-                  }
+                  chiens
                 </p>
               </div>
 
@@ -93,11 +89,7 @@ const DashBoard = () => {
                       (total, item) => item.dogs.length + total, 0,
                     ) : 0
                   }
-                  {
-                    ride.participants.reduce(
-                      (total, item) => item.dogs.length + total, 0,
-                    ) > 1 ? ' chiens' : 'chien'
-                  }
+                  chiens
                 </p>
               </div>
               <div className="dashboard__nothostedrides__link-container">
