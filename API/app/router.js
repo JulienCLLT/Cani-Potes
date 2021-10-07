@@ -25,8 +25,7 @@ router.get('/rides', checkToken, rideController.findAll);
 
 router.post('/ride', checkToken, rideController.create);
 
-//!
-router.get('/ride', rideController.getRidesByMember);
+router.get('/ride', checkToken, rideController.getRidesByMember);
 
 router.delete('/ride/:rideId(\\d+)', checkToken, rideController.delete);
 router.get('/ride/:rideId(\\d+)', checkToken, rideController.findOneRideWithAllInformations);
