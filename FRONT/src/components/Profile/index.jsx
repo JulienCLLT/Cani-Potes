@@ -281,6 +281,7 @@ const Profile = () => {
               {
                 profile.dogs.map((dog, index) => (
                   <DogSection
+                    key={dog.dog_id}
                     dog={dog}
                     index={index}
                     isEditingDog={isEditingDog}

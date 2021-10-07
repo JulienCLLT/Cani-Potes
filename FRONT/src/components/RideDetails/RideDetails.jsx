@@ -231,8 +231,8 @@ const RideDetails = () => {
               <div className="ride-details__users__registered">
                 {
                   participants.map((participant) => (
-                    <Link to={`/profile/${participant.participant_id}`} className="ride-details__current-user-link">
-                      <div className="ride-details__current-user" key={participant.participant_id}>
+                    <Link to={`/profile/${participant.participant_id}`} className="ride-details__current-user-link" key={participant.participant_id}>
+                      <div className="ride-details__current-user">
                         {userIsHost && participant.participant_id !== userProfile.id && (
                           <button
                             type="button"
