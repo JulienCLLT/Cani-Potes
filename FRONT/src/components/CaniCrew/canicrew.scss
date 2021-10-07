@@ -1,0 +1,217 @@
+@use '../../styles/vars';
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+@mixin lg-screen {
+  @media screen and (min-width:900px) {
+      @content
+  }
+};
+
+%column-and-align {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .8rem;
+}
+
+.cani-crew-wrapper {
+  background: url('../../assets/team/double-bubble.png');
+  min-height: 100vh;
+}
+
+.cani-crew-header {
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: .5rem 0 0 .5rem;
+
+    a:nth-child(1) {
+      max-width: 120px;
+    }
+
+    a:nth-child(2) {
+      width: 200px;
+      text-align: center;
+      padding: .8rem 0;
+      border-radius: 30px;
+      border: 4px solid vars.$color_main;
+      font-size: 1.2rem;
+      transition: all .2s ease;
+      animation: shake 5s infinite;
+
+      &:hover {
+        @extend %linear-gradient;
+        padding: calc(.8rem + 2px) 2px;
+        color: white;
+        border: none;
+        transition: all .2s ease;
+      }
+    }
+
+    img {
+      width: 100%;
+      border-radius: 50%;
+    }
+  }
+}
+
+.cani-crew {
+  font-size: 1.4rem;
+  margin-top: -1rem;
+
+  &__annoucement {
+    text-align: center;
+    font-family: 'Indie Flower', cursive;
+    margin-bottom: 1rem;
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: .5rem;
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    @include lg-screen {
+      flex-direction: row;
+      width: 800px;
+      margin: auto;
+      gap: 0;
+    }
+
+    button {
+      width: 140px;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      padding: .5rem .2rem;
+      border-radius: 20px;
+      @extend %linear-gradient;
+      color: white;
+      transition: all .2s ease;
+
+      &:hover {
+        transform: translate(0, -3px);
+        box-shadow: 0 1px 2px black;
+        transition: all .2s ease;
+      }
+    }
+  }
+
+  .card {
+    font-family: 'Indie Flower', cursive;
+    width: 80%;
+    height: 410px;
+    max-width: 400px;
+    border-radius: 10px;
+    margin: auto;
+    padding: 1rem 0;
+    @extend %linear-gradient;
+    color: rgba(255, 255, 255, .9);
+
+    @include lg-screen {
+      height: 450px
+    }
+
+    &__content {
+      @extend %column-and-align;
+
+      &__avatar {
+        @extend %column-and-align;
+
+        &-images {
+          text-align: center;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          gap: 1rem;
+        }
+
+        &-user, &-pet {
+          border-radius: 50%;
+        }
+        
+        &-user {
+          border: 8px solid white;
+          width: 30%;
+        }
+        
+        &-pet {
+          border: 5px solid white;
+          width: 20%;
+        }
+
+        &-social {
+          display: flex;
+          align-items: center;
+          font-size: 2rem;
+          gap: .8rem;
+          margin: 2rem 0;
+
+          @include lg-screen {
+            font-size: 3rem;
+          }
+  
+          img {
+            width: 30px;
+            transition: all .2s ease-in;
+
+            &:hover {
+              background: white;
+              transition: all .2s ease-in;
+              transform: scale(1.2) translate(0, -3px);
+              box-shadow: 0 2px 3px white;
+              border: none;
+            }
+          }
+
+          .github {
+            border-radius: 50%;
+          }
+
+          .linkedin {
+            border-radius: 5px;
+          }
+        }
+      }
+
+      &__text {
+        background: rgba(255, 255, 255, .5);
+        width: 50%;
+        text-align: center;
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      &__role {
+        width: 70%;
+        text-align: center;
+        margin: auto;
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  89% { transform: translate(0, 0) rotate(0deg); }
+  90% { transform: translate(2px, 1px) rotate(0deg); }
+	91% { transform: translate(-1px, -2px) rotate(-1deg); }
+	92% { transform: translate(-3px, 0px) rotate(1deg); }
+	93% { transform: translate(0px, 2px) rotate(0deg); }
+	94% { transform: translate(1px, -1px) rotate(1deg); }
+	95% { transform: translate(-1px, 2px) rotate(-1deg); }
+	96% { transform: translate(-3px, 1px) rotate(0deg); }
+	97% { transform: translate(2px, 1px) rotate(-1deg); }
+	98% { transform: translate(-1px, -1px) rotate(1deg); }
+	99% { transform: translate(2px, 2px) rotate(0deg); }
+	100% { transform: translate(1px, -2px) rotate(-1deg); }
+}

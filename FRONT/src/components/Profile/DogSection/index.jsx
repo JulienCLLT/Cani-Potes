@@ -10,6 +10,7 @@ import sociable from '../../../assets/img/profile-simulation/sociable.svg';
 import agressif from '../../../assets/img/profile-simulation/aggressive.png';
 import peureux from '../../../assets/img/profile-simulation/fearful.svg';
 import joueur from '../../../assets/img/profile-simulation/player.png';
+import { dburlWithoutApi } from '../../../utils/dburl';
 
 const DogSection = ({
   dog, index, isEditingDog, setIsModalDeleteDogIsOpen, profileIsUser, dogIsChanged,
@@ -228,7 +229,7 @@ const DogSection = ({
           {
             dog.dog_photo.length > 0 && dog.dog_photo.map((photo, photoIndex) => (
               <div className="profile-page__dog-pictures__container-item" key={photo.photo_id}>
-                <img src={`http://100.25.13.11/dog_resized/${photo.photo_url}`} alt={dog.dog_surname} />
+                <img src={`${dburlWithoutApi}/dog_resized/${photo.photo_url}`} alt={dog.dog_surname} />
                 {isEditingDog === index + 1 && (
                   <button
                     type="button"
