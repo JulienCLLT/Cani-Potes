@@ -66,7 +66,7 @@ const UserForm = () => {
 
               {/* Password */}
               <div className="user-form__form__input-infos__password">
-                <input {...register('password', { required: 'Veuillez entrer un mot de passe.', maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })} type="password" placeholder="Mot de passe" />
+                <input {...register('password', { required: 'Veuillez entrer un mot de passe.', minLength: { value: 8, message: 'Votre mot de passe doit contenir au moins 8 caractères.' }, maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })} type="password" placeholder="Mot de passe" />
                 {errors.password && <p className="errors">{errors.password.message}</p>}
               </div>
 

@@ -179,6 +179,9 @@
         margin: 0.5rem;
         padding: 0.5rem 0;
         border-radius: 8px;
+        &::-webkit-scrollbar {
+            display: none;
+          }
 
         &__star {
             display: inline-block;
@@ -274,17 +277,6 @@
     }
 
     &__users {
-
-        // &__infos {
-        //     display: flex;
-        //     flex-direction: column;
-        //     margin: 2*vars.$gutter;
-        //     button {
-        //         @extend %btn;
-        //         margin-left: .3rem;
-        //     }
-        // }
-
         &__registered {
             display: flex;
             flex-direction: column;
@@ -461,18 +453,8 @@
 
         button {
             @extend %btn;
-            background: white;
-            color: vars.$color_main;
             margin: .5rem 0;
-            transition: all .3s ease-in-out;
-            border: 1px solid vars.$color_main;
             font-size: 1.3* vars.$gutter;
-
-            &:hover {
-                box-shadow: 0 2px 5px rgba(0, 0, 0, .4);
-                transform: translate(0, -1px);
-                transition: all .3s ease-in-out;
-            }
         }
     }
 }
