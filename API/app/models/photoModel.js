@@ -29,7 +29,7 @@ class Photo {
         try {
             const photoToDelete = await client.query(`SELECT file_name FROM photo WHERE dog_id = $1`, [dogId]);
             await client.query(`DELETE FROM photo WHERE dog_id = $1`, [dogId]);
-            //! a tester
+            //! a tester to do delete photo serveyr
             //fs.unlinkSync('/dog_resized' + photoToDelete);
             return null;
         } catch (error) {
