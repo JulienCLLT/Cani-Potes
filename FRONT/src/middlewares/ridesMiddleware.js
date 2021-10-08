@@ -36,8 +36,8 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .get(`/ride/${action.id}`)
         .then(
           (response) => {
-            console.log('ride retournée : ', response)
             store.dispatch(saveOneRide(response.data[0]));
+            console.log('ride retournée : ', response);
           },
         )
         .catch(
@@ -48,9 +48,9 @@ const ridesMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .post(`/ride/${action.rideId}/participation`)
         .then((response) => {
-          console.log('You join this ride : ', response);
           store.dispatch(renderAgain());
           next(action);
+          console.log('You join this ride : ', response);
         })
         .catch((error) => {
           console.error("Can't join the ride : ", error.response.data);
@@ -62,9 +62,9 @@ const ridesMiddleware = (store) => (next) => (action) => {
           userId: action.userId,
         })
         .then((response) => {
-          console.log('You quit this ride : ', response);
           store.dispatch(renderAgain());
           next(action);
+          console.log('You quit this ride : ', response);
         })
         .catch((error) => console.error("Error, can't quit the ride : ", error.response.data));
       break;
@@ -75,8 +75,8 @@ const ridesMiddleware = (store) => (next) => (action) => {
         })
         .then(
           (response) => {
-            console.log('Message sent : ', response.data.message);
             store.dispatch(addMessageInState(response.data.message));
+            console.log('Message sent : ', response.data.message);
           },
         )
         .catch(
@@ -88,8 +88,8 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .delete(`/ride/${action.rideId}`)
         .then(
           (response) => {
-            console.log('Ride deleted successfully : ', response);
             store.dispatch(deleteRideInState(action.rideId));
+            console.log('Ride deleted successfully : ', response);
           },
         )
         .catch(
@@ -114,14 +114,14 @@ const ridesMiddleware = (store) => (next) => (action) => {
         })
         .then(
           (response) => {
-            console.log('Ride created successfully : ', response);
             next(action);
+            console.log('Ride created successfully : ', response);
           },
         )
         .catch(
           (error) => {
-            console.error("Can't create ride : ", error);
             store.dispatch(failedToCreateRide(error.response.data));
+            console.error("Can't create ride : ", error);
           },
         );
     }
