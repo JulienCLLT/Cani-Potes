@@ -94,7 +94,7 @@ function App() {
             <Redirect to="/" />
           ) : (
             <>
-              <Header title="Détails d'un profil" />
+              <Header />
               <main>
                 <Profile />
               </main>

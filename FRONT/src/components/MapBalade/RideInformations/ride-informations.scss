@@ -29,9 +29,11 @@
         justify-content: center;
         font-size: 1.5rem;
         color: white;
+        padding-top: 0.5*vars.$gutter;
 
         img {
-            width: 20%
+            width: 20%;
+            margin-right: 0.5*vars.$gutter;
         }
     }
 }

@@ -7,11 +7,10 @@ import { loginUser } from '../../actions/users';
 import NavBarDisconnected from '../Header/NavBarDisconnected/NavBarDisconnected';
 
 import './Connection.scss';
-import close from '../../assets/img/close.svg';
 import logo from '../../assets/navbar/canipotes_logo.jpg';
 import dogHome from '../../assets/img/home-dogs.jpg';
 import mapHome from '../../assets/img/home_map.png';
-import paw from '../../assets/img/paw.svg';
+import paw from '../../assets/img/paw-linear.svg';
 
 const Connection = () => {
   const dispatch = useDispatch();
@@ -121,7 +120,7 @@ const Connection = () => {
               type="button"
               onClick={() => setIsModalOpen(false)}
             >
-              <img src={close} alt="close" />
+              ✖
             </button>
 
             <form onSubmit={handleSubmit(onSubmit)} className="connection__form">
