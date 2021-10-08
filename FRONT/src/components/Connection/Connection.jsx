@@ -11,11 +11,15 @@ import logo from '../../assets/navbar/canipotes_logo.jpg';
 import dogHome from '../../assets/img/home-dogs.jpg';
 import mapHome from '../../assets/img/home_map.png';
 import paw from '../../assets/img/paw-linear.svg';
+import Loader from '../Loader/index';
 
 const Connection = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dogPicIsLoading, setDogPicIsLoading] = useState(false);
+
   const { failedToConnect } = useSelector((state) => state.user);
 
   const onSubmit = (data) => {
@@ -67,7 +71,7 @@ const Connection = () => {
             <div className="connection__info__text">
               <p>
                 <span>
-                  Partez à la rencontre de nombreux propriétaires de chiens - Cani'Potes -
+                  Partez à la rencontre de nombreux "propriétaires" de chiens - Cani'Potes -
                   pour que vos toutous se sociabilisent en toute sécurité avec d'autres amis poilus.
                 </span>
               </p>

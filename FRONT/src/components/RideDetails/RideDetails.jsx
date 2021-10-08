@@ -325,7 +325,7 @@ const RideDetails = () => {
                 {
                   isChatOpen ? (
                     // <img src={close} alt="close chat" />
-                    X
+                    'X'
                   ) : (
                     <img src={conversation} alt="open chat" />
                   )

@@ -89,6 +89,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .then(
           (response) => {
             store.dispatch(deleteRideInState(action.rideId));
+            store.dispatch(renderAgain());
             console.log('Ride deleted successfully : ', response);
           },
         )

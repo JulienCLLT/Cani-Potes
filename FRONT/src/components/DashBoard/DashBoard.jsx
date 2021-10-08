@@ -12,7 +12,10 @@ const DashBoard = () => {
   const { user } = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const [isModalopen, setIsModalOpen] = useState(0);
+
   useEffect(() => {
+    setIsModalOpen(0);
     dispatch(reinitRenderAgain());
     dispatch(getRidesWithUserIn());
   }, [user.renderAgain]);
@@ -61,7 +64,7 @@ const DashBoard = () => {
                   <button
                     className="dashboard__hostedrides__link link-delete"
                     type="button"
-                    onClick={() => dispatch(deleteRide(ride.id))}
+                    onClick={() => setIsModalOpen(ride.id)}
                   >
                     Supprimer
                   </button>
@@ -118,6 +121,32 @@ const DashBoard = () => {
           </div>
         </section>
       </div>
+
+      {isModalopen && (
+        <div className="dashboard__modal-wrapper">
+          <div className="dashboard__modal">
+            <button
+              className="dashboard__modal__close"
+              type="button"
+              onClick={() => setIsModalOpen(0)}
+            >
+              ✖
+            </button>
+
+            <p className="dashboard__modal__bold">Attention !</p>
+            <p>Vous êtes sur le point de supprimer cette balade</p>
+            <p>Êtes-vous sûr ?</p>
+
+            <button
+              className="dashboard__modal__delete"
+              type="button"
+              onClick={() => dispatch(deleteRide(isModalopen))}
+            >
+              Supprimer
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
