@@ -48,3 +48,8 @@ export const END_OF_SIGNUP = 'END_OF_SIGNUP';
 export const endOfSignup = () => ({
   type: END_OF_SIGNUP,
 });
+
+export const SHOW_DOGFORM = 'SHOW_DOGFORM';
+export const showDogForm = () => ({
+  type: SHOW_DOGFORM,
+});

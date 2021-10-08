@@ -29,7 +29,7 @@ import nbdog from '../../assets/img/info-ride/nbdog.svg';
 import nbcanipote from '../../assets/img/info-ride/nbcanipote.svg';
 
 import {
-  sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, removeUserFromRide, kickUserFromRide,
+  sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, userQuitRide, kickUserFromRide,
 } from '../../actions/rides';
 import { translateDate } from '../../utils/translateDate';
 import { reverseGeocoding } from '../../utils/reverseGeocoding';
@@ -94,7 +94,7 @@ const RideDetails = () => {
 
   if (userProfile.dogs.length === 0) joinInMsg = "Vous n'avez pas de chien !";
 
-  if (nbOfDogs > max_number_dogs) {
+  if (nbOfDogs >= max_number_dogs) {
     joinInMsg = 'Plus de place';
   }
   if (nbOfDogs < max_number_dogs && (nbOfDogs + userProfile.dogs.length) > max_number_dogs) {
@@ -115,7 +115,7 @@ const RideDetails = () => {
       setIsDeleteRideModalOpen(true);
     }
     else {
-      dispatch(removeUserFromRide(userProfile.id, id));
+      dispatch(userQuitRide(userProfile.id, id));
     }
   };
 
@@ -212,7 +212,7 @@ const RideDetails = () => {
               </p>
               <p>
                 <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
-                {duration.minutes} minutes
+                Durée : {duration.minutes ? `${duration.minutes} min` : 'indeterminée'}
               </p>
               <p>
                 <span className="ride-details__icon"><img src={starting} alt="starting" /></span>
@@ -231,8 +231,8 @@ const RideDetails = () => {
               <div className="ride-details__users__registered">
                 {
                   participants.map((participant) => (
-                    <Link to={`/profile/${participant.participant_id}`} className="ride-details__current-user-link">
-                      <div className="ride-details__current-user" key={participant.participant_id}>
+                    <Link to={`/profile/${participant.participant_id}`} className="ride-details__current-user-link" key={participant.participant_id}>
+                      <div className="ride-details__current-user">
                         {userIsHost && participant.participant_id !== userProfile.id && (
                           <button
                             type="button"

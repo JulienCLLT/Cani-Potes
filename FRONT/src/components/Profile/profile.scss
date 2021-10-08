@@ -142,6 +142,7 @@
   }
 
   &__buttons {
+    width: 100%;
     & .edit-btn {
       margin: auto;
     }
@@ -268,12 +269,12 @@
     .open {
       transform: rotate(90deg);
     }
-
+    
     .close {
       transform: rotate(-90deg);
     }
   }
-
+  
   &__dogform {
     &-open {
       overflow: hidden;

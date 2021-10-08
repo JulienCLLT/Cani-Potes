@@ -37,9 +37,11 @@
 
         &__container {
             width: 60px;
+            overflow: visible;
 
             @include lg-screen {
                 width: 60px;
+                margin: .5rem 0 0 .5rem;
             }
             
             img {

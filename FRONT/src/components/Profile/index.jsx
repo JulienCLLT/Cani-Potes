@@ -8,7 +8,7 @@ import {
   deleteDog, deleteDogPhoto, deleteUser, getOneUserById,
   getProfileIsLoading, reinitRenderAgain, updateDog, updateUser,
 } from '../../actions/users';
-import { getDogBreedsAndBehaviors } from '../../actions/signup';
+import { getDogBreedsAndBehaviors, showDogForm } from '../../actions/signup';
 
 import DogForm from '../SignUp/DogForm/index';
 import Loader from '../Loader/index';
@@ -64,6 +64,7 @@ const Profile = () => {
   useEffect(() => {
     setisEditingUser(false);
     setisEditingDog(false);
+    dispatch(showDogForm());
     dispatch(reinitRenderAgain());
     dispatch(getProfileIsLoading());
     dispatch(getDogBreedsAndBehaviors());
@@ -147,6 +148,8 @@ const Profile = () => {
 
   const handleDeleteDog = () => {
     const dogToDelete = profile.dogs[isEditingDog - 1];
+    console.log(isEditingDog);
+    console.log('id : ', dogToDelete.dog_id);
     setIsModalDeleteDogIsOpen(false);
     dispatch(deleteDog(user.id, dogToDelete.dog_id));
   };
@@ -259,9 +262,6 @@ const Profile = () => {
                     )
                   }
                   </span>
-                  {/* <span className="profile-page__info-user__content-field">
-                  <span>Nombre de chien{profile.dogs.length > 1 && 's'} : {profile.dogs.length}</span>
-                </span> */}
                 </p>
               )}
               {isEditingUser && (
@@ -280,6 +280,7 @@ const Profile = () => {
               {
                 profile.dogs.map((dog, index) => (
                   <DogSection
+                    key={dog.dog_id}
                     dog={dog}
                     index={index}
                     isEditingDog={isEditingDog}
@@ -425,7 +426,9 @@ const Profile = () => {
           <button
             className="profile-page__btn-dogform"
             type="button"
-            onClick={() => setIsDogFormOpen((old) => !old)}
+            onClick={() => {
+              setIsDogFormOpen((old) => !old);
+            }}
           >
             Ajouter un chien<span className={isDogFormOpen ? 'close' : 'open'}><img src={dblArrow} alt="arrow" /></span>
           </button>

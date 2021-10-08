@@ -78,9 +78,10 @@ export const addRidesToUser = (rides) => ({
 });
 
 export const DELETE__DOG = 'DELETE__DOG';
-export const deleteDog = (userId) => ({
+export const deleteDog = (userId, dogId) => ({
   type: DELETE__DOG,
   userId,
+  dogId,
 });
 
 export const DELETE__DOG__PHOTO = 'DELETE__DOG__PHOTO';

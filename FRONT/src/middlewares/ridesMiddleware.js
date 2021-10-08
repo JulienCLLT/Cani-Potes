@@ -63,6 +63,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
         })
         .then((response) => {
           console.log('You quit this ride : ', response);
+          store.dispatch(renderAgain());
           next(action);
         })
         .catch((error) => console.error("Error, can't quit the ride : ", error.response.data));

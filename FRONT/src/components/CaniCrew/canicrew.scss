@@ -140,12 +140,14 @@
         
         &-user {
           border: 8px solid white;
-          width: 30%;
+          object-fit: cover;
+          width: 35%;
         }
         
         &-pet {
           border: 5px solid white;
-          width: 20%;
+          object-fit: cover;
+          width: 25%;
         }
 
         &-social {
