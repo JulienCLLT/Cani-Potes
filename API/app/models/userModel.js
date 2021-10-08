@@ -34,13 +34,10 @@ class UserModel {
     async save() {
         try {
             if (this.id) {
-
                 const { rows } = await client.query(`SELECT update_user($1)`, [this]);
             }
             else {
                 const { rows } = await client.query('SELECT insert_user($1)', [this]);
-
-
                 this.id = rows[0].insert_user;
                 return this;
             }

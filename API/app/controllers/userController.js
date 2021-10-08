@@ -99,7 +99,7 @@ const userController = {
             };
 
 
-            response.status(204).json('Update done');
+            response.status(201).json({ zip_code: user.zip_code });
         } catch (error) {
             response.status(500).json(error.message);
         }
