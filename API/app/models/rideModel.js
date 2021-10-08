@@ -67,7 +67,8 @@ class Ride {
                 SELECT DISTINCT id
                 FROM ride
                 LEFT JOIN member_participate_ride AS mpr ON mpr.ride_id = ride.id 
-                WHERE ride.host_id = $1 OR mpr.member_id = $1;
+                WHERE (ride.host_id = $1 OR mpr.member_id = $1)
+                        AND starting_time > NOW()
             `;
             const idRide = await client.query(query_id, [userId]);
             const arrayId = idRide.rows.map(elem => elem.id);
