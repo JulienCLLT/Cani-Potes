@@ -24,9 +24,10 @@ const NavBarConnected = () => {
         to="/home"
         exact
       >
-        <div className="navbar-connected__img">
+        <div className="navbar-connected__link__img">
           <img src={home} alt="home" />
           <span>Carte</span>
+          <span className="navbar-connected__link__animation" />
         </div>
       </NavLink>
 
@@ -36,9 +37,10 @@ const NavBarConnected = () => {
         to="/board"
         exact
       >
-        <div className="navbar-connected__img">
+        <div className="navbar-connected__link__img">
           <img src={board} alt="board" />
           <span>Tableau de bord</span>
+          <span className="navbar-connected__link__animation" />
         </div>
       </NavLink>
 
@@ -48,22 +50,24 @@ const NavBarConnected = () => {
         to={`/profile/${id}`}
         exact
       >
-        <div className="navbar-connected__img">
+        <div className="navbar-connected__link__img">
           <img src={profile} alt="profil" />
           <span>Profil</span>
+          <span className="navbar-connected__link__animation" />
         </div>
       </NavLink>
 
       <NavLink
-        className="navbar-connected__sign-out"
+        className="navbar-connected__link"
         to="/"
         onClick={() => dispatch(logoutUser())}
         exact
       >
-        <div className="navbar-connected__img">
+        <div className="navbar-connected__link__img">
           <img src={logout} alt="deconnexion" />
           <span>Déconnexion</span>
         </div>
+        <span className="navbar-connected__link__animation" />
       </NavLink>
     </nav>
   );
