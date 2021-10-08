@@ -33,12 +33,12 @@ const DashBoard = () => {
           Créer une balade
         </Link>
       </header>
+      <div className="dashboard__rides">
+        <section className="dashboard__hostedrides">
+          <h2 className="dashboard__hostedrides__title">Je suis l'organisateur de ces balades</h2>
 
-      <section className="dashboard__hostedrides">
-        <h2 className="dashboard__hostedrides__title">Je suis l'organisateur de ces balades</h2>
-
-        <div className="dashboard__hostedrides__block">
-          {
+          <div className="dashboard__hostedrides__block">
+            {
             hostedRides.length > 0 ? (hostedRides.map((ride, index) => (
               <div key={ride.id} className="dashboard__hostedrides__container">
                 <div>
@@ -72,14 +72,14 @@ const DashBoard = () => {
               <div>Vous n'organisez aucune balade</div>
             )
           }
-        </div>
-      </section>
+          </div>
+        </section>
 
-      <section className="dashboard__nothostedrides">
-        <h2 className="dashboard__nothostedrides__title">Je participe à ces balades</h2>
+        <section className="dashboard__nothostedrides">
+          <h2 className="dashboard__nothostedrides__title">Je participe à ces balades</h2>
 
-        <div className="dashboard__nothostedrides__block">
-          {
+          <div className="dashboard__nothostedrides__block">
+            {
             notHostedRides.length > 0 ? (notHostedRides.map((ride, index) => (
               <div key={ride.id} className="dashboard__nothostedrides__container">
                 <div>
@@ -114,8 +114,9 @@ const DashBoard = () => {
               <div>Vous ne participez à aucune balade dont vous n'êtes pas l'organisateur.</div>
             )
           }
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
     </div>
   );
 };
