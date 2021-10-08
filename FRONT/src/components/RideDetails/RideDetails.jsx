@@ -288,17 +288,6 @@ const RideDetails = () => {
                   ))
                 }
               </div>
-
-              {/* <div className="ride-details__users__creator">
-                <Link
-                  className="ride-details__users__creator__avatar"
-                  to={`/profile/${host_id}`}
-                >
-                  <p>Créateur</p>
-                  <img src={`${dburlWithoutApi}/user_resized/${participants[0].participant_photo}`} alt={host_first_name} />
-                  <span>{userProfile.id === host_id ? 'Vous' : host_first_name}</span>
-                </Link>
-              </div> */}
             </div>
 
           </section>

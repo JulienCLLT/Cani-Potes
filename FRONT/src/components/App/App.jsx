@@ -12,12 +12,13 @@ import CreateRide from '../CreateRide/CreateRide';
 import SignUp from '../SignUp/index';
 import RideDetails from '../RideDetails/RideDetails';
 import DashBoard from '../DashBoard/DashBoard';
+import Profile from '../Profile';
+import CaniCrew from '../CaniCrew/index';
+import Legals from '../Legals/index';
 
 // import './App.scss';
 
 import '../../styles/reset.scss';
-import Profile from '../Profile';
-import CaniCrew from './../CaniCrew/index';
 
 function App() {
   const { isLogged } = useSelector((state) => state.user);
@@ -104,6 +105,10 @@ function App() {
 
         <Route exact path="/cani-crew">
           <CaniCrew />
+        </Route>
+
+        <Route exact path="/legal">
+          <Legals />
         </Route>
 
         <Route>
