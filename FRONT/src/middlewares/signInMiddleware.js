@@ -21,11 +21,11 @@ const signinMiddleware = (store) => (next) => (action) => {
         password,
       })
         .then((response) => {
-          console.log('user connect : ', response);
           store.dispatch(connectUser(response.data.authorization, response.data));
+          console.log('user connect : ', response);
         }).catch((error) => {
-          console.error(error.reponse.data);
           store.dispatch(failedToConnect());
+          console.error(error.reponse.data);
         });
       break;
     }

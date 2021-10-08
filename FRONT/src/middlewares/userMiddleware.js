@@ -21,7 +21,6 @@ const userMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .get(`/social/profile/${action.id}`)
         .then((response) => {
-          console.log('User send by db : ', response);
           const { data: profile } = response;
           if (profile.dogs === null) {
             profile.dogs = [];
@@ -30,6 +29,7 @@ const userMiddleware = (store) => (next) => (action) => {
           const userId = store.getState().user.id;
 
           store.dispatch(saveProfileInState(profile, userId));
+          console.log('User send by db : ', response);
         })
         .catch((error) => {
           console.error("Can't get profile : ", error.response.data);
@@ -39,8 +39,8 @@ const userMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .get(`/social/profile/${action.userId}`)
         .then((response) => {
-          console.log('User send by db : ', response);
           store.dispatch(saveUserDogsInState(response.data));
+          console.log('User send by db : ', response);
         })
         .catch((error) => {
           console.error("Can't get profile : ", error.response.data);
@@ -73,9 +73,9 @@ const userMiddleware = (store) => (next) => (action) => {
         },
       })
         .then((response) => {
-          console.log('Dog updated successfully : ', response);
           store.dispatch(renderAgain());
           next(action);
+          console.log('Dog updated successfully : ', response);
         })
         .catch((error) => {
           console.error('Failed to update dog : ', error.response.data);
@@ -104,8 +104,8 @@ const userMiddleware = (store) => (next) => (action) => {
         },
       })
         .then((response) => {
-          console.log('User updated : ', response.data);
           next(action);
+          console.log('User updated : ', response.data);
         })
         .catch((error) => console.error('Cannot update user : ', error.response.message));
       break;
@@ -114,9 +114,9 @@ const userMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .get('/ride')
         .then((response) => {
-          console.log('User participates to these rides : ', response);
           store.dispatch(addRidesToUser(response.data));
           next(action);
+          console.log('User participates to these rides : ', response);
         })
         .catch((error) => {
           console.error("Can't get rides within the user : ", error.response.data);
@@ -127,8 +127,8 @@ const userMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .delete(`/profile/${action.userId}/dogs/${action.dogId}/photo/${action.photoId}`)
         .then((response) => {
-          console.log('Photo deleted successfully : ', response);
           store.dispatch(renderAgain());
+          console.log('Photo deleted successfully : ', response);
         })
         .catch((error) => {
           console.error('Unable to delete photo : ', error.response.data);
@@ -138,9 +138,9 @@ const userMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .delete(`profile/${action.userId}/dogs/${action.dogId}`)
         .then((response) => {
-          console.log('Dog deleted successfully : ', response);
           store.dispatch(renderAgain());
           next(action);
+          console.log('Dog deleted successfully : ', response);
         })
         .catch((error) => {
           console.error('Failed to delete dog : ', error.response.data);
@@ -150,8 +150,8 @@ const userMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .delete('/account/delete')
         .then((response) => {
-          console.log('User deleted successfully : ', response);
           store.dispatch(logoutUser());
+          console.log('User deleted successfully : ', response);
         })
         .catch((error) => {
           console.error('Failed to delete account : ', error.response.data);

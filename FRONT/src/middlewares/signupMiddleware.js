@@ -43,9 +43,9 @@ const signupMiddleware = (store) => (next) => (action) => {
         },
       })
         .then((response) => {
-          console.log('response', response);
           store.dispatch(connectUser(response.data.authorization, response.data));
           store.dispatch(nextSignupFormStep());
+          console.log('response', response);
         }).catch((error) => {
           store.dispatch(failedToSignup(error.response.data));
           console.error('error', error.response.data);
@@ -82,10 +82,10 @@ const signupMiddleware = (store) => (next) => (action) => {
         },
       })
         .then((response) => {
-          console.log(response.data);
           store.dispatch(addDogToUser(response.data));
           store.dispatch(nextSignupFormStep());
           next(action);
+          console.log(response.data);
         }).catch((error) => {
           console.error(error.response.data);
         });
@@ -96,7 +96,8 @@ const signupMiddleware = (store) => (next) => (action) => {
       axiosInstance.get('/characteristic')
         .then((response) => {
           store.dispatch(saveDogBreedsAndBehaviors(response.data));
-        }).catch((error) => console.error('get dog breeds and behaviors error', error.response.data));
+        })
+        .catch((error) => console.error('get dog breeds and behaviors error', error.response.data));
       next(action);
       break;
     }
