@@ -1,7 +1,7 @@
 @use '../../styles/vars';
 
 @mixin lg-screen {
-    @media screen and (min-width:700px) {
+    @media screen and (min-width:400px) {
         @content
     }
 };
@@ -9,7 +9,6 @@
 .dashboard {
     margin-bottom: 4 * vars.$gutter;
     min-height: 100vh;
-    background: url('../../assets/team/double-bubble.png');
 
     &__header {
         display: flex;
@@ -71,6 +70,19 @@
     &__nothostedrides {
         &__title {
             margin-top: 2rem;
+        }
+    }
+
+    &__rides {
+
+        max-width: 550px;
+        @include lg-screen {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+            // align-items: center;
+            justify-content: space-between;
+            margin: auto;
         }
     }
 }
