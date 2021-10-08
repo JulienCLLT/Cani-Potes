@@ -1,9 +1,6 @@
 const { bcrypt, jwt, apiGeo, sharpResizeImage } = require('../services');
 const { UserModel, DogModel, RideModel, PhotoModel } = require('../models');
 
-
-
-
 const userController = {
     login: async (request, response) => {
         try {
@@ -44,15 +41,15 @@ const userController = {
             if (request.file) {
 
                 sharpResizeImage.sharpResize(request.file, 'user_resized');
-                
+
                 //push name path a image resized 
                 request.body.photo = request.file.filename;
             };
-            
+
             const user = new UserModel(request.body);
             user.password = await bcrypt.hash(user.password);
             const newUser = await user.save();
-            
+
             if (newUser) {
                 const dataUser = await UserModel.dataUserConnexion(newUser.id);
                 dataUser.position = await apiGeo(dataUser.position);
@@ -84,25 +81,25 @@ const userController = {
 
             const idPayload = request.userId;
             request.body.id = idPayload;
-             // on check la validité du mail avant toute modif avec la contrainte sql 
+            // on check la validité du mail avant toute modif avec la contrainte sql 
             const user = new UserModel(request.body);
             await user.save(user);
 
-                if (request.file) {
-                    sharpResizeImage.sharpResize(request.file, 'user_resized');
-                    const oldPhoto = await UserModel.findOne(idPayload);
+            if (request.file) {
+                sharpResizeImage.sharpResize(request.file, 'user_resized');
+                const oldPhoto = await UserModel.findOne(idPayload);
 
-                        if (oldPhoto.photo != 'avatar.jpg') {
-                            sharpResizeImage.delOldImage('user_resized', oldPhoto.photo);
-                        };
-                
-                    const newPhoto = new UserModel({id:idPayload, photo:request.file.filename});
-
-                    await newPhoto.save(newPhoto);
+                if (oldPhoto.photo != 'avatar.jpg') {
+                    sharpResizeImage.delOldImage('user_resized', oldPhoto.photo);
                 };
 
+                const newPhoto = new UserModel({ id: idPayload, photo: request.file.filename });
 
-            response.status(204).json('Update done');
+                await newPhoto.save(newPhoto);
+            };
+
+
+            response.status(201).json({ zip_code: user.zip_code });
         } catch (error) {
             response.status(500).json(error.message);
         }
@@ -115,7 +112,6 @@ const userController = {
             // delete all member's dogs + photos
             const dogsId = await DogModel.findDogFromMember(userId);
             for (dog of dogsId) {
-                //todo verfi suppression photo du fichier
                 await PhotoModel.deletePhotos(dog.id);
                 await DogModel.delete(dog.id);
             }
@@ -135,7 +131,9 @@ const userController = {
                 }
             }
             await RideModel.deleteAllRidesCreatedBy(userId);
-            // delete message
+
+            // delete photo in user_resized folden then delete membre in db
+            await PhotoModel.deletePhotoUser(userId);
             await UserModel.deleteMember(userId);
 
             response.status(204).json();

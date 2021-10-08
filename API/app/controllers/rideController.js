@@ -1,4 +1,4 @@
-const {RideModel, UserModel} = require('../models');
+const { RideModel, UserModel } = require('../models');
 
 const rideController = {
     findAll: async (_, response) => {
@@ -89,7 +89,6 @@ const rideController = {
     leaveARide: async (request, response) => {
         try {
             const rideId = Number(request.params.rideId);
-            // todo  fausse data en attendant test avec jwt
             const userId = request.userId;
 
             if (isNaN(rideId)) {
@@ -139,7 +138,6 @@ const rideController = {
     addNewParticipant: async (request, response) => {
         try {
             const rideId = Number(request.params.rideId);
-            // todo  fausse data en attendant test avec jwt
             const userId = request.userId;
 
             if (isNaN(rideId)) {
