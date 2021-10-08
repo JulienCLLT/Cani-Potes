@@ -9,7 +9,11 @@ class Ride {
 
     static async findAll() {
         try {
-            const query = `SELECT id AS ride_id, start_coordinate FROM ride`;
+            const query = `
+                SELECT id AS ride_id, start_coordinate 
+                FROM ride 
+                WHERE starting_time > NOW()
+                `;
             const { rows } = await client.query(query);
             return rows.map(row => new Ride(row));
         } catch (error) {
