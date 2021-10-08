@@ -27,6 +27,18 @@ $gutter: 1rem;
     }
 }
 
+%strong-btn {
+    @extend %btn;
+    @extend %linear-gradient;
+    border: none;
+    color: white;
+}
+
+%light-btn {
+    @extend %btn;
+    border: 1px solid $color_main;
+}
+
 %linear-gradient {
     background: linear-gradient(315deg, #f7b42c 0%, #fc575e 74%);
 }
