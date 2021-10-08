@@ -1,9 +1,6 @@
 const { bcrypt, jwt, apiGeo, sharpResizeImage } = require('../services');
 const { UserModel, DogModel, RideModel, PhotoModel } = require('../models');
 
-
-
-
 const userController = {
     login: async (request, response) => {
         try {
@@ -134,7 +131,9 @@ const userController = {
                 }
             }
             await RideModel.deleteAllRidesCreatedBy(userId);
-            // delete message
+
+            // delete photo in user_resized folden then delete membre in db
+            await PhotoModel.deletePhotoUser(userId);
             await UserModel.deleteMember(userId);
 
             response.status(204).json();

@@ -1,5 +1,6 @@
 const client = require('../database');
 
+
 class UserModel {
     constructor(data = {}) {
         for (const prop in data) {
@@ -34,11 +35,11 @@ class UserModel {
         try {
             if (this.id) {
 
-                const { rows } = await client.query(`SELECT update_user($1)`,[this]);
+                const { rows } = await client.query(`SELECT update_user($1)`, [this]);
             }
             else {
-                const {rows}= await client.query('SELECT insert_user($1)',[this]);
-                
+                const { rows } = await client.query('SELECT insert_user($1)', [this]);
+
 
                 this.id = rows[0].insert_user;
                 return this;
