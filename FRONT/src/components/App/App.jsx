@@ -63,7 +63,7 @@ function App() {
             <Redirect to="/" />
           ) : (
             <>
-              <Header />
+              <Header title="Tableau de bord" />
               <main>
                 <DashBoard />
               </main>

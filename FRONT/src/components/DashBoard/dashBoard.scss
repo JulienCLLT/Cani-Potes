@@ -1,7 +1,19 @@
 @use '../../styles/vars';
 
+@mixin sm-screen {
+    @media screen and (min-width:360px) {
+        @content
+    }
+};
+
 @mixin lg-screen {
-    @media screen and (min-width:400px) {
+    @media screen and (min-width:900px) {
+        @content
+    }
+};
+
+@mixin xl-screen {
+    @media screen and (min-width:1150px) {
         @content
     }
 };
@@ -9,6 +21,10 @@
 .dashboard {
     margin-bottom: 4 * vars.$gutter;
     min-height: 100vh;
+
+    @include lg-screen {
+        min-height: auto;
+    }
 
     &__header {
         display: flex;
@@ -29,15 +45,47 @@
         }
     }
 
+    &__linebreak {
+        width: calc(0.95 * 90%);
+        max-width: 380px;
+        margin: 0 auto;
+        height: 1px;
+        background: vars.$color_main;
+
+        @include lg-screen {
+            display: none;
+        }
+    }
+
     &__hostedrides, &__nothostedrides {
-        padding: 0 vars.$gutter;
+        padding: vars.$gutter;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        margin: 0 auto;
+        border: 1px solid vars.$color-border-input;
+
+        @include sm-screen{
+            padding: 2 * vars.$gutter;
+        }
+
+        @include lg-screen {
+            background: rgba($color: #e1cccd, $alpha: .3);
+            padding: vars.$gutter;
+            width: 48%;
+            max-width: 600px;
+        }
+
+        @include xl-screen{
+            padding: 2 * vars.$gutter;
+        }
 
         &__block {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
-        
+
         &__title {
             font-size: 1.3rem;
             margin-bottom: 2rem;
@@ -47,8 +95,14 @@
         &__container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            align-items: stretch;
             line-height: 1.5rem;
+            gap: .5rem;
+
+            @include lg-screen {
+                flex-direction: row;
+            }
         }
 
         &__name {
@@ -57,8 +111,11 @@
 
         &__link-container {
             display: flex;
-            flex-direction: column;
-            gap: .5rem;
+            gap: 1rem;
+
+            @include lg-screen {
+                flex-direction: column;
+            }
         }
 
         &__link {
@@ -66,23 +123,30 @@
             font-size: .8rem;
         }
     }
+    &__rides {
+        max-width: 550px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
 
-    &__nothostedrides {
-        &__title {
-            margin-top: 2rem;
+        @include lg-screen {
+            min-width: 915px;
+            max-width: 1385px;
+            display: flex;
+            flex-direction: row;
+            width: 90%;
+            align-items: stretch;
+            justify-content: space-between;
         }
     }
 
-    &__rides {
-
-        max-width: 550px;
-        @include lg-screen {
-            display: flex;
-            flex-direction: column;
-            width: 70%;
-            // align-items: center;
-            justify-content: space-between;
-            margin: auto;
-        }
+    .link-details {
+        @extend %strong-btn;
+        width: 95px;
+    }
+    .link-delete {
+        @extend %light-btn;
+        width: 95px;
     }
 }
