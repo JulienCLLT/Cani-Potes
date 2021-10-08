@@ -63,6 +63,17 @@
     }
 }
 
+@keyframes fade-in-modal {
+    from {
+        transform: translate(-50%, -30%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}
+
 @keyframes fade-in-from-left {
     from {
         transform: translate(-20%, 0);

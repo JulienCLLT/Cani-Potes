@@ -320,10 +320,7 @@
     }
 
     &__modal {
-        background-color: rgba(255, 255, 255, 1);
-        // background: linear-gradient(315deg, #f7b42c 0%, #fc575e 74%);
         background: linear-gradient(315deg, rgba(252, 87, 94, 0.7), rgb(247, 180, 44, 0.9) 74%);
-        // opacity: 0.8;
         position: fixed;
         top: 50%;
         left: 50%;
@@ -337,15 +334,16 @@
         z-index: 9999;
         font-size: 1.3rem;
 
+        @include lg-screen {
+            animation: fade-in-modal .3s forwards;
+        }
+
         &__close {
-            // width: 5px;
-            // height: 5px;
             align-self: flex-end;
             cursor: pointer;
             padding: 0.4*vars.$gutter 0.7* vars.$gutter;
             color: white;
             
-
             img {
                 width: 100%;
             }
@@ -357,6 +355,7 @@
         flex-direction: column;
         align-items: center;
         padding-bottom: vars.$gutter;
+        white-space: nowrap;
 
         @include lg-screen {
             width: 50%;
@@ -372,7 +371,6 @@
 
             label {
                 cursor: initial;
-                // font-weight: normal;
                 font-size: 1.1*vars.$gutter;
                 color: white;
             }
