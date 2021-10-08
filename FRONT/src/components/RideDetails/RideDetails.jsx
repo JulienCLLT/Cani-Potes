@@ -104,7 +104,7 @@ const RideDetails = () => {
   const handleJoinIn = () => {
     if (userProfile.dogs.length === 0) return;
     if (nbOfDogs < max_number_dogs) {
-      if ((nbOfDogs + userProfile.dogs.length) < max_number_dogs) {
+      if ((nbOfDogs + userProfile.dogs.length) <= max_number_dogs) {
         dispatch(addUserToRide(userProfile, ride_id));
       }
     }

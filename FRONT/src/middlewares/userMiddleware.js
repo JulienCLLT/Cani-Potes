@@ -104,7 +104,9 @@ const userMiddleware = (store) => (next) => (action) => {
         },
       })
         .then((response) => {
+          store.dispatch(renderAgain());
           next(action);
+          console.log(action);
           console.log('User updated : ', response.data);
         })
         .catch((error) => console.error('Cannot update user : ', error.response.message));
