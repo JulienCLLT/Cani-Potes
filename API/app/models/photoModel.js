@@ -1,5 +1,6 @@
 const client = require("../database");
 const fs = require('fs');
+const { delOldImage } = require("../services/sharp");
 
 class Photo {
     constructor(data = {}) {
@@ -25,12 +26,25 @@ class Photo {
         }
     }
 
+    // possible facto deletePhoto dog + deletephoto user
     static async deletePhotos(dogId) {
         try {
-            const photoToDelete = await client.query(`SELECT file_name FROM photo WHERE dog_id = $1`, [dogId]);
+            const { rows: photoToDelete } = await client.query(`SELECT file_name FROM photo WHERE dog_id = $1`, [dogId]);
             await client.query(`DELETE FROM photo WHERE dog_id = $1`, [dogId]);
-            //! a tester
-            //fs.unlinkSync('/dog_resized' + photoToDelete);
+
+            delOldImage('dog_resized', photoToDelete[0].file_name);
+            return null;
+        } catch (error) {
+            console.error(error);
+            throw new Error(error.detail ? error.detail : error.message);
+        }
+    }
+
+    static async deletePhotoUser(userId) {
+        try {
+            const queryPhoto = `SELECT photo FROM member WHERE id = $1`;
+            const { rows: photoToDelete } = await client.query(queryPhoto, [userId]);
+            delOldImage('user_resized', photoToDelete[0].photo);
             return null;
         } catch (error) {
             console.error(error);

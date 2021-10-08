@@ -148,8 +148,6 @@ const Profile = () => {
 
   const handleDeleteDog = () => {
     const dogToDelete = profile.dogs[isEditingDog - 1];
-    console.log(isEditingDog);
-    console.log('id : ', dogToDelete.dog_id);
     setIsModalDeleteDogIsOpen(false);
     dispatch(deleteDog(user.id, dogToDelete.dog_id));
   };

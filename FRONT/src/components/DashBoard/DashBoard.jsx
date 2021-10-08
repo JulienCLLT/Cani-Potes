@@ -24,7 +24,6 @@ const DashBoard = () => {
     <div className="dashboard">
 
       <header className="dashboard__header">
-        <h1>Tableau de bord</h1>
 
         <Link
           className="dashboard__header__btn"
@@ -33,12 +32,12 @@ const DashBoard = () => {
           Créer une balade
         </Link>
       </header>
+      <div className="dashboard__rides">
+        <section className="dashboard__hostedrides">
+          <h2 className="dashboard__hostedrides__title">Je suis l'organisateur de ces balades</h2>
 
-      <section className="dashboard__hostedrides">
-        <h2 className="dashboard__hostedrides__title">Je suis l'organisateur de ces balades</h2>
-
-        <div className="dashboard__hostedrides__block">
-          {
+          <div className="dashboard__hostedrides__block">
+            {
             hostedRides.length > 0 ? (hostedRides.map((ride, index) => (
               <div key={ride.id} className="dashboard__hostedrides__container">
                 <div>
@@ -54,13 +53,13 @@ const DashBoard = () => {
 
                 <div className="dashboard__hostedrides__link-container">
                   <Link
-                    className="dashboard__hostedrides__link"
+                    className="dashboard__hostedrides__link link-details"
                     to={`/ride/${ride.id}`}
                   >
                     Détails
                   </Link>
                   <button
-                    className="dashboard__hostedrides__link"
+                    className="dashboard__hostedrides__link link-delete"
                     type="button"
                     onClick={() => dispatch(deleteRide(ride.id))}
                   >
@@ -72,14 +71,16 @@ const DashBoard = () => {
               <div>Vous n'organisez aucune balade</div>
             )
           }
-        </div>
-      </section>
+          </div>
+        </section>
 
-      <section className="dashboard__nothostedrides">
-        <h2 className="dashboard__nothostedrides__title">Je participe à ces balades</h2>
+        <div className="dashboard__linebreak" />
 
-        <div className="dashboard__nothostedrides__block">
-          {
+        <section className="dashboard__nothostedrides">
+          <h2 className="dashboard__nothostedrides__title">Je participe à ces balades</h2>
+
+          <div className="dashboard__nothostedrides__block">
+            {
             notHostedRides.length > 0 ? (notHostedRides.map((ride, index) => (
               <div key={ride.id} className="dashboard__nothostedrides__container">
                 <div>
@@ -94,13 +95,13 @@ const DashBoard = () => {
                 </div>
                 <div className="dashboard__nothostedrides__link-container">
                   <Link
-                    className="dashboard__nothostedrides__link"
+                    className="dashboard__nothostedrides__link link-details"
                     to={`/ride/${ride.id}`}
                   >
                     Détails
                   </Link>
                   <button
-                    className="dashboard__nothostedrides__link"
+                    className="dashboard__nothostedrides__link link-delete"
                     type="button"
                     onClick={() => {
                       dispatch(userQuitRide(user.id, ride.id));
@@ -114,8 +115,9 @@ const DashBoard = () => {
               <div>Vous ne participez à aucune balade dont vous n'êtes pas l'organisateur.</div>
             )
           }
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
     </div>
   );
 };

@@ -36,5 +36,12 @@
                 display: none;
             }
         }
+
+        span {
+            &:hover {
+                transform: translate(0, -3px);
+                transition: all .3s ease-in-out;
+            }
+        }
     }
 }

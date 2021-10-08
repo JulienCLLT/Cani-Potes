@@ -9,7 +9,11 @@ class Ride {
 
     static async findAll() {
         try {
-            const query = `SELECT id AS ride_id, start_coordinate FROM ride`;
+            const query = `
+                SELECT id AS ride_id, start_coordinate 
+                FROM ride 
+                WHERE starting_time > NOW()
+                `;
             const { rows } = await client.query(query);
             return rows.map(row => new Ride(row));
         } catch (error) {
@@ -63,7 +67,8 @@ class Ride {
                 SELECT DISTINCT id
                 FROM ride
                 LEFT JOIN member_participate_ride AS mpr ON mpr.ride_id = ride.id 
-                WHERE ride.host_id = $1 OR mpr.member_id = $1;
+                WHERE (ride.host_id = $1 OR mpr.member_id = $1)
+                        AND starting_time > NOW()
             `;
             const idRide = await client.query(query_id, [userId]);
             const arrayId = idRide.rows.map(elem => elem.id);
@@ -78,7 +83,6 @@ class Ride {
         }
     }
 
-    //todo autre Model ? 
     static async deleteMessagesByRideId(rideId) {
         try {
             const query = `DELETE FROM member_write_ride WHERE ride_id = $1`;
@@ -173,7 +177,6 @@ class Ride {
 
     async createRide() {
         try {
-            //todo facto : SQL function
             //todo JOI
             const query = `
                 INSERT INTO ride(title,description,start_coordinate,end_coordinate, starting_time, duration, max_number_dogs, tag_id, host_id)
