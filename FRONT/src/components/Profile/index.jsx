@@ -419,7 +419,7 @@ const Profile = () => {
         </div>
       )}
 
-      {profileIsUser && (
+      {profileIsUser && !profile.isLoading && (
         <>
           <button
             className="profile-page__btn-dogform"

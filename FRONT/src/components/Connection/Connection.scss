@@ -1,4 +1,6 @@
 @use '../../styles/vars';
+@use '../../styles/keyframes.scss';
+
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 @mixin lg-screen {
@@ -106,7 +108,13 @@
         & article {
             @include lg-screen {
                 display: flex;
-                align-items: center;;
+                align-items: center;
+            }
+            
+            &:first-child {
+                @include lg-screen {
+                    animation: fade-in-from-left .7s forwards;
+                }
             }
 
             &:nth-child(2) {
@@ -114,6 +122,7 @@
                     display: block;
                     margin: 4 * vars.$gutter 0;
                     flex-direction: row-reverse;
+                    animation: fade-in-from-right .7s forwards;
                 }
             }
         }

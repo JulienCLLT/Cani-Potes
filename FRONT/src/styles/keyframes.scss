@@ -55,11 +55,42 @@
 }
 
 @keyframes fade-in {
-  from {
-      transform: translate(0, -100%);
-  } to {
-      transform: translate(0);
-  }
+    from {
+        transform: translate(0, -100%);
+    }
+    to {
+        transform: translate(0);
+    }
+}
+
+@keyframes fade-in-from-left {
+    from {
+        transform: translate(-20%, 0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-20%, 0);
+        opacity: 0;
+    }
+    to {
+        transform: translate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in-from-right {
+    from {
+        transform: translate(20%, 0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(20%, 0);
+        opacity: 0;
+    }
+    to {
+        transform: translate(0);
+        opacity: 1;
+    }
 }
 
 @keyframes appear {
