@@ -44,7 +44,6 @@ class Photo {
         try {
             const queryPhoto = `SELECT photo FROM member WHERE id = $1`;
             const { rows: photoToDelete } = await client.query(queryPhoto, [userId]);
-            console.log("photoTeDelete", photoToDelete[0].photo);
             delOldImage('user_resized', photoToDelete[0].photo);
             return null;
         } catch (error) {
