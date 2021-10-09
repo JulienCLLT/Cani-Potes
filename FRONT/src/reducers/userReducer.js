@@ -61,6 +61,7 @@ const userReducer = (state = parsedUser || userInitialState, action = {}) => {
         ],
       };
     case LOGOUT__USER:
+      localStorage.removeItem('user');
       return {
         ...userInitialState,
       };
