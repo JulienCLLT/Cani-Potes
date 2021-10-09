@@ -5,7 +5,7 @@ import {
   saveDogBreedsAndBehaviors, failedToSignup, nextSignupFormStep, addDogToUser,
 } from '../actions/signup';
 
-import { connectUser, getOneUserById } from '../actions/users';
+import { connectUser, logoutUser } from '../actions/users';
 import { dburlWithApi } from '../utils/dburl';
 
 const signupMiddleware = (store) => (next) => (action) => {
@@ -56,7 +56,8 @@ const signupMiddleware = (store) => (next) => (action) => {
 
     case DOG_SIGN_UP: {
       const {
-        surname, breed, weight, sexe, birthday, sterilization, behavior, photo_dog, dog_owner_id, description,
+        surname, breed, weight, sexe, birthday, sterilization, behavior,
+        photo_dog, dog_owner_id, description,
       } = action.dogForm;
 
       const formData = new FormData();
@@ -87,6 +88,10 @@ const signupMiddleware = (store) => (next) => (action) => {
           next(action);
           console.log(response.data);
         }).catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
           console.error(error.response.data);
         });
       break;

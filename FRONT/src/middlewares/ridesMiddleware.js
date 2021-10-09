@@ -2,10 +2,11 @@
 import axios from 'axios';
 
 import {
-  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE, CREATE_RIDE, USER__QUIT__RIDE, KICK__USER__FROM__RIDE, SEND__NEW__MESSAGE,
+  GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE,
+  CREATE_RIDE, USER__QUIT__RIDE, KICK__USER__FROM__RIDE, SEND__NEW__MESSAGE,
   saveAllRides, saveOneRide, deleteRideInState, failedToCreateRide, addMessageInState,
 } from '../actions/rides';
-import { renderAgain } from '../actions/users';
+import { logoutUser, renderAgain } from '../actions/users';
 import { dburlWithApi } from '../utils/dburl';
 
 const ridesMiddleware = (store) => (next) => (action) => {
@@ -21,28 +22,32 @@ const ridesMiddleware = (store) => (next) => (action) => {
     case GET__ALL__RIDES:
       axiosInstance
         .get('/rides')
-        .then(
-          (response) => {
-            store.dispatch(saveAllRides(response.data));
-          },
-        )
-        .catch(
-          (error) => console.error('erreur : ', error.response.data),
-        );
+        .then((response) => {
+          store.dispatch(saveAllRides(response.data));
+        })
+        .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
+          console.error('erreur : ', error.response.data);
+        });
       next(action);
       break;
     case GET__ONE__RIDE__BY__ID:
       axiosInstance
         .get(`/ride/${action.id}`)
-        .then(
-          (response) => {
-            store.dispatch(saveOneRide(response.data[0]));
-            console.log('ride retournée : ', response);
-          },
-        )
-        .catch(
-          (error) => console.error('erreur : ', error.response.data),
-        );
+        .then((response) => {
+          store.dispatch(saveOneRide(response.data[0]));
+          console.log('ride retournée : ', response);
+        })
+        .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
+          console.error('erreur : ', error.response.data);
+        });
       break;
     case ADD__USER__TO__RIDE:
       axiosInstance

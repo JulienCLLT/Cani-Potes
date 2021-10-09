@@ -32,6 +32,10 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log('User send by db : ', response);
         })
         .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
           console.error("Can't get profile : ", error.response.data);
         });
       break;
@@ -43,6 +47,10 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log('User send by db : ', response);
         })
         .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
           console.error("Can't get profile : ", error.response.data);
         });
       break;
@@ -121,6 +129,10 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log('User participates to these rides : ', response);
         })
         .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
           console.error("Can't get rides within the user : ", error.response.data);
         });
       break;

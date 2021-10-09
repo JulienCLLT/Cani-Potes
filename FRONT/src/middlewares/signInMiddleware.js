@@ -27,6 +27,7 @@ const signinMiddleware = (store) => (next) => (action) => {
             id: response.data.id,
             first_name: response.data.first_name,
             position: response.data.position,
+            dogs: [],
             token: response.data.authorization,
             isLogged: true,
             failedToConnect: false,
