@@ -22,6 +22,19 @@ const signinMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           store.dispatch(connectUser(response.data.authorization, response.data));
+
+          localStorage.setItem('user', JSON.stringify({
+            id: response.data.id,
+            first_name: response.data.first_name,
+            position: response.data.position,
+            token: response.data.authorization,
+            isLogged: true,
+            failedToConnect: false,
+            ride_id: response.data.ride_id,
+            rides: [],
+            renderAgain: false,
+          }));
+
           console.log('user connect : ', response);
         }).catch((error) => {
           store.dispatch(failedToConnect());
