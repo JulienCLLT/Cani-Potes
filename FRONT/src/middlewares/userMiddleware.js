@@ -2,8 +2,8 @@
 import axios from 'axios';
 import {
   GET__ONE__USER__BY__ID, UPDATE__USER, GET__RIDES__WITH__USER__IN,
-  DELETE__DOG, DELETE__USER, UPDATE__DOG, DELETE__DOG__PHOTO, USER__GETS__HIS__DOGS,
-  logoutUser, saveProfileInState, addRidesToUser, saveUserDogsInState, renderAgain,
+  DELETE__DOG, DELETE__USER, UPDATE__DOG, DELETE__DOG__PHOTO,
+  logoutUser, saveProfileInState, addRidesToUser, renderAgain,
 } from '../actions/users';
 import { dburlWithApi } from '../utils/dburl';
 
@@ -39,21 +39,6 @@ const userMiddleware = (store) => (next) => (action) => {
           console.error("Can't get profile : ", error.response.data);
         });
       break;
-    // case USER__GETS__HIS__DOGS:
-    //   axiosInstance
-    //     .get(`/social/profile/${action.userId}`)
-    //     .then((response) => {
-    //       store.dispatch(saveUserDogsInState(response.data));
-    //       console.log('User send by db : ', response);
-    //     })
-    //     .catch((error) => {
-    //       if (error.response.data.name === 'TokenExpiredError') {
-    //         localStorage.removeItem('user');
-    //         store.dispatch(logoutUser());
-    //       }
-    //       console.error("Can't get profile : ", error.response.data);
-    //     });
-    //   break;
     case UPDATE__DOG: {
       const {
         surname, behavior, breed, gender, weight, age, sterilization, description, photoDog,
@@ -86,6 +71,10 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log('Dog updated successfully : ', response);
         })
         .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
           console.error('Failed to update dog : ', error.response.data);
         });
       break;
@@ -117,7 +106,13 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log(action);
           console.log('User updated : ', response.data);
         })
-        .catch((error) => console.error('Cannot update user : ', error.response.message));
+        .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
+          console.error('Cannot update user : ', error.response.message);
+        });
       break;
     }
     case GET__RIDES__WITH__USER__IN: {
@@ -145,6 +140,10 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log('Photo deleted successfully : ', response);
         })
         .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
           console.error('Unable to delete photo : ', error.response.data);
         });
       break;
@@ -157,6 +156,10 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log('Dog deleted successfully : ', response);
         })
         .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
           console.error('Failed to delete dog : ', error.response.data);
         });
       break;
@@ -168,6 +171,10 @@ const userMiddleware = (store) => (next) => (action) => {
           console.log('User deleted successfully : ', response);
         })
         .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
           console.error('Failed to delete account : ', error.response.data);
         });
       break;

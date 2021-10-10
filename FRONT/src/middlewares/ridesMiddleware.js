@@ -58,6 +58,10 @@ const ridesMiddleware = (store) => (next) => (action) => {
           console.log('You join this ride : ', response);
         })
         .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
           console.error("Can't join the ride : ", error.response.data);
         });
       break;
@@ -71,36 +75,46 @@ const ridesMiddleware = (store) => (next) => (action) => {
           next(action);
           console.log('You quit this ride : ', response);
         })
-        .catch((error) => console.error("Error, can't quit the ride : ", error.response.data));
+        .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
+          console.error("Error, can't quit the ride : ", error.response.data);
+        });
       break;
     case SEND__NEW__MESSAGE:
       axiosInstance
         .post(`/social/message/ride/${action.rideId}`, {
           message: action.message,
         })
-        .then(
-          (response) => {
-            store.dispatch(addMessageInState(response.data.message));
-            console.log('Message sent : ', response.data.message);
-          },
-        )
-        .catch(
-          (error) => console.error("Message didn't send : ", error.response.data),
-        );
+        .then((response) => {
+          store.dispatch(addMessageInState(response.data.message));
+          console.log('Message sent : ', response.data.message);
+        })
+        .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
+          console.error("Message didn't send : ", error.response.data);
+        });
       break;
     case DELETE__RIDE:
       axiosInstance
         .delete(`/ride/${action.rideId}`)
-        .then(
-          (response) => {
-            store.dispatch(deleteRideInState(action.rideId));
-            store.dispatch(renderAgain());
-            console.log('Ride deleted successfully : ', response);
-          },
-        )
-        .catch(
-          (error) => console.error("Can't delete ride : ", error.response.data),
-        );
+        .then((response) => {
+          store.dispatch(deleteRideInState(action.rideId));
+          store.dispatch(renderAgain());
+          console.log('Ride deleted successfully : ', response);
+        })
+        .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
+          console.error("Can't delete ride : ", error.response.data);
+        });
       break;
     case CREATE_RIDE: {
       const {
@@ -118,18 +132,18 @@ const ridesMiddleware = (store) => (next) => (action) => {
           tag_id: 1, // todo modify later in v2
           host_id: store.getState().user.id,
         })
-        .then(
-          (response) => {
-            next(action);
-            console.log('Ride created successfully : ', response);
-          },
-        )
-        .catch(
-          (error) => {
-            store.dispatch(failedToCreateRide(error.response.data));
-            console.error("Can't create ride : ", error);
-          },
-        );
+        .then((response) => {
+          next(action);
+          console.log('Ride created successfully : ', response);
+        })
+        .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
+          store.dispatch(failedToCreateRide(error.response.data));
+          console.error("Can't create ride : ", error);
+        });
     }
       break;
     case KICK__USER__FROM__RIDE:
@@ -140,6 +154,10 @@ const ridesMiddleware = (store) => (next) => (action) => {
           next(action);
         })
         .catch((error) => {
+          if (error.response.data.name === 'TokenExpiredError') {
+            localStorage.removeItem('user');
+            store.dispatch(logoutUser());
+          }
           console.error("Can't kick the user : ", error.response.data);
         });
       break;

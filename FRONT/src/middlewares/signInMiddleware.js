@@ -1,6 +1,8 @@
 /* eslint-disable linebreak-style */
 import axios from 'axios';
-import { connectUser, LOGIN__USER, failedToConnect, saveUserDogsInState } from '../actions/users';
+import {
+  connectUser, LOGIN__USER, failedToConnect, saveUserDogsInState,
+} from '../actions/users';
 import { dburlWithApi } from '../utils/dburl';
 
 const signinMiddleware = (store) => (next) => (action) => {
@@ -22,7 +24,7 @@ const signinMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log('user connect : ', response);
-          // gog et dogs with another request
+          // get user's dogs with another request
           axios({
             method: 'GET',
             url: `${dburlWithApi}/social/profile/${response.data.id}`,
