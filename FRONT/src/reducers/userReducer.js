@@ -47,7 +47,7 @@ const userReducer = (state = parsedUser || userInitialState, action = {}) => {
       return {
         ...state,
         dogs: [
-          ...action.dogs.dogs,
+          ...action.dogs,
         ],
       };
     case ADD_DOG_TO_USER:

@@ -39,21 +39,21 @@ const userMiddleware = (store) => (next) => (action) => {
           console.error("Can't get profile : ", error.response.data);
         });
       break;
-    case USER__GETS__HIS__DOGS:
-      axiosInstance
-        .get(`/social/profile/${action.userId}`)
-        .then((response) => {
-          store.dispatch(saveUserDogsInState(response.data));
-          console.log('User send by db : ', response);
-        })
-        .catch((error) => {
-          if (error.response.data.name === 'TokenExpiredError') {
-            localStorage.removeItem('user');
-            store.dispatch(logoutUser());
-          }
-          console.error("Can't get profile : ", error.response.data);
-        });
-      break;
+    // case USER__GETS__HIS__DOGS:
+    //   axiosInstance
+    //     .get(`/social/profile/${action.userId}`)
+    //     .then((response) => {
+    //       store.dispatch(saveUserDogsInState(response.data));
+    //       console.log('User send by db : ', response);
+    //     })
+    //     .catch((error) => {
+    //       if (error.response.data.name === 'TokenExpiredError') {
+    //         localStorage.removeItem('user');
+    //         store.dispatch(logoutUser());
+    //       }
+    //       console.error("Can't get profile : ", error.response.data);
+    //     });
+    //   break;
     case UPDATE__DOG: {
       const {
         surname, behavior, breed, gender, weight, age, sterilization, description, photoDog,
