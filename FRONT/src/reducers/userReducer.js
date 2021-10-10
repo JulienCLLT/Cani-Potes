@@ -13,11 +13,14 @@ const userInitialState = {
   token: '',
   isLogged: false,
   failedToConnect: false,
+  ride_id: [],
   rides: [],
   renderAgain: false,
 };
 
-const userReducer = (state = userInitialState, action = {}) => {
+const parsedUser = JSON.parse(localStorage.getItem('user'));
+
+const userReducer = (state = parsedUser || userInitialState, action = {}) => {
   switch (action.type) {
     case CONNECT__USER:
       return {
@@ -25,7 +28,7 @@ const userReducer = (state = userInitialState, action = {}) => {
         id: action.user.id,
         first_name: action.user.first_name,
         position: action.user.position,
-        rideId: action.user.ride_id,
+        ride_id: action.user.ride_id,
         token: action.token,
         isLogged: true,
       };
@@ -44,7 +47,7 @@ const userReducer = (state = userInitialState, action = {}) => {
       return {
         ...state,
         dogs: [
-          ...action.dogs.dogs,
+          ...action.dogs,
         ],
       };
     case ADD_DOG_TO_USER:
@@ -58,6 +61,7 @@ const userReducer = (state = userInitialState, action = {}) => {
         ],
       };
     case LOGOUT__USER:
+      localStorage.removeItem('user');
       return {
         ...userInitialState,
       };
