@@ -39,6 +39,27 @@ $gutter: 1rem;
     border: 1px solid $color_main;
 }
 
+%remove-cta-absolute {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: $color_error;
+    color: white;
+    font-size: .8rem;
+    cursor: pointer;
+    transition: all .2s ease;
+
+    &:hover {
+        transform: translate(-50%, -50%) scale(1.2);
+        transition: all .2s ease;
+    }
+}
+
 %linear-gradient {
     background: linear-gradient(315deg, #f7b42c 0%, #fc575e 74%);
 }

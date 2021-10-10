@@ -144,7 +144,6 @@
         
         &:hover {
             box-shadow: 0 3px 8px 1px rgba(0, 0, 0, .4);
-            transform: translate(0, -3px);
             transition: all .3s ease-in-out;
         }
 
@@ -176,6 +175,10 @@
         &::-webkit-scrollbar {
             display: none;
           }
+
+        &__kick-btn {
+            @extend %remove-cta-absolute;
+        }
 
         &__star {
             display: inline-block;
@@ -260,6 +263,16 @@
                     }
                 }
             }
+        }
+    }
+
+    &__current-user-container {
+        position: relative;
+        transition: all .3s ease-in-out;
+
+        &:hover {
+            transform: translate(0, -3px);
+            transition: all .3s ease-in-out;
         }
     }
 
@@ -393,7 +406,7 @@
     }
 
     &__modal {
-        position: absolute;
+        position: fixed;
         width: 80%;
         top: 50%;
         left: 50%;

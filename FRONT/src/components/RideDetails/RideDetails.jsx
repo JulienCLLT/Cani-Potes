@@ -238,60 +238,62 @@ const RideDetails = () => {
                     <div className="ride-details__users__registered">
                       {
                         participants.map((participant) => (
-                          <Link to={`/profile/${participant.participant_id}`} className="ride-details__current-user-link" key={participant.participant_id}>
-                            <div className="ride-details__current-user">
-                              {userIsHost && participant.participant_id !== userProfile.id && (
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    setIsKickUserModalOpen(true);
-                                    setUserKicked(participant.participant_id);
-                                  }}
-                                >
-                                  {/* <img src={close} alt="kick user" /> */}
-                                  X
-                                </button>
-                              )}
-                              <div className="ride-details__current-user__avatar">
-                                <img src={`${dburlWithoutApi}/user_resized/${participant.participant_photo}`} alt="user" />
-                                <div className="ride-details__current-user__avatar-name">
-                                  {host_id === participant.participant_id && (
-                                    <div className="ride-details__current-user__star">
-                                      <img src={star} alt="star" />
-                                    </div>
-                                  )} {participant.participant_first_name}
+                          <div className="ride-details__current-user-container">
+                            {userIsHost && participant.participant_id !== userProfile.id && (
+                              <button
+                                className="ride-details__current-user__kick-btn"
+                                type="button"
+                                onClick={() => {
+                                  setIsKickUserModalOpen(true);
+                                  setUserKicked(participant.participant_id);
+                                }}
+                              >
+                                X
+                              </button>
+                            )}
+                            <Link className="ride-details__current-user-link" key={participant.participant_id}>
+                              <div className="ride-details__current-user">
+                                <div className="ride-details__current-user__avatar">
+                                  <img src={`${dburlWithoutApi}/user_resized/${participant.participant_photo}`} alt="user" />
+                                  <div className="ride-details__current-user__avatar-name">
+                                    {host_id === participant.participant_id && (
+                                      <div className="ride-details__current-user__star">
+                                        <img src={star} alt="star" />
+                                      </div>
+                                    )} {participant.participant_first_name}
+                                  </div>
+                                </div>
+
+                                <div className="ride-details__current-user__dogs-container">
+                                  {participant.dogs.map((dog) => (
+                                    <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
+                                      <div className="dog-avatar">
+                                        {dog.dog_photo && (
+                                          <img src={`${dburlWithoutApi}/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
+                                        )}
+                                        <span>{dog.dog_surname}</span>
+                                        <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
+
+                                      </div>
+                                      <div className="dog-details">
+                                        <ul>
+                                          <li>
+                                            <span className="dog-details__behavior">
+                                              <img src={dogBehaviors[dog.dog_behavior]} alt="dog behavior" className="dog-details__behavior__logo" />
+                                              {dog.dog_behavior}
+                                            </span>
+                                          </li>
+                                          <li>{dog.dog_breed}</li>
+                                          <li>{dog.dog_age} {dog.dog_weight}kg</li>
+                                          <li>{dog.dog_sterilization ? 'Stérilisé' : 'Non stérilisé'}</li>
+                                        </ul>
+                                      </div>
+                                    </article>
+                                  ))}
                                 </div>
                               </div>
-
-                              <div className="ride-details__current-user__dogs-container">
-                                {participant.dogs.map((dog) => (
-                                  <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
-                                    <div className="dog-avatar">
-                                      {dog.dog_photo && (
-                                        <img src={`${dburlWithoutApi}/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
-                                      )}
-                                      <span>{dog.dog_surname}</span>
-                                      <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
-
-                                    </div>
-                                    <div className="dog-details">
-                                      <ul>
-                                        <li>
-                                          <span className="dog-details__behavior">
-                                            <img src={dogBehaviors[dog.dog_behavior]} alt="dog behavior" className="dog-details__behavior__logo" />
-                                            {dog.dog_behavior}
-                                          </span>
-                                        </li>
-                                        <li>{dog.dog_breed}</li>
-                                        <li>{dog.dog_age} {dog.dog_weight}kg</li>
-                                        <li>{dog.dog_sterilization ? 'Stérilisé' : 'Non stérilisé'}</li>
-                                      </ul>
-                                    </div>
-                                  </article>
-                                ))}
-                              </div>
-                            </div>
-                          </Link>
+                            </Link>
+                          </div>
                         ))
                       }
                     </div>
