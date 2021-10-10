@@ -95,3 +95,9 @@ export const kickUserFromRide = (userId, rideId) => ({
   userId,
   rideId,
 });
+
+export const SET__ERROR__MSG = 'SET__ERROR__MSG';
+export const setErrorMsg = (errorMsg) => ({
+  type: SET__ERROR__MSG,
+  errorMsg,
+});

@@ -29,7 +29,8 @@ import nbdog from '../../assets/img/info-ride/nbdog.svg';
 import nbcanipote from '../../assets/img/info-ride/nbcanipote.svg';
 
 import {
-  sendNewMessage, addUserToRide, deleteRide, getOneRideById, getRideIsLoading, userQuitRide, kickUserFromRide,
+  sendNewMessage, addUserToRide, deleteRide, getOneRideById,
+  getRideIsLoading, userQuitRide, kickUserFromRide,
 } from '../../actions/rides';
 import { translateDate } from '../../utils/translateDate';
 import { reverseGeocoding } from '../../utils/reverseGeocoding';
@@ -45,6 +46,11 @@ const RideDetails = () => {
   const dispatch = useDispatch();
 
   const { user: userProfile } = useSelector((state) => state);
+  const {
+    ride_id, title, max_number_dogs, participants, starting_time, duration, description,
+    host_id, messages, start_coordinate, end_coordinate, isLoading, rideDoesNotExist,
+  } = useSelector((state) => state.rides.currentRide);
+  const { errorMessage } = useSelector((state) => state.rides);
 
   useEffect(() => {
     dispatch(reinitRenderAgain());
@@ -52,10 +58,6 @@ const RideDetails = () => {
     dispatch(getOneRideById(id));
   }, [userProfile.renderAgain]);
 
-  const {
-    ride_id, title, max_number_dogs, participants, starting_time, duration,
-    description, host_first_name, host_id, messages, start_coordinate, end_coordinate, isLoading,
-  } = useSelector((state) => state.rides.currentRide);
 
   const [startPointAddress, setStartPointAddress] = useState('');
   const [endPointAddress, setEndPointAddress] = useState('');
@@ -167,289 +169,301 @@ const RideDetails = () => {
   return (
     <>
       <Header />
-      <main>
-        <div className="ride-details">
-          {isRedirect && <Redirect to="/home" />}
-          <section className="ride-details__map">
-            {/* <div className="ride-details__infos__map"> */}
-            <div className="ride-details__leaflet">
-              {
-                  isLoading ? (
-                    <Loader />
-                  ) : (
-                    <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={16} scrollWheelZoom zoomControl={false}>
-                      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                      <Marker position={start_coordinate} icon={positionStart}>
-                        <Popup>Départ</Popup>
-                      </Marker>
-                      <Marker position={end_coordinate} icon={positionEnd}>
-                        <Popup>Arrivée</Popup>
-                      </Marker>
-                    </MapContainer>
-                  )
-                }
-            </div>
-            {/* </div> */}
-          </section>
-          <section className="ride-details__infos">
-            <div className="ride-details__infos__header">
-              <h2>{title}</h2>
-              <div className="ride-details__infos__header__number">
-                <span>
-                  <img src={nbdog} alt="icon dog" />
-                  {nbOfDogs} / {max_number_dogs} chiens
-                </span>
-                <span>
-                  <img src={nbcanipote} alt="icon human" />
-                  {participants.length} Cani Potes
-                </span>
-              </div>
-            </div>
-            <div className="ride-details__infos__description">
-              <p>
-                <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
-                {translateDate(starting_time)}
-              </p>
-              <p>
-                <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
-                Durée : {duration.minutes ? `${duration.minutes} min` : 'indeterminée'}
-              </p>
-              <p>
-                <span className="ride-details__icon"><img src={starting} alt="starting" /></span>
-                Départ : <br />{startPointAddress}
-              </p>
-              <p>
-                <span className="ride-details__icon"><img src={flag} alt="flag" /></span>
-                Arrivée : <br />{endPointAddress}
-              </p>
-              <p>{description}</p>
-            </div>
-          </section>
+      {
+        errorMessage === 'Ride not found' ? (
+          <div className="ride-details__ride-not-found">Balade non trouvée</div>
+        ) : (
+          <>
+            <main>
+              <div className="ride-details">
+                {isRedirect && <Redirect to="/home" />}
+                <section className="ride-details__map">
+                  {/* <div className="ride-details__infos__map"> */}
+                  <div className="ride-details__leaflet">
+                    {
+                        isLoading ? (
+                          <Loader />
+                        ) : (
+                          <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={16} scrollWheelZoom zoomControl={false}>
+                            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                            <Marker position={start_coordinate} icon={positionStart}>
+                              <Popup>Départ</Popup>
+                            </Marker>
+                            <Marker position={end_coordinate} icon={positionEnd}>
+                              <Popup>Arrivée</Popup>
+                            </Marker>
+                          </MapContainer>
+                        )
+                      }
+                  </div>
+                  {/* </div> */}
+                </section>
+                <section className="ride-details__infos">
+                  <div className="ride-details__infos__header">
+                    <h2>{title}</h2>
+                    <div className="ride-details__infos__header__number">
+                      <span>
+                        <img src={nbdog} alt="icon dog" />
+                        {nbOfDogs} / {max_number_dogs} chiens
+                      </span>
+                      <span>
+                        <img src={nbcanipote} alt="icon human" />
+                        {participants.length} Cani Potes
+                      </span>
+                    </div>
+                  </div>
+                  <div className="ride-details__infos__description">
+                    <p>
+                      <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
+                      {translateDate(starting_time)}
+                    </p>
+                    <p>
+                      <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
+                      Durée : {duration.minutes ? `${duration.minutes} min` : 'indeterminée'}
+                    </p>
+                    <p>
+                      <span className="ride-details__icon"><img src={starting} alt="starting" /></span>
+                      Départ : <br />{startPointAddress}
+                    </p>
+                    <p>
+                      <span className="ride-details__icon"><img src={flag} alt="flag" /></span>
+                      Arrivée : <br />{endPointAddress}
+                    </p>
+                    <p>{description}</p>
+                  </div>
+                </section>
 
-          <section className="ride-details__users">
-            <div className="ride-details__container">
-              <div className="ride-details__users__registered">
-                {
-                  participants.map((participant) => (
-                    <Link to={`/profile/${participant.participant_id}`} className="ride-details__current-user-link" key={participant.participant_id}>
-                      <div className="ride-details__current-user">
-                        {userIsHost && participant.participant_id !== userProfile.id && (
+                <section className="ride-details__users">
+                  <div className="ride-details__container">
+                    <div className="ride-details__users__registered">
+                      {
+                        participants.map((participant) => (
+                          <Link to={`/profile/${participant.participant_id}`} className="ride-details__current-user-link" key={participant.participant_id}>
+                            <div className="ride-details__current-user">
+                              {userIsHost && participant.participant_id !== userProfile.id && (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setIsKickUserModalOpen(true);
+                                    setUserKicked(participant.participant_id);
+                                  }}
+                                >
+                                  {/* <img src={close} alt="kick user" /> */}
+                                  X
+                                </button>
+                              )}
+                              <div className="ride-details__current-user__avatar">
+                                <img src={`${dburlWithoutApi}/user_resized/${participant.participant_photo}`} alt="user" />
+                                <div className="ride-details__current-user__avatar-name">
+                                  {host_id === participant.participant_id && (
+                                    <div className="ride-details__current-user__star">
+                                      <img src={star} alt="star" />
+                                    </div>
+                                  )} {participant.participant_first_name}
+                                </div>
+                              </div>
+
+                              <div className="ride-details__current-user__dogs-container">
+                                {participant.dogs.map((dog) => (
+                                  <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
+                                    <div className="dog-avatar">
+                                      {dog.dog_photo && (
+                                        <img src={`${dburlWithoutApi}/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
+                                      )}
+                                      <span>{dog.dog_surname}</span>
+                                      <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
+
+                                    </div>
+                                    <div className="dog-details">
+                                      <ul>
+                                        <li>
+                                          <span className="dog-details__behavior">
+                                            <img src={dogBehaviors[dog.dog_behavior]} alt="dog behavior" className="dog-details__behavior__logo" />
+                                            {dog.dog_behavior}
+                                          </span>
+                                        </li>
+                                        <li>{dog.dog_breed}</li>
+                                        <li>{dog.dog_age} {dog.dog_weight}kg</li>
+                                        <li>{dog.dog_sterilization ? 'Stérilisé' : 'Non stérilisé'}</li>
+                                      </ul>
+                                    </div>
+                                  </article>
+                                ))}
+                              </div>
+                            </div>
+                          </Link>
+                        ))
+                      }
+                    </div>
+                  </div>
+
+                </section>
+                <div className="ride-details__registration">
+                  {
+                      participants.find(
+                        (participant) => participant.participant_id === userProfile.id,
+                      )
+                        ? (
                           <button
                             type="button"
-                            onClick={() => {
-                              setIsKickUserModalOpen(true);
-                              setUserKicked(participant.participant_id);
-                            }}
+                            onClick={() => handleQuit()}
                           >
-                            {/* <img src={close} alt="kick user" /> */}
-                            X
+                            Se désinscrire
                           </button>
-                        )}
-                        <div className="ride-details__current-user__avatar">
-                          <img src={`${dburlWithoutApi}/user_resized/${participant.participant_photo}`} alt="user" />
-                          <div className="ride-details__current-user__avatar-name">
-                            {host_id === participant.participant_id && (
-                              <div className="ride-details__current-user__star">
-                                <img src={star} alt="star" />
-                              </div>
-                            )} {participant.participant_first_name}
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => handleJoinIn()}
+                          >
+                            {joinInMsg}
+                          </button>
+                        )
+                    }
+                </div>
+
+                {
+                  participants.find(
+                    (participant) => participant.participant_id === userProfile.id,
+                  ) && (
+                    <button
+                      type="button"
+                      className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
+                      onClick={() => {
+                        setIsChatOpen(!isChatOpen);
+                        scrollDownChat();
+                      }}
+                    >
+                      {
+                        isChatOpen ? (
+                          // <img src={close} alt="close chat" />
+                          'X'
+                        ) : (
+                          <img src={conversation} alt="open chat" />
+                        )
+                      }
+                    </button>
+                  )
+                }
+
+                {isChatOpen && (
+                  <section className="ride-details__chat">
+                    <div className="ride-details__messages-container" ref={chatZone}>
+                      {
+                        messages.map((msg) => (
+                          <div
+                            key={msg.id}
+                            className={msg.sender_id === userProfile.id ? 'ride-details__messages-container__message my-message' : 'ride-details__messages-container__message'}
+                          >
+                            <p>
+                              {msg.participants}
+                              <span>
+                                {msg.sender_first_name}
+                                {translateDate(msg.sent)}
+                              </span>
+                            </p>
+                            <span>{msg.message}</span>
                           </div>
-                        </div>
-
-                        <div className="ride-details__current-user__dogs-container">
-                          {participant.dogs.map((dog) => (
-                            <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
-                              <div className="dog-avatar">
-                                {dog.dog_photo && (
-                                  <img src={`${dburlWithoutApi}/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
-                                )}
-                                <span>{dog.dog_surname}</span>
-                                <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
-
-                              </div>
-                              <div className="dog-details">
-                                <ul>
-                                  <li>
-                                    <span className="dog-details__behavior">
-                                      <img src={dogBehaviors[dog.dog_behavior]} alt="dog behavior" className="dog-details__behavior__logo" />
-                                      {dog.dog_behavior}
-                                    </span>
-                                  </li>
-                                  <li>{dog.dog_breed}</li>
-                                  <li>{dog.dog_age} {dog.dog_weight}kg</li>
-                                  <li>{dog.dog_sterilization ? 'Stérilisé' : 'Non stérilisé'}</li>
-                                </ul>
-                              </div>
-                            </article>
-                          ))}
-                        </div>
-                      </div>
-                    </Link>
-                  ))
-                }
-              </div>
-            </div>
-
-          </section>
-          <div className="ride-details__registration">
-            {
-                participants.find((participant) => participant.participant_id === userProfile.id)
-                  ? (
-                    <button
-                      type="button"
-                      onClick={() => handleQuit()}
-                    >
-                      Se désinscrire
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => handleJoinIn()}
-                    >
-                      {joinInMsg}
-                    </button>
-                  )
-              }
-          </div>
-
-          {
-            participants.find((participant) => participant.participant_id === userProfile.id) && (
-              <button
-                type="button"
-                className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
-                onClick={() => {
-                  setIsChatOpen(!isChatOpen);
-                  scrollDownChat();
-                }}
-              >
-                {
-                  isChatOpen ? (
-                    // <img src={close} alt="close chat" />
-                    'X'
-                  ) : (
-                    <img src={conversation} alt="open chat" />
-                  )
-                }
-              </button>
-            )
-          }
-
-          {isChatOpen && (
-            <section className="ride-details__chat">
-              <div className="ride-details__messages-container" ref={chatZone}>
-                {
-                  messages.map((msg) => (
-                    <div
-                      key={msg.id}
-                      className={msg.sender_id === userProfile.id ? 'ride-details__messages-container__message my-message' : 'ride-details__messages-container__message'}
-                    >
-                      <p>
-                        {msg.participants}
-                        <span>
-                          {msg.sender_first_name}
-                          {translateDate(msg.sent)}
-                        </span>
-                      </p>
-                      <span>{msg.message}</span>
+                        ))
+                      }
                     </div>
-                  ))
+                    <div className="ride-details__new-message">
+                      <form onSubmit={handleSubmit(onSubmit)} className="ride-details__form">
+                        <input
+                          id="message"
+                          name="message"
+                          type="text"
+                          placeholder="Nouveau message"
+                          {...register('message', { required: true })}
+                        />
+                        <button type="submit">Envoyer</button>
+                      </form>
+                    </div>
+
+                  </section>
+                )}
+
+                {
+                  isDeleteRideModalOpen && (
+                    <div className="ride-details__modal">
+                      <p
+                        className="ride-details__modal__text"
+                      >
+                        Attention, vous êtes l'organisateur de cette balade
+                      </p>
+                      <p
+                        className="ride-details__modal__text"
+                      >
+                        En vous retirant vous la supprimerez
+                      </p>
+                      <p
+                        className="ride-details__modal__text"
+                      >
+                        Continuer ?
+                      </p>
+                      <div className="ride-details__modal__btn-container">
+                        <button
+                          type="button"
+                          className="ride-details__modal__back-btn"
+                          onClick={() => setIsDeleteRideModalOpen(false)}
+                        >
+                          Retour
+                        </button>
+                        <button
+                          type="button"
+                          className="ride-details__modal__delete-btn"
+                          onClick={() => handleDelete()}
+                        >
+                          Supprimer
+                        </button>
+                      </div>
+                    </div>
+                  )
+                }
+
+                {
+                  isKickUserModalOpen && (
+                    <div className="ride-details__modal">
+                      <p
+                        className="ride-details__modal__text"
+                      >
+                        Voulez allez retirer {
+                          participants.find(
+                            (participant) => participant.participant_id === userKicked,
+                          ).participant_first_name
+                        } de la balade ?
+                      </p>
+                      <p
+                        className="ride-details__modal__text"
+                      >
+                        Continuer ?
+                      </p>
+                      <div className="ride-details__modal__btn-container">
+                        <button
+                          type="button"
+                          className="ride-details__modal__back-btn"
+                          onClick={() => {
+                            setIsKickUserModalOpen(false);
+                            setUserKicked(0);
+                          }}
+                        >
+                          Retour
+                        </button>
+                        <button
+                          type="button"
+                          className="ride-details__modal__delete-btn"
+                          onClick={() => handleKick()}
+                        >
+                          Retirer
+                        </button>
+                      </div>
+                    </div>
+                  )
                 }
               </div>
-              <div className="ride-details__new-message">
-                <form onSubmit={handleSubmit(onSubmit)} className="ride-details__form">
-                  <input
-                    id="message"
-                    name="message"
-                    type="text"
-                    placeholder="Nouveau message"
-                    {...register('message', { required: true })}
-                  />
-                  <button type="submit">Envoyer</button>
-                </form>
-              </div>
-
-            </section>
-          )}
-
-          {
-            isDeleteRideModalOpen && (
-              <div className="ride-details__modal">
-                <p
-                  className="ride-details__modal__text"
-                >
-                  Attention, vous êtes l'organisateur de cette balade
-                </p>
-                <p
-                  className="ride-details__modal__text"
-                >
-                  En vous retirant vous la supprimerez
-                </p>
-                <p
-                  className="ride-details__modal__text"
-                >
-                  Continuer ?
-                </p>
-                <div className="ride-details__modal__btn-container">
-                  <button
-                    type="button"
-                    className="ride-details__modal__back-btn"
-                    onClick={() => setIsDeleteRideModalOpen(false)}
-                  >
-                    Retour
-                  </button>
-                  <button
-                    type="button"
-                    className="ride-details__modal__delete-btn"
-                    onClick={() => handleDelete()}
-                  >
-                    Supprimer
-                  </button>
-                </div>
-              </div>
-            )
-          }
-
-          {
-            isKickUserModalOpen && (
-              <div className="ride-details__modal">
-                <p
-                  className="ride-details__modal__text"
-                >
-                  Voulez allez retirer {
-                    participants.find(
-                      (participant) => participant.participant_id === userKicked,
-                    ).participant_first_name
-                  } de la balade ?
-                </p>
-                <p
-                  className="ride-details__modal__text"
-                >
-                  Continuer ?
-                </p>
-                <div className="ride-details__modal__btn-container">
-                  <button
-                    type="button"
-                    className="ride-details__modal__back-btn"
-                    onClick={() => {
-                      setIsKickUserModalOpen(false);
-                      setUserKicked(0);
-                    }}
-                  >
-                    Retour
-                  </button>
-                  <button
-                    type="button"
-                    className="ride-details__modal__delete-btn"
-                    onClick={() => handleKick()}
-                  >
-                    Retirer
-                  </button>
-                </div>
-              </div>
-            )
-          }
-        </div>
-      </main>
+            </main>
+          </>
+        )
+      }
     </>
   );
 };

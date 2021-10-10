@@ -7,12 +7,6 @@
     }
 };
 
-%title-background {
-    @extend %linear-gradient;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
 .ride-details {
     padding: vars.$gutter;
     margin-bottom: 3rem;
@@ -451,5 +445,12 @@
             background-color: vars.$color-main;
             color: white;
         }
+    }
+
+    &__ride-not-found {
+        text-align: center;
+        padding: 2rem;
+        font-size: 2rem;
+        @extend %title-background;
     }
 }
