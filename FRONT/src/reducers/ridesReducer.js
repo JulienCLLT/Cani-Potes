@@ -3,7 +3,7 @@ import { GET__RIDES__WITH__USER__IN, LOGOUT__USER } from '../actions/users';
 import {
   ADD__USER__TO__RIDE, USER__QUIT__RIDE, ADD__MESSAGE__IN__STATE,
   DELETE__RIDE__IN__STATE, SAVE__ALL__RIDES, SAVE__ONE__RIDE, GET__RIDE__IS__LOADING,
-  FAILED_TO_CREATE_RIDE, KICK__USER__FROM__RIDE, CREATE_RIDE,
+  FAILED_TO_CREATE_RIDE, KICK__USER__FROM__RIDE, CREATE_RIDE, SET__ERROR__MSG,
 } from '../actions/rides';
 
 const ridesInitialState = {
@@ -157,6 +157,7 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
             messages: [],
             isLoading: false,
           },
+          errorMessage: '',
         };
       }
       return {
@@ -165,6 +166,12 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           ...action.ride,
           isLoading: false,
         },
+        errorMessage: '',
+      };
+    case SET__ERROR__MSG:
+      return {
+        ...state,
+        errorMessage: action.errorMsg,
       };
     case GET__RIDE__IS__LOADING:
       return {

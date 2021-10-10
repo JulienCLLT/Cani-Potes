@@ -4,7 +4,7 @@ import axios from 'axios';
 import {
   GET__ALL__RIDES, GET__ONE__RIDE__BY__ID, DELETE__RIDE, ADD__USER__TO__RIDE,
   CREATE_RIDE, USER__QUIT__RIDE, KICK__USER__FROM__RIDE, SEND__NEW__MESSAGE,
-  saveAllRides, saveOneRide, deleteRideInState, failedToCreateRide, addMessageInState,
+  saveAllRides, saveOneRide, deleteRideInState, failedToCreateRide, addMessageInState, setErrorMsg,
 } from '../actions/rides';
 import { logoutUser, renderAgain } from '../actions/users';
 import { dburlWithApi } from '../utils/dburl';
@@ -30,7 +30,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
             localStorage.removeItem('user');
             store.dispatch(logoutUser());
           }
-          console.error('erreur : ', error.response.data);
+          console.error("Can't get all rides : ", error.response.data);
         });
       next(action);
       break;
@@ -46,7 +46,11 @@ const ridesMiddleware = (store) => (next) => (action) => {
             localStorage.removeItem('user');
             store.dispatch(logoutUser());
           }
-          console.error('erreur : ', error.response.data);
+
+          if (error.response.data === "La balade n'existe pas") {
+            store.dispatch(setErrorMsg('Ride not found'));
+          }
+          console.error("Can't get this ride : ", error.response.data);
         });
       break;
     case ADD__USER__TO__RIDE:
