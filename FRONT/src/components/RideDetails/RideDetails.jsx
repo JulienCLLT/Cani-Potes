@@ -17,7 +17,6 @@ import hourglass from '../../assets/img/info-ride/hourglass-orange.svg';
 import startFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endFlag from '../../assets/img/info-ride/endPointFlag.svg';
 import conversation from '../../assets/img/info-ride/conversation.svg';
-// import close from '../../assets/img/close.svg';
 import star from '../../assets/img/star.svg';
 import peureux from '../../assets/img/profile-simulation/fearful.svg';
 import joueur from '../../assets/img/profile-simulation/player.png';
@@ -329,7 +328,7 @@ const RideDetails = () => {
                   ) && (
                     <button
                       type="button"
-                      className={isChatOpen ? 'ride-details__toggle rotate' : 'ride-details__toggle'}
+                      className={isChatOpen ? 'ride-details__toggle chat-open' : 'ride-details__toggle'}
                       onClick={() => {
                         setIsChatOpen(!isChatOpen);
                         scrollDownChat();
@@ -348,37 +347,42 @@ const RideDetails = () => {
 
                 {isChatOpen && (
                   <section className="ride-details__chat">
-                    <div className="ride-details__messages-container" ref={chatZone}>
+                    <div className="ride-details__chat__messages-container" ref={chatZone}>
                       {
                         messages.map((msg) => (
                           <div
                             key={msg.id}
-                            className={msg.sender_id === userProfile.id ? 'ride-details__messages-container__message my-message' : 'ride-details__messages-container__message'}
+                            className={msg.sender_id === userProfile.id ? 'ride-details__chat__messages-container__message my-message' : 'ride-details__chat__messages-container__message'}
                           >
-                            <p>
-                              {msg.participants}
-                              <span>
-                                {msg.sender_first_name}
-                                {translateDate(msg.sent)}
+                            <div className="ride-details__message__avatar">
+                              <span className="ride-details__message__pic">
+                                <img src={`${dburlWithoutApi}/user_resized/${msg.sender_photo}`} alt={msg.sender_first_name} />
                               </span>
-                            </p>
+                              <div className="ride-details__message__sent-info">
+                                <span className="ride-details__message__sent-name">
+                                  {msg.sender_first_name}
+                                </span>
+                                <span className="ride-details__message__sent-date">
+                                  {translateDate(msg.sent)}
+                                </span>
+                              </div>
+                            </div>
+
                             <span>{msg.message}</span>
                           </div>
                         ))
                       }
                     </div>
-                    <div className="ride-details__new-message">
-                      <form onSubmit={handleSubmit(onSubmit)} className="ride-details__form">
-                        <input
-                          id="message"
-                          name="message"
-                          type="text"
-                          placeholder="Nouveau message"
-                          {...register('message', { required: true })}
-                        />
-                        <button type="submit">Envoyer</button>
-                      </form>
-                    </div>
+                    <form onSubmit={handleSubmit(onSubmit)} className="ride-details__chat__new-message">
+                      <input
+                        id="message"
+                        name="message"
+                        type="text"
+                        placeholder="Nouveau message"
+                        {...register('message', { required: true })}
+                      />
+                      <button type="submit">Envoyer</button>
+                    </form>
 
                   </section>
                 )}
