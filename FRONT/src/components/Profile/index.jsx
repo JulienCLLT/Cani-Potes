@@ -227,7 +227,7 @@ const Profile = () => {
             <section className="profile-page__info-user">
               {profileIsUser && isEditingUser && (
                 <button
-                  className="delete-account-btn"
+                  className="profile-page__info-user__delete-account-btn"
                   type="button"
                   onClick={() => {
                     setInputDelete('');
@@ -364,7 +364,7 @@ const Profile = () => {
               type="button"
               onClick={() => setIsModalPhotoOpen(false)}
             >
-              <img src={close} alt="close" />
+              ✖
             </button>
 
             <p>Supprimer la photo ?</p>
@@ -396,7 +396,7 @@ const Profile = () => {
               type="button"
               onClick={() => setIsModalDeleteDogIsOpen(false)}
             >
-              <img src={close} alt="close" />
+              ✖
             </button>
 
             <p>Supprimer le chien ?</p>

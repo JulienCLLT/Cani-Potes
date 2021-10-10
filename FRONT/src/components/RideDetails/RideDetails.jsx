@@ -248,7 +248,7 @@ const RideDetails = () => {
                                   setUserKicked(participant.participant_id);
                                 }}
                               >
-                                X
+                                ✖
                               </button>
                             )}
                             <Link className="ride-details__current-user-link" key={participant.participant_id}>
@@ -337,8 +337,7 @@ const RideDetails = () => {
                     >
                       {
                         isChatOpen ? (
-                          // <img src={close} alt="close chat" />
-                          'X'
+                          '✖'
                         ) : (
                           <img src={conversation} alt="open chat" />
                         )
