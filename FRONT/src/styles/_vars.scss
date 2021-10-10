@@ -50,7 +50,7 @@ $gutter: 1rem;
     border-radius: 50%;
     background: $color_error;
     color: white;
-    font-size: .8rem;
+    font-size: .9rem;
     cursor: pointer;
     transition: all .2s ease;
 
@@ -68,4 +68,14 @@ $gutter: 1rem;
     @extend %linear-gradient;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+%input {
+    border-radius: 5px;
+    padding: 0 .3rem;
+    border: 1px solid $color_grey_writing;
+
+    &:focus {
+      box-shadow: 0 3px 5px $color-border-input;
+    }
 }

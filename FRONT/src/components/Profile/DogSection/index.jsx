@@ -32,7 +32,6 @@ const DogSection = ({
         {/* SURNAME GENDER BIRTHDAY */}
         {isEditingDog === index + 1 ? (
           <>
-            {/* <div className="profile-page__dog__display-input"> */}
             {/* Surname */}
             <input
               type="text"
@@ -211,8 +210,7 @@ const DogSection = ({
                       setIsModalPhotoOpen(true);
                     }}
                   >
-                    {/* <img src={close} alt="delete" /> */}
-                    X
+                    ✖
                   </button>
                 )}
               </div>
@@ -236,46 +234,47 @@ const DogSection = ({
         </>
       )}
       <div className="profile-page__buttons">
-        <div className="profile-page__buttons__return-submit">
 
-          { profileIsUser && (
-            <div
-              onClick={() => {
-                if (dogIsChanged) setIsModalOpen(true);
-                else toggleEditDog(index);
-              }}
-            >
-              {isEditingDog === index + 1 ? (
-                <span className="profile-page__buttons__return-submit__return">
-                  Retour
-                </span>
-              ) : (
-                <span className="edit-btn">
-                  <img src={edit} alt="edit" />
-                  Modifier
-                </span>
-              )}
-            </div>
-          )}
+        { profileIsUser && (
+          <>
+            {isEditingDog === index + 1 ? (
+              <button
+                type="button"
+                className="edit-btn"
+                onClick={() => {
+                  if (dogIsChanged) setIsModalOpen(true);
+                  else toggleEditDog(index);
+                }}
+              >
+                Retour
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="edit-btn"
+                onClick={() => toggleEditDog(index)}
+              >
+                <img src={edit} alt="edit" />
+                Modifier
+              </button>
+            )}
+          </>
+        )}
 
-          {isEditingDog === index + 1 && (
-          <div className="profile-page__buttons__return-submit__submit">
+        {isEditingDog === index + 1 && (
+          <>
             <button
               type="button"
+              className="profile-page__buttons__save"
               onClick={handleUpdateDog}
             >
               Enregistrer les infos
             </button>
-          </div>
-          )}
-        </div>
-
-        {isEditingDog === index + 1 ? (
-          <button className="profile-page__buttons__delete" type="button" onClick={() => setIsModalDeleteDogIsOpen(true)}>
-            {/* <img src={close} alt="delete dog" /> */}
-            Supprimer
-          </button>
-        ) : null }
+            <button className="profile-page__buttons__delete" type="button" onClick={() => setIsModalDeleteDogIsOpen(true)}>
+              Supprimer
+            </button>
+          </>
+        )}
       </div>
     </article>
   );

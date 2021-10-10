@@ -21,6 +21,7 @@ const DeleteAccModal = ({
         Entrez votre prénom <span>{firstName}</span> pour valider cette action
       </p>
       <input
+        className="profile-page__modal__input"
         type="email"
         name="email"
         value={inputDelete}

@@ -70,6 +70,7 @@
             position: relative;
             
             h2 {
+                margin-top: 5rem;
                 text-align: center;
                 font-size: 2.5*vars.$gutter;
                 color: vars.$color_main;
@@ -308,31 +309,39 @@
     }
 
     &__toggle {
-        position: absolute;
+        position: fixed;
         z-index: 999;
-        top: 50%;
+        bottom: 4rem;
         right: .5 * vars.$gutter;
-        transform: translate(0, -50%) rotate(180deg);
-        width: 30px;
-        height: 30px;
-        background: vars.$color_main;
+        width: 50px;
+        height: 50px;
+        @extend %linear-gradient;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: all .2s ease-in;
         cursor: pointer;
-    }
+        animation: chat-bubble 15s infinite;
+        color: white;
+        transition: all .5s ease;
 
-    .rotate {
-        transform: translate(0, -50%);
-        transition: all .2s ease-in;
+        button {
+            img {
+                width: 75%;
+            }
+        }
+
+        &.chat-open {
+            bottom: 90%;
+            transition: all .5s ease;
+            font-size: 1.5rem;
+        }
     }
 
     &__chat {
         position: fixed;
-        top: 200px;
-        bottom: 50px;
+        top: 5%;
+        bottom: 57px;
         right: vars.$gutter;
         width: calc(100% - 2 * vars.$gutter);
         border-top: 1px solid vars.$color_main;
@@ -348,60 +357,87 @@
             border: 1px solid vars.$color_main;
             right: 3 * vars.$gutter;
         }
-    }
-
-    &__messages-container {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: .5 * vars.$gutter;
-        padding: vars.$gutter 0;
-        overflow-y: scroll;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-
-        &::-webkit-scrollbar {
-            display: none;
-        }
-
-        .my-message {
-            align-self: flex-end;
-        }
-
-        &__message {
-            max-width: 70%;
-            padding: .8 * vars.$gutter ;
-            background: vars.$color-border-bottom-header;
-            border-radius: 8px;
-
-            p {
-                color: vars.$color_main;
-                span {
+        
+        &__messages-container {
+            padding-top: vars.$gutter;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: .5 * vars.$gutter;
+            overflow-y: scroll;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+    
+            &::-webkit-scrollbar {
+                display: none;
+            }
+    
+            .my-message {
+                align-self: flex-end;
+            }
+    
+            &__message {
+                max-width: 70%;
+                padding: .8 * vars.$gutter ;
+                background: vars.$color-border-input;
+                border-radius: 8px;
+    
+                p {
                     color: vars.$color_main;
+                    span {
+                        color: vars.$color_main;
+                    }
+                }
+                span {
+                    color: white;
                 }
             }
-            span {
-                color: white;
+        }
+    
+    
+    
+        &__new-message {
+            margin: vars.$gutter 0;
+            display: flex;
+            justify-content: space-between;
+            gap: vars.$gutter;
+    
+            input {
+                padding: .8rem .5rem;
+                flex: 1;
+                align-self: stretch;
+                border: 1px solid vars.$color_main;
+                border-radius: 5px;
+            }
+    
+            button {
+                @extend %strong-btn;
             }
         }
     }
 
-    &__form {
-        margin-top: vars.$gutter;
-        display: flex;
-        justify-content: space-between;
-        gap: vars.$gutter;
-
-        input {
-            padding: .8rem .5rem;
-            flex: 1;
-            align-self: stretch;
-            border: 1px solid vars.$color_main;
-            border-radius: 5px;
+    &__message {
+        &__avatar {
+            display: flex;
+            gap: vars.$gutter;
         }
 
-        button {
-            @extend %btn
+        &__pic {
+            width: 60px;
+
+            img {
+                width: 100%;
+                border-radius: 50%;
+            }
+        }
+
+        &__sent-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &__sent-date {
+            font-size: .7rem;
         }
     }
 
