@@ -4,6 +4,11 @@ import { NavLink } from 'react-router-dom';
 
 import logo from '../../assets/navbar/canipotes_logo.jpg';
 
+import spa from '../../assets/error404/spa.png';
+import icad from '../../assets/error404/icad.png';
+import petAlert from '../../assets/error404/pet-alert.png';
+import chienPerdu from '../../assets/error404/chien-perdu.png';
+
 import './error.scss';
 
 const Error = () => (
@@ -26,10 +31,36 @@ const Error = () => (
     </header>
 
     <main className="error-404__main">
-      <div className="error-404__main__text-container">
-        <h1>404 <br />not found</h1>
-        <p>Vous êtes tombé sur un os !</p>
+      <div className="error-404__main__text">
+        <h1>404</h1>
+        <h2>Vous êtes tombé sur un os !</h2>
+        <p>Cette page n'existe pas.</p>
+        <p>Pensez à soutenir les associations protègeant les animaux.</p>
+        <p>Sans vos dons ils ne peuvent remplir leur mission.</p>
       </div>
+
+      <footer className="error-404__main__footer">
+        <div className="error-404__main__footer__thumbnail">
+          <a href="https://www.la-spa.fr/">
+            <img src={spa} alt="Vignette SPA" />
+          </a>
+        </div>
+        <div className="error-404__main__footer__thumbnail">
+          <a href="https://www.i-cad.fr/">
+            <img src={icad} alt="Vignette SPA" />
+          </a>
+        </div>
+        <div className="error-404__main__footer__thumbnail">
+          <a href="https://www.petalertfrance.com/">
+            <img src={petAlert} alt="Vignette SPA" />
+          </a>
+        </div>
+        <div className="error-404__main__footer__thumbnail">
+          <a href="https://www.petalertfrance.com/">
+            <img src={chienPerdu} alt="Vignette SPA" />
+          </a>
+        </div>
+      </footer>
     </main>
   </div>
 );
