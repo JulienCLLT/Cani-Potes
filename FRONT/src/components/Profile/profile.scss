@@ -241,35 +241,17 @@
   }
 
   &__modal {
-    position: fixed;
-    background: rgba(0, 0, 0, .2);
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: fade-in .3s ease-in forwards;
-    
-    &__container {
-      @extend %linear-gradient;
-      color: white;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: vars.$gutter;
-      align-items: center;
-      font-size: 1.3rem;
-      padding: 2 * vars.$gutter;
-      box-shadow: 0 0 5px black inset;
-      border-radius: 20px;
-    }
+    @extend %modal;
+    line-height: 1.2;
+
+    &__bold {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: vars.$gutter;
+  }
 
     &__close {
-        @extend %remove-cta-absolute;
+        @extend %modal-close-btn;
     }
 
     &__btn {
@@ -278,17 +260,19 @@
       gap: 1 * vars.$gutter;
       margin: 1 * vars.$gutter 0;
 
-      &-confirm {
-        background: lime !important;
-      }
-
       button {
         @extend %btn;
       }
     }
 
+    &__btn :nth-child(2) {
+      background-color: vars.$color_main;
+      color: white;
+    }
+
     &__input {
       @extend %input;
+      margin-top: vars.$gutter;
     }
   }
 
