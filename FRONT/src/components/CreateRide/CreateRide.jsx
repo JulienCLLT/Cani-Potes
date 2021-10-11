@@ -292,12 +292,13 @@ const CreateRide = () => {
           <label htmlFor="description">Description de ma balade</label>
           <textarea
             placeholder="Je souhaite me faire des Cani Potes !"
+            rows="6"
             {...register('description', { required: 'Veuillez remplir la description.', maxLength: { value: 200, message: 'Veuillez ne pas dépasser 200 caractères.' } })}
           />
           {errors.description && <span>{errors.description.message}</span>}
         </div>
 
-        <input type="submit" />
+        <input type="submit" className="create-ride__field__submit-btn" />
       </form>
     </main>
   );

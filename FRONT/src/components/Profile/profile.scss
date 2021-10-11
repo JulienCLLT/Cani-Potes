@@ -11,9 +11,15 @@
   margin-bottom: 4 * vars.$gutter;
   position: relative;
 
+  @include lg-screen {
+    margin-bottom: 0;
+  }
+
   &__content-wrapper {
     @include lg-screen {
       display: flex;
+      max-height: calc(100vh - 106.4px);
+      background: linear-gradient(315deg, rgba(#f7b42c, .5) 0%, rgba(#fc575e, .5) 74%);
     }
   }
 
@@ -31,7 +37,6 @@
   }
 
   &__header {
-    // margin:  0 auto;
     text-align: center;
     border-radius: 30px;
     padding: .5 * vars.$gutter;
@@ -39,6 +44,9 @@
 
     @include lg-screen {
       width: 400px;
+      background: none;
+      border: none;
+      border-radius: 0;
     }
     
     &-container {
@@ -47,21 +55,21 @@
       align-items: center;
       gap: .5rem;
       margin: 0 auto;
-      
+
       @include lg-screen {
-        // width: 500px;
-        // flex-direction: row;
-        // justify-content: center;
-        // gap: vars.$gutter;
-        // box-shadow: 0 0 5px vars.$color-border-bottom-header;
-        // border-radius: 10px;
-        // padding: 1rem 0;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 2px 2px 5px rgb(0 0 0 / 30%);
+        margin-top: 1.5rem;
+        padding-bottom: 1.5rem;
       }
     }
 
     &__user {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      gap: .5rem;
       margin-top: 0.5*vars.$gutter;
       font-size: 1.4*vars.$gutter;
 
@@ -86,12 +94,25 @@
 
       @include lg-screen {
         margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: vars.$gutter;
       }
 
       img {
+        margin-top: 1.5rem;
         width: 100%;
-        border-radius: 50%;
+        border-radius: 10px;
+
+        @include lg-screen {
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+        }
       }
+    }
+
+    input[type="file"] {
+      margin-left: -3rem;
     }
   }
 
@@ -103,21 +124,21 @@
 
     @include lg-screen {
       justify-content: space-around;
-      flex-direction: row;
+      margin-top: vars.$gutter;
     }
 
     &__submit button {
       @extend %strong-btn;
     }
 
+    &__content {
+      margin-top: vars.$gutter;
+    }
+
     &__content-field {
       display: flex;
       flex-direction: column;
       gap: .5rem;
-
-      @include lg-screen {
-        flex-direction: row;
-      }
     }
 
     &__delete-account-btn {
@@ -127,12 +148,20 @@
   }
 
   &__info-dogs {
-    // @extend %linear-gradient;
+    background: linear-gradient(315deg, rgba(#f7b42c, .5) 0%, rgba(#fc575e, .5) 74%);
     padding: vars.$gutter 1 * vars.$gutter;
     margin: 1 * vars.$gutter 0;
 
     @include lg-screen {
+      background: none;
+      margin: 0;
       flex: 1;
+      overflow-y: scroll;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     article {
@@ -150,18 +179,22 @@
       }
     }
   }
-  
+
   &__dog {
     display: flex;
     flex-direction: column;
     gap: .7 * vars.$gutter;
-    font-size: 1.1rem;
-    
+    font-size: 1.2rem;
+
         @include lg-screen {
           min-width: 400px;
           width: 400px;
+
+          input {
+            border-radius: 5px;
+          }
         }
-    
+
       &__first {
         display: flex;
         justify-content: space-between;
@@ -172,7 +205,13 @@
           width: 70%;
 
           & span {
-            font-size: 1.4rem;
+            font-size: 1.6rem;
+            @extend %title-background;
+            font-weight: bold;
+
+            @include lg-screen {
+              font-size: 1.8rem;
+            }
           }
         }
       }
@@ -181,14 +220,13 @@
         display: flex;
         flex-direction: column;
         gap: .7 * vars.$gutter;
-
-        &span {
-          width: 100%;
-        }
       }
 
       select {
         width: 100%;
+        font-size: 1rem;
+        border-radius: 5px;
+        padding: .3rem ;
       }
 
       span, input {
@@ -198,7 +236,32 @@
         
         img {
           width: 20px;
+
+          @include lg-screen {
+            width: 30px;
+          }
         }
+      }
+
+      &__gender-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        label {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      &__sterilization {
+        display: flex;
+        align-items: center;
+      }
+
+      textarea {
+        font-size: 1.2rem;
       }
   }
 
@@ -207,23 +270,42 @@
     display: flex;
     flex-direction: column;
     gap: .5rem;
-
+    
     .edit-btn {
-      width: 100%
+      width: 100%;
+      
+      @include lg-screen {
+        align-self: flex-end;
+        width: 200px;
+        font-size: 1.2rem;
+      }
     }
 
     &__save {
       @extend %strong-btn;
+
+      @include lg-screen {
+        align-self: flex-end;
+        width: 200px;
+        font-size: 1.2rem;
+      }
     }
 
     &__delete {
       @extend %strong-btn;
       background: vars.$color_error;
+
+      @include lg-screen {
+        align-self: flex-end;
+        width: 200px;
+        font-size: 1.2rem;
+      }
     }
   }
 
   &__dog-pictures {
     @include lg-screen {
+      min-width: 160px;
       overflow-x: scroll;
       flex: 1;
       -ms-overflow-style: none;  /* IE and Edge */
@@ -238,6 +320,7 @@
       padding: .5 * vars.$gutter;
       margin: 1 * vars.$gutter auto;
       border-radius: 5px;
+      border: 1px solid vars.$color-border-bottom-header;
       display: flex;
       gap: .5 * vars.$gutter;
       overflow: scroll;
@@ -250,10 +333,13 @@
 
       &-item {
         width: 100px;
-        min-width: 100px;
         -ms-overflow-style: none;
         scrollbar-width: none;
         position: relative;
+
+        @include lg-screen {
+          width: 150px;
+        }
   
         img {
           margin-bottom: .2rem;
@@ -321,7 +407,7 @@
     align-items: center;
     gap: .5 * vars.$gutter;
     margin: auto;
-    @extend %btn;
+    @extend %strong-btn;
 
     span {
       transition: all .3s ease-in-out;

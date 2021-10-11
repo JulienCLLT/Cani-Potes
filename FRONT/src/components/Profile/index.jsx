@@ -210,56 +210,56 @@ const Profile = () => {
                     )
                   }
                 </div>
-              </div>
-              <section className="profile-page__info-user">
-                {profileIsUser && isEditingUser && (
-                  <button
-                    className="profile-page__info-user__delete-account-btn"
-                    type="button"
-                    onClick={() => {
-                      setInputDelete('');
-                      setFailedToDelete(false);
-                      setIsModalAccountOpen(true);
-                    }}
-                  >
-                    Supprimer mon compte
-                  </button>
-                )}
-                { isEditingUser && (
-                  <p className="profile-page__info-user__content">
-                    <span className="profile-page__info-user__content-field">
-                      {
-                      isEditingUser && (
-                        <input
-                          type="text"
-                          value={firstName}
-                          onChange={(e) => setFirstName(e.target.value)}
-                        />
-                      )
-                    }
-                      {
-                      isEditingUser && (
-                        <input
-                          type="text"
-                          value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
-                        />
-                      )
-                    }
-                    </span>
-                  </p>
-                )}
-                {isEditingUser && (
-                  <div className="profile-page__info-user__submit">
+                <section className="profile-page__info-user">
+                  {profileIsUser && isEditingUser && (
                     <button
-                      type="submit"
-                      onClick={handleUpdateUser}
+                      className="profile-page__info-user__delete-account-btn"
+                      type="button"
+                      onClick={() => {
+                        setInputDelete('');
+                        setFailedToDelete(false);
+                        setIsModalAccountOpen(true);
+                      }}
                     >
-                      Enregistrer vos infos
+                      Supprimer mon compte
                     </button>
-                  </div>
-                )}
-              </section>
+                  )}
+                  {isEditingUser && (
+                    <div className="profile-page__info-user__submit">
+                      <button
+                        type="submit"
+                        onClick={handleUpdateUser}
+                      >
+                        Enregistrer vos infos
+                      </button>
+                    </div>
+                  )}
+                  { isEditingUser && (
+                    <p className="profile-page__info-user__content">
+                      <span className="profile-page__info-user__content-field">
+                        {
+                        isEditingUser && (
+                          <input
+                            type="text"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                          />
+                        )
+                      }
+                        {
+                        isEditingUser && (
+                          <input
+                            type="text"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                          />
+                        )
+                      }
+                      </span>
+                    </p>
+                  )}
+                </section>
+              </div>
             </header>
 
             {isModalDeleteAccountOpen && (
