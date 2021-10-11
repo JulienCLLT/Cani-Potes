@@ -66,6 +66,12 @@ export const updateUser = (user) => ({
   user,
 });
 
+export const UPDATE__USER__COORD = 'UPDATE__USER__COORD';
+export const updateUserCoord = (position) => ({
+  type: UPDATE__USER__COORD,
+  position,
+});
+
 export const GET__RIDES__WITH__USER__IN = 'GET__RIDES__WITH__USER__IN';
 export const getRidesWithUserIn = () => ({
   type: GET__RIDES__WITH__USER__IN,
