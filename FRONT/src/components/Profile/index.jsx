@@ -318,8 +318,8 @@ const Profile = () => {
 
       {/* DOG MODAL */}
       {isModalOpen && (
-        <div className="profile-page__modal">
-          <div className="profile-page__modal__container">
+        <div className="profile-page__modal__wrapper">
+          <div className="profile-page__modal">
             <button
               className="profile-page__modal__close"
               type="button"
@@ -356,8 +356,8 @@ const Profile = () => {
 
       {/* DOG PICTURE MODAL */}
       {isModalPhotoOpen && (
-        <div className="profile-page__modal">
-          <div className="profile-page__modal__container">
+        <div className="profile-page__modal__wrapper">
+          <div className="profile-page__modal">
             <button
               className="profile-page__modal__close"
               type="button"
@@ -388,8 +388,8 @@ const Profile = () => {
 
       {/* DOG DELETE MODAL */}
       {isModalDeleteDogIsOpen && (
-        <div className="profile-page__modal">
-          <div className="profile-page__modal__container">
+        <div className="profile-page__modal__wrapper">
+          <div className="profile-page__modal">
             <button
               className="profile-page__modal__close"
               type="button"

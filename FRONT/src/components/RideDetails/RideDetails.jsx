@@ -181,7 +181,6 @@ const RideDetails = () => {
               <div className="ride-details">
                 {isRedirect && <Redirect to="/home" />}
                 <section className="ride-details__map">
-                  {/* <div className="ride-details__infos__map"> */}
                   <div className="ride-details__leaflet">
                     {
                         isLoading ? (
@@ -199,7 +198,6 @@ const RideDetails = () => {
                         )
                       }
                   </div>
-                  {/* </div> */}
                 </section>
                 <section className="ride-details__infos">
                   <div className="ride-details__infos__header">
@@ -254,7 +252,7 @@ const RideDetails = () => {
                                 ✖
                               </button>
                             )}
-                            <Link className="ride-details__current-user-link" key={participant.participant_id}>
+                            <Link className="ride-details__current-user-link" key={participant.participant_id} to={`/profile/${participant.participant_id}`}>
                               <div className="ride-details__current-user">
                                 <div className="ride-details__current-user__avatar">
                                   <img src={`${dburlWithoutApi}/user_resized/${participant.participant_photo}`} alt="user" />

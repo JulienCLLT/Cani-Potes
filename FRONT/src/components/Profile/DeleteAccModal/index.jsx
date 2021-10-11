@@ -5,8 +5,8 @@ import React from 'react';
 const DeleteAccModal = ({
   setIsModalAccountOpen, inputDelete, setInputDelete, failedToDelete, handleDeleteAccount, firstName,
 }) => (
-  <div className="profile-page__modal">
-    <div className="profile-page__modal__container">
+  <div className="profile-page__modal__wrapper">
+    <div className="profile-page__modal">
       <button
         className="profile-page__modal__close"
         type="button"

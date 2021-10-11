@@ -240,9 +240,14 @@
     }
   }
 
+  &__modal__wrapper {
+    @extend %modal-wrapper;
+  }
+
   &__modal {
     @extend %modal;
     line-height: 1.2;
+    padding: 0;
 
     &__bold {
       font-size: 1.6rem;
@@ -252,6 +257,7 @@
 
     &__close {
         @extend %modal-close-btn;
+        margin: .5rem .5rem 0 0;
     }
 
     &__btn {
