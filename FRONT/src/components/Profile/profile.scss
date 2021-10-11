@@ -11,6 +11,12 @@
   margin-bottom: 4 * vars.$gutter;
   position: relative;
 
+  &__content-wrapper {
+    @include lg-screen {
+      display: flex;
+    }
+  }
+
   .edit-btn {
     width: 90px;
     font-size: .8rem;
@@ -25,18 +31,32 @@
   }
 
   &__header {
-    width: 60%;
-    max-width: 300px;
-    margin:  0 auto 1rem;
+    // margin:  0 auto;
     text-align: center;
     border-radius: 30px;
     padding: .5 * vars.$gutter;
+    background: top / cover url('../../assets/img/profile-simulation/wave.svg') no-repeat;
 
+    @include lg-screen {
+      width: 400px;
+    }
+    
     &-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: .5rem;
+      margin: 0 auto;
+      
+      @include lg-screen {
+        // width: 500px;
+        // flex-direction: row;
+        // justify-content: center;
+        // gap: vars.$gutter;
+        // box-shadow: 0 0 5px vars.$color-border-bottom-header;
+        // border-radius: 10px;
+        // padding: 1rem 0;
+      }
     }
 
     &__user {
@@ -53,12 +73,21 @@
       &__zipcode {
         font-size: vars.$gutter;
       }
+
+      input {
+        width: 60px;
+        font-size: .8rem;
+      }
     }
 
     &__avatar {
       width: 200px;
       margin: auto;
-      
+
+      @include lg-screen {
+        margin: 0;
+      }
+
       img {
         width: 100%;
         border-radius: 50%;
@@ -98,8 +127,13 @@
   }
 
   &__info-dogs {
-    padding: 0 1 * vars.$gutter;
+    // @extend %linear-gradient;
+    padding: vars.$gutter 1 * vars.$gutter;
     margin: 1 * vars.$gutter 0;
+
+    @include lg-screen {
+      flex: 1;
+    }
 
     article {
       background: white;
@@ -240,9 +274,14 @@
     }
   }
 
+  &__modal__wrapper {
+    @extend %modal-wrapper;
+  }
+
   &__modal {
     @extend %modal;
     line-height: 1.2;
+    padding: 0;
 
     &__bold {
       font-size: 1.6rem;
@@ -252,6 +291,7 @@
 
     &__close {
         @extend %modal-close-btn;
+        margin: .5rem .5rem 0 0;
     }
 
     &__btn {

@@ -12,6 +12,10 @@ import raph from '../../assets/team/raph.jpg';
 import raphPet from '../../assets/team/raph_pet.jpg';
 import anne from '../../assets/team/anne.jpg';
 import annePet from '../../assets/team/anne_pet.jpg';
+import julien from '../../assets/team/julien.jpg';
+import julienPet from '../../assets/team/julien_pet.jpg';
+import mathilde from '../../assets/team/mathilde.jpg';
+import mathildePet from '../../assets/team/mathilde_pet.jpg';
 
 import './canicrew.scss';
 
@@ -41,8 +45,8 @@ const CaniCrew = () => {
       firstName: 'Mathilde',
       ghLink: 'https://github.com/mathilde-chenillot',
       linkedinLink: 'https://www.linkedin.com/in/mathildechenillot/',
-      photo: logo,
-      petPhoto: logo,
+      photo: mathilde,
+      petPhoto: mathildePet,
       role: 'Product Owner',
       text: 'Oh une chauve-souris !',
     },
@@ -50,8 +54,8 @@ const CaniCrew = () => {
       firstName: 'Julien',
       ghLink: 'https://github.com/JulienCLLT',
       linkedinLink: 'https://www.linkedin.com/in/collet-julien/',
-      photo: logo,
-      petPhoto: logo,
+      photo: julien,
+      petPhoto: julienPet,
       role: 'Scrum Master',
       text: 'Pensez sécurité !',
     },

@@ -19,6 +19,7 @@ import Legals from '../Legals/index';
 // import './App.scss';
 
 import '../../styles/reset.scss';
+import Error from './../Error/index';
 
 function App() {
   const { isLogged } = useSelector((state) => state.user);
@@ -112,7 +113,7 @@ function App() {
         </Route>
 
         <Route>
-          <main>404 : t'es tombé sur un os !</main>
+          <Error />
         </Route>
 
       </Switch>
