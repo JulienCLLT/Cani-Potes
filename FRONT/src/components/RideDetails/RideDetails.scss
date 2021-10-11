@@ -350,17 +350,18 @@
         right: vars.$gutter;
         width: calc(100% - 2 * vars.$gutter);
         border-top: 1px solid vars.$color_main;
-        background: lighten(vars.$color-border-input, 10);
+        background: url('../../assets/team/double-bubble.png');
         animation: slide-in .2s ease-in;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         z-index: 998;
-
+        
         @include lg-screen {
-            max-width: 600px;
             border: 1px solid vars.$color_main;
+            max-width: 800px;
             right: 3 * vars.$gutter;
+            bottom: 0;
         }
 
         &__messages-container {
@@ -409,14 +410,20 @@
                 border-top-left-radius: 0;
                 background: white;
                 position: relative;
+                background: lighten(vars.$color_yellow, 35);
+
+                @include lg-screen {
+                    min-width: 55%;
+                }
 
                 &::before {
+                    position: relative;
                     position: absolute;
                     top: 0;
                     left: 0;
                     transform: translate(-100%, 0);
                     content: '';
-                    border-right: 10px solid white;
+                    border-right: 10px solid lighten(vars.$color_yellow, 35);
                     border-bottom: 10px solid transparent;
                 }
     
@@ -436,18 +443,30 @@
             margin: vars.$gutter 0;
             display: flex;
             justify-content: space-between;
-            gap: vars.$gutter;
+            padding: vars.$gutter vars.$gutter 0;
     
             input {
                 padding: .8rem .5rem;
                 flex: 1;
                 align-self: stretch;
                 border: 1px solid vars.$color_main;
-                border-radius: 5px;
+                border-top-left-radius: 15px;
+                border-bottom-left-radius: 15px;
             }
     
             button {
                 @extend %strong-btn;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                border-top-right-radius: 15px;
+                border-bottom-right-radius: 15px;
+
+                &:hover {
+                    transform: none;
+                }
             }
         }
     }
