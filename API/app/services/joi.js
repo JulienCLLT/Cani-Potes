@@ -55,7 +55,7 @@ const joiSchema = {
     schemaMessage : joi.object({
         member_id: joi.number().integer().min(1),
         ride_id: joi.number().integer().min(1), 
-        message: joi.string().max(500).escape()
+        message: joi.string().max(500) //interdire certains caractere speciaux []{}<>//
     }),
 
     
