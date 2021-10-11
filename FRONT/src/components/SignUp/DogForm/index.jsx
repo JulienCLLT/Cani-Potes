@@ -62,7 +62,7 @@ const DogForm = () => {
 
               {/* Weight */}
               <div className="dog__form__input-infos__first__weight">
-                <input type="number" placeholder="Poids (kg)" {...register('weight', { required: 'Veuillez renseigner son poids', valueAsNumber: true })} defaultValue="10" className="dog__commun" />
+                <input type="number" placeholder="Poids (kg)" {...register('weight', { required: 'Veuillez renseigner son poids', valueAsNumber: true })} className="dog__commun" />
                 {errors.weight && <p className="errors">{errors.weight.message}</p>}
               </div>
             </div>
