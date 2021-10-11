@@ -46,11 +46,15 @@ const RideDetails = () => {
   const dispatch = useDispatch();
 
   const { user: userProfile } = useSelector((state) => state);
+
   const {
     ride_id, title, max_number_dogs, participants, starting_time, duration, description,
     host_id, messages, start_coordinate, end_coordinate, isLoading,
   } = useSelector((state) => state.rides.currentRide);
+
   const { errorMessage } = useSelector((state) => state.rides);
+
+  messages.sort((a, b) => a.message_id - b.message_id);
 
   useEffect(() => {
     dispatch(reinitRenderAgain());
