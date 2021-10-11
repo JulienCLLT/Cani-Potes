@@ -1,5 +1,5 @@
 const { MailModel } = require('../models');
-const schemaMessage  = require('../services/joi');
+const { joiSchema }  = require('../services');
 
 
 
@@ -8,7 +8,7 @@ const mailController ={
         try {
             request.body.ride_id = parseInt(request.params.idRide,10);
             request.body.member_id = request.userId;
-            const value = await schemaMessage.validateAsync(request.body,{escapeHtml: true});
+            const value = await joiSchema.schemaMessage.validateAsync(request.body,{escapeHtml: true});
                 
             const mail = new MailModel(value);
             const data = await mail.save(mail);
