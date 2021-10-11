@@ -98,8 +98,13 @@ const userController = {
                 await newPhoto.save(newPhoto);
             };
 
+            if (request.body.zip_code) {
+                const newGps = await apiGeo(request.body.zip_code);
+                response.status(201).json({ gps: newGps });
+            } else {
+                response.status(204).json();
+            }
 
-            response.status(201).json({ zip_code: user.zip_code });
         } catch (error) {
             response.status(500).json(error.message);
         }

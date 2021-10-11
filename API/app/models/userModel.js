@@ -46,10 +46,6 @@ class UserModel {
         }
     }
 
-
-
-
-
     static async dataUserConnexion(id) {
         try {
             const { rows } = await client.query('SELECT * FROM user_basic_information WHERE id = $1', [id]);
