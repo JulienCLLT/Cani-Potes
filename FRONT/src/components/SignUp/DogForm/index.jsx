@@ -152,6 +152,7 @@ const DogForm = () => {
               {/* Description */}
               <div className="dog__form__input-infos__others__description">
                 <textarea
+                  rows="4"
                   placeholder="Une petite description de votre chien et de ce que vous recherchez :)"
                   {...register('description', { maxLength: { value: 200, message: 'Veuillez ne pas dépasser 200 caractères.' } })}
                 />
