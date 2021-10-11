@@ -5,7 +5,7 @@ BEGIN;
 CREATE VIEW rides_with_all_informations AS
 SELECT 
     ride.id AS ride_id, title, ride.description, start_coordinate, end_coordinate, 
-    to_char(starting_time, 'TMDay DD TMMonth YYYY "à" HH24 "h" MI') AS starting_time, 
+    to_char(starting_time + interval '2 hours', 'TMDay DD TMMonth YYYY "à" HH24 "h" MI') AS starting_time, 
     duration, max_number_dogs, 
     tag.label AS tag_label, 
     host.id AS host_id, host.first_name AS host_first_name,   
@@ -16,7 +16,7 @@ SELECT
             'sender_photo', sender.photo,
             'message_id', message.id,       
             'message', message.message,                    
-            'sent', to_char(message.created_at, 'TMDay DD TMMonth YYYY "à" HH24 "h" MI')
+            'sent', to_char(message.created_at + interval '2 hours', 'TMDay DD TMMonth YYYY "à" HH24 "h" MI')
         )) FILTER (WHERE sender.id IS NOT NULL) AS messages,
     array_agg(DISTINCT
         jsonb_build_object(
