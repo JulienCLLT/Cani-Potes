@@ -13,7 +13,7 @@ class Mail {
                 RETURNING jsonb_build_object(
                                 'id',id,
                                 'sender_id', member_id,
-                                'sent',to_char(member_write_ride.created_at, 'TMDay DD TMMonth YYYY "à" HH "h" MI'),
+                                'sent',to_char(member_write_ride.created_at + interval '2 hours', 'TMDay DD TMMonth YYYY "à" HH24 "h" MI'),
                                 'message',message)as message`,[
                     this.message,
                     this.ride_id,
