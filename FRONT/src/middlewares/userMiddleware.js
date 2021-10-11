@@ -101,7 +101,6 @@ const userMiddleware = (store) => (next) => (action) => {
         },
       })
         .then((response) => {
-          console.warn('michel');
           store.dispatch(updateUserCoord(response.data.gps));
           store.dispatch(renderAgain());
           next(action);
