@@ -20,27 +20,9 @@ import mathildePet from '../../assets/team/mathilde_pet.jpg';
 import './canicrew.scss';
 
 const CaniCrew = () => {
-  const [count, setCount] = useState(2);
+  const [count, setCount] = useState(0);
 
   const devs = [
-    {
-      firstName: 'Raphaël',
-      ghLink: 'https://github.com/RaphaelCharousset',
-      linkedinLink: 'https://www.linkedin.com/in/raphaelcharousset/',
-      photo: raph,
-      petPhoto: raphPet,
-      role: 'Lead Front & Git Master',
-      text: 'Il suffit de display flex !',
-    },
-    {
-      firstName: 'Anne',
-      ghLink: 'https://github.com/AnneOsolin',
-      linkedinLink: 'https://www.linkedin.com/in/anne-osolin-7b5163200/',
-      photo: anne,
-      petPhoto: annePet,
-      role: 'Git Master',
-      text: 'Vive les conflits avec git merge!',
-    },
     {
       firstName: 'Mathilde',
       ghLink: 'https://github.com/mathilde-chenillot',
@@ -60,6 +42,15 @@ const CaniCrew = () => {
       text: 'Pensez sécurité !',
     },
     {
+      firstName: 'Anne',
+      ghLink: 'https://github.com/AnneOsolin',
+      linkedinLink: 'https://www.linkedin.com/in/anne-osolin-7b5163200/',
+      photo: anne,
+      petPhoto: annePet,
+      role: 'Git Master',
+      text: 'Vive les conflits avec git merge!',
+    },
+    {
       firstName: 'Alexandra',
       ghLink: 'https://github.com/Alekiel42',
       linkedinLink: 'https://www.linkedin.com/in/alexandrabercoff/',
@@ -67,6 +58,15 @@ const CaniCrew = () => {
       petPhoto: alexPet,
       role: 'Lead Back',
       text: "Allez SQL s'il te plait !!!",
+    },
+    {
+      firstName: 'Raphaël',
+      ghLink: 'https://github.com/RaphaelCharousset',
+      linkedinLink: 'https://www.linkedin.com/in/raphaelcharousset/',
+      photo: raph,
+      petPhoto: raphPet,
+      role: 'Lead Front & Git Master',
+      text: 'Il suffit de display flex !',
     },
   ];
 
