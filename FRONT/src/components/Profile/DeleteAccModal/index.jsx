@@ -12,10 +12,10 @@ const DeleteAccModal = ({
         type="button"
         onClick={() => setIsModalAccountOpen(false)}
       >
-        {/* <img src={close} alt="close" /> */}
-        X
+        ✖
       </button>
-      <p>ATTENTION, vous êtes sur le point de supprimer votre compte</p>
+      <p className="profile-page__modal__bold">Attention !</p>
+      <p>Vous êtes sur le point de supprimer votre compte</p>
       <p>Cette action est irréversible</p>
       <p>
         Entrez votre prénom <span>{firstName}</span> pour valider cette action

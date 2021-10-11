@@ -14,6 +14,7 @@ import EsriLeafletGeoSearch from 'react-esri-leaflet/plugins/EsriLeafletGeoSearc
 import RideInformations from '../RideInformations/index';
 
 import mapPin from '../../../assets/img/maps-and-flags.svg';
+import currentPositionMapPin from '../../../assets/img/blue-pin.svg';
 import { getOneRideById, getRideIsLoading } from '../../../actions/rides';
 
 import 'leaflet/dist/leaflet.css';
@@ -32,6 +33,13 @@ const Map = () => {
     inconRetInaUrl: mapPin,
     popupAnchor: [-0, -0],
     iconSize: [22, 35],
+  });
+
+  const currentPositionIcon = new L.Icon({
+    iconUrl: currentPositionMapPin,
+    inconRetInaUrl: currentPositionMapPin,
+    popupAnchor: [-0, -0],
+    iconSize: [22, 25],
   });
 
   const fillBlueOptions = {
@@ -70,9 +78,9 @@ const Map = () => {
 
       {
         currentPosition ? (
-          <Marker position={currentPosition} />
+          <Marker position={currentPosition} icon={currentPositionIcon} />
         ) : (
-          <Marker position={user.position} />
+          <Marker position={user.position} icon={currentPositionIcon} />
         )
       }
 

@@ -328,8 +328,7 @@ const Profile = () => {
               ✖
             </button>
 
-            <p>Attention</p>
-            <p>Vous avez des modifications non enregistrées</p>
+            <p>Vous avez des modifications non enregistrées.</p>
 
             <div className="profile-page__modal__btn">
               <button
