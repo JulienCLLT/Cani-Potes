@@ -26,6 +26,7 @@ import flag from '../../assets/img/info-ride/flag-green.svg';
 import starting from '../../assets/img/info-ride/map-pin-red.svg';
 import nbdog from '../../assets/img/info-ride/nbdog.svg';
 import nbcanipote from '../../assets/img/info-ride/nbcanipote.svg';
+import send from '../../assets/img/info-ride/send.svg';
 
 import {
   sendNewMessage, addUserToRide, deleteRide, getOneRideById,
@@ -47,7 +48,7 @@ const RideDetails = () => {
   const { user: userProfile } = useSelector((state) => state);
   const {
     ride_id, title, max_number_dogs, participants, starting_time, duration, description,
-    host_id, messages, start_coordinate, end_coordinate, isLoading, rideDoesNotExist,
+    host_id, messages, start_coordinate, end_coordinate, isLoading,
   } = useSelector((state) => state.rides.currentRide);
   const { errorMessage } = useSelector((state) => state.rides);
 
@@ -381,7 +382,9 @@ const RideDetails = () => {
                         placeholder="Nouveau message"
                         {...register('message', { required: true })}
                       />
-                      <button type="submit">Envoyer</button>
+                      <button type="submit">
+                        <img src={send} alt="Envoyer" />
+                      </button>
                     </form>
 
                   </section>

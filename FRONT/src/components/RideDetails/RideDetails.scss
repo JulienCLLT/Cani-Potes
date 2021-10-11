@@ -258,10 +258,15 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    gap: .3rem;
                     
                     &__logo {
                         width: 20px;
                     }
+                }
+
+                ul li {
+                    text-align: center;
                 }
             }
         }
@@ -345,25 +350,26 @@
         right: vars.$gutter;
         width: calc(100% - 2 * vars.$gutter);
         border-top: 1px solid vars.$color_main;
-        background: white;
+        background: url('../../assets/team/double-bubble.png');
         animation: slide-in .2s ease-in;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         z-index: 998;
-
+        
         @include lg-screen {
-            max-width: 600px;
             border: 1px solid vars.$color_main;
+            max-width: 800px;
             right: 3 * vars.$gutter;
+            bottom: 0;
         }
 
         &__messages-container {
-            padding-top: vars.$gutter;
+            padding: vars.$gutter vars.$gutter 0;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: .5 * vars.$gutter;
+            gap: 1.5 * vars.$gutter;
             overflow-y: scroll;
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -374,13 +380,52 @@
     
             .my-message {
                 align-self: flex-end;
+                border-top-left-radius: 8px;
+                border-bottom-right-radius: 0;
+
+                @extend %linear-gradient;
+                * {
+                    color: vars.$color__white;
+                }
+
+                &::before {
+                    // unset properties from heriting
+                    left: unset;
+                    top: unset;
+                    right: 0;
+                    transform: translate(90%, 0);
+                    border-right: none;
+                    border-bottom: none;
+                    
+                    bottom: 0;
+                    border-left: 10px solid vars.$color_yellow;
+                    border-top: 10px solid transparent;
+                }
             }
-    
+
             &__message {
-                max-width: 70%;
+                max-width: 90%;
                 padding: .8 * vars.$gutter ;
-                background: vars.$color-border-input;
                 border-radius: 8px;
+                border-top-left-radius: 0;
+                background: white;
+                position: relative;
+                background: lighten(vars.$color_yellow, 35);
+
+                @include lg-screen {
+                    min-width: 55%;
+                }
+
+                &::before {
+                    position: relative;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    transform: translate(-100%, 0);
+                    content: '';
+                    border-right: 10px solid lighten(vars.$color_yellow, 35);
+                    border-bottom: 10px solid transparent;
+                }
     
                 p {
                     color: vars.$color_main;
@@ -389,29 +434,39 @@
                     }
                 }
                 span {
-                    color: white;
+                    color: black;
                 }
             }
         }
-    
-    
     
         &__new-message {
             margin: vars.$gutter 0;
             display: flex;
             justify-content: space-between;
-            gap: vars.$gutter;
+            padding: vars.$gutter vars.$gutter 0;
     
             input {
                 padding: .8rem .5rem;
                 flex: 1;
                 align-self: stretch;
                 border: 1px solid vars.$color_main;
-                border-radius: 5px;
+                border-top-left-radius: 15px;
+                border-bottom-left-radius: 15px;
             }
     
             button {
                 @extend %strong-btn;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                border-top-right-radius: 15px;
+                border-bottom-right-radius: 15px;
+
+                &:hover {
+                    transform: none;
+                }
             }
         }
     }
@@ -423,7 +478,7 @@
         }
 
         &__pic {
-            width: 60px;
+            width: 40px;
 
             img {
                 width: 100%;
