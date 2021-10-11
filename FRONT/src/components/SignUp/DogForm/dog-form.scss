@@ -44,6 +44,7 @@
       &__others{
         display: flex;
         flex-direction: column;
+        gap: .5rem;
   
         &__sexe, &__birthday, &__sterilized, &__character__label-flex {
           display: flex;
@@ -80,15 +81,14 @@
           width: 100%;
           justify-content: space-between;
           display: flex;
+          flex-wrap: wrap;
 
           &__label-flex {
-            width: 70%;
+            width: 175px;
             display: flex;
             justify-content: space-between;
-          }
-
-          &__p {
-
+            align-items: stretch;
+            gap: .1rem;
           }
         }
 
@@ -130,10 +130,6 @@
 
         &__character {
           display: flex;
-
-          & p {
-            
-          }
         }
   
         &__surname{
@@ -150,8 +146,20 @@
             width: 9%;
           }
         }
+
+        &__description {
+          textarea {
+            width: 100%;
+          }
+        }
       }
   
+    }
+
+    .dog__behavior {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 

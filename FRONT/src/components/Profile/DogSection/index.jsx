@@ -44,7 +44,7 @@ const DogSection = ({
               }}
             />
             {/* Gender */}
-            <span className="profile-page__dog__gender-container">
+            <div className="profile-page__dog__gender-container">
               <label htmlFor="femelle">
                 Femelle
                 <input
@@ -73,7 +73,7 @@ const DogSection = ({
                   }}
                 />
               </label>
-            </span>
+            </div>
             {/* Birthday */}
             <label htmlFor="birthday">
               Date de naissance
@@ -134,7 +134,7 @@ const DogSection = ({
               />
             </div>
             {/* Sterilization */}
-            <label htmlFor="sterilization">
+            <div className="profile-page__dog__sterilization">
               <input
                 type="checkbox"
                 name="sterilization"
@@ -145,10 +145,13 @@ const DogSection = ({
                   setDogIsChanged(true);
                 }}
               />
-              Stérilisé
-            </label>
+              <label htmlFor="sterilization">
+                Stérilisé
+              </label>
+            </div>
             {/* Description */}
             <textarea
+              rows="3"
               maxLength="200"
               name="description"
               onChange={(e) => {
@@ -227,55 +230,53 @@ const DogSection = ({
             onChange={(e) => setPhotoDog(e.target.files[0])}
           />
         )}
+        <div className="profile-page__buttons">
+
+          { profileIsUser && (
+            <>
+              {isEditingDog === index + 1 ? (
+                <button
+                  type="button"
+                  className="edit-btn"
+                  onClick={() => {
+                    if (dogIsChanged) setIsModalOpen(true);
+                    else toggleEditDog(index);
+                  }}
+                >
+                  Retour
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="edit-btn"
+                  onClick={() => toggleEditDog(index)}
+                >
+                  <img src={edit} alt="edit" />
+                  Modifier
+                </button>
+              )}
+            </>
+          )}
+
+          {isEditingDog === index + 1 && (
+            <>
+              <button
+                type="button"
+                className="profile-page__buttons__save"
+                onClick={handleUpdateDog}
+              >
+                Enregistrer les infos
+              </button>
+              <button className="profile-page__buttons__delete" type="button" onClick={() => setIsModalDeleteDogIsOpen(true)}>
+                Supprimer
+              </button>
+            </>
+          )}
+        </div>
       </div>
       {(isEditingDog === index + 1) && (dog.dog_photo.length >= 5) && (
-        <>
-          <p>Impossible d'ajouter une photo. Veuillez en retirer</p>
-        </>
+        <p>Impossible d'ajouter une photo. Veuillez en retirer</p>
       )}
-      <div className="profile-page__buttons">
-
-        { profileIsUser && (
-          <>
-            {isEditingDog === index + 1 ? (
-              <button
-                type="button"
-                className="edit-btn"
-                onClick={() => {
-                  if (dogIsChanged) setIsModalOpen(true);
-                  else toggleEditDog(index);
-                }}
-              >
-                Retour
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="edit-btn"
-                onClick={() => toggleEditDog(index)}
-              >
-                <img src={edit} alt="edit" />
-                Modifier
-              </button>
-            )}
-          </>
-        )}
-
-        {isEditingDog === index + 1 && (
-          <>
-            <button
-              type="button"
-              className="profile-page__buttons__save"
-              onClick={handleUpdateDog}
-            >
-              Enregistrer les infos
-            </button>
-            <button className="profile-page__buttons__delete" type="button" onClick={() => setIsModalDeleteDogIsOpen(true)}>
-              Supprimer
-            </button>
-          </>
-        )}
-      </div>
     </article>
   );
 };
