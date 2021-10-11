@@ -9,6 +9,7 @@
 
 .navbar-connected {
     width: 100%;
+    max-width: 600px;
     display: flex;
     justify-content: space-around;
     padding: .5 *vars.$gutter 0;
