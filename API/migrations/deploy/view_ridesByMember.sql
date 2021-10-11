@@ -8,7 +8,7 @@ SELECT
     ride.id, 
     host_id, 
     title,
-    to_char(starting_time, 'TMDay DD TMMonth YYYY "à" HH "h" MI') AS starting_time,
+    to_char(starting_time + interval '2 hours', 'TMDay DD TMMonth YYYY "à" HH "h" MI') AS starting_time,
     max_number_dogs,
     ARRAY(
         SELECT d.id
