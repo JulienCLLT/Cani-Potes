@@ -6,6 +6,8 @@ const userController = {
         try {
             const body = request.body;
 
+            body.email = body.email.toLowerCase();
+
             //requete pour recup les data du membre via l'email
             const result = await UserModel.login(body.email);
 
@@ -45,6 +47,8 @@ const userController = {
                 //push name path a image resized 
                 request.body.photo = request.file.filename;
             };
+
+            request.body.email = request.body.email.toLowerCase();
 
             const user = new UserModel(request.body);
             user.password = await bcrypt.hash(user.password);
