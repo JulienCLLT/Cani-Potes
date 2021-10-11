@@ -233,7 +233,7 @@
           transform: translate(25%, -25%);
 
           &:hover {
-            transform: translate(25%, -25%) scale(1.2) rotate(90deg);
+            transform: translate(25%, -25%) scale(1.2);
           }
         }
       }

@@ -33,11 +33,8 @@ const CreateRide = () => {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
     13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
   ];
-  const minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
 
-  const dogs = [
-    2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,13, 14, 15, 16, 17, 18, 19, 20,
-  ];
+  const minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
 
   const date = new Date();
 
@@ -61,8 +58,7 @@ const CreateRide = () => {
   const [startPointAddress, setStartPointAddress] = useState();
   const [endPointAddress, setEndPointAddress] = useState();
   const [searchPosition, setSearchPosition] = useState(user.position);
-  const [isHelpStartOpen, setIsHelpStartOpen] = useState(false);
-  const [isHelpEndOpen, setIsHelpEndOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   const onSubmit = (data) => {
     if (!startPoint || !endPoint) {
@@ -173,23 +169,20 @@ const CreateRide = () => {
           {errors.title && <span>{errors.title.message}</span>}
         </div>
 
-        {isHelpEndOpen || isHelpStartOpen && (
+        {isHelpOpen && (
           <div className="create-ride__help">
-            <p className={isHelpStartOpen ? 'create-ride__help__msg' : 'inactive'}>
-              Pour définir le point de départ de votre balade
-              , appuyer sur le bouton de départ puis soit :
-              <ul>
-                <li>appuyer sur la map à l'endroit voulu</li>
-                <li>rechercher votre adresse depuis la barre de recherche sur la map</li>
-              </ul>
-            </p>
-            <p className={isHelpEndOpen ? 'create-ride__help__msg' : 'inactive'}>
-              Pour définir le point d'arrivée
-              , appuyer sur le bouton d'arrivée puis soit :
-              <ul>
-                <li>appuyer sur la map à l'endroit voulu</li>
-                <li>rechercher votre adresse depuis la barre de recherche sur la map</li>
-              </ul>
+            <p className="create-ride__help__msg">
+              <button
+                className="profile-page__modal__close"
+                type="button"
+                onClick={() => setIsHelpOpen(false)}
+              >
+                ✖
+              </button>
+              Pour définir un point sur la carte pour votre balade
+              , choisissez "Adresse de départ" ou "Adresse d'arrivée" puis soit :
+              <span>appuyez sur la carte à l'endroit voulu,</span>
+              <span>soit recherchez votre adresse depuis la barre de recherche sur la carte</span>
             </p>
           </div>
         )}
@@ -204,7 +197,7 @@ const CreateRide = () => {
             >
               Adresse de départ
             </button>
-            <span className="create-ride__help__btn" onClick={() => setIsHelpStartOpen((old) => !old)}>?</span>
+            <span className="create-ride__help__btn" onClick={() => setIsHelpOpen(true)}>?</span>
           </div>
           <span>{startPointAddress}</span>
         </div>
@@ -219,7 +212,7 @@ const CreateRide = () => {
             >
               Adresse d'arrivée
             </button>
-            <span className="create-ride__help__btn" onClick={() => setIsHelpEndOpen((old) => !old)}>?</span>
+            <span className="create-ride__help__btn" onClick={() => setIsHelpOpen(true)}>?</span>
           </div>
           <span>{endPointAddress}</span>
         </div>

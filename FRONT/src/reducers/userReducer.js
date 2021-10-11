@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import {
-  LOGOUT__USER, FAILED__TO__CONNECT, CONNECT__USER, ADD__RIDES__TO__USER,
+  LOGOUT__USER, FAILED__TO__CONNECT, CONNECT__USER, ADD__RIDES__TO__USER, UPDATE__USER__COORD,
   DELETE__DOG, SAVE__USER__DOGS__IN__STATE, REINIT__RENDER__AGAIN, RENDER__AGAIN, UPDATE__USER,
 } from '../actions/users';
 import { ADD_DOG_TO_USER } from '../actions/signup';
@@ -37,6 +37,11 @@ const userReducer = (state = parsedUser || userInitialState, action = {}) => {
         ...state,
         first_name: action.firstName,
         lastName: action.lastName,
+      };
+    case UPDATE__USER__COORD:
+      return {
+        ...state,
+        position: action.position,
       };
     case FAILED__TO__CONNECT:
       return {

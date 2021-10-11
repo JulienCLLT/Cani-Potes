@@ -3,7 +3,7 @@ import axios from 'axios';
 import {
   GET__ONE__USER__BY__ID, UPDATE__USER, GET__RIDES__WITH__USER__IN,
   DELETE__DOG, DELETE__USER, UPDATE__DOG, DELETE__DOG__PHOTO,
-  logoutUser, saveProfileInState, addRidesToUser, renderAgain,
+  logoutUser, saveProfileInState, addRidesToUser, renderAgain, updateUserCoord,
 } from '../actions/users';
 import { dburlWithApi } from '../utils/dburl';
 
@@ -101,9 +101,9 @@ const userMiddleware = (store) => (next) => (action) => {
         },
       })
         .then((response) => {
+          store.dispatch(updateUserCoord(response.data.gps));
           store.dispatch(renderAgain());
           next(action);
-          console.log(action);
           console.log('User updated : ', response.data);
         })
         .catch((error) => {
