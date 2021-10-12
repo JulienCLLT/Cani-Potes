@@ -1,22 +1,21 @@
-# <img src="./FRONT/src/assets/navbar/canipotes_logo.png" width = 100px > Cani' Potes projet D'apothéose 
+# <img src="./FRONT/src/assets/navbar/canipotes_logo.png" width = 100px > Cani' Potes  
 
 
-#### Apothé quoi ?
-
-Après 3 mois de socle et 1 mois de spé(REACT ou DATA) au sein de l'école O'clcok, Nous devons consacrer 4 semaines sur un projet de fin d'étude.
+Après 3 mois de socle et 1 mois de spé(REACT ou DATA) au sein de l'école O'clcok, Nous devions consacrer 4 semaines sur un projet de fin d'étude.
 
 ## Notre projet 
 
 Le but de cette application web est d'offrir la possibilité aux propriétaires de chiens d’organiser des balades collectives, dans l’objectif d'offrir un cadre social sain pour les animaux et les propriétaires. Cela permettra de socialiser et sociabiliser les chiens, ce qui est très important afin qu’ils ne développent pas de troubles comportementaux
 <p align="center">
-<img src="./FRONT/src/assets/img/home_map.png" width = 350px ></p>
+<img src="./FRONT/src/assets/img/home_map.png" style="width:300px;border-radius:10px;box-shadow: 2px 3px 3px rgba(166, 166, 166, 0.8);"></p>
 
 ## Notre equipe
-- Product Owner : [Mathilde Chenillot](https://github.com/mathilde-chenillot)
-- Scrum Master : [Julien Collet](https://github.com/JulienCLLT)
-- Lead dev Front : [Raphaël Charousset](https://github.com/RaphaelCharousset)
-- Lead dev Back : [Alexandra Bercoff](https://github.com/Alekiel42)
-- Git Master : [Anne Osolin](https://github.com/AnneOsolin)
+
+- **Product Owner** : [Mathilde Chenillot](https://github.com/mathilde-chenillot)
+- **Scrum Master** : [Julien Collet](https://github.com/JulienCLLT)
+- **Lead dev Front** : [Raphaël Charousset](https://github.com/RaphaelCharousset)
+- **Lead dev Back** : [Alexandra Bercoff](https://github.com/Alekiel42)
+- **Git Master** : [Anne Osolin](https://github.com/AnneOsolin)
 
 
 #### Critères de projet
