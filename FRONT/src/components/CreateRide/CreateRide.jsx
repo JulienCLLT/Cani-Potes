@@ -180,9 +180,9 @@ const CreateRide = () => {
                 ✖
               </button>
               Pour définir un point sur la carte pour votre balade
-              , choisissez "Adresse de départ" ou "Adresse d'arrivée" puis soit :
-              <span>appuyez sur la carte à l'endroit voulu,</span>
-              <span>soit recherchez votre adresse depuis la barre de recherche sur la carte</span>
+              , choisir "Adresse de départ" ou "Adresse d'arrivée" puis soit :
+              <span>appuyer sur la carte à l'endroit voulu,</span>
+              <span>soit rechercher une adresse depuis la barre de recherche sur la carte</span>
             </p>
           </div>
         )}
@@ -237,7 +237,7 @@ const CreateRide = () => {
           <div>
             <select {...register('startHour', { required: 'Veuillez sélectionner l\'heure de la balade.' })} defaultValue={17}>
               {hours.map(
-                (hour) => <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}</option>,
+                (hour) => <option key={hour} value={hour}>{hour.toString().padStart(2, '0')}h</option>,
               )}
             </select>
             {/* Start min */}
@@ -260,7 +260,7 @@ const CreateRide = () => {
         <div className="create-ride__field-double">
           {/* Duration */}
           <div className="create-ride__field-double__item">
-            <p>Durée</p>
+            <label htmlFor="duration">Durée</label>
             <input
               id="duration"
               name="duration"

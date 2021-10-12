@@ -10,16 +10,17 @@
 .profile-page {
   margin-bottom: 4 * vars.$gutter;
   position: relative;
-
+  
   @include lg-screen {
+    background: linear-gradient(315deg, rgba(#f7b42c, .5) 0%, rgba(#fc575e, .5) 74%);
+    min-height: calc(100vh - 69.6px);
     margin-bottom: 0;
   }
 
   &__content-wrapper {
     @include lg-screen {
       display: flex;
-      max-height: calc(100vh - 106.4px);
-      background: linear-gradient(315deg, rgba(#f7b42c, .5) 0%, rgba(#fc575e, .5) 74%);
+      min-height: calc(100vh - 106.4px - 1rem);
     }
   }
 
@@ -83,6 +84,7 @@
       }
 
       input {
+        @extend %input;
         width: 60px;
         font-size: .8rem;
       }
@@ -91,14 +93,10 @@
     &__avatar {
       width: 200px;
       margin: auto;
-
-      @include lg-screen {
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: vars.$gutter;
-      }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: vars.$gutter;
 
       img {
         margin-top: 1.5rem;
@@ -139,6 +137,10 @@
       display: flex;
       flex-direction: column;
       gap: .5rem;
+
+      input {
+        @extend %input;
+      }
     }
 
     &__delete-account-btn {
@@ -148,7 +150,6 @@
   }
 
   &__info-dogs {
-    background: linear-gradient(315deg, rgba(#f7b42c, .5) 0%, rgba(#fc575e, .5) 74%);
     padding: vars.$gutter 1 * vars.$gutter;
     margin: 1 * vars.$gutter 0;
 
@@ -262,6 +263,7 @@
 
       textarea {
         font-size: 1.2rem;
+        @extend %input;
       }
   }
 
@@ -305,7 +307,7 @@
 
   &__dog-pictures {
     @include lg-screen {
-      min-width: 160px;
+      min-width: 200px;
       overflow-x: scroll;
       flex: 1;
       -ms-overflow-style: none;  /* IE and Edge */
@@ -432,5 +434,20 @@
       overflow: hidden;
       max-height: 0px;
     }
+  }
+
+  input[type="file"] {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  &__photo-label {
+    @extend %input;
+    cursor: pointer;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: .3rem;
   }
 }

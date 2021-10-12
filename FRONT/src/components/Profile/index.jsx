@@ -174,10 +174,20 @@ const Profile = () => {
                   <img src={`${dburlWithoutApi}/user_resized/${profile.photo}`} alt={profile.first_name} />
                   {
                     isEditingUser && (
-                      <input
-                        type="file"
-                        onChange={(e) => setPhotoUser(e.target.files[0])}
-                      />
+                      <>
+                        <label
+                          htmlFor="user_photo"
+                          className="profile-page__photo-label"
+                        >
+                          {photoUser ? `${photoUser.name}` : 'Choisir une photo'}
+                        </label>
+                        <input
+                          type="file"
+                          name="user_photo"
+                          id="user_photo"
+                          onChange={(e) => setPhotoUser(e.target.files[0])}
+                        />
+                      </>
                     )
                   }
                 </div>
@@ -305,6 +315,7 @@ const Profile = () => {
                     description={description}
                     setDogAndPicIndex={setDogAndPicIndex}
                     setIsModalPhotoOpen={setIsModalPhotoOpen}
+                    photoDog={photoDog}
                     setPhotoDog={setPhotoDog}
                     handleUpdateDog={handleUpdateDog}
                   />

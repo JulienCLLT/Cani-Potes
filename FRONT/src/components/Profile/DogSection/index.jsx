@@ -17,7 +17,7 @@ const DogSection = ({
   setIsModalOpen, toggleEditDog, surname, setSurname, setDogIsChanged, gender,
   setGender, setAge, setBreed, breed, signup, weight, handleSetWeight,
   behavior, setBehavior, sterilization, setSterilization, setDescription,
-  description, setDogAndPicIndex, setIsModalPhotoOpen, setPhotoDog, handleUpdateDog,
+  description, setDogAndPicIndex, setIsModalPhotoOpen, photoDog, setPhotoDog, handleUpdateDog,
 }) => {
   const dogBehaviors = {
     peureux,
@@ -179,7 +179,7 @@ const DogSection = ({
               </span>
               {/* Behavior */}
               <span>
-                <img src={dogBehaviors[dog.dog_behavior]} alt="comportement" />
+                <img src={dogBehaviors[dog.dog_behavior]} alt={dog.dog_behavior} />
                 {dog.dog_behavior}
               </span>
             </div>
@@ -224,14 +224,23 @@ const DogSection = ({
           )}
         </div>
         {(isEditingDog === index + 1) && (dog.dog_photo.length < 5) && (
-          <input
-            type="file"
-            name="photo"
-            onChange={(e) => setPhotoDog(e.target.files[0])}
-          />
+          <>
+            <label
+              htmlFor={`dog_photo${dog.dog_id}`}
+              className="profile-page__photo-label"
+            >
+              {photoDog ? `${photoDog.name}` : 'Choisir une photo'}
+            </label>
+            <input
+              type="file"
+              name={`dog_photo${dog.dog_id}`}
+              id={`dog_photo${dog.dog_id}`}
+              onChange={(e) => setPhotoDog(e.target.files[0])}
+            />
+          </>
         )}
-        <div className="profile-page__buttons">
 
+        <div className="profile-page__buttons">
           { profileIsUser && (
             <>
               {isEditingDog === index + 1 ? (
@@ -309,6 +318,7 @@ DogSection.propTypes = {
   description: PropTypes.string,
   setDogAndPicIndex: PropTypes.func.isRequired,
   setIsModalPhotoOpen: PropTypes.func.isRequired,
+  photoDog: PropTypes.object,
   setPhotoDog: PropTypes.func.isRequired,
   handleUpdateDog: PropTypes.func.isRequired,
 };
