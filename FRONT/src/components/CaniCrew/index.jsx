@@ -106,7 +106,7 @@ const CaniCrew = () => {
 
       <main className="cani-crew">
         <div className="cani-crew__annoucement">
-          <h1>La CaniCrew</h1>
+          <h1>Le CaniCrew</h1>
           <p>Une équipe qui a du chien !</p>
         </div>
 
