@@ -41,22 +41,22 @@ const Error = () => (
 
       <footer className="error-404__main__footer">
         <div className="error-404__main__footer__thumbnail">
-          <a href="https://www.la-spa.fr/">
+          <a target="_blank" href="https://www.la-spa.fr/" rel="noreferrer">
             <img src={spa} alt="Vignette SPA" />
           </a>
         </div>
         <div className="error-404__main__footer__thumbnail">
-          <a href="https://www.i-cad.fr/">
+          <a target="_blank" href="https://www.i-cad.fr/" rel="noreferrer">
             <img src={icad} alt="Vignette SPA" />
           </a>
         </div>
         <div className="error-404__main__footer__thumbnail">
-          <a href="https://www.petalertfrance.com/">
+          <a target="_blank" href="https://www.petalertfrance.com/" rel="noreferrer">
             <img src={petAlert} alt="Vignette SPA" />
           </a>
         </div>
         <div className="error-404__main__footer__thumbnail">
-          <a href="https://www.petalertfrance.com/">
+          <a target="_blank" href="https://www.chien-perdu.org/fr-fr/" rel="noreferrer">
             <img src={chienPerdu} alt="Vignette SPA" />
           </a>
         </div>
