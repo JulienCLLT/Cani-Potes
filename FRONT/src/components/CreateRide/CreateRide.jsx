@@ -13,6 +13,7 @@ import L from 'leaflet';
 // import esri for geocoding
 import EsriLeafletGeoSearch from 'react-esri-leaflet/plugins/EsriLeafletGeoSearch';
 import { geocodeService } from 'esri-leaflet-geocoder';
+import { apikey } from '../../utils/arcGiskey';
 
 import { createRide } from '../../actions/rides';
 
@@ -22,7 +23,6 @@ import startPointFlag from '../../assets/img/info-ride/startPointFlag.svg';
 import endPointFlag from '../../assets/img/info-ride/endPointFlag.svg';
 
 const CreateRide = () => {
-  const apikey = 'AAPKbde72a12e3ff4574b3edd95295b1d13d5-bGBIhj88MhjknVOZZpLcC1yEkpv4yu2Bx8MRWji_av4Hj2aqwc1AsUJ2UyTK3Q';
   const { failedToCreateRide, errorMessage, rideIsCreated } = useSelector((state) => state.rides);
   const { user } = useSelector((state) => state);
   const { register, handleSubmit, formState: { errors } } = useForm();
