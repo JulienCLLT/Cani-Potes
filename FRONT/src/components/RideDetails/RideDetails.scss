@@ -545,7 +545,7 @@
         text-align: center;
 
         button {
-            @extend %btn;
+            @extend %strong-btn;
             margin: .5rem 0;
             font-size: 1.5* vars.$gutter;
             background-color: vars.$color-main;

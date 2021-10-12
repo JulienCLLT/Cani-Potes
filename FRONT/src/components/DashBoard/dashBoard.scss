@@ -70,7 +70,7 @@
         }
 
         @include lg-screen {
-            background: rgba($color: #e1cccd, $alpha: .3);
+            background-color: rgba(247, 180, 44, 0.2);
             padding: vars.$gutter;
             width: 48%;
             max-width: 600px;

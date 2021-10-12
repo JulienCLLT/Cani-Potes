@@ -139,17 +139,8 @@
         animation: fade-in .3s ease-in forwards;
 
         &__msg {
-            @extend %linear-gradient;
-            color: white;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: vars.$gutter;
-            font-size: 1.3rem;
-            padding: 2 * vars.$gutter;
-            box-shadow: 0 0 5px black inset;
-            border-radius: 20px;
+            @extend %modal;
+            max-width: 500px;
         }
 
         &__btn {
