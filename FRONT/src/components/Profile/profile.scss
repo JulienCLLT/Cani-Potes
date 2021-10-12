@@ -447,4 +447,11 @@
     box-shadow: 2px 2px 5px rgb(0 0 0 / 30%);
     margin-bottom: 1rem;
   }
+
+  input[type="file"] {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
 }
