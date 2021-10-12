@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
 import './profile.scss';
+import { dburlWithoutApi } from '../../../../utils/dburl';
 
 const Profile = ({ ride_id, participants, host_id }) => {
 
@@ -43,8 +44,16 @@ const Profile = ({ ride_id, participants, host_id }) => {
                         return (
                           <div className="profile__article__dogs-container" key={`participant${participant.participant_id}dog${dog.dog_id}`}>
                             <div className="profile__article__dogs-image">
-                              {dog.dog_photo && (
-                                <img src={`http://100.25.13.11/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} />
+                              {dog.dog_photo ? (
+                                <img
+                                  src={`${dburlWithoutApi}/dog_resized/${dog.dog_photo[0].photo_url}`}
+                                  alt={dog.dog_surname}
+                                />
+                              ) : (
+                                <img
+                                  src={`${dburlWithoutApi}/dog_resized/avatar.jpg`}
+                                  alt={dog.dog_surname}
+                                />
                               )}
                             </div>
                             <div className="profile__article__dogs-surname">

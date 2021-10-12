@@ -269,8 +269,18 @@ const RideDetails = () => {
                                   {participant.dogs.map((dog) => (
                                     <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
                                       <div className="dog-avatar">
-                                        {dog.dog_photo && (
-                                          <img src={`${dburlWithoutApi}/dog_resized/${dog.dog_photo[0].photo_url}`} alt={dog.dog_surname} className="dog-avatar__photo" />
+                                        {dog.dog_photo ? (
+                                          <img
+                                            src={`${dburlWithoutApi}/dog_resized/${dog.dog_photo[0].photo_url}`}
+                                            alt={dog.dog_surname}
+                                            className="dog-avatar__photo"
+                                          />
+                                        ) : (
+                                          <img
+                                            src={`${dburlWithoutApi}/dog_resized/avatar.jpg`}
+                                            alt={dog.dog_surname}
+                                            className="dog-avatar__photo"
+                                          />
                                         )}
                                         <span>{dog.dog_surname}</span>
                                         <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>

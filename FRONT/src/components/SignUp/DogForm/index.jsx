@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable max-len */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { dogSignUp, getDogBreedsAndBehaviors } from '../../../actions/signup';
@@ -12,6 +12,8 @@ import { dogSignUp, getDogBreedsAndBehaviors } from '../../../actions/signup';
 import './dog-form.scss';
 
 const DogForm = () => {
+  const [dogGender, setDogGender] = useState(0);
+
   const {
     formStep, breeds, behaviors, failedToSignup, errorMessage,
   } = useSelector((state) => state.signup);
@@ -73,14 +75,34 @@ const DogForm = () => {
                 <p>Il s'agit d'un(e)</p>
                 {/* Female */}
                 <div className="dog__form__input-infos__others__sexe__label">
-                  <label htmlFor="female"> Femelle
-                    <input {...register('sexe', { required: 'Veuillez renseigner son sexe' })} type="radio" value="1" id="female" />
+                  <label
+                    className={dogGender === 1 ? 'field-selected' : 'not-selected'}
+                    htmlFor="female"
+                  >
+                    Femelle
+                    <input
+                      {...register('sexe', { required: 'Veuillez renseigner son sexe' })}
+                      type="radio"
+                      value="1"
+                      id="female"
+                      onChange={e => setDogGender(e.target.value)}
+                    />
                   </label>
 
                   {/* Male */}
 
-                  <label htmlFor="male" className="dog__form__input-infos__others__sexe__label">  Mâle
-                    <input {...register('sexe', { required: 'Veuillez renseigner son sexe' })} type="radio" value="2" id="male" />
+                  <label
+                    className={dogGender === 2 ? 'field-selected' : 'not-selected'}
+                    htmlFor="male"
+                  >
+                    Mâle
+                    <input
+                      {...register('sexe', { required: 'Veuillez renseigner son sexe' })}
+                      type="radio"
+                      value="2"
+                      id="male"
+                      onChange={e => setDogGender(e.target.value)}
+                    />
                   </label>
                 </div>
 
@@ -92,6 +114,7 @@ const DogForm = () => {
 
                 <label htmlFor="birthday" className="dog__title">Il est né le</label>
                 <input
+                  className="dog__commun"
                   type="date"
                   {...register('birthday', { required: 'Veuillez renseigner sa date de naissance' })}
                   id="birthday"
@@ -119,7 +142,7 @@ const DogForm = () => {
 
               {/* Behavior */}
               <div className="dog__form__input-infos__others__character">
-                <p className="dog__dog__form__input-infos__others__character__p">Il est plutôt du genre</p>
+                <p className="dog__form__input-infos__others__character__p">Il est plutôt</p>
                 <div className="dog__form__input-infos__others__character__label-flex">
 
                   {
@@ -137,7 +160,7 @@ const DogForm = () => {
               {/* Surname */}
               <div className="dog__form__input-infos__others__surname">
                 <label htmlFor="surname" className="dog__title">
-                  Il s'appelle
+                  <p>Il s'appelle</p>
                   <input type="text" placeholder="Nom" {...register('surname', { required: 'Veuillez renseigner son nom', maxLength: { value: 20, message: 'Veuillez ne pas dépasser 20 caractères.' } })} id="surname" />
                 </label>
                 {errors.surname && <p className="errors">{errors.surname.message}</p>}
@@ -146,7 +169,14 @@ const DogForm = () => {
               <div className="dog__form__input-infos__others__picture">
                 <label htmlFor="photo_dog">
                   Ajouter une photo de mon chien
-                  <input type="file" placeholder="Photo de mon chien" {...register('photo_dog')} accept="image/png, image/jpeg" />
+                  <input
+                    type="file"
+                    name="photo_dog"
+                    id="photo_dog"
+                    placeholder="Photo de mon chien"
+                    {...register('photo_dog')}
+                    accept="image/png, image/jpeg"
+                  />
                 </label>
               </div>
               {/* Description */}

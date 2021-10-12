@@ -15,14 +15,15 @@ import DashBoard from '../DashBoard/DashBoard';
 import Profile from '../Profile';
 import CaniCrew from '../CaniCrew/index';
 import Legals from '../Legals/index';
+import Error from '../Error/index';
 
 // import './App.scss';
 
 import '../../styles/reset.scss';
-import Error from './../Error/index';
 
 function App() {
-  const { isLogged } = useSelector((state) => state.user);
+  const { isLogged, id } = useSelector((state) => state.user);
+  const { member_id } = useSelector((state) => state.profile);
 
   return (
     <div className="App">
@@ -35,8 +36,8 @@ function App() {
           ) : (
             <Connection />
           )}
-
         </Route>
+
         <Route exact path="/signup">
           <>
             <Header />
@@ -96,7 +97,7 @@ function App() {
             <Redirect to="/" />
           ) : (
             <>
-              <Header />
+              <Header title={id === member_id ? 'Mon profil' : 'Profil'} />
               <main>
                 <Profile />
               </main>
