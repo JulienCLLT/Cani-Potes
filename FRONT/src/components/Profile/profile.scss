@@ -20,7 +20,6 @@
   &__content-wrapper {
     @include lg-screen {
       display: flex;
-      min-height: calc(100vh - 106.4px - 1rem);
     }
   }
 
@@ -408,7 +407,7 @@
     display: flex;
     align-items: center;
     gap: .5 * vars.$gutter;
-    margin: auto;
+    margin: 0 auto 1rem;
     @extend %strong-btn;
 
     span {
@@ -449,5 +448,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
     padding: .3rem;
+  }
+  .signup {
+    box-shadow: 2px 2px 5px rgb(0 0 0 / 30%);
+    margin-bottom: 1rem;
   }
 }

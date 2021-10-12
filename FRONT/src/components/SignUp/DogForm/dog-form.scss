@@ -1,6 +1,20 @@
 @use '../../../styles/vars';
 
+@mixin lg-screen {
+  @media screen and (min-width:900px) {
+      @content
+  }
+};
+
 .dog {
+  background-color: white;
+  padding: .5rem 2rem;
+  border-radius: 10px;
+  max-width: 550px;
+  margin: auto;
+
+  @include lg-screen {
+  }
 
   &__behavior {
     width: 49%;
@@ -14,12 +28,9 @@
   &__form {
     display: flex;
     flex-direction: column;
-    width: 50%;
     margin: 0 auto;
 
-
     &__input-infos {
-      // height: 520px;
   
       &__first {
         margin: vars.$gutter 0;
@@ -32,8 +43,8 @@
         }
 
         & select, & input {
-        height: 2* vars.$gutter;
-        width: 100%;
+          height: 2* vars.$gutter;
+          width: 100%;
         }
 
         & select {
@@ -64,8 +75,6 @@
             display: flex;
             justify-content: space-between;
 
- 
-
             & label {
               width: 49%;
               font-size: 0.9* vars.$gutter;
@@ -83,12 +92,23 @@
           display: flex;
           flex-wrap: wrap;
 
+          &__p {
+            width: 30%;
+          }
+
           &__label-flex {
-            width: 175px;
+            flex: 1;
             display: flex;
             justify-content: space-between;
             align-items: stretch;
             gap: .1rem;
+          }
+
+          .dog__behavior {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: .3rem;
           }
         }
 
@@ -107,7 +127,7 @@
         &__birthday {
           & input {
             border-radius: 2px;
-            // width: 100%;
+            flex: 1;
           }
         }
 
@@ -127,18 +147,25 @@
             width: 30%;
           }
         }
-
-        &__character {
-          display: flex;
-        }
   
         &__surname{
-  
-          & input {
-            border: none;
-            // margin-left: 4.4*vars.$gutter;
-            border-bottom: 0.2*vars.$gutter solid vars.$color_border-input;
+
+          label {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            p {
+              width: 30%;
+            }
+            & input {
+              flex: 1;
+              border: none;
+              border-bottom: 0.2*vars.$gutter solid vars.$color_border-input;
+            }
           }
+  
         }
 
         &__add-dog {
@@ -152,14 +179,19 @@
             width: 100%;
           }
         }
-      }
-  
-    }
 
-    .dog__behavior {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+        &__picture {
+          margin: 1rem 0;
+          label {
+            @extend %input;
+            cursor: pointer;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: .3rem;
+          }
+        }
+      }
     }
   }
 
@@ -171,39 +203,37 @@
     padding: 0.3*vars.$gutter;
     width: 35%;
     text-align: center;
-    // margin-right: 0.5*vars.$gutter;
-    // margin-bottom: 0.8*vars.$gutter;
   }
 
-//   // texts before input
+  // texts before input
   &__title {
-    width: 10*vars.$gutter;
+    width: 30%;
   }
 
+  // remove the arrows of input type number
+  input[type="number"] {
+    /* Firefox */
+    -moz-appearance: textfield;
+  
+    /* Chrome */
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin:0;
+    }
+  
+    /* Opéra*/
+    &::-o-inner-spin-button {
+      -o-appearance: none;
+      margin: 0; 
+    }
+  }
+
+  input[type="radio"] {
+    width: 0;
+    height: 0;
+  }
+
+  .field-selected {
+    box-shadow: 0 0 3px vars.$color_main inset;
+  }
 }
-
-// remove the arrows of input type number
-input[type="number"] {
-  /* Firefox */
-	-moz-appearance: textfield;
-
-	/* Chrome */
-	&::-webkit-inner-spin-button {
-		-webkit-appearance: none;
-		margin:0;
-	}
-
-	/* Opéra*/
-	&::-o-inner-spin-button {
-		-o-appearance: none;
-		margin: 0; 
-	}
-}
-
-// input[type="radio"]{
-//   display: none;
-// }
-
-// input[type="radio"]:checked + label {
-//   border: 0.15*vars.$gutter solid vars.$color_main;
-// }

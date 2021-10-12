@@ -433,9 +433,7 @@ const Profile = () => {
           <button
             className="profile-page__btn-dogform"
             type="button"
-            onClick={() => {
-              setIsDogFormOpen((old) => !old);
-            }}
+            onClick={() => setIsDogFormOpen((old) => !old)}
           >
             Ajouter un chien<span className={isDogFormOpen ? 'close' : 'open'}><img src={dblArrow} alt="arrow" /></span>
           </button>
