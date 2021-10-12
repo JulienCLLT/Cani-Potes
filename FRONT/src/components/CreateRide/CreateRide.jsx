@@ -179,10 +179,11 @@ const CreateRide = () => {
               >
                 ✖
               </button>
-              Pour définir un point sur la carte pour votre balade
-              , choisir "Adresse de départ" ou "Adresse d'arrivée" puis soit :
-              <span>appuyer sur la carte à l'endroit voulu,</span>
-              <span>soit rechercher une adresse depuis la barre de recherche sur la carte</span>
+              Pour définir un point sur la carte
+              , appuyer sur le bouton "Adresse de départ" ou "Adresse d'arrivée" puis soit :
+              <span>- appuyer sur la carte à l'endroit voulu,</span>
+              <span>ou</span>
+              <span>- rechercher une adresse depuis la barre de recherche sur la carte.</span>
             </p>
           </div>
         )}

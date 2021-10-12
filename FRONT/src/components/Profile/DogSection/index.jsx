@@ -229,7 +229,7 @@ const DogSection = ({
               htmlFor={`dog_photo${dog.dog_id}`}
               className="profile-page__photo-label"
             >
-              {photoDog ? `${photoDog.name}` : 'Choisir une photo'}
+              {photoDog ? `${photoDog.name}` : 'Ajouter une photo'}
             </label>
             <input
               type="file"
