@@ -16,6 +16,7 @@ const DogForm = () => {
     gender: '',
     sterilization: false,
     behavior: '',
+    picture: '',
   });
 
   const {
@@ -214,10 +215,11 @@ const DogForm = () => {
                 </label>
                 {errors.surname && <p className="errors">{errors.surname.message}</p>}
               </div>
+
               {/* Picture */}
               <div className="dog__form__input-infos__others__picture">
                 <label htmlFor="photo_dog">
-                  Ajouter une photo de mon chien
+                  {dogInfo.picture ? dogInfo.picture : 'Ajouter une photo de mon chien'}
                   <input
                     type="file"
                     name="photo_dog"
@@ -225,6 +227,10 @@ const DogForm = () => {
                     placeholder="Photo de mon chien"
                     {...register('photo_dog')}
                     accept="image/png, image/jpeg"
+                    onChange={(e) => setDogInfo((old) => ({
+                      ...old,
+                      picture: e.target.files[0].name,
+                    }))}
                   />
                 </label>
               </div>

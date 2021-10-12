@@ -236,6 +236,7 @@
   }
 
   .field-selected {
-    box-shadow: 0 0 3px vars.$color_main inset;
+    border: .1rem solid transparent;
+    box-shadow: 0 0 4px vars.$color_main ;
   }
 }
