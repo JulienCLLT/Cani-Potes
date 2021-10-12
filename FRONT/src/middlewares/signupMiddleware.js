@@ -5,7 +5,7 @@ import {
   saveDogBreedsAndBehaviors, failedToSignup, nextSignupFormStep, addDogToUser,
 } from '../actions/signup';
 
-import { connectUser, logoutUser } from '../actions/users';
+import { connectUser, logoutUser, renderAgain } from '../actions/users';
 import { dburlWithApi } from '../utils/dburl';
 
 const signupMiddleware = (store) => (next) => (action) => {
@@ -85,6 +85,7 @@ const signupMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           store.dispatch(addDogToUser(response.data));
           store.dispatch(nextSignupFormStep());
+          store.dispatch(renderAgain());
           next(action);
           console.log(response.data);
         })
