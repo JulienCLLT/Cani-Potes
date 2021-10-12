@@ -47,10 +47,10 @@ const ridesMiddleware = (store) => (next) => (action) => {
             store.dispatch(logoutUser());
           }
 
-          if (error.response.data === "La balade n'existe pas") {
+          if (error.response.data === "La balade n'existe pas" || error.response.status === 404) {
             store.dispatch(setErrorMsg('Ride not found'));
           }
-          console.error("Can't get this ride : ", error.response.data);
+          console.error("Can't get this ride : ", error.response);
         });
       break;
     case ADD__USER__TO__RIDE:
