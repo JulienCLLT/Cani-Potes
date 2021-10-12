@@ -231,9 +231,19 @@
   input[type="radio"] {
     width: 0;
     height: 0;
+    opacity: 0;
+    border: none;
+  }
+  
+  input[type="file"] {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
   }
 
   .field-selected {
-    box-shadow: 0 0 3px vars.$color_main inset;
+    border: .1rem solid transparent;
+    box-shadow: 0 0 4px vars.$color_main ;
   }
 }

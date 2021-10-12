@@ -435,12 +435,6 @@
     }
   }
 
-  input[type="file"] {
-    width: 0;
-    height: 0;
-    overflow: hidden;
-  }
-
   &__photo-label {
     @extend %input;
     cursor: pointer;

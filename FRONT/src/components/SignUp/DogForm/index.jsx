@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { dogSignUp, getDogBreedsAndBehaviors } from '../../../actions/signup';
 // import SearchBar from '../SearchBar';
@@ -12,7 +12,12 @@ import { dogSignUp, getDogBreedsAndBehaviors } from '../../../actions/signup';
 import './dog-form.scss';
 
 const DogForm = () => {
-  const [dogGender, setDogGender] = useState(0);
+  const [dogInfo, setDogInfo] = useState({
+    gender: '',
+    sterilization: false,
+    behavior: '',
+    picture: '',
+  });
 
   const {
     formStep, breeds, behaviors, failedToSignup, errorMessage,
@@ -76,7 +81,7 @@ const DogForm = () => {
                 {/* Female */}
                 <div className="dog__form__input-infos__others__sexe__label">
                   <label
-                    className={dogGender === 1 ? 'field-selected' : 'not-selected'}
+                    className={dogInfo.gender === 'female' ? 'field-selected' : 'not-selected'}
                     htmlFor="female"
                   >
                     Femelle
@@ -85,14 +90,17 @@ const DogForm = () => {
                       type="radio"
                       value="1"
                       id="female"
-                      onChange={e => setDogGender(e.target.value)}
+                      onChange={() => setDogInfo((old) => ({
+                        ...old,
+                        gender: 'female',
+                      }))}
                     />
                   </label>
 
                   {/* Male */}
 
                   <label
-                    className={dogGender === 2 ? 'field-selected' : 'not-selected'}
+                    className={dogInfo.gender === 'male' ? 'field-selected' : 'not-selected'}
                     htmlFor="male"
                   >
                     Mâle
@@ -101,7 +109,10 @@ const DogForm = () => {
                       type="radio"
                       value="2"
                       id="male"
-                      onChange={e => setDogGender(e.target.value)}
+                      onChange={() => setDogInfo((old) => ({
+                        ...old,
+                        gender: 'male',
+                      }))}
                     />
                   </label>
                 </div>
@@ -128,12 +139,37 @@ const DogForm = () => {
               <div className="dog__form__input-infos__others__sterilized">
                 <p className="dog__form__input-infos__others__sterilized_p">Il est stérilisé</p>
                 <div className="dog__form__input-infos__others__sterilized__parent-label">
-                  <label htmlFor="sterilization-true" className="dog__form__input-infos__others__sterilized__label">
-                    <input {...register('sterilization', { required: "Veuillez renseigner s'il est stérilisé" })} type="radio" value="true" id="sterilization-true" />
+                  <label
+                    htmlFor="sterilization-true"
+                    className={dogInfo.sterilization === true ? 'dog__form__input-infos__others__sterilized__label field-selected' : 'dog__form__input-infos__others__sterilized__label'}
+                  >
+                    <input
+                      {...register('sterilization', { required: "Veuillez renseigner s'il est stérilisé" })}
+                      type="radio"
+                      value="true"
+                      id="sterilization-true"
+                      onChange={() => setDogInfo((old) => ({
+                        ...old,
+                        sterilization: true,
+                      }))}
+                    />
                     Oui
                   </label>
-                  <label htmlFor="sterilization-false" className="dog__form__input-infos__others__sterilized__label">
-                    <input {...register('sterilization', { required: "Veuillez renseigner s'il est stérilisé" })} type="radio" value="false" id="sterilization-false" />
+                  <label
+                    htmlFor="sterilization-false"
+                    className={dogInfo.sterilization === false ? 'dog__form__input-infos__others__sterilized__label field-selected' : 'dog__form__input-infos__others__sterilized__label'}
+                  >
+                    <input
+                      {...register('sterilization', { required: "Veuillez renseigner s'il est stérilisé" })}
+                      type="radio"
+                      value="false"
+                      defaultChecked
+                      id="sterilization-false"
+                      onChange={() => setDogInfo((old) => ({
+                        ...old,
+                        sterilization: false,
+                      }))}
+                    />
                     Non
                   </label>
                 </div>
@@ -147,8 +183,22 @@ const DogForm = () => {
 
                   {
                     behaviors.map((behavior) => (
-                      <label htmlFor={behavior.label} className="dog__behavior" key={behavior.id} style={{ textTransform: 'capitalize' }}>
-                        <input {...register('behavior', { required: 'Veuillez renseigner son caractère' })} type="radio" value={behavior.id} id={behavior.label} />
+                      <label
+                        htmlFor={behavior.label}
+                        className={dogInfo.behavior === behavior.label ? 'dog__behavior field-selected' : 'dog__behavior'}
+                        key={behavior.id}
+                        style={{ textTransform: 'capitalize' }}
+                      >
+                        <input
+                          {...register('behavior', { required: 'Veuillez renseigner son caractère' })}
+                          type="radio"
+                          value={behavior.id}
+                          id={behavior.label}
+                          onChange={() => setDogInfo((old) => ({
+                            ...old,
+                            behavior: behavior.label,
+                          }))}
+                        />
                         {behavior.label}
                       </label>
                     ))
@@ -165,10 +215,11 @@ const DogForm = () => {
                 </label>
                 {errors.surname && <p className="errors">{errors.surname.message}</p>}
               </div>
+
               {/* Picture */}
               <div className="dog__form__input-infos__others__picture">
                 <label htmlFor="photo_dog">
-                  Ajouter une photo de mon chien
+                  {dogInfo.picture ? dogInfo.picture : 'Ajouter une photo de mon chien'}
                   <input
                     type="file"
                     name="photo_dog"
@@ -176,6 +227,10 @@ const DogForm = () => {
                     placeholder="Photo de mon chien"
                     {...register('photo_dog')}
                     accept="image/png, image/jpeg"
+                    onChange={(e) => setDogInfo((old) => ({
+                      ...old,
+                      picture: e.target.files[0].name,
+                    }))}
                   />
                 </label>
               </div>

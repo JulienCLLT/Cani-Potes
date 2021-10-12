@@ -11,7 +11,7 @@ const initialState = {
   breeds: [],
 
   // for continue and previous button
-  formStep: 2,
+  formStep: 1,
 
   // to display db errors when submit form
   failedToSignup: false,
