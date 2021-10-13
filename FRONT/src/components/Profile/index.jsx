@@ -16,11 +16,10 @@ import Loader from '../Loader/index';
 import './profile.scss';
 
 import dblArrow from '../../assets/img/info-ride/double_arrow.svg';
-import edit from '../../assets/img/profile-simulation/edit.svg';
 import DeleteAccModal from './DeleteAccModal';
 import DogSection from './DogSection/index';
-import { dburlWithoutApi } from '../../utils/dburl';
 import UserSection from './UserSection';
+import DogModal from './DogModal';
 
 const Profile = () => {
   const { user, profile, signup } = useSelector((state) => state);
@@ -232,40 +231,12 @@ const Profile = () => {
 
       {/* DOG MODAL */}
       {isModalOpen && (
-        <div className="profile-page__modal__wrapper">
-          <div className="profile-page__modal">
-            <button
-              className="profile-page__modal__close"
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-            >
-              ✖
-            </button>
-
-            <p>Vous avez des modifications non enregistrées.</p>
-
-            <div className="profile-page__modal__btn">
-              <button
-                className="profile-page__modal__btn-confirm"
-                type="button"
-                onClick={() => {
-                  setIsModalOpen(false);
-                  setDogIsChanged(false);
-                  setisEditingDog(0);
-                }}
-              >
-                Quitter
-              </button>
-              <button
-                className="profile-page__modal__btn-danger"
-                type="button"
-                onClick={handleUpdateDog}
-              >
-                Enregistrer
-              </button>
-            </div>
-          </div>
-        </div>
+        <DogModal
+          setIsModalOpen={setIsModalOpen}
+          setDogIsChanged={setDogIsChanged}
+          setisEditingDog={setisEditingDog}
+          handleUpdateDog={handleUpdateDog}
+        />
       )}
 
       {/* DOG PICTURE MODAL */}

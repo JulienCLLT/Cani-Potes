@@ -293,7 +293,7 @@ const DogSection = ({
 DogSection.propTypes = {
   dog: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
-  isEditingDog: PropTypes.bool.isRequired,
+  isEditingDog: PropTypes.number.isRequired,
   setIsModalDeleteDogIsOpen: PropTypes.func.isRequired,
   profileIsUser: PropTypes.bool.isRequired,
   dogIsChanged: PropTypes.bool.isRequired,
