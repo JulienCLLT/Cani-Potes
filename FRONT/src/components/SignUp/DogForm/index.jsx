@@ -35,7 +35,6 @@ const DogForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(dogSignUp(data));
   };
 

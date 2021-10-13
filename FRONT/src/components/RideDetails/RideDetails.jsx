@@ -7,11 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import RideInfo from './RideInfo/index';
 
 import conversation from '../../assets/img/info-ride/conversation.svg';
-import star from '../../assets/img/star.svg';
-import peureux from '../../assets/img/profile-simulation/fearful.svg';
-import joueur from '../../assets/img/profile-simulation/player.png';
-import agressif from '../../assets/img/profile-simulation/aggressive.png';
-import sociable from '../../assets/img/profile-simulation/sociable.svg';
 import send from '../../assets/img/info-ride/send.svg';
 
 import {
@@ -25,6 +20,7 @@ import './RideDetails.scss';
 import Header from '../Header/Header';
 import { reinitRenderAgain } from '../../actions/users';
 import { dburlWithoutApi } from '../../utils/dburl';
+import RideParticipants from './RideParticipants';
 
 const RideDetails = () => {
   const { id } = useParams();
@@ -53,8 +49,6 @@ const RideDetails = () => {
   reverseGeocoding(start_coordinate, setStartPointAddress);
   reverseGeocoding(end_coordinate, setEndPointAddress);
 
-  const userIsHost = userProfile.id === host_id;
-
   let nbOfDogs = 0;
 
   participants.map((participant) => nbOfDogs += participant.dogs.length);
@@ -66,12 +60,6 @@ const RideDetails = () => {
     return 0;
   });
 
-  const dogBehaviors = {
-    peureux,
-    joueur,
-    agressif,
-    sociable,
-  };
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -80,35 +68,6 @@ const RideDetails = () => {
   const [isDeleteRideModalOpen, setIsDeleteRideModalOpen] = useState(false);
   const [isKickUserModalOpen, setIsKickUserModalOpen] = useState(false);
   const [userKicked, setUserKicked] = useState(0);
-
-  let joinInMsg = "S'inscrire";
-
-  if (userProfile.dogs.length === 0) joinInMsg = "Vous n'avez pas de chien !";
-
-  if (nbOfDogs >= max_number_dogs) {
-    joinInMsg = 'Plus de place';
-  }
-  if (nbOfDogs < max_number_dogs && (nbOfDogs + userProfile.dogs.length) > max_number_dogs) {
-    joinInMsg = 'Vous êtes trop nombreux';
-  }
-
-  const handleJoinIn = () => {
-    if (userProfile.dogs.length === 0) return;
-    if (nbOfDogs < max_number_dogs) {
-      if ((nbOfDogs + userProfile.dogs.length) <= max_number_dogs) {
-        dispatch(addUserToRide(userProfile, ride_id));
-      }
-    }
-  };
-
-  const handleQuit = () => {
-    if (userIsHost) {
-      setIsDeleteRideModalOpen(true);
-    }
-    else {
-      dispatch(userQuitRide(userProfile.id, id));
-    }
-  };
 
   const handleDelete = () => {
     dispatch(deleteRide(ride_id));
@@ -160,105 +119,13 @@ const RideDetails = () => {
                   endPointAddress={endPointAddress}
                 />
 
-                <section className="ride-details__users">
-                  <div className="ride-details__container">
-                    <div className="ride-details__users__registered">
-                      {
-                        participants.map((participant) => (
-                          <div className="ride-details__current-user-container" key={participant.participant_id}>
-                            {userIsHost && participant.participant_id !== userProfile.id && (
-                              <button
-                                className="ride-details__current-user__kick-btn"
-                                type="button"
-                                onClick={() => {
-                                  setIsKickUserModalOpen(true);
-                                  setUserKicked(participant.participant_id);
-                                }}
-                              >
-                                ✖
-                              </button>
-                            )}
-                            <Link className="ride-details__current-user-link" key={participant.participant_id} to={`/profile/${participant.participant_id}`}>
-                              <div className="ride-details__current-user">
-                                <div className="ride-details__current-user__avatar">
-                                  <img src={`${dburlWithoutApi}/user_resized/${participant.participant_photo}`} alt="user" />
-                                  <div className="ride-details__current-user__avatar-name">
-                                    {host_id === participant.participant_id && (
-                                      <div className="ride-details__current-user__star">
-                                        <img src={star} alt="star" />
-                                      </div>
-                                    )} {participant.participant_first_name}
-                                  </div>
-                                </div>
-
-                                <div className="ride-details__current-user__dogs-container">
-                                  {participant.dogs.map((dog) => (
-                                    <article className="ride-details__current-user__current-dog" key={dog.dog_id}>
-                                      <div className="dog-avatar">
-                                        {dog.dog_photo ? (
-                                          <img
-                                            src={`${dburlWithoutApi}/dog_resized/${dog.dog_photo[0].photo_url}`}
-                                            alt={dog.dog_surname}
-                                            className="dog-avatar__photo"
-                                          />
-                                        ) : (
-                                          <img
-                                            src={`${dburlWithoutApi}/dog_resized/avatar.jpg`}
-                                            alt={dog.dog_surname}
-                                            className="dog-avatar__photo"
-                                          />
-                                        )}
-                                        <span>{dog.dog_surname}</span>
-                                        <span>{dog.dog_gender === 'mâle' ? '♂' : '♀'}</span>
-
-                                      </div>
-                                      <div className="dog-details">
-                                        <ul>
-                                          <li>
-                                            <span className="dog-details__behavior">
-                                              <img src={dogBehaviors[dog.dog_behavior]} alt="dog behavior" className="dog-details__behavior__logo" />
-                                              {dog.dog_behavior}
-                                            </span>
-                                          </li>
-                                          <li>{dog.dog_breed}</li>
-                                          <li>{dog.dog_age} {dog.dog_weight}kg</li>
-                                          <li>{dog.dog_sterilization ? 'Stérilisé' : 'Non stérilisé'}</li>
-                                        </ul>
-                                      </div>
-                                    </article>
-                                  ))}
-                                </div>
-                              </div>
-                            </Link>
-                          </div>
-                        ))
-                      }
-                    </div>
-                  </div>
-
-                </section>
-                <div className="ride-details__registration">
-                  {
-                      participants.find(
-                        (participant) => participant.participant_id === userProfile.id,
-                      )
-                        ? (
-                          <button
-                            type="button"
-                            onClick={() => handleQuit()}
-                          >
-                            Se désinscrire
-                          </button>
-                        ) : (
-                          <button
-                            type="button"
-                            onClick={() => handleJoinIn()}
-                          >
-                            {joinInMsg}
-                          </button>
-                        )
-                    }
-                </div>
+                <RideParticipants
+                  setIsKickUserModalOpen={setIsKickUserModalOpen}
+                  setUserKicked={setUserKicked}
+                  nbOfDogs={nbOfDogs}
+                  setIsDeleteRideModalOpen={setIsDeleteRideModalOpen}
+                  id={id}
+                />
 
                 {
                   participants.find(
