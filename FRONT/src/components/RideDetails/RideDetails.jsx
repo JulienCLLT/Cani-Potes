@@ -1,26 +1,21 @@
 /* eslint-disable linebreak-style */
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, Redirect, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { Redirect, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import RideInfo from './RideInfo/index';
 
-
-import {
-  sendNewMessage, addUserToRide, deleteRide, getOneRideById,
-  getRideIsLoading, userQuitRide, kickUserFromRide,
-} from '../../actions/rides';
-import { translateDate } from '../../utils/translateDate';
+import { getOneRideById, getRideIsLoading } from '../../actions/rides';
 import { reverseGeocoding } from '../../utils/reverseGeocoding';
 
-import './RideDetails.scss';
 import Header from '../Header/Header';
 import { reinitRenderAgain } from '../../actions/users';
-import { dburlWithoutApi } from '../../utils/dburl';
 import RideParticipants from './RideParticipants';
 import Chat from './Chat';
 import DeleteRideModal from './DeleteRideModal';
+import KickUserModal from './KickUserModal';
+
+import './RideDetails.scss';
 
 const RideDetails = () => {
   const { id } = useParams();
@@ -29,8 +24,8 @@ const RideDetails = () => {
   const { user: userProfile } = useSelector((state) => state);
 
   const {
-    ride_id, max_number_dogs, participants,
-    host_id, messages, start_coordinate, end_coordinate,
+    max_number_dogs, participants, host_id,
+    messages, start_coordinate, end_coordinate,
   } = useSelector((state) => state.rides.currentRide);
 
   const { errorMessage } = useSelector((state) => state.rides);
@@ -63,15 +58,6 @@ const RideDetails = () => {
   const [isDeleteRideModalOpen, setIsDeleteRideModalOpen] = useState(false);
   const [isKickUserModalOpen, setIsKickUserModalOpen] = useState(false);
   const [userKicked, setUserKicked] = useState(0);
-
-
-  const handleKick = () => {
-    dispatch(kickUserFromRide(userKicked, id));
-    setIsKickUserModalOpen(false);
-    setUserKicked(0);
-  };
-
-
 
   return (
     <>
@@ -116,51 +102,12 @@ const RideDetails = () => {
 
                 {
                   isKickUserModalOpen && (
-                    <div className="ride-details__modal">
-                      <button
-                        type="button"
-                        className="ride-details__modal__close"
-                        onClick={() => {
-                          setIsKickUserModalOpen(false);
-                          setUserKicked(0);
-                        }}
-                      >
-                        ✖
-                      </button>
-                      <p
-                        className="ride-details__modal__text"
-                      >
-                        Voulez allez retirer {
-                          participants.find(
-                            (participant) => participant.participant_id === userKicked,
-                          ).participant_first_name
-                        } de la balade
-                      </p>
-                      <p
-                        className="ride-details__modal__text"
-                      >
-                        Continuer ?
-                      </p>
-                      <div className="ride-details__modal__btn-container">
-                        <button
-                          type="button"
-                          className="ride-details__modal__back-btn"
-                          onClick={() => {
-                            setIsKickUserModalOpen(false);
-                            setUserKicked(0);
-                          }}
-                        >
-                          Retour
-                        </button>
-                        <button
-                          type="button"
-                          className="ride-details__modal__delete-btn"
-                          onClick={() => handleKick()}
-                        >
-                          Retirer
-                        </button>
-                      </div>
-                    </div>
+                    <KickUserModal
+                      userKicked={userKicked}
+                      id={id}
+                      setIsKickUserModalOpen={setIsKickUserModalOpen}
+                      setUserKicked={setUserKicked}
+                    />
                   )
                 }
               </div>
