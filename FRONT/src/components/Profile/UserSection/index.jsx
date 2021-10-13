@@ -8,6 +8,8 @@ import { dburlWithoutApi } from '../../../utils/dburl';
 
 import edit from '../../../assets/img/profile-simulation/edit.svg';
 
+import './userSection.scss';
+
 const UserSection = ({
   profile, isEditingUser, setisEditingUser, profileIsUser,
   setIsModalAccountOpen, setInputDelete, setFailedToDelete,

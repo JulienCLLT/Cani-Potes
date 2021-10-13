@@ -12,6 +12,8 @@ import peureux from '../../../assets/img/profile-simulation/fearful.svg';
 import joueur from '../../../assets/img/profile-simulation/player.png';
 import { dburlWithoutApi } from '../../../utils/dburl';
 
+import './dogSection.scss';
+
 const DogSection = ({
   dog, index, isEditingDog, setIsModalDeleteDogIsOpen, profileIsUser, dogIsChanged,
   setIsModalOpen, toggleEditDog, surname, setSurname, setDogIsChanged, gender,

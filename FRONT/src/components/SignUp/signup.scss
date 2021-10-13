@@ -55,7 +55,7 @@
             @extend %btn;
             margin-left: 0.5*vars.$gutter;
             @extend %linear-gradient;
-            color: white;
+            color: vars.$color__white;
         }
     
         &__back {

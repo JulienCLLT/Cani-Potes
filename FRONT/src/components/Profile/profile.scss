@@ -36,118 +36,6 @@
     }
   }
 
-  &__header {
-    text-align: center;
-    border-radius: 30px;
-    padding: .5 * vars.$gutter;
-    background: top / cover url('../../assets/img/profile-simulation/wave.svg') no-repeat;
-
-    @include lg-screen {
-      width: 400px;
-      background: none;
-      border: none;
-      border-radius: 0;
-    }
-    
-    &-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .5rem;
-      margin: 0 auto;
-
-      @include lg-screen {
-        background: white;
-        border-radius: 10px;
-        box-shadow: 2px 2px 5px rgb(0 0 0 / 30%);
-        margin-top: 1.5rem;
-        padding-bottom: 1.5rem;
-      }
-    }
-
-    &__user {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .5rem;
-      margin-top: 0.5*vars.$gutter;
-      font-size: 1.4*vars.$gutter;
-
-      &__avatar-name {
-        margin-bottom: 0.3*vars.$gutter;
-        font-size: 1.8rem;
-      }
-
-      &__zipcode {
-        font-size: vars.$gutter;
-      }
-
-      input {
-        @extend %input;
-        width: 60px;
-        font-size: .8rem;
-      }
-    }
-
-    &__avatar {
-      width: 200px;
-      margin: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: vars.$gutter;
-
-      img {
-        margin-top: 1.5rem;
-        width: 100%;
-        border-radius: 10px;
-
-        @include lg-screen {
-          box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
-        }
-      }
-    }
-
-    input[type="file"] {
-      margin-left: -3rem;
-    }
-  }
-
-  &__info-user {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    gap: vars.$gutter;
-
-    @include lg-screen {
-      justify-content: space-around;
-      margin-top: vars.$gutter;
-    }
-
-    &__submit button {
-      @extend %strong-btn;
-    }
-
-    &__content {
-      margin-top: vars.$gutter;
-    }
-
-    &__content-field {
-      display: flex;
-      flex-direction: column;
-      gap: .5rem;
-
-      input {
-        @extend %input;
-      }
-    }
-
-    &__delete-account-btn {
-      @extend %strong-btn;
-      background: vars.$color_error;
-    }
-  }
-
   &__info-dogs {
     padding: vars.$gutter 1 * vars.$gutter;
     margin: 1 * vars.$gutter 0;
@@ -165,7 +53,7 @@
     }
 
     article {
-      background: white;
+      background: vars.$color__white;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
       border-radius: 10px;
       padding: vars.$gutter;
@@ -178,92 +66,6 @@
         flex-wrap: wrap;
       }
     }
-  }
-
-  &__dog {
-    display: flex;
-    flex-direction: column;
-    gap: .7 * vars.$gutter;
-    font-size: 1.2rem;
-
-        @include lg-screen {
-          min-width: 400px;
-          width: 400px;
-
-          input {
-            border-radius: 5px;
-          }
-        }
-
-      &__first {
-        display: flex;
-        justify-content: space-between;
-
-        &__surname-gender {
-          display: flex;
-          justify-content: space-between;
-          width: 70%;
-
-          & span {
-            font-size: 1.6rem;
-            @extend %title-background;
-            font-weight: bold;
-
-            @include lg-screen {
-              font-size: 1.8rem;
-            }
-          }
-        }
-      }
-
-      &__second {
-        display: flex;
-        flex-direction: column;
-        gap: .7 * vars.$gutter;
-      }
-
-      select {
-        width: 100%;
-        font-size: 1rem;
-        border-radius: 5px;
-        padding: .3rem ;
-      }
-
-      span, input {
-        display: flex;
-        align-items: center;
-        gap: .5 * vars.$gutter;
-        
-        img {
-          width: 20px;
-
-          @include lg-screen {
-            width: 30px;
-          }
-        }
-      }
-
-      &__gender-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        label {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-      }
-
-      &__sterilization {
-        display: flex;
-        align-items: center;
-      }
-
-      textarea {
-        font-size: 1.2rem;
-        @extend %input;
-      }
   }
 
   &__buttons {
@@ -394,7 +196,7 @@
 
     &__btn :nth-child(2) {
       background-color: vars.$color_main;
-      color: white;
+      color: vars.$color__white;
     }
 
     &__input {

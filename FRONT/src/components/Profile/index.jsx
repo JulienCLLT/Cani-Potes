@@ -6,14 +6,12 @@ import { useParams } from 'react-router-dom';
 
 import {
   deleteDog, deleteDogPhoto, deleteUser, getOneUserById,
-  getProfileIsLoading, reinitRenderAgain, updateDog, updateUser,
+  getProfileIsLoading, reinitRenderAgain, updateDog,
 } from '../../actions/users';
 import { getDogBreedsAndBehaviors, showDogForm } from '../../actions/signup';
 
 import DogForm from '../SignUp/DogForm/index';
 import Loader from '../Loader/index';
-
-import './profile.scss';
 
 import dblArrow from '../../assets/img/info-ride/double_arrow.svg';
 import DeleteAccModal from './DeleteAccModal';
@@ -21,6 +19,9 @@ import DogSection from './DogSection/index';
 import UserSection from './UserSection';
 import DogModal from './DogModal';
 import DogPictureModal from './DogPictureModal';
+import DogDeleteModal from './DogDeleteModal';
+
+import './profile.scss';
 
 const Profile = () => {
   const { user, profile, signup } = useSelector((state) => state);
@@ -82,13 +83,6 @@ const Profile = () => {
     }
   };
 
-  // const toggleEditUser = () => {
-  //   setisEditingUser(!isEditingUser);
-  //   setFirstName(profile.first_name);
-  //   setLastName(profile.last_name);
-  //   setZipcode(profile.zip_code);
-  // };
-
   const toggleEditDog = (index) => {
     if (isEditingDog === index + 1) setisEditingDog(0);
     else {
@@ -109,13 +103,6 @@ const Profile = () => {
       setDescription(editingDog.dog_description);
     }
   };
-
-  // const handleUpdateUser = () => {
-  //   setisEditingUser(false);
-  //   dispatch(updateUser({
-  //     firstName, lastName, zipcode, photoUser,
-  //   }));
-  // };
 
   const handleUpdateDog = () => {
     const updatedDog = {
@@ -250,34 +237,10 @@ const Profile = () => {
 
       {/* DOG DELETE MODAL */}
       {isModalDeleteDogIsOpen && (
-        <div className="profile-page__modal__wrapper">
-          <div className="profile-page__modal">
-            <button
-              className="profile-page__modal__close"
-              type="button"
-              onClick={() => setIsModalDeleteDogIsOpen(false)}
-            >
-              ✖
-            </button>
-
-            <p>Supprimer le chien ?</p>
-
-            <div className="profile-page__modal__btn">
-              <button
-                type="button"
-                onClick={() => setIsModalDeleteDogIsOpen(false)}
-              >
-                Non
-              </button>
-              <button
-                type="button"
-                onClick={handleDeleteDog}
-              >
-                Oui
-              </button>
-            </div>
-          </div>
-        </div>
+        <DogDeleteModal
+          setIsModalDeleteDogIsOpen={setIsModalDeleteDogIsOpen}
+          handleDeleteDog={handleDeleteDog}
+        />
       )}
 
       {profileIsUser && !profile.isLoading && (

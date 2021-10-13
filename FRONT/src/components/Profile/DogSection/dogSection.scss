@@ -1,0 +1,95 @@
+@use '../../../styles/vars';
+
+@mixin lg-screen {
+  @media screen and (min-width:900px) {
+      @content
+  }
+};
+
+.profile-page{
+  &__dog {
+    display: flex;
+    flex-direction: column;
+    gap: .7 * vars.$gutter;
+    font-size: 1.2rem;
+
+        @include lg-screen {
+          min-width: 400px;
+          width: 400px;
+
+          input {
+            border-radius: 5px;
+          }
+        }
+
+      &__first {
+        display: flex;
+        justify-content: space-between;
+
+        &__surname-gender {
+          display: flex;
+          justify-content: space-between;
+          width: 70%;
+
+          & span {
+            font-size: 1.6rem;
+            @extend %title-background;
+            font-weight: bold;
+
+            @include lg-screen {
+              font-size: 1.8rem;
+            }
+          }
+        }
+      }
+
+      &__second {
+        display: flex;
+        flex-direction: column;
+        gap: .7 * vars.$gutter;
+      }
+
+      select {
+        width: 100%;
+        font-size: 1rem;
+        border-radius: 5px;
+        padding: .3rem ;
+      }
+
+      span, input {
+        display: flex;
+        align-items: center;
+        gap: .5 * vars.$gutter;
+        
+        img {
+          width: 20px;
+
+          @include lg-screen {
+            width: 30px;
+          }
+        }
+      }
+
+      &__gender-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        label {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      &__sterilization {
+        display: flex;
+        align-items: center;
+      }
+
+      textarea {
+        font-size: 1.2rem;
+        @extend %input;
+      }
+  }
+}

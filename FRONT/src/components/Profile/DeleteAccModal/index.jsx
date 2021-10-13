@@ -1,6 +1,5 @@
 /* eslint-disable linebreak-style */
 import React from 'react';
-// import close from '../../../assets/img/close.svg';
 
 const DeleteAccModal = ({
   setIsModalAccountOpen, inputDelete, setInputDelete, failedToDelete, handleDeleteAccount, firstName,

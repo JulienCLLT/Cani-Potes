@@ -44,7 +44,7 @@
       &:hover {
         @extend %linear-gradient;
         padding: calc(.8rem + 2px) 2px;
-        color: white;
+        color: vars.$color__white;
         border: none;
         transition: all .2s ease;
       }
@@ -95,7 +95,7 @@
       padding: .5rem .2rem;
       border-radius: 20px;
       @extend %linear-gradient;
-      color: white;
+      color: vars.$color__white;
       transition: all .2s ease;
 
       &:hover {
@@ -140,13 +140,13 @@
         }
         
         &-user {
-          border: 8px solid white;
+          border: 8px solid vars.$color__white;
           object-fit: cover;
           width: 35%;
         }
         
         &-pet {
-          border: 5px solid white;
+          border: 5px solid vars.$color__white;
           object-fit: cover;
           width: 25%;
         }
@@ -167,10 +167,10 @@
             transition: all .2s ease-in;
 
             &:hover {
-              background: white;
+              background: vars.$color__white;
               transition: all .2s ease-in;
               transform: scale(1.2) translate(0, -3px);
-              box-shadow: 0 2px 3px white;
+              box-shadow: 0 2px 3px vars.$color__white;
               border: none;
             }
           }

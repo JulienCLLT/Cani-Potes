@@ -33,7 +33,7 @@
       &:hover {
         @extend %linear-gradient;
         padding: calc(.8rem + 2px) 2px;
-        color: white;
+        color: vars.$color__white;
         border: none;
         transition: all .2s ease;
       }

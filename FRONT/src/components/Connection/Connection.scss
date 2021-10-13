@@ -48,7 +48,7 @@
         @include lg-screen {
             font-size: 3rem;
             display: block;
-            color: white;
+            color: vars.$color__white;
             font-family: 'Indie Flower', cursive;
         }
     }
@@ -67,7 +67,7 @@
         &__signin, &__signup {
             @extend %btn;
             border-radius: 10px;
-            background: white;
+            background: vars.$color__white;
             color: vars.$color_main;
             padding: .5 * vars.$gutter;
 
@@ -337,7 +337,7 @@
             align-self: flex-end;
             cursor: pointer;
             padding: 0.4*vars.$gutter 0.7* vars.$gutter;
-            color: white;
+            color: vars.$color__white;
             
             img {
                 width: 100%;
@@ -367,7 +367,7 @@
             label {
                 cursor: initial;
                 font-size: 1.1*vars.$gutter;
-                color: white;
+                color: vars.$color__white;
             }
 
             input {
@@ -383,7 +383,7 @@
             @extend %btn;
             font-size: vars.$gutter;
             border-radius: 10px;
-            background: white;
+            background: vars.$color__white;
             color: vars.$color_main;
             padding: .5 * vars.$gutter;
         }

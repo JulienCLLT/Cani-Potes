@@ -40,7 +40,7 @@
             @extend %btn;
             @extend %linear-gradient;
             border: none;
-            color: white;
+            color: vars.$color__white;
             padding: .6rem 1rem;
         }
     }

@@ -327,7 +327,7 @@
         align-items: center;
         cursor: pointer;
         animation: chat-bubble 15s infinite;
-        color: white;
+        color: vars.$color__white;
         transition: all .5s ease;
 
         button {
@@ -408,7 +408,7 @@
                 padding: .8 * vars.$gutter ;
                 border-radius: 8px;
                 border-top-left-radius: 0;
-                background: white;
+                background: vars.$color__white;
                 position: relative;
                 background: lighten(vars.$color_yellow, 35);
 
@@ -549,7 +549,7 @@
             margin: .5rem 0;
             font-size: 1.5* vars.$gutter;
             background-color: vars.$color-main;
-            color: white;
+            color: vars.$color__white;
         }
     }
 

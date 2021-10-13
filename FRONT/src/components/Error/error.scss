@@ -33,7 +33,7 @@
       &:hover {
         @extend %linear-gradient;
         padding: calc(.8rem + 2px) 2px;
-        color: white;
+        color: vars.$color__white;
         border: none;
         transition: all .2s ease;
       }
@@ -55,7 +55,7 @@
       margin: 0 auto;
       border-radius: 17px;
     }
-    color: white;
+    color: vars.$color__white;
     display: flex;
     flex-direction: column;
 
