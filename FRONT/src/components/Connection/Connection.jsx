@@ -2,23 +2,21 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { loginUser } from '../../actions/users';
 import NavBarDisconnected from '../Header/NavBarDisconnected/NavBarDisconnected';
 
-import './Connection.scss';
-import logo from '../../assets/navbar/canipotes_logo.jpg';
 import dogHome from '../../assets/img/home-dogs.jpg';
 import mapHome from '../../assets/img/home_map.png';
 import paw from '../../assets/img/paw-linear.svg';
-import Loader from '../Loader/index';
+
+import './Connection.scss';
+import ConnectionHeader from './ConnectionHeader';
 
 const Connection = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [dogPicIsLoading, setDogPicIsLoading] = useState(false);
 
   const { failedToConnect } = useSelector((state) => state.user);
 
@@ -28,32 +26,7 @@ const Connection = () => {
 
   return (
     <div className="connection-container">
-      <header className="header-connection">
-        <NavLink
-          className="header-connection__logo"
-          to="/"
-          exact
-        >
-          <img src={logo} alt="logo cani potes" />
-        </NavLink>
-        <h1 className="header-connection__title">Cani' Potes</h1>
-        <div className="header-connection__cta">
-          <button
-            type="button"
-            className="header-connection__cta__signin"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Connexion
-          </button>
-          <NavLink
-            className="header-connection__cta__signup"
-            to="/signup"
-            exact
-          >
-            Inscription
-          </NavLink>
-        </div>
-      </header>
+      <ConnectionHeader setIsModalOpen={setIsModalOpen} />
 
       <main className="connection">
         <div className="connection__info">
