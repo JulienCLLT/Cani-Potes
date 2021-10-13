@@ -20,6 +20,7 @@ import { reinitRenderAgain } from '../../actions/users';
 import { dburlWithoutApi } from '../../utils/dburl';
 import RideParticipants from './RideParticipants';
 import Chat from './Chat';
+import DeleteRideModal from './DeleteRideModal';
 
 const RideDetails = () => {
   const { id } = useParams();
@@ -63,10 +64,6 @@ const RideDetails = () => {
   const [isKickUserModalOpen, setIsKickUserModalOpen] = useState(false);
   const [userKicked, setUserKicked] = useState(0);
 
-  const handleDelete = () => {
-    dispatch(deleteRide(ride_id));
-    setIsRedirect(true);
-  };
 
   const handleKick = () => {
     dispatch(kickUserFromRide(userKicked, id));
@@ -110,47 +107,12 @@ const RideDetails = () => {
                   id={id}
                 />
 
-                {
-                  isDeleteRideModalOpen && (
-                    <div className="ride-details__modal-wrapper">
-                      <div className="ride-details__modal">
-                        <button
-                          type="button"
-                          className="ride-details__modal__close"
-                          onClick={() => setIsDeleteRideModalOpen(false)}
-                        >
-                          ✖
-                        </button>
-                        <p className="ride-details__modal__bold">Attention !</p>
-                        <p className="ride-details__modal__text">
-                          Vous êtes l'organisateur de cette balade.
-                        </p>
-                        <p className="ride-details__modal__text">
-                          En vous retirant vous la supprimerez.
-                        </p>
-                        <p className="ride-details__modal__text">
-                          Continuer ?
-                        </p>
-                        <div className="ride-details__modal__btn-container">
-                          <button
-                            type="button"
-                            className="ride-details__modal__back-btn"
-                            onClick={() => setIsDeleteRideModalOpen(false)}
-                          >
-                            Retour
-                          </button>
-                          <button
-                            type="button"
-                            className="ride-details__modal__delete-btn"
-                            onClick={() => handleDelete()}
-                          >
-                            Supprimer
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }
+                {isDeleteRideModalOpen && (
+                  <DeleteRideModal
+                    setIsRedirect={setIsRedirect}
+                    setIsDeleteRideModalOpen={setIsDeleteRideModalOpen}
+                  />
+                )}
 
                 {
                   isKickUserModalOpen && (
