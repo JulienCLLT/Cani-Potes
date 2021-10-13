@@ -201,6 +201,7 @@ const DogSection = ({
         )}
       </div>
 
+      {/* DOG PICTURES */}
       <div className="profile-page__dog-pictures">
         <div className="profile-page__dog-pictures__container">
           {

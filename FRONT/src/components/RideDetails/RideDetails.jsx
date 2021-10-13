@@ -4,28 +4,14 @@ import { Link, Redirect, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-  MapContainer, TileLayer, Marker, Popup,
-} from 'react-leaflet';
+import RideInfo from './RideInfo/index';
 
-import L from 'leaflet';
-
-import Loader from '../Loader/index';
-
-import calendar from '../../assets/img/info-ride/calendar-blue.svg';
-import hourglass from '../../assets/img/info-ride/hourglass-orange.svg';
-import startFlag from '../../assets/img/info-ride/startPointFlag.svg';
-import endFlag from '../../assets/img/info-ride/endPointFlag.svg';
 import conversation from '../../assets/img/info-ride/conversation.svg';
 import star from '../../assets/img/star.svg';
 import peureux from '../../assets/img/profile-simulation/fearful.svg';
 import joueur from '../../assets/img/profile-simulation/player.png';
 import agressif from '../../assets/img/profile-simulation/aggressive.png';
 import sociable from '../../assets/img/profile-simulation/sociable.svg';
-import flag from '../../assets/img/info-ride/flag-green.svg';
-import starting from '../../assets/img/info-ride/map-pin-red.svg';
-import nbdog from '../../assets/img/info-ride/nbdog.svg';
-import nbcanipote from '../../assets/img/info-ride/nbcanipote.svg';
 import send from '../../assets/img/info-ride/send.svg';
 
 import {
@@ -48,8 +34,8 @@ const RideDetails = () => {
   const { user: userProfile } = useSelector((state) => state);
 
   const {
-    ride_id, title, max_number_dogs, participants, starting_time, duration, description,
-    host_id, messages, start_coordinate, end_coordinate, isLoading,
+    ride_id, max_number_dogs, participants,
+    host_id, messages, start_coordinate, end_coordinate,
   } = useSelector((state) => state.rides.currentRide);
 
   const { errorMessage } = useSelector((state) => state.rides);
@@ -149,25 +135,9 @@ const RideDetails = () => {
     dispatch(sendNewMessage(
       userProfile.id, id, message,
     ));
-
     reset();
-
     scrollDownChat();
   };
-
-  const positionStart = new L.Icon({
-    iconUrl: startFlag,
-    inconRetInaUrl: startFlag,
-    popupAnchor: [-0, -0],
-    iconSize: [35, 42],
-  });
-
-  const positionEnd = new L.Icon({
-    iconUrl: endFlag,
-    inconRetInaUrl: endFlag,
-    popupAnchor: [-0, -0],
-    iconSize: [35, 42],
-  });
 
   return (
     <>
@@ -180,66 +150,22 @@ const RideDetails = () => {
             <main>
               <div className="ride-details">
                 {isRedirect && <Redirect to="/home" />}
-                <section className="ride-details__map">
-                  <div className="ride-details__leaflet">
-                    {
-                        isLoading ? (
-                          <Loader />
-                        ) : (
-                          <MapContainer className="ride-details__leaflet__map" center={start_coordinate} zoom={16} scrollWheelZoom zoomControl={false}>
-                            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                            <Marker position={start_coordinate} icon={positionStart}>
-                              <Popup>Départ</Popup>
-                            </Marker>
-                            <Marker position={end_coordinate} icon={positionEnd}>
-                              <Popup>Arrivée</Popup>
-                            </Marker>
-                          </MapContainer>
-                        )
-                      }
-                  </div>
-                </section>
-                <section className="ride-details__infos">
-                  <div className="ride-details__infos__header">
-                    <h2>{title}</h2>
-                    <div className="ride-details__infos__header__number">
-                      <span>
-                        <img src={nbdog} alt="icon dog" />
-                        {nbOfDogs} / {max_number_dogs} chiens
-                      </span>
-                      <span>
-                        <img src={nbcanipote} alt="icon human" />
-                        {participants.length} Cani Potes
-                      </span>
-                    </div>
-                  </div>
-                  <div className="ride-details__infos__description">
-                    <p>
-                      <span className="ride-details__icon"><img src={calendar} alt="calendar" /></span>
-                      {translateDate(starting_time)}
-                    </p>
-                    <p>
-                      <span className="ride-details__icon"><img src={hourglass} alt="hourglass" /></span>
-                      Durée : {duration.minutes ? `${duration.minutes} min` : 'indeterminée'}
-                    </p>
-                    <p>
-                      <span className="ride-details__icon"><img src={starting} alt="starting" /></span>
-                      Départ : <br />{startPointAddress}
-                    </p>
-                    <p>
-                      <span className="ride-details__icon"><img src={flag} alt="flag" /></span>
-                      Arrivée : <br />{endPointAddress}
-                    </p>
-                    <p>{description}</p>
-                  </div>
-                </section>
+                <RideInfo
+                  start_coordinate={start_coordinate}
+                  end_coordinate={end_coordinate}
+                  nbOfDogs={nbOfDogs}
+                  max_number_dogs={max_number_dogs}
+                  nbParticipants={participants.length}
+                  startPointAddress={startPointAddress}
+                  endPointAddress={endPointAddress}
+                />
 
                 <section className="ride-details__users">
                   <div className="ride-details__container">
                     <div className="ride-details__users__registered">
                       {
                         participants.map((participant) => (
-                          <div className="ride-details__current-user-container">
+                          <div className="ride-details__current-user-container" key={participant.participant_id}>
                             {userIsHost && participant.participant_id !== userProfile.id && (
                               <button
                                 className="ride-details__current-user__kick-btn"
