@@ -24,37 +24,40 @@ const signinMiddleware = (store) => (next) => (action) => {
       })
         .then((response) => {
           console.log('user connect : ', response);
+
           // get user's dogs with another request
-          axios({
-            method: 'GET',
-            url: `${dburlWithApi}/social/profile/${response.data.id}`,
-            headers: {
-              'Access-Control-Allow-Origin': '*',
-              authorization: `${response.data.authorization}`,
-            },
-          })
-            .then((responseDogs) => {
-              store.dispatch(connectUser(response.data.authorization, response.data));
-              store.dispatch(saveUserDogsInState(responseDogs.data.dogs));
+          // axios({
+          //   method: 'GET',
+          //   url: `${dburlWithApi}/social/profile/${response.data.id}`,
+          //   headers: {
+          //     'Access-Control-Allow-Origin': '*',
+          //     // authorization: `${response.data.authorization}`,
+          //   },
+          // })
+          //   .then((responseDogs) => {
+          //     //store.dispatch(connectUser(response.data.authorization, response.data));
+          //     store.dispatch(connectUser(response.data));
+              
+          //     store.dispatch(saveUserDogsInState(responseDogs.data.dogs));
 
-              localStorage.setItem('user', JSON.stringify({
-                id: response.data.id,
-                first_name: response.data.first_name,
-                position: response.data.position,
-                dogs: responseDogs.data.dogs,
-                token: response.data.authorization,
-                isLogged: true,
-                failedToConnect: false,
-                ride_id: response.data.ride_id,
-                rides: [],
-                renderAgain: false,
-              }));
+          //     localStorage.setItem('user', JSON.stringify({
+          //       id: response.data.id,
+          //       first_name: response.data.first_name,
+          //       position: response.data.position,
+          //       dogs: responseDogs.data.dogs,
+          //       //token: response.data.authorization,
+          //       isLogged: true,
+          //       failedToConnect: false,
+          //       ride_id: response.data.ride_id,
+          //       rides: [],
+          //       renderAgain: false,
+          //     }));
 
-              console.log('User send by db : ', response);
-            })
-            .catch((errorDogs) => {
-              console.error(errorDogs.response.data);
-            });
+          //     console.log('User send by db : ', response);
+          //   })
+          //   .catch((errorDogs) => {
+          //     console.error(errorDogs.response.data);
+          //   });
         }).catch((error) => {
           store.dispatch(failedToConnect());
           console.error(error.response.data);

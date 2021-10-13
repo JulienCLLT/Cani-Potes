@@ -22,9 +22,10 @@ const userController = {
                     //authentification ok on genere un token
                     const token = jwt.signToken({ id: result.id });
                     //dataUser.authorization = token;
-                    response.cookie('token', token, { httpOnly: true });
+                    
 
                     //response.set({'authorization': token})
+                    response.cookie('token', token, { httpOnly: true });
                     response.status(200).json(dataUser);
                 } else {
                     response.status(400).json({ error: "Invalid Password" });
