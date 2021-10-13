@@ -20,7 +20,7 @@ const CreateRideMap = ({
   switchPoint, setStartPoint, setEndPoint, startPoint, setStartPointAddress,
   setEndPointAddress, endPoint, setSearchPosition,
 }) => {
-  const { position } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state);
 
   const positionStart = new L.Icon({
     iconUrl: startPointFlag,
@@ -58,7 +58,7 @@ const CreateRideMap = ({
 
   return (
     <div className="create-ride__map-wrapper">
-      <MapContainer className="leaflet-container" center={position} zoom={16} scrollWheelZoom>
+      <MapContainer className="leaflet-container" center={user.position} zoom={16} scrollWheelZoom>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Marker
           position={startPoint}
