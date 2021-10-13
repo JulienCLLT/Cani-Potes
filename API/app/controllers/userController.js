@@ -21,7 +21,8 @@ const userController = {
                     dataUser.position = await apiGeo(dataUser.position);
                     //authentification ok on genere un token
                     const token = jwt.signToken({ id: result.id });
-                    dataUser.authorization = token;
+                    //dataUser.authorization = token;
+                    response.cookie('token', token, { httpOnly: true });
 
                     //response.set({'authorization': token})
                     response.status(200).json(dataUser);
