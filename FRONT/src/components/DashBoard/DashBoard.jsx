@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteRide, userQuitRide } from '../../actions/rides';
+import { userQuitRide } from '../../actions/rides';
 import { getRidesWithUserIn, reinitRenderAgain } from '../../actions/users';
 import { translateDate } from '../../utils/translateDate';
 
 import './dashBoard.scss';
+import DashBoardModal from './DashBoardModal';
 
 const DashBoard = () => {
   const { user } = useSelector((state) => state);
@@ -27,7 +28,6 @@ const DashBoard = () => {
     <div className="dashboard">
 
       <header className="dashboard__header">
-
         <Link
           className="dashboard__header__btn"
           to="/ride/create"
@@ -35,6 +35,7 @@ const DashBoard = () => {
           Créer une balade
         </Link>
       </header>
+
       <div className="dashboard__rides">
         <section className="dashboard__hostedrides">
           <h2 className="dashboard__hostedrides__title">Je suis l'organisateur de ces balades</h2>
@@ -96,6 +97,7 @@ const DashBoard = () => {
                     chien{ride.dogs_enrolled && ride.dogs_enrolled.length > 1 ? 's' : null}
                   </p>
                 </div>
+
                 <div className="dashboard__nothostedrides__link-container">
                   <Link
                     className="dashboard__nothostedrides__link link-details"
@@ -123,29 +125,10 @@ const DashBoard = () => {
       </div>
 
       {isModalopen && (
-        <div className="dashboard__modal-wrapper">
-          <div className="dashboard__modal">
-            <button
-              className="dashboard__modal__close"
-              type="button"
-              onClick={() => setIsModalOpen(0)}
-            >
-              ✖
-            </button>
-
-            <p className="dashboard__modal__bold">Attention !</p>
-            <p>Vous êtes sur le point de supprimer cette balade.</p>
-            <p>Êtes-vous sûr ?</p>
-
-            <button
-              className="dashboard__modal__delete"
-              type="button"
-              onClick={() => dispatch(deleteRide(isModalopen))}
-            >
-              Supprimer
-            </button>
-          </div>
-        </div>
+        <DashBoardModal
+          setIsModalOpen={setIsModalOpen}
+          isModalopen={isModalopen}
+        />
       )}
     </div>
   );
