@@ -8,10 +8,8 @@ import { Redirect } from 'react-router-dom';
 import {
   MapContainer, TileLayer, Marker, useMapEvents,
 } from 'react-leaflet';
-import L from 'leaflet';
 
 // import esri for geocoding
-import EsriLeafletGeoSearch from 'react-esri-leaflet/plugins/EsriLeafletGeoSearch';
 import { geocodeService } from 'esri-leaflet-geocoder';
 import { apikey } from '../../utils/arcGiskey';
 
@@ -19,12 +17,12 @@ import { createRide } from '../../actions/rides';
 
 import './createRide.scss';
 
-import startPointFlag from '../../assets/img/info-ride/startPointFlag.svg';
-import endPointFlag from '../../assets/img/info-ride/endPointFlag.svg';
+import CreateRideMap from './CreateRideMap';
+import { geocodingReverse } from '../../utils/geocodingReverse';
 
 const CreateRide = () => {
   const { failedToCreateRide, errorMessage, rideIsCreated } = useSelector((state) => state.rides);
-  const { user } = useSelector((state) => state);
+  const { position } = useSelector((state) => state.user);
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const dispatch = useDispatch();
@@ -38,71 +36,20 @@ const CreateRide = () => {
 
   const date = new Date();
 
-  const positionStart = new L.Icon({
-    iconUrl: startPointFlag,
-    inconRetInaUrl: startPointFlag,
-    popupAnchor: [-0, -0],
-    iconSize: [45, 55],
-  });
-
-  const positionEnd = new L.Icon({
-    iconUrl: endPointFlag,
-    inconRetInaUrl: endPointFlag,
-    popupAnchor: [-0, -0],
-    iconSize: [45, 55],
-  });
-
   const [switchPoint, setSwitchPoint] = useState('start');
-  const [startPoint, setStartPoint] = useState(user.position);
+  const [startPoint, setStartPoint] = useState(position);
   const [endPoint, setEndPoint] = useState();
   const [startPointAddress, setStartPointAddress] = useState();
   const [endPointAddress, setEndPointAddress] = useState();
-  const [searchPosition, setSearchPosition] = useState(user.position);
+  const [searchPosition, setSearchPosition] = useState(position);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   const onSubmit = (data) => {
-    if (!startPoint || !endPoint) {
-      console.warn('Invalid start or end point for ride');
-    }
     dispatch(createRide(data, startPoint, endPoint));
-  };
-
-  const geocodeServiceEsri = geocodeService({
-    apikey,
-  });
-
-  // reverse geocoding : convert lat and lng to address
-  const geocodingReverse = (latlng, useStatepointAddress) => {
-    geocodeServiceEsri.reverse().latlng(latlng)
-      .run((error, result) => {
-        if (error) {
-          console.log('reverse geocoding error', error);
-        }
-        useStatepointAddress(result.address.LongLabel);
-      });
   };
 
   // initial startPointAddress
   geocodingReverse(startPoint, setStartPointAddress);
-
-  const LocationMarker = () => {
-    const [position, setPosition] = useState(null);
-    useMapEvents({
-      click(e) {
-        if (switchPoint === 'start') {
-          setStartPoint([e.latlng.lat, e.latlng.lng]);
-          geocodingReverse(startPoint, setStartPointAddress);
-        }
-        else if (switchPoint === 'end') {
-          setEndPoint([e.latlng.lat, e.latlng.lng]);
-          geocodingReverse([e.latlng.lat, e.latlng.lng], setEndPointAddress);
-        }
-      },
-    });
-    return position === null ? null : (
-      <Marker />
-    );
-  };
 
   useEffect(() => {
     if (switchPoint === 'start') {
@@ -118,39 +65,18 @@ const CreateRide = () => {
   return (
     <main className="create-ride">
       {rideIsCreated && <Redirect to="/board" />}
-      <div className="create-ride__map-wrapper">
-        <MapContainer className="leaflet-container" center={user.position} zoom={16} scrollWheelZoom>
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <Marker
-            position={startPoint}
-            icon={positionStart}
-          />
-          {endPoint && (
-            <Marker
-              position={endPoint}
-              icon={positionEnd}
-            />
-          )}
-          <LocationMarker />
-          <EsriLeafletGeoSearch
-            position="topleft"
-            useMapBounds={false}
-            placeholder="Chercher une adresse ou un endroit"
-            providers={{
-              arcgisOnlineProvider: {
-                apikey,
-              },
-            }}
-            eventHandlers={{
-              results: (results) => {
-                console.log('EsriLeafletGeosearch', [results.latlng.lat, results.latlng.lng]);
-                setSearchPosition([results.latlng.lat, results.latlng.lng]);
-              },
-            }}
-            key={apikey}
-          />
-        </MapContainer>
-      </div>
+
+      <CreateRideMap
+        switchPoint={switchPoint}
+        setStartPoint={setStartPoint}
+        setEndPoint={setEndPoint}
+        startPoint={startPoint}
+        setStartPointAddress={setStartPointAddress}
+        setEndPointAddress={setEndPointAddress}
+        endPoint={endPoint}
+        setSearchPosition={setSearchPosition}
+      />
+
       <form onSubmit={handleSubmit(onSubmit)} className="create-ride__form">
         {
           failedToCreateRide && <span>{errorMessage}</span>
