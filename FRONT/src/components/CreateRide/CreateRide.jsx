@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import './createRide.scss';
-
 import CreateRideMap from './CreateRideMap';
 import { geocodingReverse } from '../../utils/geocodingReverse';
 import CreateRideForm from './CreateRideForm';
+
+import './createRide.scss';
 
 const CreateRide = () => {
   const { rideIsCreated } = useSelector((state) => state.rides);

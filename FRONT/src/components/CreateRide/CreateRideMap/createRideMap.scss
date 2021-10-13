@@ -1,0 +1,23 @@
+@mixin lg-screen {
+    @media screen and (min-width: 900px) {
+        @content
+    }
+};
+
+.create-ride {
+  &__map-wrapper {
+    width: 100%;
+    
+    .leaflet-container {
+        height: 300px;
+
+        @include lg-screen {
+            height: calc(100vh - 69.6px);
+        }
+    }
+
+    @include lg-screen {
+        flex: 1;
+    }
+  }
+}

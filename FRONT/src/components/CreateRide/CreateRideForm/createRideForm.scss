@@ -1,0 +1,136 @@
+@use '../../../styles/vars';
+
+@mixin lg-screen {
+    @media screen and (min-width: 900px) {
+        @content
+    }
+};
+
+.create-ride {
+
+  &__form {
+    padding: 0 2rem 5rem;
+    max-width: 500px;
+    margin: 0 auto;
+    background: lighten(vars.$color-border-input, 12);
+    
+    @include lg-screen {
+        width: 34%;
+        padding: 0 2rem;
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
+    margin: 1rem 0;
+    
+    &__map-cta {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        
+        button {
+            @extend %light-btn;
+        }
+        
+        .selected {
+            @extend %strong-btn;
+        }
+
+    }
+    
+    &-double {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        
+        &__item {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: .3rem;
+
+            input {
+                width: 100%;
+                padding: .3rem .5rem;
+                border: 1px solid vars.$color-border-input;
+                border-radius: 5px;
+                
+                &:focus {
+                    box-shadow: 0 0 3px vars.$color_main;
+                }
+                
+                &:focus-visible {
+                    outline: none;
+                }
+            }
+        }
+    }
+    
+    input, textarea {
+        align-self: stretch;
+        padding: .3rem .5rem;
+        border: 1px solid vars.$color-border-input;
+        border-radius: 5px;
+        
+        &:focus {
+            box-shadow: 0 0 3px vars.$color_main;
+        }
+        
+        &:focus-visible {
+            outline: none;
+        }
+    }
+    
+    &__map-container {
+        position: relative;
+    }
+    
+    &__submit-btn {
+        @extend %strong-btn;
+    }
+
+    select {
+        padding: .3rem .5rem;
+        border: 1px solid vars.$color-border-input;
+        border-radius: 5px;
+        margin-right: .3rem;
+    }
+}
+
+  &__help {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, .1);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fade-in .3s ease-in forwards;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+
+      &__msg {
+          @extend %modal;
+          max-width: 500px;
+      }
+
+      &__btn {
+          @extend %light-btn;
+          width: 30px;
+          height: 30px;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+      }
+  }
+}

@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 
 import { createRide } from '../../../actions/rides';
 
+import './createRideForm.scss';
+
 const CreateRideForm = ({
   startPoint, endPoint, switchPoint, setSwitchPoint, startPointAddress, endPointAddress,
 }) => {

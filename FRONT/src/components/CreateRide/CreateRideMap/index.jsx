@@ -16,6 +16,8 @@ import startPointFlag from '../../../assets/img/info-ride/startPointFlag.svg';
 import endPointFlag from '../../../assets/img/info-ride/endPointFlag.svg';
 import { geocodingReverse } from '../../../utils/geocodingReverse';
 
+import './createRideMap.scss';
+
 const CreateRideMap = ({
   switchPoint, setStartPoint, setEndPoint, startPoint, setStartPointAddress,
   setEndPointAddress, endPoint, setSearchPosition,
