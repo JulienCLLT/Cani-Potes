@@ -10,6 +10,8 @@ import { translateDate } from '../../../utils/translateDate';
 import conversation from '../../../assets/img/info-ride/conversation.svg';
 import send from '../../../assets/img/info-ride/send.svg';
 
+import './chat.scss';
+
 const Chat = ({
   userId, id,
 }) => {

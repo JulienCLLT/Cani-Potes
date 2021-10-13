@@ -1,0 +1,99 @@
+@use '../../../styles/vars';
+
+@mixin lg-screen {
+  @media screen and (min-width:700px) {
+      @content
+  }
+};
+
+.ride-details {
+  &__leaflet {
+    height: 200px;
+
+    @include lg-screen {
+        height: 400px;
+    }
+
+    &__map {
+        height: 100%;
+    }
+
+    .leaflet-bottom  {
+        z-index: 400 !important;
+    }
+  }
+  
+  &__map {
+    h2 {
+        margin: .5 * vars.$gutter 0;
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+  }
+  
+  &__infos {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: vars.$gutter;
+    gap: vars.$gutter;
+
+    &__header {
+        position: relative;
+        
+        h2 {
+            margin-top: 5rem;
+            text-align: center;
+            font-size: 2.5*vars.$gutter;
+            color: vars.$color_main;
+            padding: vars.$gutter;
+        }
+
+        &__number {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            margin: 1.2*vars.$gutter;
+            top: 0;
+            font-size: 1.1*vars.$gutter;
+            background: rgba(167, 167, 167, .1);
+            box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+            padding: .5 * vars.$gutter;
+            margin: .5 * vars.$gutter;
+            border-radius: 8px;
+            transition: all .3s ease-in-out;
+            color: vars.$color_grey_writing;
+
+            span {
+                display: flex;
+                align-items: center;
+                img {
+                    width: 40px;
+                }
+            }
+            button {
+                @extend %btn;
+                margin-left: .3rem;
+            }
+        }
+    }
+
+    &__description {
+        display: flex;
+        flex-direction: column;
+        gap: .3rem;
+        font-size: 1.2rem;
+        color: vars.$color_grey_writing;
+        line-height: 1.5;
+        padding: vars.$gutter 0;
+        background-color: rgba(247, 180, 44, 0.2);
+        padding: 3*vars.$gutter;
+        border-radius: 8px;
+        
+
+        @include lg-screen {
+            width: 70%;
+            margin: auto;
+        }
+    }
+  }
+}

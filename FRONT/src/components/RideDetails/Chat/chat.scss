@@ -1,0 +1,162 @@
+@use '../../../styles/vars';
+
+@mixin lg-screen {
+  @media screen and (min-width:700px) {
+      @content
+  }
+};
+
+.ride-details {
+  &__chat {
+      position: fixed;
+      top: 5%;
+      bottom: 57px;
+      right: vars.$gutter;
+      width: calc(100% - 2 * vars.$gutter);
+      border-top: 1px solid vars.$color_main;
+      background: url('../../../assets/team/double-bubble.png');
+      animation: slide-in .2s ease-in;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 998;
+      
+      @include lg-screen {
+          border: 1px solid vars.$color_main;
+          max-width: 800px;
+          right: 3 * vars.$gutter;
+          bottom: 0;
+      }
+
+      &__messages-container {
+          padding: vars.$gutter vars.$gutter 0;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1.5 * vars.$gutter;
+          overflow-y: scroll;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+  
+          &::-webkit-scrollbar {
+              display: none;
+          }
+  
+          .my-message {
+              align-self: flex-end;
+              border-top-left-radius: 8px;
+              border-bottom-right-radius: 0;
+
+              @extend %linear-gradient;
+              * {
+                  color: vars.$color__white;
+              }
+
+              &::before {
+                  // unset properties from heriting
+                  left: unset;
+                  top: unset;
+                  right: 0;
+                  transform: translate(90%, 0);
+                  border-right: none;
+                  border-bottom: none;
+                  
+                  bottom: 0;
+                  border-left: 10px solid vars.$color_yellow;
+                  border-top: 10px solid transparent;
+              }
+          }
+
+          &__message {
+              max-width: 90%;
+              padding: .8 * vars.$gutter ;
+              border-radius: 8px;
+              border-top-left-radius: 0;
+              background: vars.$color__white;
+              position: relative;
+              background: lighten(vars.$color_yellow, 35);
+
+              @include lg-screen {
+                  min-width: 55%;
+              }
+
+              &::before {
+                  position: relative;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  transform: translate(-100%, 0);
+                  content: '';
+                  border-right: 10px solid lighten(vars.$color_yellow, 35);
+                  border-bottom: 10px solid transparent;
+              }
+  
+              p {
+                  color: vars.$color_main;
+                  span {
+                      color: vars.$color_main;
+                  }
+              }
+              span {
+                  color: black;
+              }
+          }
+      }
+  
+      &__new-message {
+          margin: vars.$gutter 0;
+          display: flex;
+          justify-content: space-between;
+          padding: vars.$gutter vars.$gutter 0;
+  
+          input {
+              padding: .8rem .5rem;
+              flex: 1;
+              align-self: stretch;
+              border: 1px solid vars.$color_main;
+              border-top-left-radius: 15px;
+              border-bottom-left-radius: 15px;
+          }
+  
+          button {
+              @extend %strong-btn;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-top-left-radius: 0;
+              border-bottom-left-radius: 0;
+              border-top-right-radius: 15px;
+              border-bottom-right-radius: 15px;
+
+              &:hover {
+                  transform: none;
+              }
+          }
+      }
+  }
+
+  &__message {
+      &__avatar {
+          display: flex;
+          gap: vars.$gutter;
+      }
+
+      &__pic {
+          width: 40px;
+
+          img {
+              width: 100%;
+              border-radius: 50%;
+          }
+      }
+
+      &__sent-info {
+          display: flex;
+          flex-direction: column;
+      }
+
+      &__sent-date {
+          font-size: .7rem;
+      }
+  }
+}

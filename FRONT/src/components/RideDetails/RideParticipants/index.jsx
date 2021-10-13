@@ -14,6 +14,8 @@ import joueur from '../../../assets/img/profile-simulation/player.png';
 import agressif from '../../../assets/img/profile-simulation/aggressive.png';
 import sociable from '../../../assets/img/profile-simulation/sociable.svg';
 
+import './rideParticipants.scss';
+
 const RideParticipants = ({
   setIsKickUserModalOpen, setUserKicked, nbOfDogs, setIsDeleteRideModalOpen, id,
 }) => {

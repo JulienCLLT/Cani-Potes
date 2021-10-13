@@ -21,6 +21,8 @@ import nbcanipote from '../../../assets/img/info-ride/nbcanipote.svg';
 import startFlag from '../../../assets/img/info-ride/startPointFlag.svg';
 import endFlag from '../../../assets/img/info-ride/endPointFlag.svg';
 
+import './rideInfo.scss';
+
 const RideInfo = ({
   start_coordinate, end_coordinate, nbOfDogs, max_number_dogs,
   nbParticipants, startPointAddress, endPointAddress,
@@ -64,6 +66,7 @@ const RideInfo = ({
             }
         </div>
       </section>
+
       <section className="ride-details__infos">
         <div className="ride-details__infos__header">
           <h2>{title}</h2>
