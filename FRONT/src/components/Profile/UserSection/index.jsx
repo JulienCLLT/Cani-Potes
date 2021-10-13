@@ -70,21 +70,6 @@ const UserSection = ({
               <span className="profile-page__header__user__zipcode">{profile.zip_code}</span>
             )
           }
-          {
-            profileIsUser && (
-              <div
-                className="profile-page__header__edit  edit-btn"
-                onClick={toggleEditUser}
-              >
-                {isEditingUser ? 'Retour' : (
-                  <>
-                    <img src={edit} alt="edit" />
-                    Modifier
-                  </>
-                )}
-              </div>
-            )
-          }
         </div>
         <section className="profile-page__info-user">
           {profileIsUser && isEditingUser && (
@@ -110,6 +95,22 @@ const UserSection = ({
               </button>
             </div>
           )}
+          {
+            profileIsUser && (
+              <button
+                type="button"
+                className="profile-page__header__edit  edit-btn"
+                onClick={toggleEditUser}
+              >
+                {isEditingUser ? 'Retour' : (
+                  <>
+                    <img src={edit} alt="edit" />
+                    Modifier
+                  </>
+                )}
+              </button>
+            )
+          }
           { isEditingUser && (
             <p className="profile-page__info-user__content">
               <span className="profile-page__info-user__content-field">
