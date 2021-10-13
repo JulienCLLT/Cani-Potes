@@ -1,0 +1,69 @@
+@use '../../../styles/vars';
+
+@mixin lg-screen {
+  @media screen and (min-width:900px) {
+      @content
+  }
+};
+
+.header-connection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1 * vars.$gutter;
+  border-bottom: 1px solid vars.$color_main;
+  @extend %linear-gradient;
+
+  @include lg-screen {
+      padding: 0 vars.$gutter;
+  }
+
+  &__logo img {
+      width: 60px;
+      border-radius: 50%;
+
+      @include lg-screen {
+          width: 100px;
+      }
+  }
+
+  &__title {
+      display: none;
+      
+      @include lg-screen {
+          font-size: 3rem;
+          display: block;
+          color: vars.$color__white;
+          font-family: 'Indie Flower', cursive;
+      }
+  }
+
+  &__cta {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: .5 * vars.$gutter;
+
+      @include lg-screen {
+          flex-direction: row;
+          gap: 1.5 * vars.$gutter;
+      }
+
+      &__signin, &__signup {
+          @extend %btn;
+          border-radius: 10px;
+          background: vars.$color__white;
+          color: vars.$color_main;
+          padding: .5 * vars.$gutter;
+
+          @include lg-screen {
+              font-size: 1.45rem;
+          }
+
+          &:hover {
+              box-shadow: 0 0 10px vars.$color-border-input;
+              transition: all .2s ease;
+          }
+      }
+  }
+}

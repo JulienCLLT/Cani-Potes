@@ -5,6 +5,8 @@ import { PropTypes } from 'prop-types';
 
 import logo from '../../../assets/navbar/canipotes_logo.jpg';
 
+import './connectionHeader.scss';
+
 const ConnectionHeader = ({ setIsModalOpen }) => (
   <header className="header-connection">
     <NavLink

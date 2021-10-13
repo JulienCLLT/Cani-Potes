@@ -1,0 +1,90 @@
+@use '../../../styles/vars';
+
+@mixin lg-screen {
+  @media screen and (min-width:900px) {
+      @content
+  }
+};
+
+.connection {
+  &__modal {
+    background: linear-gradient(315deg, rgba(252, 87, 94, 0.7), rgb(247, 180, 44, 0.9) 74%);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    max-width: 400px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    z-index: 9999;
+    font-size: 1.3rem;
+
+    @include lg-screen {
+        animation: fade-in-modal .3s forwards;
+    }
+
+    &__close {
+        align-self: flex-end;
+        cursor: pointer;
+        padding: 0.4*vars.$gutter 0.7* vars.$gutter;
+        color: vars.$color__white;
+        
+        img {
+            width: 100%;
+        }
+    }
+  }
+
+  &__form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: vars.$gutter;
+      white-space: nowrap;
+
+      @include lg-screen {
+          width: 50%;
+      }
+
+      &__field {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+
+          label {
+              cursor: initial;
+              font-size: 1.1*vars.$gutter;
+              color: vars.$color__white;
+          }
+
+          input {
+              border-radius: 5px;
+              width: 100%;
+              border: none;
+              padding: .5 * vars.$gutter .5 * vars.$gutter;
+              font-size: 1.1*vars.$gutter;
+          }
+      }
+
+      &__submit {
+          @extend %btn;
+          font-size: vars.$gutter;
+          border-radius: 10px;
+          background: vars.$color__white;
+          color: vars.$color_main;
+          padding: .5 * vars.$gutter;
+      }
+
+      &__failed {
+          color: red;
+          font-size: .8rem;
+          margin-bottom: 1 * vars.$gutter;
+      }
+  }
+}

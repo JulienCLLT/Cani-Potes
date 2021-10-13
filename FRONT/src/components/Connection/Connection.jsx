@@ -1,28 +1,18 @@
 /* eslint-disable linebreak-style */
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../actions/users';
 import NavBarDisconnected from '../Header/NavBarDisconnected/NavBarDisconnected';
+
+import ConnectionHeader from './ConnectionHeader';
+import ConnectionModal from './ConnectionModal';
 
 import dogHome from '../../assets/img/home-dogs.jpg';
 import mapHome from '../../assets/img/home_map.png';
 import paw from '../../assets/img/paw-linear.svg';
 
 import './Connection.scss';
-import ConnectionHeader from './ConnectionHeader';
 
 const Connection = () => {
-  const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const { failedToConnect } = useSelector((state) => state.user);
-
-  const onSubmit = (data) => {
-    dispatch(loginUser(data));
-  };
 
   return (
     <div className="connection-container">
@@ -69,6 +59,7 @@ const Connection = () => {
               </div>
             </div>
           </article>
+
           <div className="connection__info__text connection__info__text-center">
             <div>
               <h2>Commencez l'aventure simplement</h2>
@@ -91,51 +82,7 @@ const Connection = () => {
         </div>
 
         {isModalOpen && (
-          <div className="connection__modal">
-            <button
-              className="connection__modal__close"
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-            >
-              ✖
-            </button>
-
-            <form onSubmit={handleSubmit(onSubmit)} className="connection__form">
-              <div className="connection__form__field">
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  {...register('email', { required: true })}
-                />
-              </div>
-
-              <div className="connection__form__field">
-                <label htmlFor="password">Mot de passe</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  {...register('password', { required: true })}
-                />
-              </div>
-
-              {
-                failedToConnect && (
-                  <span className="connection__form__failed">Les identifiants sont inexacts.</span>
-                )
-              }
-
-              <button
-                className="connection__form__submit"
-                type="submit"
-              >
-                Se connecter
-              </button>
-
-            </form>
-          </div>
+          <ConnectionModal setIsModalOpen={setIsModalOpen} />
         )}
       </main>
 
