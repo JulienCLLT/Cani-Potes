@@ -23,7 +23,7 @@ const signinMiddleware = (store) => (next) => (action) => {
         password,
       })
         .then((response) => {
-          console.log('user connect : ', response);
+          // console.log('user connect : ', response);
           // get user's dogs with another request
           axios({
             method: 'GET',
@@ -50,14 +50,14 @@ const signinMiddleware = (store) => (next) => (action) => {
                 renderAgain: false,
               }));
 
-              console.log('User send by db : ', response);
+              // console.log('User send by db : ', response);
             })
             .catch((errorDogs) => {
-              console.error(errorDogs.response.data);
+              // console.error(errorDogs.response.data);
             });
         }).catch((error) => {
           store.dispatch(failedToConnect());
-          console.error(error.response.data);
+          // console.error(error.response.data);
         });
       break;
     }

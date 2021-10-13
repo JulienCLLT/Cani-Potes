@@ -21,7 +21,7 @@ const ridesInitialState = {
       0,
       0,
     ],
-    starting_time: '', // translate into le 15 sept 2021 à 18h30
+    starting_time: '',
     duration: {
       minutes: 0,
     },
@@ -32,7 +32,7 @@ const ridesInitialState = {
     messages: [
       {
         message_id: 1,
-        sent: '', // translate into il y a ... min / heures / jours
+        sent: '',
         message: '',
         sender_id: 0,
         sender_photo: '',
@@ -55,7 +55,7 @@ const ridesInitialState = {
             dog_breed: '',
             dog_gender: '',
             dog_weight: '',
-            dog_age: 0, // number of months
+            dog_age: 0,
             dog_sterilization: false,
             dog_description: '',
           },

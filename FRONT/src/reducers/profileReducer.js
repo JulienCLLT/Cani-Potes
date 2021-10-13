@@ -6,7 +6,7 @@ const profileInitialState = {
   first_name: '',
   last_name: '',
   photo: '',
-  zip_code: 12345,
+  zip_code: 75001,
   dogs: [],
   birthday: '',
   isLoading: false,

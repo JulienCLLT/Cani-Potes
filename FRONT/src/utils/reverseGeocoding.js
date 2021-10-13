@@ -12,9 +12,9 @@ export const reverseGeocoding = (latlng, setStateValue) => {
     .reverse()
     .latlng(latlng)
     .run(async (error, result) => {
-      if (error) {
-        console.warn('reverse geocoding error', error);
-      }
+      // if (error) {
+        // console.warn('reverse geocoding error', error);
+      // }
       setStateValue(result.address.LongLabel);
     });
 };

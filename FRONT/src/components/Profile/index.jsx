@@ -20,6 +20,7 @@ import edit from '../../assets/img/profile-simulation/edit.svg';
 import DeleteAccModal from './DeleteAccModal';
 import DogSection from './DogSection/index';
 import { dburlWithoutApi } from '../../utils/dburl';
+import UserSection from './UserSection';
 
 const Profile = () => {
   const { user, profile, signup } = useSelector((state) => state);
@@ -30,10 +31,6 @@ const Profile = () => {
 
   // manage to edit user
   const [isEditingUser, setisEditingUser] = useState(false);
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [zipcode, setZipcode] = useState();
-  const [photoUser, setPhotoUser] = useState();
 
   // manage to edit dog
   const [isEditingDog, setisEditingDog] = useState(false);
@@ -85,12 +82,12 @@ const Profile = () => {
     }
   };
 
-  const toggleEditUser = () => {
-    setisEditingUser(!isEditingUser);
-    setFirstName(profile.first_name);
-    setLastName(profile.last_name);
-    setZipcode(profile.zip_code);
-  };
+  // const toggleEditUser = () => {
+  //   setisEditingUser(!isEditingUser);
+  //   setFirstName(profile.first_name);
+  //   setLastName(profile.last_name);
+  //   setZipcode(profile.zip_code);
+  // };
 
   const toggleEditDog = (index) => {
     if (isEditingDog === index + 1) setisEditingDog(0);
@@ -113,12 +110,12 @@ const Profile = () => {
     }
   };
 
-  const handleUpdateUser = () => {
-    setisEditingUser(false);
-    dispatch(updateUser({
-      firstName, lastName, zipcode, photoUser,
-    }));
-  };
+  // const handleUpdateUser = () => {
+  //   setisEditingUser(false);
+  //   dispatch(updateUser({
+  //     firstName, lastName, zipcode, photoUser,
+  //   }));
+  // };
 
   const handleUpdateDog = () => {
     const updatedDog = {
@@ -168,109 +165,16 @@ const Profile = () => {
           <Loader />
         ) : (
           <div className="profile-page__content-wrapper">
-            <header className="profile-page__header">
-              <div className="profile-page__header-container">
-                <div className="profile-page__header__avatar">
-                  <img src={`${dburlWithoutApi}/user_resized/${profile.photo}`} alt={profile.first_name} />
-                  {
-                    isEditingUser && (
-                      <>
-                        <label
-                          htmlFor="user_photo"
-                          className="profile-page__photo-label"
-                        >
-                          {photoUser ? `${photoUser.name}` : 'Choisir une photo'}
-                        </label>
-                        <input
-                          type="file"
-                          name="user_photo"
-                          id="user_photo"
-                          onChange={(e) => setPhotoUser(e.target.files[0])}
-                        />
-                      </>
-                    )
-                  }
-                </div>
-                <div className="profile-page__header__user">
-                  <span className="profile-page__header__user__avatar-name">{profile.first_name}</span>
-                  {
-                    isEditingUser ? (
-                      <input
-                        type="number"
-                        value={zipcode}
-                        onChange={(e) => setZipcode(e.target.value)}
-                      />
-                    ) : (
-                      <span className="profile-page__header__user__zipcode">{profile.zip_code}</span>
-                    )
-                  }
-                  {
-                    profileIsUser && (
-                      <div
-                        className="profile-page__header__edit  edit-btn"
-                        onClick={toggleEditUser}
-                      >
-                        {isEditingUser ? 'Retour' : (
-                          <>
-                            <img src={edit} alt="edit" />
-                            Modifier
-                          </>
-                        )}
-                      </div>
-                    )
-                  }
-                </div>
-                <section className="profile-page__info-user">
-                  {profileIsUser && isEditingUser && (
-                    <button
-                      className="profile-page__info-user__delete-account-btn"
-                      type="button"
-                      onClick={() => {
-                        setInputDelete('');
-                        setFailedToDelete(false);
-                        setIsModalAccountOpen(true);
-                      }}
-                    >
-                      Supprimer mon compte
-                    </button>
-                  )}
-                  {isEditingUser && (
-                    <div className="profile-page__info-user__submit">
-                      <button
-                        type="submit"
-                        onClick={handleUpdateUser}
-                      >
-                        Enregistrer vos infos
-                      </button>
-                    </div>
-                  )}
-                  { isEditingUser && (
-                    <p className="profile-page__info-user__content">
-                      <span className="profile-page__info-user__content-field">
-                        {
-                        isEditingUser && (
-                          <input
-                            type="text"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                          />
-                        )
-                      }
-                        {
-                        isEditingUser && (
-                          <input
-                            type="text"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                          />
-                        )
-                      }
-                      </span>
-                    </p>
-                  )}
-                </section>
-              </div>
-            </header>
+
+            <UserSection
+              profile={profile}
+              isEditingUser={isEditingUser}
+              setisEditingUser={setisEditingUser}
+              profileIsUser={profileIsUser}
+              setIsModalAccountOpen={setIsModalAccountOpen}
+              setInputDelete={setInputDelete}
+              setFailedToDelete={setFailedToDelete}
+            />
 
             {isModalDeleteAccountOpen && (
               <DeleteAccModal

@@ -30,7 +30,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
             localStorage.removeItem('user');
             store.dispatch(logoutUser());
           }
-          console.error("Can't get all rides : ", error.response.data);
+          // console.error("Can't get all rides : ", error.response.data);
         });
       next(action);
       break;
@@ -39,7 +39,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .get(`/ride/${action.id}`)
         .then((response) => {
           store.dispatch(saveOneRide(response.data[0]));
-          console.log('ride retournée : ', response);
+          // console.log('ride retournée : ', response);
         })
         .catch((error) => {
           if (error.response.data.name === 'TokenExpiredError') {
@@ -50,7 +50,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
           if (error.response.data === "La balade n'existe pas" || error.response.status === 404) {
             store.dispatch(setErrorMsg('Ride not found'));
           }
-          console.error("Can't get this ride : ", error.response);
+          // console.error("Can't get this ride : ", error.response);
         });
       break;
     case ADD__USER__TO__RIDE:
@@ -59,14 +59,14 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           store.dispatch(renderAgain());
           next(action);
-          console.log('You join this ride : ', response);
+          // console.log('You join this ride : ', response);
         })
         .catch((error) => {
           if (error.response.data.name === 'TokenExpiredError') {
             localStorage.removeItem('user');
             store.dispatch(logoutUser());
           }
-          console.error("Can't join the ride : ", error.response.data);
+          // console.error("Can't join the ride : ", error.response.data);
         });
       break;
     case USER__QUIT__RIDE:
@@ -77,14 +77,14 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           store.dispatch(renderAgain());
           next(action);
-          console.log('You quit this ride : ', response);
+          // console.log('You quit this ride : ', response);
         })
         .catch((error) => {
           if (error.response.data.name === 'TokenExpiredError') {
             localStorage.removeItem('user');
             store.dispatch(logoutUser());
           }
-          console.error("Error, can't quit the ride : ", error.response.data);
+          // console.error("Error, can't quit the ride : ", error.response.data);
         });
       break;
     case SEND__NEW__MESSAGE:
@@ -94,14 +94,14 @@ const ridesMiddleware = (store) => (next) => (action) => {
         })
         .then((response) => {
           store.dispatch(addMessageInState(response.data.message));
-          console.log('Message sent : ', response.data.message);
+          // console.log('Message sent : ', response.data.message);
         })
         .catch((error) => {
           if (error.response.data.name === 'TokenExpiredError') {
             localStorage.removeItem('user');
             store.dispatch(logoutUser());
           }
-          console.error("Message didn't send : ", error.response.data);
+          // console.error("Message didn't send : ", error.response.data);
         });
       break;
     case DELETE__RIDE:
@@ -110,14 +110,14 @@ const ridesMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           store.dispatch(deleteRideInState(action.rideId));
           store.dispatch(renderAgain());
-          console.log('Ride deleted successfully : ', response);
+          // console.log('Ride deleted successfully : ', response);
         })
         .catch((error) => {
           if (error.response.data.name === 'TokenExpiredError') {
             localStorage.removeItem('user');
             store.dispatch(logoutUser());
           }
-          console.error("Can't delete ride : ", error.response.data);
+          // console.error("Can't delete ride : ", error.response.data);
         });
       break;
     case CREATE_RIDE: {
@@ -138,7 +138,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
         })
         .then((response) => {
           next(action);
-          console.log('Ride created successfully : ', response);
+          // console.log('Ride created successfully : ', response);
         })
         .catch((error) => {
           if (error.response.data.name === 'TokenExpiredError') {
@@ -146,7 +146,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
             store.dispatch(logoutUser());
           }
           store.dispatch(failedToCreateRide(error.response.data));
-          console.error("Can't create ride : ", error);
+          // console.error("Can't create ride : ", error);
         });
     }
       break;
@@ -154,7 +154,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
       axiosInstance
         .delete(`/ride/${action.rideId}/participation/user/${action.userId}`)
         .then((response) => {
-          console.log('User kicked from ride : ', response);
+          // console.log('User kicked from ride : ', response);
           next(action);
         })
         .catch((error) => {
@@ -162,7 +162,7 @@ const ridesMiddleware = (store) => (next) => (action) => {
             localStorage.removeItem('user');
             store.dispatch(logoutUser());
           }
-          console.error("Can't kick the user : ", error.response.data);
+          // console.error("Can't kick the user : ", error.response.data);
         });
       break;
     default:

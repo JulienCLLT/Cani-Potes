@@ -1,12 +1,13 @@
 /* eslint-disable linebreak-style */
 import {
-  NEXT_SIGNUP_FORM_STEP, SAVE_DOG_BREEDS_AND_BEHAVIORS, FAILED_TO_SIGNUP, FORMSTEP_SHOWS_DOGFORM, END_OF_SIGNUP, SHOW_DOGFORM,
+  NEXT_SIGNUP_FORM_STEP, SAVE_DOG_BREEDS_AND_BEHAVIORS, FAILED_TO_SIGNUP,
+  FORMSTEP_SHOWS_DOGFORM, END_OF_SIGNUP, SHOW_DOGFORM,
 } from '../actions/signup';
 import { LOGOUT__USER } from '../actions/users';
 
 const initialState = {
 
-  // to have beahaviors and breeds
+  // to have behaviors and breeds
   behaviors: [],
   breeds: [],
 

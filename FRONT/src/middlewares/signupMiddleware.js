@@ -45,10 +45,10 @@ const signupMiddleware = (store) => (next) => (action) => {
         .then((response) => {
           store.dispatch(connectUser(response.data.authorization, response.data));
           store.dispatch(nextSignupFormStep());
-          console.log('response', response);
+          // console.log('response', response);
         }).catch((error) => {
           store.dispatch(failedToSignup(error.response.data));
-          console.error('error', error.response.data);
+          // console.error('error', error.response.data);
         });
       next(action);
       break;
@@ -87,14 +87,14 @@ const signupMiddleware = (store) => (next) => (action) => {
           store.dispatch(nextSignupFormStep());
           store.dispatch(renderAgain());
           next(action);
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch((error) => {
           if (error.response.data.name === 'TokenExpiredError') {
             localStorage.removeItem('user');
             store.dispatch(logoutUser());
           }
-          console.error(error.response.data);
+          // console.error(error.response.data);
         });
       break;
     }
@@ -109,7 +109,7 @@ const signupMiddleware = (store) => (next) => (action) => {
             localStorage.removeItem('user');
             store.dispatch(logoutUser());
           }
-          console.error('get dog breeds and behaviors error', error.response.data)
+          // console.error('get dog breeds and behaviors error', error.response.data)
         });
       next(action);
       break;
