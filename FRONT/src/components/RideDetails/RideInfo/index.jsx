@@ -116,7 +116,7 @@ RideInfo.propTypes = {
   max_number_dogs: PropTypes.number.isRequired,
   nbParticipants: PropTypes.number.isRequired,
   startPointAddress: PropTypes.string.isRequired,
-  endPointAddress:PropTypes.string.isRequired,
-}
+  endPointAddress: PropTypes.string.isRequired,
+};
 
 export default RideInfo;

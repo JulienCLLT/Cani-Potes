@@ -2,7 +2,7 @@
 import React from 'react';
 
 const DeleteAccModal = ({
-  setIsModalAccountOpen, inputDelete, setInputDelete, failedToDelete, handleDeleteAccount, firstName,
+  setIsModalAccountOpen, inputDelete, setInputDelete, failedToDelete, handleDeleteAccount,
 }) => (
   <div className="profile-page__modal__wrapper">
     <div className="profile-page__modal">
@@ -17,7 +17,7 @@ const DeleteAccModal = ({
       <p>Vous êtes sur le point de supprimer votre compte</p>
       <p>Cette action est irréversible</p>
       <p>
-        Entrez votre prénom <span>{firstName}</span> pour valider cette action
+        Ecrivez <span className="profile-page__modal__italic"> Supprimer mon compte</span> pour valider cette action
       </p>
       <input
         className="profile-page__modal__input"
@@ -28,7 +28,7 @@ const DeleteAccModal = ({
       />
 
       {failedToDelete && (
-        <span>Le prénom ne correspond pas</span>
+        <span className="profile-page__modal__failed">La phrase ne correspond pas</span>
       )}
 
       <div className="profile-page__modal__btn">

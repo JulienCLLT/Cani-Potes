@@ -137,7 +137,7 @@ const Profile = () => {
   };
 
   const handleDeleteAccount = () => {
-    if (inputDelete === user.first_name) {
+    if (inputDelete === 'Supprimer mon compte') {
       dispatch(deleteUser());
     }
     else {

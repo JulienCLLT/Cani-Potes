@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { deleteRide } from '../../../actions/rides';
 
-const DeleteRideModal = ({
-  setIsRedirect, setIsDeleteRideModalOpen,
-}) => {
-  const handleDelete = () => {
-    const dispatch = useDispatch();
-    const { ride_id } = useSelector((state) => state.rides.currentRide);
+const DeleteRideModal = ({ setIsRedirect, setIsDeleteRideModalOpen }) => {
+  const dispatch = useDispatch();
+  const { ride_id } = useSelector((state) => state.rides.currentRide);
 
+  const handleDelete = () => {
     dispatch(deleteRide(ride_id));
+    setIsDeleteRideModalOpen(false);
     setIsRedirect(true);
   };
 
