@@ -20,6 +20,7 @@ import DeleteAccModal from './DeleteAccModal';
 import DogSection from './DogSection/index';
 import UserSection from './UserSection';
 import DogModal from './DogModal';
+import DogPictureModal from './DogPictureModal';
 
 const Profile = () => {
   const { user, profile, signup } = useSelector((state) => state);
@@ -241,34 +242,10 @@ const Profile = () => {
 
       {/* DOG PICTURE MODAL */}
       {isModalPhotoOpen && (
-        <div className="profile-page__modal__wrapper">
-          <div className="profile-page__modal">
-            <button
-              className="profile-page__modal__close"
-              type="button"
-              onClick={() => setIsModalPhotoOpen(false)}
-            >
-              ✖
-            </button>
-
-            <p>Supprimer la photo ?</p>
-
-            <div className="profile-page__modal__btn">
-              <button
-                type="button"
-                onClick={() => setIsModalPhotoOpen(false)}
-              >
-                Non
-              </button>
-              <button
-                type="button"
-                onClick={handleDeletePhoto}
-              >
-                Oui
-              </button>
-            </div>
-          </div>
-        </div>
+        <DogPictureModal
+          setIsModalPhotoOpen={setIsModalPhotoOpen}
+          handleDeletePhoto={handleDeletePhoto}
+        />
       )}
 
       {/* DOG DELETE MODAL */}
