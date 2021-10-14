@@ -48,7 +48,7 @@ const DashBoard = () => {
                   <p>{translateDate(ride.starting_time)}</p>
                   <p>
                     {
-                      ride.dogs_enrolled ? `${ride.dogs_enrolled.length} ` : '0 '
+                      ride.dogs_enrolled ? `${ride.dogs_enrolled.length} ` : '0'
                     }
                     chien{ride.dogs_enrolled && ride.dogs_enrolled.length > 1 ? 's' : null}
                   </p>
@@ -91,7 +91,7 @@ const DashBoard = () => {
                   <p>{translateDate(ride.starting_time)}</p>
                   <p>
                     {
-                      ride.dogs_enrolled ? `${ride.dogs_enrolled.length} ` : '0 '
+                      ride.dogs_enrolled ? `${ride.dogs_enrolled.length} ` : '0'
                     }
                     chien{ride.dogs_enrolled && ride.dogs_enrolled.length > 1 ? 's' : null}
                   </p>
