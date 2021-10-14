@@ -1,5 +1,19 @@
 {
   "name": "cani-potes",
+  "jest": {
+    "modulePaths": [
+      "./"
+    ],
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/tests"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less|scss)$": "<rootDir>/__mocks__/styleMock.js"
+    },
+    "setupFilesAfterEnv": ["<rootDir>/tests/.setup.js"]
+  },
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -8,8 +22,10 @@
   },
   "dependencies": {
     "axios": "^0.21.4",
+    "babel-jest": "^27.2.5",
     "esri-leaflet": "^3.0.3",
     "esri-leaflet-geocoder": "^3.1.1",
+    "jest": "^27.2.5",
     "leaflet": "^1.7.1",
     "node-sass": "^6.0.1",
     "prop-types": "^15.7.2",
