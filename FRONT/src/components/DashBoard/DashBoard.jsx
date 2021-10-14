@@ -124,12 +124,12 @@ const DashBoard = () => {
         </section>
       </div>
 
-      {isModalopen && (
+      {isModalopen ? (
         <DashBoardModal
           setIsModalOpen={setIsModalOpen}
           isModalopen={isModalopen}
         />
-      )}
+      ) : null}
     </div>
   );
 };
