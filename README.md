@@ -1,8 +1,8 @@
-# <img src="./FRONT/src/assets/navbar/canipotes_logo.png" width = 100px > Cani' Potes  
+# <img src="./FRONT/src/assets/navbar/canipotes_logo.png" style = "width:100px; border-radius: 50%" > Cani' Potes  
 
 ## Contexte du projet
 
-Après 3 mois de socle et 1 mois de spé (REACT ou DATA) au sein de l'école O'clock, Nous devions consacrer 4 semaines sur un projet de fin d'étude. Ce projet avait pour but de créer le Minimum Viable Product dans un temps imparti.
+Après 3 mois de socle et 1 mois de spé (REACT ou DATA) au sein de l'école O'clock, Nous devions consacrer 4 semaines sur un projet de fin d'étude. Ce projet avait pour but de créer le **Minimum Viable Product** dans un temps ***imparti***.
 
 ## Notre projet 
 
@@ -27,14 +27,14 @@ Le but de cette application web est d'offrir la possibilité aux maîtres de chi
 - Le projet doit correspondre à un **objectif concret**, pouvant émaner d'une personne qui n'est pas développeur
   et dont la finalité n'est pas forcément une prouesse technique.
 
-- Le projet doit être à la fois ambitieux et raisonnable, et pouvoir tenir dans un planning de **4 semaines**.
-  * Sprint 0 : Première semaine sert à définir les bases, l'organisation, la structure du MVP du projet et la production de nombreux documents nécessaires au Titre professionnel (**code interdit**).
-  * Sprint 1/2 : ***Deux semaines*** pour coder le projet.
-  * Sprint 3 Dernière semaine pour débug/test le projet pour sa présentation.
+- Le projet doit être à la fois ambitieux et raisonnable, et pouvoir tenir dans un planning de *4 semaines*.
+  * **Sprint 0** : Première semaine sert à définir les bases, l'organisation, la structure du MVP du projet et la production de nombreux documents nécessaires au Titre professionnel ( *code interdit* ).
+  * **Sprint 1/2** : ***Deux semaines*** pour coder le projet.
+  * **Sprint 3** : Dernière semaine pour débug/test le projet pour sa présentation.
 
 - Le projet doit mettre en oeuvre les **compétences** abordées dans la formation Full-stack JavaScript.
 
-- Le projet doit répondre au référentiel du titre professionnel Développeur Web et Web mobile niveau 5 => [fiche récap Titre Pro DWWM](https://www.banque.di.afpa.fr/espaceemployeurscandidatsacteurs/EGPResultat.aspx?ct=01280m03&cd=&cr=&type=t)
+- Le projet doit répondre au référentiel du titre professionnel Développeur Web et Web mobile niveau 5 => [fiche récap Titre Pro](https://www.banque.di.afpa.fr/espaceemployeurscandidatsacteurs/EGPResultat.aspx?ct=01280m03&cd=&cr=&type=t)
   
 ### Techno du projet
 
@@ -60,10 +60,10 @@ Le but de cette application web est d'offrir la possibilité aux maîtres de chi
 - [MULTER](https://www.npmjs.com/package/multer)
 - [SHARP](https://www.npmjs.com/package/sharp)
 - [NODE-FETCH](https://www.npmjs.com/package/node-fetch) 
-- [API de conversion adresse en coordonnées longitude latitude](https://geo.api.gouv.fr/adresse)
+- [API de conversion d'adresse en coordonnées longitude latitude](https://geo.api.gouv.fr/adresse)
 
 #### Déploiement
-- AWS (API)
+- AWS EC2 (API)
 - Surge (FRONT)
 
 ## Comment l'utiliser ? 
@@ -73,10 +73,11 @@ Le but de cette application web est d'offrir la possibilité aux maîtres de chi
 ```bash
 git clone <url du repo>
 ```
+
 #### 2. Prérequis en local
-    * Sqitch
-    * Node.Js
-    * Postgresql
+-  Sqitch
+-  Node.Js
+-  Postgresql
 
 
 
@@ -92,7 +93,7 @@ npm install
 - Créer votre fichier `.env` avec les paramètres en vous aidant de `.env.example`.
 - Créer un fichier `sqitch.conf` à la racine en vous aidant du fichier `sqitch.example.conf`. Adaptez les paramètres de connexion à votre base de données. 
 - Déployez le projet sqitch : `sqitch deploy`
-- Vous pouvez utiliser le fichier de seeding `seedForProd.sql` pour tester l'API avec des datas impératives. Plus d'informations ci-dessous.  
+- Utiliser le fichier de seeding `seedForProd.sql` pour tester l'API avec des datas impératives aux formulaires.  
 - Exécuter `npm start` pour lancer l'API. 
 
 #### 4. Installez les dépendances en FRONT
