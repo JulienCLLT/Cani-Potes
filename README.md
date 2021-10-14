@@ -2,13 +2,16 @@
 
 ## Contexte du projet
 
-Après 3 mois de socle et 1 mois de spé(REACT ou DATA) au sein de l'école O'clock, Nous devions consacrer 4 semaines sur un projet de fin d'étude.Ce projet avait pour but de créer le Minimum Viable Product dans un temps imparti.
+Après 3 mois de socle et 1 mois de spé (REACT ou DATA) au sein de l'école O'clock, Nous devions consacrer 4 semaines sur un projet de fin d'étude. Ce projet avait pour but de créer le Minimum Viable Product dans un temps imparti.
 
 ## Notre projet 
 
-Le but de cette application web est d'offrir la possibilité aux maîtres de chiens d’organiser des balades collectives, dans l’objectif d'offrir un cadre social sain pour les animaux et les maîtres de chiens. Cela permettra de socialiser et sociabiliser les chiens, ce qui est très important afin qu’ils ne développent pas de troubles comportementaux
+Le but de cette application web est d'offrir la possibilité aux maîtres de chiens d’organiser des balades collectives, dans l’objectif d'offrir un cadre social sain pour les animaux et les maîtres de chiens. Cela permettra de socialiser et sociabiliser les chiens, ce qui est très important afin qu’ils ne développent pas de troubles comportementaux.
+**<p align="center"><a href="http://cani-potes.surge.sh/" style="background: linear-gradient(
+315deg,#f7b42c 0%,#fc575e 74%); color: white; padding: .6rem 1rem; border-radius:50px">Cani' Potes</a></p>**
+
 <p align="center">
-<img src="./FRONT/src/assets/img/home_map.png" style="width:300px;border-radius:10px;box-shadow: 2px 3px 3px rgba(166, 166, 166, 0.8);"></p>
+<img src="./FRONT/src/assets/img/home_map.png" style="width:350px; height: 370px;border-radius:10px;box-shadow: 2px 3px 3px rgba(166, 166, 166, 0.8);"></p>
 
 ## Notre equipe
 
@@ -65,37 +68,39 @@ Le but de cette application web est d'offrir la possibilité aux maîtres de chi
 
 ## Comment l'utiliser ? 
 
-1. Télécharger le repo sur votre machine
+#### 1. Télécharger le repo sur votre machine
 
 ```bash
 git clone <url du repo>
 ```
-2. Prérequis en local
+#### 2. Prérequis en local
+    * Sqitch
+    * Node.Js
+    * Postgresql
 
-- Sqitch
-- Node.Js
-- POSTGRESQL
 
-1. Installez les dépendances en Back
+
+#### 3. Installez les dépendances en Back
 
 ```bash
 cd projet-20-balade-entre-chien/API/
 npm install 
 ```
+  
+-  Créer une base de données PostgreSQL   
 
-3. Créer une base de données PostgreSQL   
-4. Adaptez votre fichier `.env` avec les paramètres de connexion à votre base de données.
-5. Créer un fichier `sqitch.conf` à la racine en vous aidant du fichier `sqitch.example.conf`. Adaptez les paramètres de connexion à votre base de données. 
-6. Déployez le projet sqitch : `sqitch deploy`
-7. Vous pouvez utiliser le fichier de seeding `seedForProd.sql` pour tester l'API avec des datas impératives. Plus d'informations ci-dessous.  
-8. Exécuter `npm start` pour lancer l'API. 
+- Créer votre fichier `.env` avec les paramètres en vous aidant de `.env.example`.
+- Créer un fichier `sqitch.conf` à la racine en vous aidant du fichier `sqitch.example.conf`. Adaptez les paramètres de connexion à votre base de données. 
+- Déployez le projet sqitch : `sqitch deploy`
+- Vous pouvez utiliser le fichier de seeding `seedForProd.sql` pour tester l'API avec des datas impératives. Plus d'informations ci-dessous.  
+- Exécuter `npm start` pour lancer l'API. 
 
-3. Installez les dépendances en FRONT
+#### 4. Installez les dépendances en FRONT
 
 ```bash
 cd projet-20-balade-entre-chien/FRONT/
 npm install 
+```
 
--Modifier le fichier `dburl.js`avec l'url qui pointe vers l'API deployée (localhost:xxxx)
--Exécuter `npm run dev` pour lancer l'API.
-
+- Modifier le fichier `dburl.js` avec l'url qui pointe vers l'API deployée (http://localhost:xxxx)
+- Exécuter `npm run dev` pour lancer l'API.
