@@ -1,9 +1,10 @@
+/* eslint-disable linebreak-style */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import home from '../../../assets/navbar/location.png';
-import board from '../../../assets/navbar/tablet.png';
+import home from '../../../assets/navbar/location.svg';
+import board from '../../../assets/navbar/board.svg';
 import profile from '../../../assets/navbar/user.svg';
 import logout from '../../../assets/navbar/log-out.svg';
 
@@ -13,7 +14,7 @@ import './NavBarConnected.scss';
 
 const NavBarConnected = () => {
   const dispatch = useDispatch();
-  const { id } = useSelector(state => state.user);
+  const { id } = useSelector((state) => state.user);
 
   return (
     <nav className="navbar-connected">
@@ -23,9 +24,10 @@ const NavBarConnected = () => {
         to="/home"
         exact
       >
-        <div className="navbar-connected__img">
+        <div className="navbar-connected__link__img">
           <img src={home} alt="home" />
-          <span>Home</span>
+          <span>Carte</span>
+          <span className="navbar-connected__link__animation" />
         </div>
       </NavLink>
 
@@ -35,9 +37,10 @@ const NavBarConnected = () => {
         to="/board"
         exact
       >
-        <div className="navbar-connected__img">
+        <div className="navbar-connected__link__img">
           <img src={board} alt="board" />
-          <span>Board</span>
+          <span>Tableau de bord</span>
+          <span className="navbar-connected__link__animation" />
         </div>
       </NavLink>
 
@@ -47,22 +50,24 @@ const NavBarConnected = () => {
         to={`/profile/${id}`}
         exact
       >
-        <div className="navbar-connected__img">
-          <img src={profile} alt="profile" />
-          <span>Profile</span>
+        <div className="navbar-connected__link__img">
+          <img src={profile} alt="profil" />
+          <span>Profil</span>
+          <span className="navbar-connected__link__animation" />
         </div>
       </NavLink>
 
       <NavLink
-        className="navbar-connected__sign-out"
+        className="navbar-connected__link"
         to="/"
         onClick={() => dispatch(logoutUser())}
         exact
       >
-        <div className="navbar-connected__img">
-          <img src={logout} alt="logout" />
-          <span>Logout</span>
+        <div className="navbar-connected__link__img">
+          <img src={logout} alt="deconnexion" />
+          <span>Déconnexion</span>
         </div>
+        <span className="navbar-connected__link__animation" />
       </NavLink>
     </nav>
   );

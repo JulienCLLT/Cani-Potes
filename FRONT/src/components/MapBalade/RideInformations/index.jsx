@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import Ride from './Ride/index';
 import Profile from './Profile/index';
+import Loader from '../../Loader/index';
 
 // import images
 import rideImage from '../../../assets/img/info-ride/dog-walk.svg';
@@ -16,11 +17,11 @@ const RideInformations = () => {
 
   return (
     <Popup className="ride-informations">
-      <h1><img className="icon" src={rideImage} alt="clock" />{currentRide.title}</h1>
       <div className="ride-informations__all">
+        <h1><img className="icon" src={rideImage} alt="clock" />{currentRide.title}</h1>
         {
           currentRide.isLoading ? (
-            <span>Chargement en cours</span>
+            <Loader />
           ) : (
             <>
               <Ride {...currentRide} />

@@ -43,3 +43,13 @@ export const FORMSTEP_SHOWS_DOGFORM = 'FORMSTEP_SHOWS_DOGFORM';
 export const formstepShowsDogform = () => ({
   type: FORMSTEP_SHOWS_DOGFORM,
 });
+
+export const END_OF_SIGNUP = 'END_OF_SIGNUP';
+export const endOfSignup = () => ({
+  type: END_OF_SIGNUP,
+});
+
+export const SHOW_DOGFORM = 'SHOW_DOGFORM';
+export const showDogForm = () => ({
+  type: SHOW_DOGFORM,
+});

@@ -1,11 +1,19 @@
 @use '../../styles/vars';
+@use '../../styles/keyframes.scss';
+
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 @mixin lg-screen {
     @media screen and (min-width:900px) {
         @content
     }
-}
+};
+
+@mixin xl-screen {
+    @media screen and (min-width:1200px) {
+        @content
+    }
+};
 
 .connection-container {
     display: flex;
@@ -19,7 +27,11 @@
     align-items: center;
     padding: 1 * vars.$gutter;
     border-bottom: 1px solid vars.$color_main;
-    background: vars.$color_main;
+    @extend %linear-gradient;
+
+    @include lg-screen {
+        padding: 0 vars.$gutter;
+    }
 
     &__logo img {
         width: 60px;
@@ -44,7 +56,7 @@
     &__cta {
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: stretch;
         gap: .5 * vars.$gutter;
 
         @include lg-screen {
@@ -62,39 +74,55 @@
             @include lg-screen {
                 font-size: 1.45rem;
             }
+
+            &:hover {
+                box-shadow: 0 0 10px vars.$color-border-input;
+                transition: all .2s ease;
+            }
         }
     }
 }
 
 .connection {
-    &__cani-potes {
-        font-family: 'Indie Flower', cursive;
-        font-size: 1.7rem;
+    h2 {
+        @extend %title-background;
+        font-size: 1.3rem;
+        padding: 0 1rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        line-height: 1.3;
+
+        @include lg-screen {
+            width: 100%;
+            font-size: 1.8rem;
+        }
     }
 
     p {
-        line-height: 1.2;
+        line-height: 1.3;
+        padding: 1 * vars.$gutter 2 * vars.$gutter;
     }
-    
-    flex: 1;
 
-    @include lg-screen {
-        width: 70%;
-        margin: auto;
-    }
 
     &__info {
         & article {
             @include lg-screen {
                 display: flex;
-                gap: 2 * vars.$gutter;
                 align-items: center;
-                margin: 3 * vars.$gutter 0;
+            }
+            
+            &:first-child {
+                @include lg-screen {
+                    animation: fade-in-from-left .7s forwards;
+                }
             }
 
             &:nth-child(2) {
                 @include lg-screen {
+                    display: block;
+                    margin: 4 * vars.$gutter 0;
                     flex-direction: row-reverse;
+                    animation: fade-in-from-right .7s forwards;
                 }
             }
         }
@@ -119,107 +147,198 @@
                 }
             }
             
-            h2, span {
+            h1 {
                 position: absolute;
-                top: 20%;
+                top: 0;
+                bottom: 0;
                 left: 50%;
-                width: 80%;
-                max-width: 350px;
+                width: 100%;
                 z-index: 1;
-                transform: translate(-50%, -50%);
+                transform: translate(-50%, 0);
                 text-align: center;
                 font-size: 1.6rem;
                 color: vars.$color__white;
                 text-shadow: 0 0 5px black;
-
-                @include lg-screen {
-                    top: 25%;
-                }
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
                 
                 strong {
+                    padding-top: .3rem;
                     font-family: 'Indie Flower', cursive;
                     font-size: 1.5em;
+                    background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,.05) 100%);
+
+                    @include lg-screen {
+                        font-size: 3.2rem;
+                    }
+                }
+
+                span {
+                    background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,.05) 100%);
+                    padding: .3 * vars.$gutter 1 * vars.$gutter;
+                    font-size: 1.2rem;
                 }
             }
-            
-            div {
 
-                @include lg-screen {
-                    min-width: 300px;
-                    max-width: 640px;
-                }
+            div {
 
                 img {
                     width: 100%;
-                    opacity: .6;
+                    opacity: 1;
                 }
             }
+        }
 
+        &__text-title {
+            text-align: center;
+            font-size: 1.2rem;
         }
         
         &__text {
-            width: 87%;
             margin: 2 * vars.$gutter auto;
-            padding: 1 * vars.$gutter 2 * vars.$gutter  2 * vars.$gutter;
-            border-radius: 5px;
-            box-shadow: 0 1px 5px vars.$color-border-bottom-header;
+            padding: vars.$gutter 2 * vars.$gutter;
+            text-align: center;
             
             @include lg-screen {
-                width: 60%;
+                width: 50%;
                 margin: 0;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                padding:  3 * vars.$gutter 2 * vars.$gutter  3 * vars.$gutter;
-            }
-            
-            span:nth-child(1) {
-                font-size: 1.5rem;
-                padding-bottom: 1 * vars.$gutter;
-                border-bottom: 1px solid vars.$color-border-bottom-header;
-                margin-bottom: .7 * vars.$gutter;
+                padding: 0 2 * vars.$gutter;
             }
             
             p, div {
                 display: flex;
                 flex-direction: column;
-                font-size: 1.3rem;
+                color: vars.$color_grey_writing;
                 line-height: 1.3;
             }
 
+            p span {
+                @include lg-screen {
+                    font-size: 1.6rem;
+                    line-height: 1.5;
+                    font-weight: 300;
+                    text-align: left;
+                }
 
+                @include xl-screen{
+                    font-size: 2rem;
+                }
+            }
+
+            &-center {
+                @include lg-screen {
+                    width: 100%;
+                    margin: 0 auto 2rem;
+                }
+
+                ol {
+                    align-self: center;
+
+                    @include lg-screen {
+                        text-align: left;
+                    }
+
+                    div {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+
+                        img {
+                            width: 27px;
+                        }
+                    }
+
+                    li {
+                        text-align: center;
+                        margin: .5rem 0;
+
+                        @include lg-screen {
+                            font-size: 1.35rem;
+                            font-weight: 300;
+                            color: black;
+                        }
+                    }
+                }
+            }
         }
 
         &__map {
-            height: 250px;
             margin-bottom: 1 * vars.$gutter 0;
-            background: grey;
+
+            div {
+                width: 100%;
+                img {
+                    width: 100%;
+                }
+            }
+
+            p {
+                margin-top: 2rem;
+                text-align: center;
+                color :vars.$color_grey_writing;
+
+                &:last-child {
+                    margin-top: 3 * vars.$gutter;
+                }
+            }
+            
+            &-row-reverse {
+                @include lg-screen {
+                    display: flex;
+                    flex-direction: row-reverse;
+                    align-items: center;
+                    margin-top: 2rem;
+                }
+
+                div {
+                    @include lg-screen {
+                        width: 50%;
+                    }
+                }
+
+                p {
+                    @include lg-screen {
+                        width: 50%;
+                        padding: 0 8vw;
+                        font-size: 1.35rem;
+                        font-weight: 300;
+                        text-align: left;
+                        color: black;
+                    }
+                }
+            }
         }
     }
 
     &__modal {
-        background-color: rgba(200, 200, 200, .8);
+        background: linear-gradient(315deg, rgba(252, 87, 94, 0.7), rgb(247, 180, 44, 0.9) 74%);
         position: fixed;
         top: 50%;
         left: 50%;
         width: 80%;
-        max-width: 600px;
+        max-width: 400px;
         transform: translate(-50%, -50%);
-        padding: 3 * vars.$gutter 3 * vars.$gutter;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         border-radius: 10px;
         z-index: 9999;
         font-size: 1.3rem;
 
+        @include lg-screen {
+            animation: fade-in-modal .3s forwards;
+        }
+
         &__close {
-            width: 50px;
-            height: 50px;
             align-self: flex-end;
             cursor: pointer;
-
+            padding: 0.4*vars.$gutter 0.7* vars.$gutter;
+            color: white;
+            
             img {
                 width: 100%;
             }
@@ -230,6 +349,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding-bottom: vars.$gutter;
+        white-space: nowrap;
 
         @include lg-screen {
             width: 50%;
@@ -240,13 +361,13 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 1rem;
+            gap: 0.5rem;
             margin-bottom: 1rem;
 
             label {
-                @extend %btn;
                 cursor: initial;
-                font-weight: normal;
+                font-size: 1.1*vars.$gutter;
+                color: white;
             }
 
             input {
@@ -254,12 +375,17 @@
                 width: 100%;
                 border: none;
                 padding: .5 * vars.$gutter .5 * vars.$gutter;
+                font-size: 1.1*vars.$gutter;
             }
         }
 
         &__submit {
             @extend %btn;
-            font-size: inherit;
+            font-size: vars.$gutter;
+            border-radius: 10px;
+            background: white;
+            color: vars.$color_main;
+            padding: .5 * vars.$gutter;
         }
 
         &__failed {
@@ -270,9 +396,11 @@
     }
 
     &__footer{
+        width: calc(100% - 2rem);
+        margin: auto;
         display: flex;
         justify-content: center;
-        padding: 1 * vars.$gutter 0 vars.$gutter;
-        background: vars.$color_grey_connection_footer_bg;
+        padding: .5rem 0;
+        border-top: 1px solid rgb(200, 200, 200);
     }
 }

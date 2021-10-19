@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+/* eslint-disable linebreak-style */
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteRide, removeUserFromRide } from '../../actions/rides';
-import { getRidesWithUserIn } from '../../actions/users';
+import { deleteRide, userQuitRide } from '../../actions/rides';
+import { getRidesWithUserIn, reinitRenderAgain } from '../../actions/users';
+import { translateDate } from '../../utils/translateDate';
 
 import './dashBoard.scss';
 
@@ -10,62 +12,141 @@ const DashBoard = () => {
   const { user } = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const [isModalopen, setIsModalOpen] = useState(0);
+
   useEffect(() => {
+    setIsModalOpen(0);
+    dispatch(reinitRenderAgain());
     dispatch(getRidesWithUserIn());
-  }, []);
+  }, [user.renderAgain]);
+
+  const hostedRides = user.rides.filter((ride) => ride.host_id === user.id);
+  const notHostedRides = user.rides.filter((ride) => ride.host_id !== user.id);
 
   return (
-    <div className="dashboard-page">
-      <header className="dashboard-page__header">
-        <h1 className="dashboard-title">Tableau de bord</h1>
-        <div className="dashboard-avatar">
-          <img src={user.photo} alt={user.first_name} />
-        </div>
-        <span>{user.first_name} {user.last_name}</span>
+    <div className="dashboard">
+
+      <header className="dashboard__header">
+
         <Link
-          className="create-ride__btn"
+          className="dashboard__header__btn"
           to="/ride/create"
-          exact
         >
           Créer une balade
         </Link>
       </header>
-      <div className="dashboard-info__host">
-        <h2>Je suis l'organisateur d'une ballade</h2>
-        <p>Quelles infos mettre ici ?</p>
-        <Link
-          className="ride-"
-          to="/ride/:id"
-          exact
-        >
-          Voir la balade
-        </Link>
-        <button
-          className="delete-btn"
-          type="button"
-          onClick={() => dispatch(deleteRide())}
-        >
-          Supprimer la balade
-        </button>
+      <div className="dashboard__rides">
+        <section className="dashboard__hostedrides">
+          <h2 className="dashboard__hostedrides__title">Je suis l'organisateur de ces balades</h2>
+
+          <div className="dashboard__hostedrides__block">
+            {
+            hostedRides.length > 0 ? (hostedRides.map((ride, index) => (
+              <div key={ride.id} className="dashboard__hostedrides__container">
+                <div>
+                  <p className="dashboard__hostedrides__name">#{index + 1} {ride.title}</p>
+                  <p>{translateDate(ride.starting_time)}</p>
+                  <p>
+                    {
+                      ride.dogs_enrolled ? `${ride.dogs_enrolled.length} ` : '0'
+                    }
+                    chien{ride.dogs_enrolled && ride.dogs_enrolled.length > 1 ? 's' : null}
+                  </p>
+                </div>
+
+                <div className="dashboard__hostedrides__link-container">
+                  <Link
+                    className="dashboard__hostedrides__link link-details"
+                    to={`/ride/${ride.id}`}
+                  >
+                    Détails
+                  </Link>
+                  <button
+                    className="dashboard__hostedrides__link link-delete"
+                    type="button"
+                    onClick={() => setIsModalOpen(ride.id)}
+                  >
+                    Supprimer
+                  </button>
+                </div>
+              </div>
+            ))) : (
+              <div>Vous n'organisez aucune balade</div>
+            )
+          }
+          </div>
+        </section>
+
+        <div className="dashboard__linebreak" />
+
+        <section className="dashboard__nothostedrides">
+          <h2 className="dashboard__nothostedrides__title">Je participe à ces balades</h2>
+
+          <div className="dashboard__nothostedrides__block">
+            {
+            notHostedRides.length > 0 ? (notHostedRides.map((ride, index) => (
+              <div key={ride.id} className="dashboard__nothostedrides__container">
+                <div>
+                  <p className="dashboard__nothostedrides__name">#{index + 1} {ride.title}</p>
+                  <p>{translateDate(ride.starting_time)}</p>
+                  <p>
+                    {
+                      ride.dogs_enrolled ? `${ride.dogs_enrolled.length} ` : '0'
+                    }
+                    chien{ride.dogs_enrolled && ride.dogs_enrolled.length > 1 ? 's' : null}
+                  </p>
+                </div>
+                <div className="dashboard__nothostedrides__link-container">
+                  <Link
+                    className="dashboard__nothostedrides__link link-details"
+                    to={`/ride/${ride.id}`}
+                  >
+                    Détails
+                  </Link>
+                  <button
+                    className="dashboard__nothostedrides__link link-delete"
+                    type="button"
+                    onClick={() => {
+                      dispatch(userQuitRide(user.id, ride.id));
+                    }}
+                  >
+                    Quitter
+                  </button>
+                </div>
+              </div>
+            ))) : (
+              <div>Vous ne participez à aucune balade dont vous n'êtes pas l'organisateur.</div>
+            )
+          }
+          </div>
+        </section>
       </div>
-      <div className="dashboard-info__participant">
-        <h2>Je participe à une ballade</h2>
-        <p>Quelles infos mettre ici ?</p>
-        <Link
-          className="ride-"
-          to="/ride/:id"
-          exact
-        >
-          Voir la balade
-        </Link>
-        <button
-          className="remove-btn"
-          type="button"
-          onClick={() => dispatch(removeUserFromRide())}
-        >
-          Me retirer de la balade
-        </button>
-      </div>
+
+      {isModalopen && (
+        <div className="dashboard__modal-wrapper">
+          <div className="dashboard__modal">
+            <button
+              className="dashboard__modal__close"
+              type="button"
+              onClick={() => setIsModalOpen(0)}
+            >
+              ✖
+            </button>
+
+            <p className="dashboard__modal__bold">Attention !</p>
+            <p>Vous êtes sur le point de supprimer cette balade.</p>
+            <p>Êtes-vous sûr ?</p>
+
+            <button
+              className="dashboard__modal__delete"
+              type="button"
+              onClick={() => dispatch(deleteRide(isModalopen))}
+            >
+              Supprimer
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

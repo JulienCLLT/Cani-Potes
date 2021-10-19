@@ -1,4 +1,4 @@
-const database = require('./../database');
+const client = require('../database');
 
 class Mail {
     constructor(data={}) {
@@ -9,11 +9,11 @@ class Mail {
 
     async save() {
         try {
-            const { rows } = await database.query(`INSERT INTO member_write_ride (message, ride_id, member_id) VALUES ($1, $2, $3)
+            const { rows } = await client.query(`INSERT INTO member_write_ride (message, ride_id, member_id) VALUES ($1, $2, $3)
                 RETURNING jsonb_build_object(
                                 'id',id,
                                 'sender_id', member_id,
-                                'sent',to_char(member_write_ride.created_at, 'TMDay DD TMMonth YYYY "à" HH "h" MI'),
+                                'sent',to_char(member_write_ride.created_at + interval '2 hours', 'TMDay DD TMMonth YYYY "à" HH24 "h" MI'),
                                 'message',message)as message`,[
                     this.message,
                     this.ride_id,
@@ -22,11 +22,7 @@ class Mail {
         
             return rows [0]
         } catch (error) {
-            if (error.detail) {
-                throw new Error(error.detail)
-            } else {
-                throw error;
-            }
+            throw new Error(error.detail ? error.detail : error.message);
         }
         
     }

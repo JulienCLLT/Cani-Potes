@@ -8,7 +8,11 @@
     padding: .3rem 0;
 
     a {
-        @extend %btn;
-        font-size: .9rem;
+        color: vars.$color_grey_writing;
+        font-size: .8rem;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }

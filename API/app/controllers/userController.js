@@ -1,16 +1,12 @@
-const bcrypt = require('../services/bcrypt');
-const jwt = require('../services/jwtoken');
-const apiGeo = require('../services/apiGeo');
-
-const UserModel = require('../models/userModel');
-const Dog = require('../models/dogModel');
-const Ride = require('../models/rideModel');
-const Photo = require('../models/photoModel');
+const { bcrypt, jwt, apiGeo, sharpResizeImage } = require('../services');
+const { UserModel, DogModel, RideModel, PhotoModel } = require('../models');
 
 const userController = {
     login: async (request, response) => {
         try {
             const body = request.body;
+
+            body.email = body.email.toLowerCase();
 
             //requete pour recup les data du membre via l'email
             const result = await UserModel.login(body.email);
@@ -27,7 +23,7 @@ const userController = {
                     const token = jwt.signToken({ id: result.id });
                     dataUser.authorization = token;
 
-                    //response.set({'authozization': token})
+                    //response.set({'authorization': token})
                     response.status(200).json(dataUser);
                 } else {
                     response.status(400).json({ error: "Invalid Password" });
@@ -43,14 +39,22 @@ const userController = {
 
     addNewUser: async (request, response) => {
         try {
+
+            if (request.file) {
+
+                sharpResizeImage.sharpResize(request.file, 'user_resized');
+
+                //push name path a image resized 
+                request.body.photo = request.file.filename;
+            };
+
+            request.body.email = request.body.email.toLowerCase();
+
             const user = new UserModel(request.body);
-
-            //on Bcrypt et remplace direct le password
             user.password = await bcrypt.hash(user.password);
-
             const newUser = await user.save();
-            if (newUser) {
 
+            if (newUser) {
                 const dataUser = await UserModel.dataUserConnexion(newUser.id);
                 dataUser.position = await apiGeo(dataUser.position);
                 const token = jwt.signToken({ id: newUser.id });
@@ -76,14 +80,35 @@ const userController = {
         }
     },
 
-    save: async (request, response) => {
+    updateUser: async (request, response) => {
         try {
-            const idPayload = request.userId; //normalement on recupe id de l'user dans le payload
 
+            const idPayload = request.userId;
             request.body.id = idPayload;
+            // on check la validité du mail avant toute modif avec la contrainte sql 
             const user = new UserModel(request.body);
             await user.save(user);
-            response.status(204).json('Update done');
+
+            if (request.file) {
+                sharpResizeImage.sharpResize(request.file, 'user_resized');
+                const oldPhoto = await UserModel.findOne(idPayload);
+
+                if (oldPhoto.photo != 'avatar.jpg') {
+                    sharpResizeImage.delOldImage('user_resized', oldPhoto.photo);
+                };
+
+                const newPhoto = new UserModel({ id: idPayload, photo: request.file.filename });
+
+                await newPhoto.save(newPhoto);
+            };
+
+            if (request.body.zip_code) {
+                const newGps = await apiGeo(request.body.zip_code);
+                response.status(201).json({ gps: newGps });
+            } else {
+                response.status(204).json();
+            }
+
         } catch (error) {
             response.status(500).json(error.message);
         }
@@ -94,29 +119,30 @@ const userController = {
             const userId = request.userId;
 
             // delete all member's dogs + photos
-            const dogsId = await Dog.findDogFromMember(userId);
+            const dogsId = await DogModel.findDogFromMember(userId);
             for (dog of dogsId) {
-                //todo verfi suppression photo du fichier
-                await Photo.deletePhotos(dog.id);
-                await Dog.delete(dog.id);
+                await PhotoModel.deletePhotos(dog.id);
+                await DogModel.delete(dog.id);
             }
 
             // delete his participations to ride
-            await Ride.deleteParticipationsOfOneMember(userId);
+            await RideModel.deleteParticipationsOfOneMember(userId);
             // delete all messages sent by user
-            await Ride.deleteMessagesFromMember(userId);
+            await RideModel.deleteMessagesFromMember(userId);
 
-            const ridesHosted = await Ride.findRidesHostedBy(userId);
+            const ridesHosted = await RideModel.findRidesHostedBy(userId);
             if (ridesHosted) {
                 for (ride in ridesHosted) {
                     // retirer tous les participants a ces balades 
-                    await Ride.deleteAllParticipantsFromRide(ride.id);
+                    await RideModel.deleteAllParticipantsFromRide(ride.id);
                     //supprimer tous les messages a ppartenant a cette balade 
-                    await Ride.deleteMessagesByRideId(ride.id);
+                    await RideModel.deleteMessagesByRideId(ride.id);
                 }
             }
-            await Ride.deleteAllRidesCreatedBy(userId);
-            // delete message
+            await RideModel.deleteAllRidesCreatedBy(userId);
+
+            // delete photo in user_resized folden then delete membre in db
+            await PhotoModel.deletePhotoUser(userId);
             await UserModel.deleteMember(userId);
 
             response.status(204).json();

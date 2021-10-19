@@ -1,9 +1,9 @@
 /* eslint-disable linebreak-style */
-import { LOGOUT__USER } from '../actions/users';
+import { GET__RIDES__WITH__USER__IN, LOGOUT__USER } from '../actions/users';
 import {
   ADD__USER__TO__RIDE, USER__QUIT__RIDE, ADD__MESSAGE__IN__STATE,
   DELETE__RIDE__IN__STATE, SAVE__ALL__RIDES, SAVE__ONE__RIDE, GET__RIDE__IS__LOADING,
-  FAILED_TO_CREATE_RIDE, KICK__USER__FROM__RIDE,
+  FAILED_TO_CREATE_RIDE, KICK__USER__FROM__RIDE, CREATE_RIDE, SET__ERROR__MSG,
 } from '../actions/rides';
 
 const ridesInitialState = {
@@ -67,6 +67,7 @@ const ridesInitialState = {
     ],
   },
   failedToCreateRide: false,
+  rideIsCreated: false,
   errorMessage: '',
 };
 
@@ -106,8 +107,11 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           ],
         },
       };
-    case ADD__MESSAGE__IN__STATE:
-      console.log(new Date().toISOString())
+    case ADD__MESSAGE__IN__STATE: {
+      const sender = state.currentRide.participants.find(
+        (participant) => participant.participant_id === action.message.sender_id,
+      );
+
       return {
         ...state,
         currentRide: {
@@ -115,16 +119,17 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           messages: [
             ...state.currentRide.messages,
             {
-              sent: action.sent,
-              message: action.message,
-              sender_id: action.sender_id,
-              sender_photo: action.sender_photo,
-              sender_first_name: action.sender_first_name,
-              sender_last_name: action.sender_last_name,
+              message_id: action.message.id,
+              sent: action.message.sent,
+              message: action.message.message,
+              sender_id: action.message.sender_id,
+              sender_photo: sender.participant_photo,
+              sender_first_name: sender.participant_first_name,
             },
           ],
         },
       };
+    }
     case DELETE__RIDE__IN__STATE:
       return {
         ...state,
@@ -152,6 +157,7 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
             messages: [],
             isLoading: false,
           },
+          errorMessage: '',
         };
       }
       return {
@@ -160,6 +166,12 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
           ...action.ride,
           isLoading: false,
         },
+        errorMessage: '',
+      };
+    case SET__ERROR__MSG:
+      return {
+        ...state,
+        errorMessage: action.errorMsg,
       };
     case GET__RIDE__IS__LOADING:
       return {
@@ -184,6 +196,17 @@ const ridesReducer = (state = ridesInitialState, action = {}) => {
             (participant) => participant.participant_id !== action.userId,
           ),
         },
+      };
+    case CREATE_RIDE:
+      return {
+        ...state,
+        rideIsCreated: true,
+      };
+    case GET__RIDES__WITH__USER__IN:
+      // when redirect on /board, clean state to be able to go back on /ride/create
+      return {
+        ...state,
+        rideIsCreated: false,
       };
     case LOGOUT__USER:
       return {

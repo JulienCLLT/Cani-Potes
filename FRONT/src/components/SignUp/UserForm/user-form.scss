@@ -10,8 +10,7 @@
     }
 
     &__input-infos {
-      // height: 620px;
-      padding-bottom: vars.$gutter;
+      padding: 0.5*vars.$gutter 0;
 
       &__identity, &__zipcode__input {
         padding: 0 2*vars.$gutter;

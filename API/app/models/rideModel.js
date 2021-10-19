@@ -1,4 +1,4 @@
-const client = require('../../database');
+const client = require('../database');
 
 class Ride {
     constructor(data = {}) {
@@ -9,7 +9,11 @@ class Ride {
 
     static async findAll() {
         try {
-            const query = `SELECT id AS ride_id, start_coordinate FROM ride`;
+            const query = `
+                SELECT id AS ride_id, start_coordinate 
+                FROM ride 
+                WHERE starting_time > NOW()
+                `;
             const { rows } = await client.query(query);
             return rows.map(row => new Ride(row));
         } catch (error) {
@@ -58,26 +62,20 @@ class Ride {
     }
     static async findRidesByMember(userId) {
         try {
-            //todo facto
-            const query = `
-                SELECT 
-                    ride.id AS ride_id, 
-                    host_id, 
-                    title,
-                    to_char(starting_time, 'TMDay DD TMMonth YYYY "à" HH "h" MI') AS starting_time,
-                    max_number_dogs,
-                    ARRAY_AGG(DISTINCT
-                                jsonb_build_object(
-                                    'participant_id', mp.member_id,
-                                    'dogs', (SELECT ARRAY_AGG(dog.id) FROM dog WHERE dog_owner_id = mp.member_id)
-                                    )
-                            ) AS participants
-                FROM ride 
-                JOIN member_participate_ride AS mp ON ride.id = mp.ride_id
-                WHERE ride.host_id = $1 OR mp.member_id = $1
-                GROUP BY ride.id, host_id, title, starting_time, max_number_dogs     
+            // select id from ride where user is enrolled (host or participant)
+            const query_id = `
+                SELECT DISTINCT id
+                FROM ride
+                LEFT JOIN member_participate_ride AS mpr ON mpr.ride_id = ride.id 
+                WHERE (ride.host_id = $1 OR mpr.member_id = $1)
+                        AND starting_time > NOW()
             `;
-            const { rows } = await client.query(query, [userId]);
+            const idRide = await client.query(query_id, [userId]);
+            const arrayId = idRide.rows.map(elem => elem.id);
+
+            // select rides where id 
+            const query = `SELECT * FROM rides_by_member WHERE id = ANY($1)`;
+            const { rows } = await client.query(query, [arrayId]);
             return rows.map(row => new Ride(row));
         } catch (error) {
             console.error(error);
@@ -85,7 +83,6 @@ class Ride {
         }
     }
 
-    //todo autre Model ? 
     static async deleteMessagesByRideId(rideId) {
         try {
             const query = `DELETE FROM member_write_ride WHERE ride_id = $1`;
@@ -180,7 +177,6 @@ class Ride {
 
     async createRide() {
         try {
-            //todo facto : SQL function
             //todo JOI
             const query = `
                 INSERT INTO ride(title,description,start_coordinate,end_coordinate, starting_time, duration, max_number_dogs, tag_id, host_id)

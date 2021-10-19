@@ -1,5 +1,7 @@
 /* eslint-disable linebreak-style */
-import { NEXT_SIGNUP_FORM_STEP, SAVE_DOG_BREEDS_AND_BEHAVIORS, FAILED_TO_SIGNUP, FORMSTEP_SHOWS_DOGFORM } from '../actions/signup';
+import {
+  NEXT_SIGNUP_FORM_STEP, SAVE_DOG_BREEDS_AND_BEHAVIORS, FAILED_TO_SIGNUP, FORMSTEP_SHOWS_DOGFORM, END_OF_SIGNUP, SHOW_DOGFORM,
+} from '../actions/signup';
 import { LOGOUT__USER } from '../actions/users';
 
 const initialState = {
@@ -13,8 +15,10 @@ const initialState = {
 
   // to display db errors when submit form
   failedToSignup: false,
-  errorMessage: '',
 
+  // manage unable to redirect after ending signup process
+  endSignUp: false,
+  errorMessage: '',
 };
 
 const reducer = (state = initialState, action = {}) => {
@@ -41,6 +45,16 @@ const reducer = (state = initialState, action = {}) => {
         errorMessage: action.errorMessage,
       };
     case FORMSTEP_SHOWS_DOGFORM:
+      return {
+        ...state,
+        formStep: 2,
+      };
+    case END_OF_SIGNUP:
+      return {
+        ...state,
+        endSignUp: true,
+      };
+    case SHOW_DOGFORM:
       return {
         ...state,
         formStep: 2,

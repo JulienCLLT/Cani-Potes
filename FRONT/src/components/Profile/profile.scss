@@ -1,4 +1,5 @@
 @use '../../styles/vars';
+@use '../../styles/keyframes.scss';
 
 @mixin lg-screen {
   @media screen and (min-width:900px) {
@@ -6,268 +7,378 @@
   }
 };
 
-%edit-btn {
-  cursor: pointer;
-  box-shadow: 0 0 5px black;
-  padding: .5 * vars.$gutter;
-  border-radius: 10px;
-
-  &:hover {
-    box-shadow: 0 0 5px black inset;
-  }
-}
-
 .profile-page {
   margin-bottom: 4 * vars.$gutter;
   position: relative;
+  
+  @include lg-screen {
+    background: linear-gradient(315deg, rgba(#f7b42c, .5) 0%, rgba(#fc575e, .5) 74%);
+    min-height: calc(100vh - 69.6px);
+    margin-bottom: 0;
+  }
 
-  &__edit {
-    @extend %edit-btn;
-    position: absolute;
-    top: 1 * vars.$gutter;
-    right: 1 * vars.$gutter;
+  &__content-wrapper {
+    @include lg-screen {
+      display: flex;
+    }
+  }
+
+  .edit-btn {
+    width: 90px;
+    font-size: .8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @extend %light-btn;
+
+    img {
+      width: 1.1rem;
+    }
   }
 
   &__header {
-    width: 60%;
-    min-width: 220px;
-    max-width: 300px;
-    margin: auto;
     text-align: center;
-    box-shadow: 0 0 10px  vars.$color-border-input ;
     border-radius: 30px;
     padding: .5 * vars.$gutter;
+    background: top / cover url('../../assets/img/profile-simulation/wave.svg') no-repeat;
 
-    &__annoucement {
-      font-size: 1.5rem;
+    @include lg-screen {
+      width: 400px;
+      background: none;
+      border: none;
+      border-radius: 0;
+    }
+    
+    &-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      margin: 0 auto;
+
+      @include lg-screen {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 2px 2px 5px rgb(0 0 0 / 30%);
+        margin-top: 1.5rem;
+        padding-bottom: 1.5rem;
+      }
+    }
+
+    &__user {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      margin-top: 0.5*vars.$gutter;
+      font-size: 1.4*vars.$gutter;
+
+      &__avatar-name {
+        margin-bottom: 0.3*vars.$gutter;
+        font-size: 1.8rem;
+      }
+
+      &__zipcode {
+        font-size: vars.$gutter;
+      }
+
+      input {
+        @extend %input;
+        width: 60px;
+        font-size: .8rem;
+      }
     }
 
     &__avatar {
       width: 200px;
       margin: auto;
-      
-      img {
-        width: 100%;
-        border-radius: 50%;
-      }
-    }
-
-    &__avatar-name {
-      font-size: 1.3rem;
-    }
-  }
-
-  &__info-user, &__info-dogs {
-    padding: 0 1 * vars.$gutter;
-    margin: 1 * vars.$gutter 0;
-  }
-
-  &__info-user {
-
-    &__content {
       display: flex;
       flex-direction: column;
-      gap: .3rem;
-      width: 60%;
-      padding: 1 * vars.$gutter;
-      margin: 1 * vars.$gutter auto;
-      box-shadow: 0 0 5px vars.$color-border-input;
-      border-radius: 5px;
+      align-items: center;
+      gap: vars.$gutter;
 
-      &-field {
-        display: flex;
-        gap: .5rem;
-      
-        input {
-          width: 50%;
+      img {
+        margin-top: 1.5rem;
+        width: 100%;
+        border-radius: 10px;
+
+        @include lg-screen {
+          box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
         }
       }
     }
 
-    &__submit {
-      text-align: center;
+    input[type="file"] {
+      margin-left: -3rem;
+    }
+  }
 
-      button {
-        @extend %btn;
+  &__info-user {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: vars.$gutter;
+
+    @include lg-screen {
+      justify-content: space-around;
+      margin-top: vars.$gutter;
+    }
+
+    &__submit button {
+      @extend %strong-btn;
+    }
+
+    &__content {
+      margin-top: vars.$gutter;
+    }
+
+    &__content-field {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+
+      input {
+        @extend %input;
       }
+    }
+
+    &__delete-account-btn {
+      @extend %strong-btn;
+      background: vars.$color_error;
     }
   }
 
   &__info-dogs {
+    padding: vars.$gutter 1 * vars.$gutter;
+    margin: 1 * vars.$gutter 0;
+
+    @include lg-screen {
+      background: none;
+      margin: 0;
+      flex: 1;
+      overflow-y: scroll;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
 
     article {
-      box-shadow: 0 0 3px black;
+      background: white;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, .3);
+      border-radius: 10px;
       padding: vars.$gutter;
       margin: vars.$gutter 0;
 
       @include lg-screen {
         display: flex;
         justify-content: space-between;
+        gap: 2rem;
         flex-wrap: wrap;
       }
-
-      h2 {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-
-        span {
-          @include lg-screen {
-            display: flex;
-            align-items: center;
-            gap: .5 * vars.$gutter;
-          }
-        }
-
-        .profile-page__edit__dog {
-          @extend %edit-btn;
-        }
-      }
-
     }
   }
 
   &__dog {
-    &__display-input {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    gap: .7 * vars.$gutter;
+    font-size: 1.2rem;
 
-      input[type="date"] {
-        width: 100%;
-      }
+        @include lg-screen {
+          min-width: 400px;
+          width: 400px;
 
-      .profile-page__dog__gender-container {
+          input {
+            border-radius: 5px;
+          }
+        }
+
+      &__first {
         display: flex;
-        justify-content: center;
-        font-size: .8rem;
+        justify-content: space-between;
 
-        input {
-          width: 10px;
-          margin: .1 * vars.$gutter auto 0;
+        &__surname-gender {
+          display: flex;
+          justify-content: space-between;
+          width: 70%;
+
+          & span {
+            font-size: 1.6rem;
+            @extend %title-background;
+            font-weight: bold;
+
+            @include lg-screen {
+              font-size: 1.8rem;
+            }
+          }
         }
       }
-    }
 
-    @include lg-screen {
-      min-width: 500px;
-      width: 500px;
-    }
-
-    &__details {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      width: 80%;
-      padding: .5 * vars.$gutter;
-      margin: 1 * vars.$gutter auto;
-      box-shadow: 0 0 3px black;
-      border-radius: 5px;
+      &__second {
+        display: flex;
+        flex-direction: column;
+        gap: .7 * vars.$gutter;
+      }
 
       select {
         width: 100%;
+        font-size: 1rem;
+        border-radius: 5px;
+        padding: .3rem ;
       }
 
       span, input {
-        width: 50%;
         display: flex;
         align-items: center;
         gap: .5 * vars.$gutter;
         
         img {
           width: 20px;
+
+          @include lg-screen {
+            width: 30px;
+          }
         }
       }
 
-      &-container {
+      &__gender-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        label {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      &__sterilization {
+        display: flex;
+        align-items: center;
+      }
+
+      textarea {
+        font-size: 1.2rem;
+        @extend %input;
+      }
+  }
+
+  &__buttons {
+    margin-top: vars.$gutter;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    
+    .edit-btn {
+      width: 100%;
+      
+      @include lg-screen {
+        align-self: flex-end;
+        width: 200px;
+        font-size: 1.2rem;
+      }
+    }
+
+    &__save {
+      @extend %strong-btn;
+
+      @include lg-screen {
+        align-self: flex-end;
+        width: 200px;
+        font-size: 1.2rem;
+      }
+    }
+
+    &__delete {
+      @extend %strong-btn;
+      background: vars.$color_error;
+
+      @include lg-screen {
+        align-self: flex-end;
+        width: 200px;
+        font-size: 1.2rem;
       }
     }
   }
 
   &__dog-pictures {
     @include lg-screen {
-      max-width: calc(100% - 500px);
+      min-width: 200px;
+      overflow-x: scroll;
+      flex: 1;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
 
     &__container {
+      width: auto;
       padding: .5 * vars.$gutter;
       margin: 1 * vars.$gutter auto;
-      box-shadow: 0 0 3px black;
       border-radius: 5px;
+      border: 1px solid vars.$color-border-input;
       display: flex;
       gap: .5 * vars.$gutter;
       overflow: scroll;
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
 
       &::-webkit-scrollbar {
         display: none;
       }
-      
 
       &-item {
         width: 100px;
-        min-width: 100px;
         -ms-overflow-style: none;
         scrollbar-width: none;
         position: relative;
+
+        @include lg-screen {
+          width: 150px;
+        }
   
         img {
+          margin-bottom: .2rem;
           width: 100%;
+          border-radius: 3px;
+          box-shadow: 2px 2px 3px rgba(0, 0, 0, .3);
         }
 
         button {
-          position: absolute;
-          padding: 0;
-          top: 0;
-          right: 0;
+          @extend %remove-cta-absolute;
           transform: translate(25%, -25%);
-          background: red;
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          cursor: pointer;
 
           &:hover {
-            transform:  translate(25%, -25%) scale(1.2);
+            transform: translate(25%, -25%) scale(1.2);
           }
         }
       }
     }
   }
 
+  &__modal__wrapper {
+    @extend %modal-wrapper;
+  }
+
   &__modal {
-    position: fixed;
-    background: rgba(200, 200, 200, .8);
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: fade-in .3s ease-in forwards;
-    
-    &__container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.3rem;
-      padding: 2 * vars.$gutter;
-      box-shadow: 0 0 5px black inset;
-      border-radius: 20px;
-    }
+    @extend %modal;
+    line-height: 1.2;
+    padding: 0;
+
+    &__bold {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: vars.$gutter;
+  }
 
     &__close {
-        width: 50px;
-        height: 50px;
-        align-self: flex-end;
-        cursor: pointer;
+        @extend %modal-close-btn;
+        margin: .5rem .5rem 0 0;
     }
 
     &__btn {
@@ -276,13 +387,19 @@
       gap: 1 * vars.$gutter;
       margin: 1 * vars.$gutter 0;
 
-      &-confirm {
-        background: lime !important;
-      }
-
       button {
         @extend %btn;
       }
+    }
+
+    &__btn :nth-child(2) {
+      background-color: vars.$color_main;
+      color: white;
+    }
+
+    &__input {
+      @extend %input;
+      margin-top: vars.$gutter;
     }
   }
 
@@ -290,8 +407,8 @@
     display: flex;
     align-items: center;
     gap: .5 * vars.$gutter;
-    margin: auto;
-    @extend %btn;
+    margin: 0 auto 1rem;
+    @extend %strong-btn;
 
     span {
       transition: all .3s ease-in-out;
@@ -300,12 +417,12 @@
     .open {
       transform: rotate(90deg);
     }
-
+    
     .close {
       transform: rotate(-90deg);
     }
   }
-
+  
   &__dogform {
     &-open {
       overflow: hidden;
@@ -317,24 +434,24 @@
       max-height: 0px;
     }
   }
-}
 
-@keyframes fade-in {
-  from {
-    transform: translate(0, -100%);
-  } to {
-    transform: translate(0);
+  &__photo-label {
+    @extend %input;
+    cursor: pointer;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: .3rem;
   }
-}
+  .signup {
+    box-shadow: 2px 2px 5px rgb(0 0 0 / 30%);
+    margin-bottom: 1rem;
+  }
 
-@keyframes appear {
-  from {
-    max-height: 0px;
-  }
-  99% {
-    max-height: 650px;
-  }
-  to {
-    max-height: none;
+  input[type="file"] {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
   }
 }
