@@ -10,6 +10,11 @@ Le but de cette application web est d'offrir la possibilité aux maîtres de chi
 **<p align="center"><a href="http://cani-potes.surge.sh/" style="background: linear-gradient(
 315deg,#f7b42c 0%,#fc575e 74%); color: white; padding: .6rem 1rem; border-radius:50px">Cani' Potes</a></p>**
 
+**<p align="center"><a href="https://youtu.be/jrl_DBlTLyM?t=1509" style="background: linear-gradient(
+315deg,#f7b42c 0%,#fc575e 74%); color: white; padding: .6rem 1rem; border-radius:50px">Replay live présentation Cani' Potes</a></p>**
+
+
+
 <p align="center">
 <img src="./FRONT/src/assets/img/home_map.png" style="width:350px; height: 370px;border-radius:10px;box-shadow: 2px 3px 3px rgba(166, 166, 166, 0.8);"></p>
 
